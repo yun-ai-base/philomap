@@ -279,23 +279,137 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
 /* ── Selected glow animation ── */
 @keyframes pulse-glow{0%,100%{opacity:.55}50%{opacity:1}}
 
+/* ── Mobile: filter overlay backdrop ── */
+#filter-overlay{display:none;position:fixed;inset:0;z-index:19;background:rgba(0,0,8,.5);backdrop-filter:blur(4px)}
+#filter-overlay.show{display:block}
+#mob-filter-btn{display:none;position:fixed;z-index:15;bottom:80px;right:12px;width:44px;height:44px;border-radius:50%;background:rgba(129,140,248,.2);border:1px solid rgba(129,140,248,.3);backdrop-filter:blur(12px);color:#c7d2fe;font-size:18px;cursor:pointer;align-items:center;justify-content:center;box-shadow:0 2px 16px rgba(0,0,0,.4)}
+#mob-filter-btn:active{transform:scale(.92)}
+
 /* ── Responsive ── */
 @media(max-width:768px){
-  #filter-panel{left:6px;width:165px;padding:12px 10px;font-size:11px}
-  #detail-panel{width:100vw}
-  #time-bar{bottom:8px;padding:12px 14px 10px;width:94vw}
-  #header h1{font-size:18px}
-  #header .subtitle{font-size:10px}
-  #detail-panel .dp-scroll{padding:24px 20px 40px}
+  /* Header */
+  #header{top:8px;left:0;transform:none;width:100%;padding:0 4px}
+  #header h1{font-size:16px}
+  #header .subtitle{display:none}
+  .view-toggle{overflow-x:auto;gap:2px;padding:0 4px 4px;scrollbar-width:none;justify-content:flex-start;-webkit-overflow-scrolling:touch;margin-top:4px}
+  .view-toggle::-webkit-scrollbar{display:none}
+  .view-toggle button{padding:4px 6px;font-size:9px;white-space:nowrap;flex-shrink:0;letter-spacing:0}
+  #lang-btn{position:relative;right:auto;top:auto;display:inline-block;margin-left:6px;font-size:9px;padding:1px 6px;vertical-align:middle}
+  /* fade hint on right edge */
+  #header::after{content:'';position:absolute;right:0;top:28px;width:24px;height:30px;background:linear-gradient(90deg,transparent,rgba(0,0,8,.7));pointer-events:none;z-index:1}
+
+  /* Graph */
+  #graph-svg{top:48px}
+
+  /* Filter: slide overlay */
+  #filter-panel{left:0;top:0;bottom:0;width:280px;border-radius:0 16px 16px 0;border:none;border-right:1px solid rgba(255,255,255,.08);z-index:20;transform:translateX(-100%);opacity:1;pointer-events:auto;transition:transform .3s cubic-bezier(.4,0,.2,1)}
+  #filter-panel.collapsed{transform:translateX(-100%);opacity:1;pointer-events:auto}
+  #filter-panel.mob-open{transform:translateX(0)}
+  #filter-toggle{display:none}
+  #mob-filter-btn{display:flex}
+
+  /* Detail */
+  #detail-panel{width:100vw;border-radius:16px 0 0 16px}
+  #detail-panel .dp-scroll{padding:28px 16px 40px}
   .dp-name{font-size:20px}
+  .dp-name-en{font-size:12px}
+  .dp-portrait{width:72px;height:72px;font-size:32px}
+  .dp-portrait .dp-glow{width:100px;height:100px}
   .dp-ai-review{padding:14px 16px}
-  #time-river .tr-card{width:90px;padding:8px 6px}
-  .tr-card .trc-name{font-size:11px}
-  .tr-now{left:8px}
-  #duel-modal .duel-body{flex-direction:column}
-  #duel-modal .duel-chart{width:100%;height:280px}
-  #duel-modal .duel-table{width:100%}
-  .view-toggle button{padding:5px 14px;font-size:11px}
+  .dp-quote-block{padding:14px 16px;margin:16px 0}
+  .dp-quote-text{font-size:13px}
+  .dp-summary{font-size:12px}
+  .dp-eval{font-size:11px;padding:12px 14px}
+  .dp-anecdote{font-size:12px;padding:12px 14px}
+  .dp-concept-item{padding:10px 12px}
+  .dp-concept-item .dp-concept-name{font-size:12px}
+  .dp-concept-item .dp-concept-desc{font-size:11px}
+  .dp-infl-item{padding:8px 12px}
+  .dp-contemp-item{padding:8px 12px}
+  .dp-work-item{padding:6px 0}
+  .dp-reading-item{padding:8px 12px}
+  /* Level tabs */
+  .dp-level-btns{flex-wrap:wrap;gap:2px;margin-left:6px}
+  .dp-level-btn{padding:2px 7px;font-size:9px}
+
+  /* Genealogy */
+  .dp-gen-tree .dp-gen-node{max-width:160px;padding:5px 10px;gap:8px}
+  .dp-gen-tree .dp-gen-name{font-size:11px}
+  .dp-gen-tree .dp-gen-self{max-width:180px}
+  .dp-gen-tree .dp-gen-self .dp-gen-name{font-size:13px}
+
+  /* Time slider */
+  #time-bar{bottom:8px;padding:10px 10px 8px;width:96vw;border-radius:12px}
+  #time-bar .time-label{font-size:10px}
+  #time-bar .time-hint{display:none}
+  #time-bar .time-track-wrap{height:28px;margin:0 2px}
+  #time-bar .time-header{margin-bottom:4px}
+  #time-bar input[type="range"]{height:28px}
+  #time-bar input[type="range"]::-webkit-slider-thumb{width:14px;height:14px}
+  #time-bar .time-ticks{font-size:8px;margin-top:3px}
+  #time-bar .time-value{font-size:11px;margin-top:4px;padding:2px 10px}
+
+  /* Time river */
+  #time-river .tr-header{padding:50px 0 6px}
+  #time-river .tr-header h2{font-size:18px}
+  #time-river .tr-header p{font-size:10px}
+  #time-river .tr-card{width:76px;padding:6px 4px;gap:3px}
+  .tr-card .trc-avatar{width:28px;height:28px;font-size:12px}
+  .tr-card .trc-name{font-size:10px}
+  .tr-card .trc-years{font-size:8px}
+  .tr-now{left:6px;font-size:8px}
+  .tr-era-label{font-size:9px}
+  .tr-scroll{padding:12px 20px 20px}
+  .tr-zoom{top:52px;right:12px}
+  .tr-zoom button{width:26px;height:26px;font-size:14px}
+
+  /* Duel */
+  #duel-modal{padding:20px 14px;width:96vw}
+  #duel-modal .duel-header h2{font-size:16px}
+  .duel-body{flex-direction:column;gap:6px}
+  .duel-chart{width:100%;height:240px}
+  .duel-chart h4{font-size:12px}
+  .duel-table{width:100%}
+  .duel-table td,.duel-table th{font-size:11px;padding:6px 8px}
+  .duel-vs{font-size:22px;padding-top:2px}
+  .duel-picker select{font-size:13px;padding:10px 32px 10px 12px}
+  .duel-topic select{font-size:13px;padding:8px 32px 8px 14px;min-width:auto;width:100%}
+  .duel-btn{padding:8px 24px;font-size:13px}
+
+  /* Quiz */
+  #quiz-modal{padding:24px 18px;width:94vw}
+  #quiz-modal .qz-header h2{font-size:17px}
+  #quiz-modal .qz-header p{font-size:11px}
+  .qz-q-text{font-size:14px}
+  .qz-option{font-size:13px;padding:12px 14px}
+  .qz-dna-bar .qz-dna-name{width:60px;font-size:12px}
+  .qz-dna-bar .qz-dna-pct{width:40px;font-size:11px}
+  .qz-btns button{padding:6px 16px;font-size:12px}
+  .qz-share-card{width:auto}
+
+  /* Spectrum */
+  .spec-controls{gap:6px;flex-wrap:wrap;padding:4px 8px}
+  .spec-controls label{font-size:9px}
+  .spec-controls select{font-size:11px;padding:4px 22px 4px 8px}
+  .spec-legend{font-size:9px;gap:8px;padding:5px 10px;bottom:8px}
+
+  /* Twin */
+  #twin-view .tw-header{padding:50px 12px 6px}
+  #twin-view .tw-header h2{font-size:18px}
+  #twin-view .tw-header p{font-size:11px}
+  .tw-container{padding:10px 12px 40px}
+  .tw-grid{grid-template-columns:1fr;gap:8px}
+  .tw-card{padding:12px 14px}
+  .tw-section{margin-bottom:20px}
+  .tw-section-title{font-size:12px}
+
+  /* Duel/quiz as bottom sheet */
+  #duel-overlay{align-items:flex-end}
+  #duel-modal{border-radius:20px 20px 0 0;max-height:85vh}
+  #quiz-overlay{align-items:flex-end}
+  #quiz-modal{border-radius:20px 20px 0 0;max-height:85vh}
+}@media(min-width:769px){
+  #filter-overlay,#mob-filter-btn{display:none!important}
 }
 
 /* ═══════════════ VIEW TOGGLE ═══════════════ */
@@ -303,6 +417,8 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
 .view-toggle button{padding:6px 18px;border-radius:100px;font-size:12px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.05);color:#94a3b8;cursor:pointer;font-family:inherit;letter-spacing:.5px;transition:all .25s}
 .view-toggle button:hover{border-color:rgba(255,255,255,.35);color:#e2e8f0}
 .view-toggle button.active{background:rgba(129,140,248,.2);border-color:rgba(129,140,248,.45);color:#c7d2fe;font-weight:600;box-shadow:0 0 16px rgba(129,140,248,.15)}
+#lang-btn{position:absolute;right:-2px;top:-2px;font-size:10px;color:#64748b;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:6px;padding:2px 8px;cursor:pointer;font-family:inherit;letter-spacing:.5px;transition:all .2s;z-index:2;pointer-events:auto}
+#lang-btn:hover{background:rgba(129,140,248,.12);color:#a5b4fc;border-color:rgba(129,140,248,.25)}
 
 /* ═══════════════ TIME RIVER ═══════════════ */
 /* TWIN UNIVERSE */
@@ -465,6 +581,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
 <div id="header">
   <h1>脉络 Philomap</h1>
   <div class="subtitle">在群星闪耀时，发现思想的引力</div>
+  <div class="lang-toggle" id="lang-btn" title="Switch language">CN / EN</div>
   <div class="view-toggle">
     <button class="active" data-view="star">✨ 思想星图</button>
     <button data-view="river">⏳ 时光长河</button>
@@ -518,6 +635,8 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
   <button id="filter-reset">重置全部筛选</button>
 </div>
 <button id="filter-toggle" title="展开/收起">▶</button>
+<button id="mob-filter-btn" title="筛选">🔍</button>
+<div id="filter-overlay"></div>
 
 <!-- ═══════════ DETAIL PANEL (right) ═══════════ -->
 <div id="detail-panel">
@@ -768,6 +887,97 @@ const civColors={western:{color:'#818cf8',glow:'#a78bfa'},eastern:{color:'#fbbf2
 function formatYear(y){return y<0?`公元前${Math.abs(y)}年`:`公元${y}年`}
 function formatYears(birth,death){return formatYear(birth)+' — '+formatYear(death)}
 const civDisplay={western:'西方',eastern:'东方',indian:'印度',islamic:'伊斯兰'};
+const civDisplayEn={western:'Western',eastern:'Eastern',indian:'Indian',islamic:'Islamic'};
+
+// ═══════════════ I18N ═══════════════
+let lang=localStorage.getItem('philomap-lang')||'zh';
+const I18N={
+  zh:{subtitle:'在群星闪耀时，发现思想的引力',hint:'拖拽滑块筛选思想家',allEra:'全部时代',searchPlh:'搜索哲人、概念、金句…',filterTitle:'🔭 星图筛选',civLabel:'文明圈',schoolLabel:'流派',eraLabel:'时代',resetBtn:'重置全部筛选',
+    vStar:'✨ 思想星图',vRiver:'⏳ 时光长河',vSpec:'📊 哲学光谱',vDuel:'⚔️ 哲学对决',vQuiz:'🧬 基因测试',vTwin:'🧬 孪生宇宙',
+    secEvo:'思想演化',secTL:'人生时间轴',secCore:'核心思想',secWorks:'代表著作',secEvents:'著名事件',secAnec:'逸闻趣事',secSci:'科学视角',secAI:'AI 智慧点评',secInfl:'影响力地图',secCont:'当代应用',secRead:'拓展阅读',secGen:'学术家谱',secRel:'关联哲人',
+    anecdote:'你知道吗',influence:'影响力',
+    duelTitle:'哲学对决',duelA:'哲人 A',duelB:'哲人 B',duelTopic:'辩论议题',duelStart:'开始对决',
+    quizTitle:'🧬 哲学基因测试',quizSub:'20 道趣味选择题 · 发现你的哲学 DNA',quizRetry:'重新测试',quizShare:'复制分享图片',
+    twinTitle:'🧬 知识孪生宇宙',twinSub:'我的其他项目 · 点击跳转',
+    teacher:'导师',student:'弟子',influenceLabel:'影响',influenced:'受惠',
+    loading:'思想星座排列中...'},
+  en:{subtitle:'Where great minds meet across time',hint:'Drag to filter philosophers',allEra:'All Eras',searchPlh:'Search philosopher, idea, quote…',filterTitle:'🔭 Filters',civLabel:'Civilization',schoolLabel:'School',eraLabel:'Era',resetBtn:'Reset All',
+    vStar:'✨ Star Map',vRiver:'⏳ Time River',vSpec:'📊 Spectrum',vDuel:'⚔️ Duel',vQuiz:'🧬 Quiz',vTwin:'🧬 Twinverse',
+    secEvo:'Evolution',secTL:'Timeline',secCore:'Core Ideas',secWorks:'Works',secEvents:'Events',secAnec:'Anecdote',secSci:'Evaluation',secAI:'AI Review',secInfl:'Influence Map',secCont:'Applications',secRead:'Further Reading',secGen:'Genealogy',secRel:'Relations',
+    anecdote:'Did You Know',influence:'Influence',
+    duelTitle:'Philosophy Duel',duelA:'Philosopher A',duelB:'Philosopher B',duelTopic:'Debate Topic',duelStart:'Begin Debate',
+    quizTitle:'🧬 Philosophy DNA Quiz',quizSub:'20 questions to discover your philosophical DNA',quizRetry:'Retry',quizShare:'Copy Image',
+    twinTitle:'🧬 Knowledge Twinverse',twinSub:'My other projects — click to visit',
+    teacher:'Teacher',student:'Student',influenceLabel:'Influence',influenced:'Influenced',
+    loading:'Arranging the constellation of thought...'}
+};
+function t(key){return (I18N[lang]||I18N.zh)[key]||key}
+function applyLang(){
+  const en=lang==='en';
+  document.getElementById('lang-btn').textContent=en?'EN / CN':'CN / EN';
+  document.querySelector('#header .subtitle').textContent=t('subtitle');
+  document.querySelector('[data-view="star"]').textContent=t('vStar');
+  document.querySelector('[data-view="river"]').textContent=t('vRiver');
+  document.querySelector('[data-view="spectrum"]').textContent=t('vSpec');
+  document.querySelector('[data-view="duel"]').textContent=t('vDuel');
+  document.querySelector('[data-view="quiz"]').textContent=t('vQuiz');
+  document.querySelector('[data-view="twin"]').textContent=t('vTwin');
+  document.querySelector('.fp-header h3').textContent=t('filterTitle');
+  document.querySelector('[data-filter="civilization"]').previousElementSibling.textContent=t('civLabel');
+  document.querySelector('[data-filter="school"]').previousElementSibling.textContent=t('schoolLabel');
+  document.querySelector('[data-filter="era"]').previousElementSibling.textContent=t('eraLabel');
+  document.getElementById('filter-reset').textContent=t('resetBtn');
+  document.getElementById('search-input').placeholder=t('searchPlh');
+  document.querySelector('#twin-view .tw-header h2').textContent=t('twinTitle');
+  document.querySelector('#twin-view .tw-header p').textContent=t('twinSub');
+  document.querySelector('#time-bar .time-hint').textContent=t('hint');
+  document.querySelector('#time-bar .time-label').innerHTML='<span>⏳</span>'+(lang==='en'?'Era Filter':'时代筛选');
+  if(timeDisplay.textContent==='全部时代'||timeDisplay.textContent==='All Eras')timeDisplay.textContent=lang==='en'?'All Eras':'全部时代';
+  document.querySelector('#quiz-modal .qz-header h2').textContent=t('quizTitle');
+  document.querySelector('#quiz-modal .qz-header p').textContent=t('quizSub');
+  document.getElementById('qz-retry').textContent=t('quizRetry');
+  document.getElementById('qz-copy').textContent=t('quizShare');
+  document.querySelector('#duel-modal .duel-header h2').textContent='⚔️ '+t('duelTitle');
+  document.querySelectorAll('.duel-picker label')[0].textContent=t('duelA');
+  document.querySelectorAll('.duel-picker label')[1].textContent=t('duelB');
+  document.querySelector('.duel-topic label').textContent=t('duelTopic');
+  document.getElementById('duel-trigger').textContent=t('duelStart');
+  // Timeline legend
+  const tlLegend=document.getElementById('dp-tl-legend');
+  if(tlLegend){
+    if(lang==='en'){tlLegend.innerHTML='<span style="color:#fbbf24">● Life</span><span style="color:#818cf8">● Works</span><span style="color:#34d399">● Events</span>'}
+    else{tlLegend.innerHTML='<span style="color:#fbbf24">● 生平</span><span style="color:#818cf8">● 著作</span><span style="color:#34d399">● 世界事件</span>'}
+  }
+  // School tooltip
+  document.querySelectorAll('.filter-btn').forEach(b=>{
+    const s=dataRef?.schools?.find(sc=>sc.id===b.dataset.value);
+    if(s&&s.nameEn&&lang==='en')b.textContent=s.nameEn;
+    else if(s&&s.name&&lang==='zh')b.textContent=s.name;
+  });
+  // Era filter buttons
+  document.querySelectorAll('[data-key="era"]').forEach(b=>{
+    const e=dataRef?.eras?.find(er=>er.id===b.dataset.value);
+    if(e&&e.nameEn&&lang==='en')b.textContent=e.nameEn;
+    else if(e&&e.name&&lang==='zh')b.textContent=e.name;
+  });
+  // Civilization filter buttons
+  document.querySelectorAll('[data-key="civilization"]').forEach(b=>{
+    const map={western:{zh:'西方',en:'Western'},eastern:{zh:'东方',en:'Eastern'},indian:{zh:'印度',en:'Indian'},islamic:{zh:'伊斯兰',en:'Islamic'}};
+    const m=map[b.dataset.value];if(m)b.textContent=lang==='en'?m.en:m.zh;
+  });
+  // Node labels on graph
+  document.querySelectorAll('.node-label').forEach(el=>{
+    const g=el.closest('.node-group');
+    if(!g||!g.__data__)return;
+    el.textContent=lang==='en'?(g.__data__.nameEn||g.__data__.name):g.__data__.name;
+  });
+}
+document.getElementById('lang-btn').addEventListener('click',()=>{
+  lang=lang==='zh'?'en':'zh';
+  localStorage.setItem('philomap-lang',lang);
+  applyLang();
+  if(selectedNode){openDetailPanel(selectedNode);setTimeout(applyLang,100)}
+});
 
 // ═══════════════ SVG DEFS ═══════════════
 function setupDefs(){
@@ -811,6 +1021,7 @@ function toggleFilter(key,value,btn){
   const set=currentFilters[key];
   if(set.has(value)){set.delete(value);btn.classList.remove('active')}else{set.add(value);btn.classList.add('active')}
   updateFilterCount();applyAllFilters();
+  if(window.innerWidth<=768){var fo=document.getElementById('filter-overlay');filterPanel.classList.remove('mob-open');if(fo)fo.classList.remove('show')}
 }
 function resetFilters(){
   for(const k of Object.keys(currentFilters))currentFilters[k].clear();
@@ -820,6 +1031,11 @@ function resetFilters(){
   updateFilterCount();applyAllFilters();
 }
 document.getElementById('filter-reset').addEventListener('click',resetFilters);
+// Mobile filter
+const mobFilterBtn=document.getElementById('mob-filter-btn'),filterOverlay=document.getElementById('filter-overlay');
+mobFilterBtn.addEventListener('click',()=>{filterPanel.classList.toggle('mob-open');filterOverlay.classList.toggle('show')});
+filterOverlay.addEventListener('click',()=>{filterPanel.classList.remove('mob-open');filterOverlay.classList.remove('show')});
+resetFilters=((orig)=>function(){orig();if(window.innerWidth<=768){filterPanel.classList.remove('mob-open');filterOverlay.classList.remove('show')}})(resetFilters);
 
 function buildFilterPanel(data){
   const civContainer=document.querySelector('[data-filter="civilization"]');
@@ -828,7 +1044,7 @@ function buildFilterPanel(data){
   const schools=[...new Set(data.philosophers.map(p=>p.school))].map(s=>data.schools.find(sc=>sc.id===s)).filter(Boolean);
   const schoolTip=document.getElementById('school-tip');
   for(const s of schools){const btn=document.createElement('button');btn.className='filter-btn';btn.dataset.key='school';btn.dataset.value=s.id;btn.textContent=s.name;btn.addEventListener('click',()=>toggleFilter('school',s.id,btn));
-    if(s.description){btn.addEventListener('mouseenter',function(e){schoolTip.querySelector('.st-name').textContent=s.name;schoolTip.querySelector('.st-desc').textContent=s.description;schoolTip.querySelector('.st-dev').textContent=s.development||'';const x=e.clientX+12,y=e.clientY-10;schoolTip.style.left=(x+300>window.innerWidth?x-316:x)+'px';schoolTip.style.top=(y+180>window.innerHeight?y-196:y)+'px';schoolTip.style.opacity=1});btn.addEventListener('mouseleave',()=>{schoolTip.style.opacity=0})}
+    if(s.description){btn.addEventListener('mouseenter',function(e){schoolTip.querySelector('.st-name').textContent=lang==='en'?(s.nameEn||s.name):s.name;schoolTip.querySelector('.st-desc').textContent=lang==='en'?(s.descriptionEn||s.description):s.description;schoolTip.querySelector('.st-dev').textContent=s.development||'';const x=e.clientX+12,y=e.clientY-10;schoolTip.style.left=(x+300>window.innerWidth?x-316:x)+'px';schoolTip.style.top=(y+180>window.innerHeight?y-196:y)+'px';schoolTip.style.opacity=1});btn.addEventListener('mouseleave',()=>{schoolTip.style.opacity=0})}
     schoolContainer.appendChild(btn)}
   const eraContainer=document.querySelector('[data-filter="era"]');
   const eras=[...new Set(data.philosophers.map(p=>p.era))].map(e=>data.eras.find(er=>er.id===e)).filter(Boolean);
@@ -857,6 +1073,7 @@ function applyAllFilters(){
 }
 
 // ═══════════════ DETAIL PANEL ═══════════════
+function lf(d,f){return lang==='en'&&d[f+'En']?d[f+'En']:d[f]}
 function openDetailPanel(d){
   selectedNode=d;const c=civColors[d.civilization]||civColors.western,data=dataRef;
   const panel=detailPanel,scroll=panel.querySelector('.dp-scroll');
@@ -876,31 +1093,31 @@ function openDetailPanel(d){
   portrait.style.borderColor=c.glow+'60';
   panel.querySelector('.dp-glow').style.boxShadow=`0 0 32px ${c.glow}50`;
   // Name & meta
-  panel.querySelector('.dp-name').textContent=d.name;
-  panel.querySelector('.dp-name-en').textContent=d.nameEn||'';
-  panel.querySelector('.dp-meta').textContent=formatYears(d.birth,d.death)+' · '+d.nationality;
+  panel.querySelector('.dp-name').textContent=lang==='en'?(d.nameEn||d.name):d.name;
+  panel.querySelector('.dp-name-en').textContent=lang==='en'?d.name:d.nameEn||'';
+  panel.querySelector('.dp-meta').textContent=formatYears(d.birth,d.death)+' · '+(lang==='en'&&d.nationalityEn?d.nationalityEn:d.nationality);
   // Badges
   const badges=panel.querySelector('.dp-badges');badges.innerHTML='';
   const civBadge=document.createElement('span');civBadge.className='dp-badge';
   civBadge.style.background=civColors[d.civilization]?`rgba(${d.civilization==='eastern'?'251,191,36':d.civilization==='indian'?'244,114,182':d.civilization==='islamic'?'52,211,153':'129,140,248'},.2)`:'rgba(255,255,255,.06)';
-  civBadge.style.color=c.color;civBadge.textContent=civDisplay[d.civilization]||d.civilization;badges.appendChild(civBadge);
+  civBadge.style.color=c.color;civBadge.textContent=lang==='en'?(civDisplayEn[d.civilization]||d.civilization):civDisplay[d.civilization]||d.civilization;badges.appendChild(civBadge);
   const school=data.schools.find(s=>s.id===d.school);
-  if(school){const sBadge=document.createElement('span');sBadge.className='dp-badge';sBadge.style.background='rgba(255,255,255,.05)';sBadge.style.color='#cbd5e1';sBadge.style.cursor='pointer';sBadge.textContent=school.name;
-    if(school.description){const st=document.getElementById('school-tip');sBadge.addEventListener('mouseenter',function(e){st.querySelector('.st-name').textContent=school.name;st.querySelector('.st-desc').textContent=school.description;st.querySelector('.st-dev').textContent=school.development||'';const x=e.clientX+12,y=e.clientY-10;st.style.left=(x+300>window.innerWidth?x-316:x)+'px';st.style.top=(y+180>window.innerHeight?y-196:y)+'px';st.style.opacity=1});sBadge.addEventListener('mouseleave',()=>{st.style.opacity=0})}
+  if(school){const sBadge=document.createElement('span');sBadge.className='dp-badge';sBadge.style.background='rgba(255,255,255,.05)';sBadge.style.color='#cbd5e1';sBadge.style.cursor='pointer';sBadge.textContent=lang==='en'?(school.nameEn||school.name):school.name;
+    if(school.description){const st=document.getElementById('school-tip');sBadge.addEventListener('mouseenter',function(e){st.querySelector('.st-name').textContent=lang==='en'?(school.nameEn||school.name):school.name;st.querySelector('.st-desc').textContent=lang==='en'?(school.descriptionEn||school.description):school.description;st.querySelector('.st-dev').textContent=school.development||'';const x=e.clientX+12,y=e.clientY-10;st.style.left=(x+300>window.innerWidth?x-316:x)+'px';st.style.top=(y+180>window.innerHeight?y-196:y)+'px';st.style.opacity=1});sBadge.addEventListener('mouseleave',()=>{st.style.opacity=0})}
     badges.appendChild(sBadge)}
   // Influence stars
   const stars=panel.querySelector('.dp-stars');stars.innerHTML='';
   for(let i=0;i<10;i++){const st=document.createElement('div');st.className='dp-star';st.style.background=i<d.influence?c.color:'rgba(255,255,255,.1)';stars.appendChild(st)}
   // Summary
-  panel.querySelector('.dp-summary').innerHTML=d.summary||'';
-  // Quotes (support both goldenQuotes array and goldenQuote single)
+  panel.querySelector('.dp-summary').innerHTML=lf(d,'summary')||'';
+  // Quotes
   const qb=panel.querySelector('.dp-quote-block');
   const quotes=d.goldenQuotes||(d.goldenQuote?[d.goldenQuote]:[]);
   if(quotes.length>0){qb.style.display='block';qb.style.setProperty('--quote-accent',c.color);
     let qIdx=0;
     function showQuote(i){
-      qb.querySelector('.dp-quote-text').innerHTML='&#x201C;'+quotes[i].text+'&#x201D;';
-      qb.querySelector('.dp-quote-src').innerHTML='—— '+quotes[i].source;
+      qb.querySelector('.dp-quote-text').innerHTML='&#x201C;'+lf(quotes[i],'text')+'&#x201D;';
+      qb.querySelector('.dp-quote-src').innerHTML='—— '+lf(quotes[i],'source');
       const nav=qb.querySelector('.dp-quote-nav');
       if(quotes.length>1){nav.innerHTML='';for(let j=0;j<quotes.length;j++){const dot=document.createElement('span');dot.className='dp-quote-dot'+(j===i?' active':'');dot.addEventListener('click',e=>{e.stopPropagation();showQuote(j)});nav.appendChild(dot)}nav.style.display='flex'}else{nav.style.display='none'}
     }
@@ -908,62 +1125,66 @@ function openDetailPanel(d){
   }else{qb.style.display='none'}
   // Thought evolution
   const evSec=document.getElementById('dp-evolution');
-  if(d.thoughtEvolution){evSec.style.display='block';evSec.querySelector('.dp-evolution-text').innerHTML=d.thoughtEvolution;const dot=evSec.querySelector('.dp-evolution-text');dot.style.setProperty('--dot-color',c.color)}else{evSec.style.display='none'}
+  if(lf(d,'thoughtEvolution')){evSec.style.display='block';evSec.querySelector('.dp-evolution-text').innerHTML=lf(d,'thoughtEvolution');const dot=evSec.querySelector('.dp-evolution-text');dot.style.setProperty('--dot-color',c.color)}else{evSec.style.display='none'}
   // Timeline
   const tlSec=document.getElementById('dp-timeline'),tlContent=document.getElementById('dp-tl-content');
-  if(d.timeline&&d.timeline.length){tlSec.style.display='block';tlContent.innerHTML='';const displayEvents=d.timeline.slice(0,12);for(const e of displayEvents){tlContent.innerHTML+=`<div class="dp-tl-item ${e.type}"><div class="dp-tl-year">${formatYear(e.year)}</div><div class="dp-tl-title">${e.title}</div>${e.desc?`<div class="dp-tl-desc">${e.desc}</div>`:''}</div>`}}else{tlSec.style.display='none'}
+  if(d.timeline&&d.timeline.length){tlSec.style.display='block';tlContent.innerHTML='';const displayEvents=d.timeline.slice(0,12);for(const e of displayEvents){tlContent.innerHTML+=`<div class="dp-tl-item ${e.type}"><div class="dp-tl-year">${formatYear(e.year)}</div><div class="dp-tl-title">${lf(e,'title')}</div>${e.desc?`<div class="dp-tl-desc">${lf(e,'desc')}</div>`:''}</div>`}}else{tlSec.style.display='none'}
   // Core thoughts
   const coreSec=document.getElementById('dp-core'),coreList=coreSec.querySelector('.dp-concept-list'),coreNet=document.getElementById('dp-concept-net');
   if(d.coreThoughts&&d.coreThoughts.length){coreSec.style.display='block';coreList.innerHTML='';
     for(let ci=0;ci<d.coreThoughts.length;ci++){const ct=d.coreThoughts[ci];const hasL1=!!ct.l1,hasL2=!!ct.l2,hasL3=!!ct.l3;const defaultLevel=hasL1?'l1':hasL2?'l2':'l3';
       const item=document.createElement('div');item.className='dp-concept-item';item.dataset.ci=ci;
-      const levels=[{k:'l1',label:'入门'},{k:'l2',label:'类比'},{k:'l3',label:'研究'}];
-      item.innerHTML=`<div class="dp-concept-name"><span style="color:${c.color}">${ct.concept}</span><div class="dp-level-btns">${levels.map(lv=>`<button class="dp-level-btn${lv.k===defaultLevel?' active':''}${ct[lv.k]?'':' disabled'}" data-level="${lv.k}">${lv.label}</button>`).join('')}</div></div><div class="dp-concept-desc" data-ci="${ci}">${ct[defaultLevel]||ct.desc}</div>`;
+      const lvlLabels=lang==='en'?[{k:'l1',label:'Beginner'},{k:'l2',label:'Analogy'},{k:'l3',label:'Advanced'}]:[{k:'l1',label:'入门'},{k:'l2',label:'类比'},{k:'l3',label:'研究'}];
+      const cpt=lf(ct,'concept');const lvl=lf(ct,defaultLevel)||ct.desc||'';
+      const lvlEn=lang==='en'?(ct[defaultLevel+'En']||ct.descEn||''):'';
+      const descText=lvlEn||lvl;
+      item.innerHTML=`<div class="dp-concept-name"><span style="color:${c.color}">${cpt}</span><div class="dp-level-btns">${lvlLabels.map(lv=>`<button class="dp-level-btn${lv.k===defaultLevel?' active':''}${ct[lv.k]?'':' disabled'}" data-level="${lv.k}">${lv.label}</button>`).join('')}</div></div><div class="dp-concept-desc" data-ci="${ci}">${descText}</div>`;
       // Level switch logic
-      item.querySelectorAll('.dp-level-btn').forEach(btn=>{btn.addEventListener('click',e=>{e.stopPropagation();const lv=btn.dataset.level;if(!ct[lv])return;item.querySelectorAll('.dp-level-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');item.querySelector('.dp-concept-desc').textContent=ct[lv]})});
+      item.querySelectorAll('.dp-level-btn').forEach(btn=>{btn.addEventListener('click',e=>{e.stopPropagation();const lv=btn.dataset.level;if(!ct[lv])return;item.querySelectorAll('.dp-level-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');item.querySelector('.dp-concept-desc').textContent=lf(ct,lv)||ct[lv]})});
       coreList.appendChild(item)}
     // Concept network
     renderConceptNet(d,c,coreNet);
   }else{coreSec.style.display='none';coreNet.style.display='none'}
   // Works
   const worksSec=document.getElementById('dp-works'),worksList=worksSec.querySelector('.dp-works-list');
-  if(d.representativeWorks&&d.representativeWorks.length){worksSec.style.display='block';worksList.innerHTML='';for(const w of d.representativeWorks){let html=`<div class="dp-work-item"><div class="dp-work-icon" style="background:${c.color}"></div><div class="dp-work-info"><span class="dp-work-title">${w.title}</span>${w.type?`<span class="dp-work-meta">${w.type}${w.year?` · ${formatYear(w.year)}`:''}</span>`:''}`;if(w.content)html+=`<div class="dp-work-content">${w.content}</div>`;html+='</div></div>';worksList.innerHTML+=html}}else{worksSec.style.display='none'}
+  if(d.representativeWorks&&d.representativeWorks.length){worksSec.style.display='block';worksList.innerHTML='';for(const w of d.representativeWorks){let html=`<div class="dp-work-item"><div class="dp-work-icon" style="background:${c.color}"></div><div class="dp-work-info"><span class="dp-work-title">${lf(w,'title')}</span>${w.type?`<span class="dp-work-meta">${w.type}${w.year?` · ${formatYear(w.year)}`:''}</span>`:''}`;if(w.content)html+=`<div class="dp-work-content">${lf(w,'content')||w.content}</div>`;html+='</div></div>';worksList.innerHTML+=html}}else{worksSec.style.display='none'}
   // Events
   const eventsSec=document.getElementById('dp-events'),eventsList=eventsSec.querySelector('.dp-event-list');
-  if(d.famousEvents&&d.famousEvents.length){eventsSec.style.display='block';eventsList.innerHTML='';for(const ev of d.famousEvents){eventsList.innerHTML+=`<div class="dp-event-item"><strong>${ev.title}</strong>${ev.year?`（${formatYear(ev.year)}）` : ''}：${ev.desc}</div>`}}else{eventsSec.style.display='none'}
+  if(d.famousEvents&&d.famousEvents.length){eventsSec.style.display='block';eventsList.innerHTML='';for(const ev of d.famousEvents){eventsList.innerHTML+=`<div class="dp-event-item"><strong>${lf(ev,'title')}</strong>${ev.year?`（${formatYear(ev.year)}）` : ''}：${lf(ev,'desc')}</div>`}}else{eventsSec.style.display='none'}
   // Anecdote
   const anecdoteSec=document.getElementById('dp-anecdote');
-  if(d.anecdote){anecdoteSec.style.display='block';anecdoteSec.querySelector('.dp-anecdote-text').innerHTML=d.anecdote}else{anecdoteSec.style.display='none'}
+  if(lf(d,'anecdote')){anecdoteSec.style.display='block';anecdoteSec.querySelector('.dp-anecdote-text').innerHTML=lf(d,'anecdote')}else{anecdoteSec.style.display='none'}
   // Scientific eval
   const evalSec=document.getElementById('dp-eval');
-  if(d.scientificEval){evalSec.style.display='block';evalSec.querySelector('.dp-eval').innerHTML=d.scientificEval}else{evalSec.style.display='none'}
+  if(lf(d,'scientificEval')){evalSec.style.display='block';evalSec.querySelector('.dp-eval').innerHTML=lf(d,'scientificEval')}else{evalSec.style.display='none'}
   // AI Review
   const aiSec=document.getElementById('dp-ai-review');
-  if(d.aiReview){aiSec.style.display='block';aiSec.querySelector('.dp-ai-text').innerHTML=d.aiReview}else{aiSec.style.display='none'}
+  if(lf(d,'aiReview')){aiSec.style.display='block';aiSec.querySelector('.dp-ai-text').innerHTML=lf(d,'aiReview')}else{aiSec.style.display='none'}
   // Influence Map
   const inflSec=document.getElementById('dp-infl'),inflGrid=inflSec.querySelector('.dp-infl-grid');
   const inflData=d.layers?.L7_legacy?.influenceMap;
   if(inflData&&inflData.length){inflSec.style.display='block';inflGrid.innerHTML=inflData.map(i=>
-    '<div class="dp-infl-item"><span class="dp-infl-icon">'+i.icon+'</span><div class="dp-infl-content"><div class="dp-infl-domain">'+i.domain+'</div><div class="dp-infl-desc">'+i.desc+'</div></div></div>'
+    '<div class="dp-infl-item"><span class="dp-infl-icon">'+i.icon+'</span><div class="dp-infl-content"><div class="dp-infl-domain">'+lf(i,'domain')+'</div><div class="dp-infl-desc">'+lf(i,'desc')+'</div></div></div>'
   ).join('')}else{inflSec.style.display='none'}
   // Contemporary Applications
   const contempSec=document.getElementById('dp-contemp'),contempList=contempSec.querySelector('.dp-contemp-list');
   const contempData=d.layers?.L7_legacy?.contemporaryApplications;
   if(contempData&&contempData.length){contempSec.style.display='block';contempList.innerHTML=contempData.map(i=>
-    '<div class="dp-contemp-item"><span class="dp-contemp-icon">'+i.icon+'</span><div class="dp-contemp-info"><div class="dp-contemp-title">'+i.title+'</div><div class="dp-contemp-desc">'+i.desc+'</div></div></div>'
+    '<div class="dp-contemp-item"><span class="dp-contemp-icon">'+i.icon+'</span><div class="dp-contemp-info"><div class="dp-contemp-title">'+lf(i,'title')+'</div><div class="dp-contemp-desc">'+lf(i,'desc')+'</div></div></div>'
   ).join('')}else{contempSec.style.display='none'}
   // Further reading
   const readSec=document.getElementById('dp-reading'),readList=readSec.querySelector('.dp-reading-list');
   if(d.furtherReading&&d.furtherReading.length){readSec.style.display='block';readList.innerHTML='';
     const typeIcons={book:'📖',concept:'💭',video:'🎬',article:'📄'};
-    for(const fr of d.furtherReading){const hasUrl=fr.url&&fr.url.startsWith('http');readList.innerHTML+=`<${hasUrl?'a':'div'} class="dp-reading-item"${hasUrl?` href="${fr.url}" target="_blank" rel="noopener"`:''}><span class="dp-reading-icon">${typeIcons[fr.type]||'📌'}</span><div class="dp-reading-info"><div class="dp-reading-title">${fr.title}${hasUrl?' ↗':''}</div><div class="dp-reading-desc">${fr.desc}</div></div><span class="dp-reading-type">${fr.type}</span></${hasUrl?'a':'div'}>`}
+    for(const fr of d.furtherReading){const hasUrl=fr.url&&fr.url.startsWith('http');readList.innerHTML+=`<${hasUrl?'a':'div'} class="dp-reading-item"${hasUrl?` href="${fr.url}" target="_blank" rel="noopener"`:''}><span class="dp-reading-icon">${typeIcons[fr.type]||'📌'}</span><div class="dp-reading-info"><div class="dp-reading-title">${lf(fr,'title')}${hasUrl?' ↗':''}</div><div class="dp-reading-desc">${lf(fr,'desc')}</div></div><span class="dp-reading-type">${fr.type}</span></${hasUrl?'a':'div'}>`}
   }else{readSec.style.display='none'}
   // Related
   const relSec=document.getElementById('dp-related'),relList=relSec.querySelector('.dp-related-list');
   if(d.relationships&&d.relationships.length){relSec.style.display='block';relList.innerHTML='';const nodeMap=new Map(simData.allNodes.map(n=>[n.id,n]));
     for(const rel of d.relationships){const target=nodeMap.get(rel.target);if(!target)continue;const tag=document.createElement('span');tag.className='dp-related-tag';
       tag.style.borderColor=target.color+'40';
-      tag.innerHTML=`${target.name}<span class="dp-rel-type">${rel.type==='teacher-student'?'师承':rel.type==='influence'?'影响':'论战'}</span>`;
+      const relLabel=lang==='en'?{teacherStudent:'Teacher/Student',influence:'Influence',debate:'Debate'}[rel.type]||rel.type:{teacherStudent:'师承',influence:'影响',debate:'论战'}[rel.type]||rel.type;
+      tag.innerHTML=`${lang==='en'?target.nameEn||target.name:target.name}<span class="dp-rel-type">${relLabel}</span>`;
       tag.addEventListener('click',()=>{closeDetailPanel();setTimeout(()=>{const n=simData.allNodes.find(x=>x.id===target.id);if(n)openDetailPanel(n)},300)});relList.appendChild(tag)}
   }else{relSec.style.display='none'}
   // Genealogy
@@ -976,6 +1197,13 @@ function openDetailPanel(d){
   panel.querySelector('.dp-accent').style.background=theme.accent;
   panel.classList.add('open');scroll.scrollTop=0;
   highlightConnections(d);
+  // Update section titles for current language
+  document.querySelectorAll('.dp-section-title').forEach(function(el){
+    var icon=el.querySelector('.dp-section-icon');if(!icon)return;
+    var map={'dp-evolution':['secEvo','🌊'],'dp-timeline':['secTL','📅'],'dp-core':['secCore','💡'],'dp-works':['secWorks','📖'],'dp-events':['secEvents','⚡'],'dp-anecdote':['secAnec','📜'],'dp-eval':['secSci','🔬'],'dp-ai-review':['secAI','🤖'],'dp-infl':['secInfl','🌐'],'dp-contemp':['secCont','🔮'],'dp-reading':['secRead','📚'],'dp-gen':['secGen','🌳'],'dp-related':['secRel','🪐']};
+    var id=el.closest('.dp-section').id;
+    if(map[id]){el.innerHTML='<span class="dp-section-icon">'+map[id][1]+'</span>'+t(map[id][0])+'<span style="flex:1;height:1px;background:rgba(255,255,255,.06);margin-left:4px"></span>'}
+  });
 }
 function renderConceptNet(philosopher,civColor,svgEl){
   const concepts=philosopher.coreThoughts||[];
@@ -1009,54 +1237,56 @@ function renderConceptNet(philosopher,civColor,svgEl){
 }
 function closeDetailPanel(){selectedNode=null;detailPanel.classList.remove('open');clearHighlights();const qb=document.querySelector('.dp-quote-block');if(qb&&qb.dataset.interval){clearInterval(+qb.dataset.interval);delete qb.dataset.interval}}
 function exportMD(d){
-  const civName=(civDisplay[d.civilization]||d.civilization);
+  const civName=lang==='en'?(civDisplayEn[d.civilization]||d.civilization):(civDisplay[d.civilization]||d.civilization);
   const schoolName=(dataRef.schools.find(s=>s.id===d.school)||{}).name||'';
-  let md=[`# ${d.name}（${d.nameEn||''}）`,'',
-    `> ${d.goldenQuotes&&d.goldenQuotes[0]?d.goldenQuotes[0].text:''}`,'',
-    `- **生卒**：${formatYears(d.birth,d.death)}`,'',
-    `- **国籍**：${d.nationality}`,'',
-    `- **文明**：${civName}`,'',
-    `- **流派**：${schoolName}`,'',
-    `- **角色**：${d.role||''}`,'',
-    `- **影响力**：${'★'.repeat(d.influence||0)}${'☆'.repeat(10-(d.influence||0))}`,'',
-    '',`## 概述`,'',`${d.summary||''}`,'',
+  const schoolNameEn=(dataRef.schools.find(s=>s.id===d.school)||{}).nameEn||schoolName;
+  let md=[`# ${lang==='en'?d.nameEn||d.name:d.name}（${lang==='en'?d.name:d.nameEn||''}）`,'',
+    `> ${d.goldenQuotes&&d.goldenQuotes[0]?lf(d.goldenQuotes[0],'text'):''}`,'',
+    `- **${lang==='en'?'Life':'生卒'}**：${formatYears(d.birth,d.death)}`,'',
+    `- **${lang==='en'?'Nationality':'国籍'}**：${d.nationality}`,'',
+    `- **${lang==='en'?'Civilization':'文明'}**：${civName}`,'',
+    `- **${lang==='en'?'School':'流派'}**：${lang==='en'?schoolNameEn:schoolName}`,'',
+    `- **${lang==='en'?'Role':'角色'}**：${d.role||''}`,'',
+    `- **${lang==='en'?'Influence':'影响力'}**：${'★'.repeat(d.influence||0)}${'☆'.repeat(10-(d.influence||0))}`,'',
+    '',`## ${lang==='en'?'Overview':'概述'}`,'',`${lf(d,'summary')||''}`,'',
   ];
-  if(d.thoughtEvolution){md.push('','## 思想演变','',d.thoughtEvolution)}
+  if(lf(d,'thoughtEvolution')){md.push('','## '+(lang==='en'?'Thought Evolution':'思想演变'),'',lf(d,'thoughtEvolution'))}
   if(d.goldenQuotes&&d.goldenQuotes.length){
-    md.push('','## 金句','');
-    d.goldenQuotes.forEach((q,i)=>{md.push(`${i+1}. **${q.text}** —— ${q.source}`,'')})
+    md.push('','## '+(lang==='en'?'Golden Quotes':'金句'),'');
+    d.goldenQuotes.forEach((q,i)=>{md.push(`${i+1}. **${lf(q,'text')}** —— ${lf(q,'source')}`,'')})
   }
   if(d.coreThoughts&&d.coreThoughts.length){
-    md.push('','## 核心思想','');
-    d.coreThoughts.forEach(ct=>{md.push(`### ${ct.concept}`,'',`${ct.desc}`,'')})
+    md.push('','## '+(lang==='en'?'Core Ideas':'核心思想'),'');
+    d.coreThoughts.forEach(ct=>{md.push(`### ${lf(ct,'concept')}`,'',`${lf(ct,'desc')||ct.desc}`,'')})
   }
   if(d.representativeWorks&&d.representativeWorks.length){
-    md.push('','## 代表作品','');
-    d.representativeWorks.forEach(w=>{md.push(`### ${w.title}`,`- **类型**：${w.type||''}${w.year?` · ${formatYear(w.year)}`:''}`,'',`${w.content||''}`,'')})
+    md.push('','## '+(lang==='en'?'Works':'代表作品'),'');
+    d.representativeWorks.forEach(w=>{md.push(`### ${lf(w,'title')}`,`- **${lang==='en'?'Type':'类型'}**：${w.type||''}${w.year?` · ${formatYear(w.year)}`:''}`,'',`${lf(w,'content')||w.content||''}`,'')})
   }
   if(d.famousEvents&&d.famousEvents.length){
-    md.push('','## 著名事件','');
-    d.famousEvents.forEach(ev=>{md.push(`- **${ev.title}**${ev.year?`（${formatYear(ev.year)}）` : ''}：${ev.desc}`,'')})
+    md.push('','## '+(lang==='en'?'Events':'著名事件'),'');
+    d.famousEvents.forEach(ev=>{md.push(`- **${lf(ev,'title')}**${ev.year?`（${formatYear(ev.year)}）` : ''}：${lf(ev,'desc')}`,'')})
   }
-  if(d.anecdote){md.push('','## 轶事','',d.anecdote.replace(/<[^>]+>/g,''))}
+  if(lf(d,'anecdote')){md.push('','## '+(lang==='en'?'Anecdote':'轶事'),'',lf(d,'anecdote').replace(/<[^>]+>/g,''))}
   const inflMd=d.layers?.L7_legacy?.influenceMap;
-  if(inflMd&&inflMd.length){md.push('','## 影响力地图','');inflMd.forEach(i=>{md.push('- **'+i.domain+'**：'+i.desc,'')})}
+  if(inflMd&&inflMd.length){md.push('','## '+(lang==='en'?'Influence Map':'影响力地图'),'');inflMd.forEach(i=>{md.push('- **'+lf(i,'domain')+'**：'+lf(i,'desc'),'')})}
   const contMd=d.layers?.L7_legacy?.contemporaryApplications;
-  if(contMd&&contMd.length){md.push('','## 当代应用','');contMd.forEach(c=>{md.push('- **'+c.title+'**：'+c.desc,'')})}
-  if(d.scientificEval){md.push('','## 学术评价','',d.scientificEval.replace(/<[^>]+>/g,''))}
-  if(d.aiReview){md.push('','## AI 点评','',d.aiReview.replace(/<[^>]+>/g,''))}
+  if(contMd&&contMd.length){md.push('','## '+(lang==='en'?'Applications':'当代应用'),'');contMd.forEach(c=>{md.push('- **'+lf(c,'title')+'**：'+lf(c,'desc'),'')})}
+  if(lf(d,'scientificEval')){md.push('','## '+(lang==='en'?'Academic Evaluation':'学术评价'),'',lf(d,'scientificEval').replace(/<[^>]+>/g,''))}
+  if(lf(d,'aiReview')){md.push('','## '+(lang==='en'?'AI Review':'AI 点评'),'',lf(d,'aiReview').replace(/<[^>]+>/g,''))}
   if(d.furtherReading&&d.furtherReading.length){
-    md.push('','## 拓展阅读','');
-    d.furtherReading.forEach(fr=>{md.push(`- [${fr.title}](${fr.url||'#'}) —— ${fr.desc}（${fr.type}）`)});md.push('')
+    md.push('','## '+(lang==='en'?'Further Reading':'拓展阅读'),'');
+    d.furtherReading.forEach(fr=>{md.push(`- [${lf(fr,'title')}](${fr.url||'#'}) —— ${lf(fr,'desc')}（${fr.type}）`)});md.push('')
   }
   if(d.relationships&&d.relationships.length){
-    md.push('','## 关联哲人','');
+    md.push('','## '+(lang==='en'?'Related Philosophers':'关联哲人'),'');
     const nm=new Map(simData.allNodes.map(n=>[n.id,n]));
-    d.relationships.forEach(r=>{const t=nm.get(r.target);if(t){md.push(`- **${t.name}**：${r.description||''}（${r.type==='teacher-student'?'师承':r.type==='influence'?'影响':'论战'}）`)}});md.push('')
+    const relLabel=lang==='en'?{teacherStudent:'Teacher/Student',influence:'Influence',debate:'Debate'}:{teacherStudent:'师承',influence:'影响',debate:'论战'};
+    d.relationships.forEach(r=>{const t=nm.get(r.target);if(t){md.push(`- **${lang==='en'?t.nameEn||t.name:t.name}**：${r.description||''}（${relLabel[r.type]||r.type}）`)}});md.push('')
   }
-  md.push('','---','','*由「脉络 Philomap」导出*');
+  md.push('','---','','*'+(lang==='en'?'Exported from「Philomap — Star Map of Thought」':'由「脉络 Philomap」导出')+'*');
   const blob=new Blob([md.join('\n')],{type:'text/markdown;charset=utf-8'});
-  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`${d.name}.md`;a.click();URL.revokeObjectURL(a.href)
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=(lang==='en'?d.nameEn||d.name:d.name)+'.md';a.click();URL.revokeObjectURL(a.href)
 }
 document.querySelector('.dp-close').addEventListener('click',closeDetailPanel);
 document.querySelector('.dp-export').addEventListener('click',()=>{if(selectedNode)exportMD(selectedNode)});
@@ -1195,7 +1425,7 @@ function renderGenealogy(d,data){
   // Older (teachers / influencers)
   for(const item of uniqueOlder){
     const tc=civColors[item.node.civilization]||civColors.western;
-    html+='<div class="dp-gen-node" data-id="'+item.node.id+'"><div class="dp-gen-dot" style="background:'+tc.color+'"></div><span class="dp-gen-name">'+item.node.name+'</span><span class="dp-gen-meta">'+item.type+'</span></div>';
+    html+='<div class="dp-gen-node" data-id="'+item.node.id+'"><div class="dp-gen-dot" style="background:'+tc.color+'"></div><span class="dp-gen-name">'+(lang==='en'?item.node.nameEn||item.node.name:item.node.name)+'</span><span class="dp-gen-meta">'+(lang==='en'?{teacher:'Teacher',influence:'Influence',student:'Student',influenced:'Influenced'}[item.type]||item.type:item.type)+'</span></div>';
   }
   if(uniqueOlder.length>0)html+='<div class="dp-gen-line">↑</div>';
   // Self
@@ -1204,7 +1434,7 @@ function renderGenealogy(d,data){
   // Younger (students / influenced)
   for(const item of uniqueYounger){
     const sc=civColors[item.node.civilization]||civColors.western;
-    html+='<div class="dp-gen-node" data-id="'+item.node.id+'"><div class="dp-gen-dot" style="background:'+sc.color+'"></div><span class="dp-gen-name">'+item.node.name+'</span><span class="dp-gen-meta">'+item.type+'</span></div>';
+    html+='<div class="dp-gen-node" data-id="'+item.node.id+'"><div class="dp-gen-dot" style="background:'+sc.color+'"></div><span class="dp-gen-name">'+(lang==='en'?item.node.nameEn||item.node.name:item.node.name)+'</span><span class="dp-gen-meta">'+(lang==='en'?{teacher:'Teacher',influence:'Influence',student:'Student',influenced:'Influenced'}[item.type]||item.type:item.type)+'</span></div>';
   }
   html+='</div>';
   tree.innerHTML=html;
@@ -1272,8 +1502,8 @@ function renderGraph(data){
 
   nodeGroups.on('mouseenter',function(event,d){
     if(selectedNode&&selectedNode.id===d.id)return;d3.select(this).select('.node-glow').transition().duration(200).attr('stroke-width',5).attr('opacity',.85);d3.select(this).select('.node-body').transition().duration(200).attr('opacity',1);
-    tooltip.querySelector('.tt-name').textContent=d.name+(d.nameEn?' ('+d.nameEn+')':'');tooltip.querySelector('.tt-years').textContent=formatYears(d.birth,d.death)+' · '+d.nationality;
-    const se=dataRef?.schools.find(s=>s.id===d.school);const scEl=tooltip.querySelector('.tt-school');scEl.textContent=se?.name||'';scEl.style.background=civColors[d.civilization]?`rgba(${d.civilization==='eastern'?'251,191,36':d.civilization==='indian'?'244,114,182':d.civilization==='islamic'?'52,211,153':'129,140,248'},.2)`:'rgba(255,255,255,.1)';scEl.style.color=(civColors[d.civilization]||civColors.western).color;
+    tooltip.querySelector('.tt-name').textContent=lang==='en'?(d.nameEn||d.name)+(d.nameEn&&d.name?' ('+d.name+')':''):d.name+(d.nameEn?' ('+d.nameEn+')':'');tooltip.querySelector('.tt-years').textContent=formatYears(d.birth,d.death)+' · '+d.nationality;
+    const se=dataRef?.schools.find(s=>s.id===d.school);const scEl=tooltip.querySelector('.tt-school');scEl.textContent=lang==='en'?(se?.nameEn||se?.name||''):(se?.name||'');scEl.style.background=civColors[d.civilization]?`rgba(${d.civilization==='eastern'?'251,191,36':d.civilization==='indian'?'244,114,182':d.civilization==='islamic'?'52,211,153':'129,140,248'},.2)`:'rgba(255,255,255,.1)';scEl.style.color=(civColors[d.civilization]||civColors.western).color;
     const q=d.goldenQuotes?d.goldenQuotes[0]:d.goldenQuote;tooltip.querySelector('.tt-quote').textContent=q?.text||'';tooltip.querySelector('.tt-quote-src').textContent=q?.source||'';tooltip.style.opacity=1;
   }).on('mousemove',function(event){const x=event.clientX+16,y=event.clientY-16;tooltip.style.left=(x+260>window.innerWidth?x-276:x)+'px';tooltip.style.top=(y+160>window.innerHeight?y-176:y)+'px'})
   .on('mouseleave',function(event,d){if(selectedNode&&selectedNode.id===d.id)return;d3.select(this).select('.node-glow').transition().duration(300).attr('stroke-width',3).attr('opacity',.55);d3.select(this).select('.node-body').transition().duration(300).attr('opacity',.9);tooltip.style.opacity=0})
@@ -1309,6 +1539,7 @@ function switchView(view){
   document.getElementById('graph-svg').style.display=isStar?'block':'none';
   filterPanel.style.display=(isStar||isRiver)?'':'none';
   filterToggle.style.display=(isStar||isRiver)?'':'none';
+  mobFilterBtn.style.display=(isStar||isRiver)?'':'none';
   timeSlider.style.display=(isStar||isRiver)?'':'none';
   timeRiver.classList.toggle('active',isRiver);
   duelOverlay.classList.toggle('active',isDuel);
