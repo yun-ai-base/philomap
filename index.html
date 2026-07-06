@@ -1,0 +1,1824 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>脉络 Philomap — 人类思想星图</title>
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --western:#818cf8;--western-glow:#a78bfa;--western-bg:rgba(129,140,248,.12);
+  --eastern:#fbbf24;--eastern-glow:#fcd34d;--eastern-bg:rgba(251,191,36,.12);
+  --indian:#f472b6;--indian-glow:#f9a8d4;--indian-bg:rgba(244,114,182,.12);
+  --islamic:#34d399;--islamic-glow:#6ee7b7;--islamic-bg:rgba(52,211,153,.12);
+  --panel-bg:rgba(10,10,28,.88);--border-subtle:rgba(255,255,255,.06);
+}
+html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:system-ui,-apple-system,"Microsoft YaHei","PingFang SC",sans-serif;color:#e2e8f0}
+
+/* ── Canvas & SVG layers ── */
+#bg-canvas{position:fixed;inset:0;z-index:0}
+#graph-svg{position:fixed;inset:0;z-index:1;cursor:grab}
+#graph-svg:active{cursor:grabbing}
+#graph-svg.dragging-node{cursor:grabbing}
+
+/* ── Loading ── */
+#loading{position:fixed;inset:0;z-index:100;background:#000008;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .6s}
+#loading.hidden{opacity:0;pointer-events:none}
+#loading .loader-ring{width:48px;height:48px;border-radius:50%;border:2px solid rgba(129,140,248,.2);border-top-color:#818cf8;animation:spin 1.2s linear infinite;margin-bottom:16px}
+@keyframes spin{to{transform:rotate(360deg)}}
+#loading p{color:#64748b;font-size:13px;letter-spacing:1px}
+
+/* ── Header ── */
+#header{position:fixed;z-index:5;top:20px;left:50%;transform:translateX(-50%);text-align:center;pointer-events:none}
+#header h1{font-size:24px;font-weight:700;color:#f1f5f9;letter-spacing:2px;text-shadow:0 0 40px rgba(129,140,248,.4)}
+#header .subtitle{font-size:12px;color:#64748b;letter-spacing:3px;margin-top:4px}
+
+/* ── Tooltip ── */
+#tooltip{position:fixed;z-index:10;pointer-events:none;opacity:0;background:rgba(15,15,30,.94);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:12px 16px;max-width:260px;transition:opacity .2s;box-shadow:0 8px 32px rgba(0,0,0,.5)}
+#tooltip .tt-name{font-size:15px;font-weight:700;margin-bottom:2px}
+#tooltip .tt-years{font-size:11px;color:#94a3b8;margin-bottom:6px}
+#tooltip .tt-school{display:inline-block;padding:2px 10px;border-radius:100px;font-size:10px;margin-bottom:6px}
+#tooltip .tt-quote{font-size:12px;color:#cbd5e1;font-style:italic;line-height:1.5}
+#tooltip .tt-quote-src{font-size:10px;color:#64748b;margin-top:2px}
+
+/* ═══════════════ SEARCH ═══════════════ */
+#search-wrap{position:relative;margin-bottom:14px}
+#search-input{width:100%;padding:8px 12px 8px 30px;border-radius:10px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#e2e8f0;font-size:12px;font-family:inherit;outline:none;transition:all .2s}
+#search-input:focus{border-color:rgba(129,140,248,.35);box-shadow:0 0 12px rgba(129,140,248,.1)}
+#search-input::placeholder{color:#64748b}
+#search-icon{position:absolute;left:9px;top:50%;transform:translateY(-50%);font-size:12px;color:#64748b;pointer-events:none}
+#search-results{position:absolute;top:100%;left:0;right:0;z-index:50;background:rgba(20,20,45,.98);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.1);border-radius:12px;margin-top:4px;max-height:260px;overflow-y:auto;display:none;box-shadow:0 8px 32px rgba(0,0,0,.5)}
+#search-results.show{display:block}
+#search-results::-webkit-scrollbar{width:4px}
+#search-results::-webkit-scrollbar-thumb{background:rgba(255,255,255,.08);border-radius:2px}
+.sr-empty{padding:12px 16px;color:#64748b;font-size:12px;text-align:center}
+.sr-item{display:flex;align-items:center;gap:10px;padding:10px 14px;cursor:pointer;transition:all .15s;border-bottom:1px solid rgba(255,255,255,.03)}
+.sr-item:last-child{border-bottom:none}
+.sr-item:hover{background:rgba(129,140,248,.12)}
+.sr-item .sr-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.sr-item .sr-name{font-size:13px;font-weight:600;color:#f1f5f9}
+.sr-item .sr-meta{font-size:10px;color:#64748b;margin-left:auto}
+.sr-item .sr-highlight{color:#fbbf24}
+
+/* ═══════════════ GENEALOGY TREE ═══════════════ */
+.dp-gen-tree{position:relative;padding:16px 0 4px}
+.dp-gen-tree .dp-gen-node{display:flex;align-items:center;gap:10px;padding:6px 12px;margin:0 auto 6px;border-radius:8px;cursor:pointer;transition:all .2s;max-width:200px}
+.dp-gen-tree .dp-gen-node:hover{background:rgba(255,255,255,.05);transform:translateX(2px)}
+.dp-gen-tree .dp-gen-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.dp-gen-tree .dp-gen-name{font-size:12px;font-weight:600;color:#e2e8f0}
+.dp-gen-tree .dp-gen-meta{font-size:10px;color:#fbbf24;font-weight:600;margin-left:auto;text-shadow:0 0 8px rgba(251,191,36,.15)}
+.dp-gen-tree .dp-gen-self{padding:10px 16px;margin:8px auto;border-radius:10px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);max-width:220px;text-align:center}
+.dp-gen-tree .dp-gen-self .dp-gen-name{font-size:14px;color:#f1f5f9}
+.dp-gen-tree .dp-gen-line{text-align:center;color:rgba(255,255,255,.12);font-size:10px;line-height:1;padding:1px 0}
+
+
+/* Influence Map & Contemporary */
+.dp-infl-grid{display:flex;flex-direction:column;gap:8px}
+.dp-infl-item{padding:10px 14px;border-radius:10px;background:rgba(255,255,255,.015);border:1px solid rgba(255,255,255,.04);display:flex;align-items:flex-start;gap:10px;transition:all .2s}
+.dp-infl-item:hover{background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.08)}
+.dp-infl-icon{font-size:16px;flex-shrink:0;margin-top:1px}
+.dp-infl-content{flex:1;min-width:0}
+.dp-infl-domain{font-size:12px;font-weight:600;color:#e2e8f0;margin-bottom:2px}
+.dp-infl-desc{font-size:11px;color:#94a3b8;line-height:1.5}
+.dp-contemp-list{display:flex;flex-direction:column;gap:8px}
+.dp-contemp-item{padding:10px 14px;border-radius:10px;background:rgba(99,102,241,.03);border:1px solid rgba(99,102,241,.06);display:flex;align-items:flex-start;gap:10px;transition:all .2s}
+.dp-contemp-item:hover{background:rgba(99,102,241,.06);border-color:rgba(99,102,241,.12)}
+.dp-contemp-icon{font-size:16px;flex-shrink:0;margin-top:1px}
+.dp-contemp-info{flex:1;min-width:0}
+.dp-contemp-title{font-size:12px;font-weight:600;color:#e2e8f0;margin-bottom:2px}
+.dp-contemp-desc{font-size:11px;color:#94a3b8;line-height:1.5}
+/* ═══════════════ FILTER PANEL (left) ═══════════════ */
+#filter-panel{position:fixed;z-index:5;left:14px;top:50%;transform:translateY(-50%);background:var(--panel-bg);backdrop-filter:blur(20px);border:1px solid var(--border-subtle);border-radius:16px;padding:18px 14px;width:195px;font-size:12px;transition:transform .35s cubic-bezier(.4,0,.2,1),opacity .35s}
+#filter-panel.collapsed{transform:translateY(-50%) translateX(-210px);opacity:0;pointer-events:none}
+#filter-panel .fp-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+#filter-panel .fp-header h3{font-size:14px;font-weight:700;color:#f1f5f9;letter-spacing:.5px}
+#filter-panel .fp-badge{font-size:10px;padding:3px 9px;border-radius:100px;background:rgba(129,140,248,.25);color:#c7d2fe;display:none;font-weight:600}
+#filter-panel .fp-badge.show{display:inline-block}
+
+.filter-group{margin-bottom:14px}
+.filter-group:last-of-type{margin-bottom:8px}
+.filter-group-label{font-size:10px;color:#94a3b8;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;padding-left:2px;font-weight:700}
+.filter-btns{display:flex;flex-wrap:wrap;gap:5px}
+.filter-btn{padding:6px 14px;border-radius:100px;font-size:12px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.04);color:#cbd5e1;cursor:pointer;transition:all .2s;white-space:nowrap;font-family:inherit;letter-spacing:.3px}
+.filter-btn:hover{border-color:rgba(255,255,255,.4);color:#f1f5f9;background:rgba(255,255,255,.1);transform:translateY(-1px)}
+.filter-btn.active{color:#fff;font-weight:600;transform:translateY(-1px)}
+.filter-btn.active.western{background:rgba(129,140,248,.25);border-color:rgba(129,140,248,.5);box-shadow:0 0 12px rgba(129,140,248,.15)}
+.filter-btn.active.eastern{background:rgba(251,191,36,.3);border-color:rgba(251,191,36,.6);box-shadow:0 0 16px rgba(251,191,36,.2);color:#fff}
+.filter-btn.active.indian{background:rgba(244,114,182,.3);border-color:rgba(244,114,182,.6);box-shadow:0 0 16px rgba(244,114,182,.2);color:#fff}
+.filter-btn.active.islamic{background:rgba(52,211,153,.3);border-color:rgba(52,211,153,.6);box-shadow:0 0 16px rgba(52,211,153,.2);color:#fff}
+
+.filter-btns::-webkit-scrollbar{width:4px}
+.filter-btns::-webkit-scrollbar-track{background:transparent}
+.filter-btns::-webkit-scrollbar-thumb{background:rgba(255,255,255,.08);border-radius:2px}
+.filter-btns::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,.15)}
+#filter-reset{width:100%;padding:6px 0;border-radius:8px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.03);color:#64748b;font-size:10px;cursor:pointer;font-family:inherit;letter-spacing:.5px;transition:all .2s;margin-top:4px}
+#filter-reset:hover{background:rgba(255,255,255,.08);color:#cbd5e1;border-color:rgba(255,255,255,.12)}
+
+#filter-toggle{position:fixed;z-index:5;left:14px;top:50%;transform:translateY(-50%);width:24px;height:48px;border-radius:0 8px 8px 0;border:1px solid var(--border-subtle);border-left:none;background:var(--panel-bg);backdrop-filter:blur(20px);color:#64748b;font-size:11px;cursor:pointer;transition:all .35s cubic-bezier(.4,0,.2,1);display:flex;align-items:center;justify-content:center}
+#filter-panel.collapsed ~ #filter-toggle{transform:translateY(-50%) translateX(195px);border-radius:8px;border-left:1px solid var(--border-subtle);left:-10px}
+/* School tooltip */
+#school-tip{position:fixed;z-index:20;pointer-events:none;opacity:0;background:rgba(15,15,32,.96);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:14px 18px;max-width:300px;transition:opacity .2s;box-shadow:0 8px 32px rgba(0,0,0,.5)}
+#school-tip .st-name{font-size:14px;font-weight:700;color:#f1f5f9;margin-bottom:6px}
+#school-tip .st-desc{font-size:12px;color:#cbd5e1;line-height:1.6;margin-bottom:8px}
+#school-tip .st-dev-label{font-size:9px;color:#64748b;text-transform:uppercase;letter-spacing:1px;margin-bottom:3px}
+#school-tip .st-dev{font-size:11px;color:#94a3b8;line-height:1.5}
+
+/* ═══════════════ DETAIL PANEL (right) ═══════════════ */
+#detail-panel{position:fixed;z-index:8;right:0;top:0;bottom:0;width:420px;background:linear-gradient(180deg,rgba(12,12,32,.95) 0%,rgba(10,10,28,.92) 100%);backdrop-filter:blur(24px);border-left:1px solid rgba(255,255,255,.08);transform:translateX(100%);transition:transform .45s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;box-shadow:-8px 0 48px rgba(0,0,0,.6)}
+#detail-panel.open{transform:translateX(0)}
+#detail-panel .dp-accent{position:absolute;left:0;top:0;width:3px;height:100%;border-radius:0;transition:background .3s}
+#detail-panel .dp-close{position:absolute;top:18px;right:18px;z-index:2;width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);color:#94a3b8;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .25s}
+#detail-panel .dp-close:hover{background:rgba(239,68,68,.15);border-color:rgba(239,68,68,.3);color:#f87171}
+#detail-panel .dp-export{position:absolute;top:18px;right:62px;z-index:2;width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);color:#94a3b8;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .25s}
+#detail-panel .dp-export:hover{background:rgba(129,140,248,.15);border-color:rgba(129,140,248,.3);color:#a5b4fc}
+#detail-panel .dp-scroll{flex:1;overflow-y:auto;padding:32px 28px 48px;scroll-behavior:smooth;overscroll-behavior:contain}
+#detail-panel .dp-scroll::-webkit-scrollbar{width:4px}
+#detail-panel .dp-scroll::-webkit-scrollbar-track{background:transparent}
+#detail-panel .dp-scroll::-webkit-scrollbar-thumb{background:rgba(255,255,255,.06);border-radius:2px}
+
+/* Hero */
+.dp-hero{text-align:center;margin-bottom:24px}
+.dp-portrait{width:96px;height:96px;border-radius:50%;margin:0 auto 16px;display:flex;align-items:center;justify-content:center;font-size:40px;font-weight:700;position:relative;border:2.5px solid rgba(255,255,255,.2);transition:all .3s;overflow:hidden}
+.dp-portrait img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.dp-portrait .dp-glow{position:absolute;inset:-8px;border-radius:50%;z-index:-1;animation:dp-glow-pulse 3s ease-in-out infinite}
+.dp-portrait .dp-initial{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:inherit;border-radius:50%}
+.dp-portrait.has-img .dp-initial{display:none}
+@keyframes dp-glow-pulse{0%,100%{transform:scale(1);opacity:.35}50%{transform:scale(1.15);opacity:.55}}
+.dp-name{font-size:24px;font-weight:800;color:#f8fafc;letter-spacing:1.5px;line-height:1.2}
+.dp-name-en{font-size:13px;color:#64748b;margin-top:4px;letter-spacing:.8px;font-style:italic}
+.dp-meta{font-size:12px;color:#94a3b8;margin-top:6px;letter-spacing:.3px}
+.dp-badges{display:flex;justify-content:center;gap:8px;margin-top:10px;flex-wrap:wrap}
+.dp-badge{padding:5px 16px;border-radius:100px;font-size:11px;font-weight:500;letter-spacing:.5px;transition:all .2s}
+.dp-influence{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:10px;font-size:11px;color:#64748b}
+.dp-influence .dp-stars{display:flex;gap:2px}
+.dp-influence .dp-star{width:6px;height:6px;border-radius:50%}
+
+/* Quote */
+.dp-quote-block{margin:22px 0;padding:16px 20px;border-radius:14px;background:rgba(255,255,255,.025);position:relative;overflow:hidden}
+.dp-quote-block::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:0 2px 2px 0;background:var(--quote-accent,rgba(255,255,255,.15));transition:background .3s}
+.dp-quote-text{font-size:14px;font-style:italic;line-height:1.7;color:#cbd5e1;position:relative;z-index:1}
+.dp-quote-src{font-size:11px;color:#64748b;margin-top:8px;position:relative;z-index:1}
+.dp-quote-nav{display:flex;gap:6px;margin-top:10px;position:relative;z-index:1}
+.dp-quote-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.15);cursor:pointer;transition:all .2s}
+.dp-quote-dot.active{background:var(--quote-accent,rgba(255,255,255,.5));box-shadow:0 0 6px var(--quote-accent,rgba(255,255,255,.3))}
+
+/* Summary */
+.dp-summary{margin:18px 0;font-size:13px;line-height:1.75;color:#94a3b8;letter-spacing:.2px}
+
+/* Sections */
+.dp-section{margin-top:26px}
+.dp-section-title{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:#cbd5e1;letter-spacing:.8px;margin-bottom:14px}
+.dp-section-title .dp-section-icon{font-size:14px;flex-shrink:0}
+.dp-section-title::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.06);margin-left:4px}
+
+/* Thought Evolution */
+.dp-evolution{position:relative;padding-left:20px}
+.dp-evolution::before{content:'';position:absolute;left:6px;top:4px;bottom:4px;width:1px;background:rgba(255,255,255,.08)}
+.dp-evolution-text{font-size:13px;color:#94a3b8;line-height:1.75;position:relative}
+.dp-evolution-text::before{content:'';position:absolute;left:-18px;top:6px;width:8px;height:8px;border-radius:50%;border:2px solid var(--dot-color,rgba(255,255,255,.2))}
+
+/* Concept cards */
+/* Timeline */
+.dp-timeline{position:relative;padding-left:20px}
+.dp-timeline::before{content:'';position:absolute;left:6px;top:0;bottom:0;width:2px;background:linear-gradient(180deg,rgba(251,191,36,.3) 0%,rgba(129,140,248,.3) 50%,rgba(52,211,153,.3) 100%)}
+.dp-tl-item{position:relative;padding:8px 0 8px 18px;font-size:12px}
+.dp-tl-item::before{content:'';position:absolute;left:-18px;top:10px;width:10px;height:10px;border-radius:50%;border:2px solid;flex-shrink:0;z-index:1}
+.dp-tl-item.life::before{background:#fbbf24;border-color:#fbbf24;box-shadow:0 0 6px rgba(251,191,36,.4)}
+.dp-tl-item.work::before{background:#818cf8;border-color:#818cf8;box-shadow:0 0 6px rgba(129,140,248,.4)}
+.dp-tl-item.world::before{background:#34d399;border-color:#34d399;box-shadow:0 0 6px rgba(52,211,153,.4)}
+.dp-tl-item .dp-tl-year{font-size:10px;font-weight:700;margin-bottom:2px}
+.dp-tl-item .dp-tl-title{font-weight:600;color:#e2e8f0}
+.dp-tl-item .dp-tl-desc{color:#94a3b8;font-size:11px;line-height:1.4;margin-top:2px}
+.dp-tl-item.life .dp-tl-year{color:#fbbf24}
+.dp-tl-item.work .dp-tl-year{color:#818cf8}
+.dp-tl-item.world .dp-tl-year{color:#34d399}
+.dp-concept-list{display:flex;flex-direction:column;gap:8px}
+.dp-concept-item{padding:12px 16px;border-radius:12px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.05);transition:all .2s}
+.dp-concept-item:hover{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.1)}
+.dp-concept-item .dp-concept-name{font-size:13px;font-weight:700;color:#e2e8f0;display:flex;align-items:center;gap:6px}
+.dp-concept-item .dp-concept-name::before{content:'';width:5px;height:5px;border-radius:50%;flex-shrink:0}
+.dp-concept-item .dp-concept-desc{font-size:12px;color:#94a3b8;margin-top:5px;line-height:1.6}
+/* Level tabs */
+.dp-level-btns{display:flex;gap:4px;margin-left:auto}
+.dp-level-btn{padding:3px 10px;border-radius:6px;font-size:10px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.03);color:#64748b;cursor:pointer;font-family:inherit;transition:all .2s;white-space:nowrap}
+.dp-level-btn:hover{border-color:rgba(255,255,255,.25);color:#cbd5e1}
+.dp-level-btn.active{background:rgba(129,140,248,.15);border-color:rgba(129,140,248,.35);color:#c7d2fe;font-weight:600}
+.dp-level-btn.disabled{opacity:.35;pointer-events:none}
+/* Concept network */
+.dp-concept-net{width:100%;height:220px;border-radius:12px;background:rgba(0,0,0,.2);border:1px solid rgba(255,255,255,.04);margin-top:12px}
+.dp-concept-net .cn-label{font-size:10px;fill:#64748b}
+.dp-concept-net .cn-node{stroke-width:2;cursor:pointer}
+.dp-concept-net .cn-node:hover{stroke-width:3}
+.dp-concept-net .cn-edge{stroke:rgba(255,255,255,.15);fill:none}
+.dp-concept-net .cn-label-bg{stroke:rgba(0,0,0,.6);stroke-width:3;fill:none;stroke-linejoin:round}
+.concept-net-tip{position:fixed;z-index:25;pointer-events:none;opacity:0;background:rgba(12,12,30,.94);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:8px 12px;font-size:11px;color:#cbd5e1;max-width:200px;transition:opacity .15s;box-shadow:0 4px 16px rgba(0,0,0,.4)}
+
+/* Works */
+.dp-works-list{display:flex;flex-direction:column;gap:4px}
+.dp-work-item{display:flex;align-items:center;gap:12px;padding:8px 0;font-size:12px;border-bottom:1px solid rgba(255,255,255,.03)}
+.dp-work-item:last-child{border-bottom:none}
+.dp-work-item .dp-work-icon{width:4px;height:4px;border-radius:50%;flex-shrink:0}
+.dp-work-item .dp-work-info{flex:1;min-width:0}
+.dp-work-item .dp-work-title{color:#e2e8f0;font-weight:600}
+.dp-work-item .dp-work-meta{color:#64748b;font-size:10px}
+.dp-work-content{font-size:11px;color:#94a3b8;line-height:1.5;margin-top:4px}
+
+/* Events */
+.dp-event-list{display:flex;flex-direction:column;gap:10px}
+.dp-event-item{font-size:12px;color:#94a3b8;line-height:1.65;padding-left:16px;position:relative;border-left:1px solid rgba(255,255,255,.06)}
+.dp-event-item strong{color:#e2e8f0;display:block;margin-bottom:2px}
+
+/* Eval */
+.dp-eval{font-size:12px;color:#94a3b8;line-height:1.75;padding:14px 16px;border-radius:12px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.04);letter-spacing:.1px}
+
+/* Anecdote */
+.dp-anecdote{font-size:13px;color:#cbd5e1;line-height:1.75;padding:14px 16px;border-radius:12px;background:rgba(251,191,36,.04);border:1px solid rgba(251,191,36,.1)}
+.dp-anecdote .dp-anecdote-label{font-size:10px;color:#fbbf24;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px}
+
+/* AI Review */
+.dp-ai-review{padding:18px 20px;border-radius:14px;background:linear-gradient(135deg,rgba(99,102,241,.06),rgba(139,92,246,.06));border:1px solid rgba(99,102,241,.12);position:relative}
+.dp-ai-review .dp-ai-text{font-size:13px;color:#cbd5e1;line-height:1.8;letter-spacing:.15px}
+
+/* Further Reading */
+.dp-reading-list{display:flex;flex-direction:column;gap:8px}
+.dp-reading-item{display:flex;align-items:flex-start;gap:12px;padding:10px 14px;border-radius:10px;background:rgba(255,255,255,.015);border:1px solid rgba(255,255,255,.04);transition:all .2s;cursor:pointer;text-decoration:none}
+.dp-reading-item:hover{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.1)}
+.dp-reading-item .dp-reading-icon{font-size:16px;flex-shrink:0;margin-top:1px}
+.dp-reading-item .dp-reading-info{flex:1;min-width:0}
+.dp-reading-item .dp-reading-title{font-size:12px;font-weight:600;color:#e2e8f0;margin-bottom:2px}
+.dp-reading-item .dp-reading-desc{font-size:11px;color:#64748b;line-height:1.5}
+.dp-reading-item .dp-reading-type{font-size:9px;color:#475569;text-transform:uppercase;letter-spacing:.8px;flex-shrink:0}
+
+/* Related */
+.dp-related-list{display:flex;flex-wrap:wrap;gap:6px}
+.dp-related-tag{padding:6px 14px;border-radius:100px;font-size:11px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.02);color:#cbd5e1;cursor:pointer;transition:all .2s;font-family:inherit;letter-spacing:.3px}
+.dp-related-tag:hover{transform:translateY(-1px);color:#f8fafc;box-shadow:0 2px 12px rgba(0,0,0,.3)}
+.dp-related-tag .dp-rel-type{font-size:9px;color:#64748b;margin-left:4px}
+
+/* ── Time Slider ── */
+#time-bar{position:fixed;z-index:5;bottom:24px;left:50%;transform:translateX(-50%);background:linear-gradient(180deg,rgba(15,15,35,.92),rgba(10,10,28,.95));backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:16px 24px 12px;width:min(660px,90vw);box-shadow:0 4px 32px rgba(0,0,0,.4)}
+#time-bar .time-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+#time-bar .time-label{font-size:11px;font-weight:600;color:#cbd5e1;letter-spacing:.5px}
+#time-bar .time-label span{font-size:13px;margin-right:6px}
+#time-bar .time-hint{font-size:10px;color:#64748b;letter-spacing:.3px}
+#time-bar .time-track-wrap{position:relative;height:32px;margin:0 4px}
+#time-bar .time-track-bg{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);height:3px;border-radius:2px;background:rgba(255,255,255,.05);overflow:hidden}
+#time-bar .time-track-fill{position:absolute;top:50%;transform:translateY(-50%);height:3px;border-radius:2px;background:rgba(129,140,248,.25);transition:left .1s,right .1s}
+#time-bar .time-eras{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);height:3px;display:flex;border-radius:2px;overflow:hidden;pointer-events:none;opacity:.08}
+#time-bar .time-era-seg{height:100%}
+#time-bar input[type="range"]{-webkit-appearance:none;appearance:none;width:100%;height:32px;background:transparent;position:absolute;left:0;top:0;margin:0;z-index:2;cursor:pointer}
+#time-bar input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:16px;height:16px;border-radius:50%;cursor:pointer;background:#818cf8;border:2px solid #c7d2fe;box-shadow:0 0 16px rgba(129,140,248,.5),0 0 4px rgba(0,0,0,.3);transition:transform .15s;position:relative;z-index:3}
+#time-bar input[type="range"]::-webkit-slider-thumb:hover{transform:scale(1.2)}
+#time-bar input[type="range"]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;cursor:pointer;background:#818cf8;border:2px solid #c7d2fe;box-shadow:0 0 16px rgba(129,140,248,.5)}
+#time-bar .time-ticks{display:flex;justify-content:space-between;margin-top:6px;font-size:9px;color:#475569;padding:0 2px;position:relative}
+#time-bar .time-tick{display:flex;flex-direction:column;align-items:center;gap:2px}
+#time-bar .time-tick::before{content:'';width:1px;height:6px;background:rgba(255,255,255,.1)}
+#time-bar .time-value{text-align:center;font-size:12px;margin-top:6px;color:#a78bfa;font-weight:600;letter-spacing:.5px;padding:2px 12px;border-radius:100px;background:rgba(129,140,248,.1);display:inline-block;position:relative;left:50%;transform:translateX(-50%)}
+
+/* ── Selected glow animation ── */
+@keyframes pulse-glow{0%,100%{opacity:.55}50%{opacity:1}}
+
+/* ── Responsive ── */
+@media(max-width:768px){
+  #filter-panel{left:6px;width:165px;padding:12px 10px;font-size:11px}
+  #detail-panel{width:100vw}
+  #time-bar{bottom:8px;padding:12px 14px 10px;width:94vw}
+  #header h1{font-size:18px}
+  #header .subtitle{font-size:10px}
+  #detail-panel .dp-scroll{padding:24px 20px 40px}
+  .dp-name{font-size:20px}
+  .dp-ai-review{padding:14px 16px}
+  #time-river .tr-card{width:90px;padding:8px 6px}
+  .tr-card .trc-name{font-size:11px}
+  .tr-now{left:8px}
+  #duel-modal .duel-body{flex-direction:column}
+  #duel-modal .duel-chart{width:100%;height:280px}
+  #duel-modal .duel-table{width:100%}
+  .view-toggle button{padding:5px 14px;font-size:11px}
+}
+
+/* ═══════════════ VIEW TOGGLE ═══════════════ */
+.view-toggle{display:flex;gap:4px;margin-top:8px;pointer-events:auto}
+.view-toggle button{padding:6px 18px;border-radius:100px;font-size:12px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.05);color:#94a3b8;cursor:pointer;font-family:inherit;letter-spacing:.5px;transition:all .25s}
+.view-toggle button:hover{border-color:rgba(255,255,255,.35);color:#e2e8f0}
+.view-toggle button.active{background:rgba(129,140,248,.2);border-color:rgba(129,140,248,.45);color:#c7d2fe;font-weight:600;box-shadow:0 0 16px rgba(129,140,248,.15)}
+
+/* ═══════════════ TIME RIVER ═══════════════ */
+/* TWIN UNIVERSE */
+#twin-view{position:fixed;inset:0;z-index:3;background:radial-gradient(ellipse at 50% 50%,#0a0a20,#000008);display:none;flex-direction:column;overflow-y:auto}
+#twin-view.active{display:flex}
+#twin-view .tw-header{text-align:center;padding:80px 24px 10px;flex-shrink:0}
+#twin-view .tw-header h2{font-size:22px;font-weight:700;color:#f1f5f9;letter-spacing:1px}
+#twin-view .tw-header p{font-size:12px;color:#64748b;margin-top:4px}
+.tw-container{max-width:900px;margin:0 auto;padding:20px 24px 60px;width:100%}
+.tw-section{margin-bottom:32px}
+.tw-section-title{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:#94a3b8;letter-spacing:.5px;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,.06)}
+.tw-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
+.tw-card{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:12px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);text-decoration:none;transition:all .25s;cursor:pointer;min-width:0}
+.tw-card:hover{background:rgba(255,255,255,.05);border-color:rgba(201,168,76,.25);transform:translateY(-2px)}
+.tw-card-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.tw-card-icon.ai{background:rgba(129,140,248,.15)}
+.tw-card-icon.tool{background:rgba(251,191,36,.12)}
+.tw-card-icon.content{background:rgba(244,114,182,.1)}
+.tw-card-icon.data{background:rgba(52,211,153,.1)}
+.tw-card-info{flex:1;min-width:0}
+.tw-card-name{font-size:13px;font-weight:600;color:#f1f5f9;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tw-card-desc{font-size:11px;color:#64748b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
+.tw-card-arrow{color:#4a4844;font-size:12px;flex-shrink:0;transition:all .25s}
+.tw-card:hover .tw-card-arrow{color:#c9a84c;transform:translateX(3px)}
+#time-river{position:fixed;inset:0;z-index:3;background:radial-gradient(ellipse at 50% 50%,#0a0a20,#000008);display:none;flex-direction:column}
+#time-river.active{display:flex}
+#time-river .tr-header{text-align:center;padding:80px 0 10px;flex-shrink:0}
+#time-river .tr-header h2{font-size:22px;font-weight:700;color:#f1f5f9;letter-spacing:1px}
+#time-river .tr-header p{font-size:11px;color:#64748b;margin-top:2px}
+.tr-now{position:absolute;top:12px;left:20px;z-index:2;color:#94a3b8;font-size:10px}
+/* Time river zoom */
+.tr-zoom{position:absolute;top:70px;right:24px;z-index:4;display:flex;gap:6px;align-items:center}
+.tr-zoom button{width:30px;height:30px;border-radius:8px;border:1px solid rgba(255,255,255,.12);background:rgba(15,15,32,.9);color:#cbd5e1;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;font-family:inherit;line-height:1}
+.tr-zoom button:hover{background:rgba(30,30,56,.9);border-color:rgba(255,255,255,.25);color:#f1f5f9}
+.tr-zoom .tr-zoom-label{font-size:10px;color:#64748b;min-width:36px;text-align:center}
+.tr-scroll{flex:1;overflow-x:auto;overflow-y:hidden;padding:20px 60px 30px;cursor:grab;scroll-behavior:smooth}
+.tr-scroll:active{cursor:grabbing}
+.tr-scroll::-webkit-scrollbar{height:8px}
+.tr-scroll::-webkit-scrollbar-track{background:rgba(255,255,255,.03);border-radius:4px}
+.tr-scroll::-webkit-scrollbar-thumb{background:rgba(255,255,255,.12);border-radius:4px}
+.tr-scroll::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,.2)}
+.tr-canvas{position:relative;height:100%}
+.tr-canvas{position:relative;height:100%}
+/* Era bands */
+.tr-era-band{position:absolute;top:0;bottom:0;opacity:.06;border-radius:4px;pointer-events:none}
+/* Center time axis */
+.tr-axis{position:absolute;left:0;right:0;top:50%;height:2px;background:linear-gradient(90deg,transparent 0%,rgba(255,255,255,.3) 3%,rgba(255,255,255,.3) 97%,transparent 100%);z-index:1}
+/* Philosopher cards */
+.tr-row{position:absolute;left:0;right:0;height:45%;display:flex;align-items:flex-end;padding-bottom:20px}
+.tr-row.bottom{top:50%;align-items:flex-start;padding-top:24px;padding-bottom:0}
+.tr-card{position:absolute;display:flex;flex-direction:column;align-items:center;gap:6px;width:110px;padding:10px 8px;border-radius:12px;background:rgba(15,15,35,.8);border:1px solid rgba(255,255,255,.08);cursor:pointer;transition:all .3s;transform:translateX(-50%);z-index:2}
+.tr-card:hover{background:rgba(30,30,60,.9);border-color:rgba(255,255,255,.25);transform:translateX(-50%) translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,.4);z-index:5}
+.tr-card .trc-avatar{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:#fff;flex-shrink:0}
+.tr-card .trc-name{font-size:13px;font-weight:600;color:#f1f5f9;text-align:center;line-height:1.2}
+.tr-card .trc-years{font-size:10px;color:#94a3b8}
+/* Era labels on axis */
+.tr-era-label{position:absolute;top:50%;transform:translate(-50%,-50%);font-size:12px;font-weight:700;color:rgba(255,255,255,.7);pointer-events:none;z-index:3;white-space:nowrap;text-shadow:0 0 8px rgba(0,0,0,.6)}
+.tr-era-line{position:absolute;top:0;bottom:0;width:1px;background:rgba(255,255,255,.08);pointer-events:none}
+
+/* ═══════════════ DUEL MODAL ═══════════════ */
+#duel-overlay{position:fixed;inset:0;z-index:30;background:rgba(0,0,8,.85);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center}
+#duel-overlay.active{display:flex}
+#duel-modal{background:rgba(14,14,32,.96);border:1px solid rgba(255,255,255,.1);border-radius:20px;width:min(900px,92vw);max-height:90vh;overflow-y:auto;padding:28px 30px;box-shadow:0 16px 64px rgba(0,0,0,.6)}
+#duel-modal::-webkit-scrollbar{width:4px}
+#duel-modal::-webkit-scrollbar-thumb{background:rgba(255,255,255,.08);border-radius:2px}
+#duel-modal .duel-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
+#duel-modal .duel-header h2{font-size:20px;font-weight:700;color:#f1f5f9}
+#duel-modal .duel-close{width:32px;height:32px;border-radius:50%;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);color:#94a3b8;font-size:14px;cursor:pointer;transition:all .2s}
+#duel-modal .duel-close:hover{background:rgba(239,68,68,.15);border-color:rgba(239,68,68,.3);color:#f87171}
+.duel-body{display:flex;gap:24px}
+.duel-picker{flex:1;text-align:center}
+.duel-picker label{display:block;font-size:11px;color:#94a3b8;text-transform:uppercase;letter-spacing:2px;margin-bottom:10px;font-weight:600}
+.duel-picker select{width:100%;padding:12px 36px 12px 16px;border-radius:12px;border:1px solid rgba(255,255,255,.1);background:rgba(18,18,38,.9);color:#f1f5f9;font-size:14px;font-weight:500;font-family:inherit;cursor:pointer;outline:none;transition:all .25s;-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M6 8L1 3h10z' fill='%2394a3b8'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
+.duel-picker select:hover{border-color:rgba(255,255,255,.25);background:rgba(22,22,46,.95)}
+.duel-picker select:focus{border-color:rgba(129,140,248,.5);box-shadow:0 0 0 3px rgba(129,140,248,.08),0 0 20px rgba(129,140,248,.08)}
+.duel-picker select option{background:#181830;color:#e2e8f0;padding:10px 14px;font-size:13px}
+.duel-picker select option:hover,.duel-picker select option:checked{background:rgba(129,140,248,.15)}
+.duel-vs{display:flex;align-items:center;font-size:28px;font-weight:900;color:rgba(255,255,255,.12);padding-top:20px;text-shadow:0 0 12px rgba(129,140,248,.2)}
+.duel-topic{margin:24px 0;text-align:center}
+.duel-topic label{font-size:11px;color:#94a3b8;text-transform:uppercase;letter-spacing:2px;display:block;margin-bottom:10px;font-weight:600}
+.duel-topic select{padding:10px 40px 10px 18px;border-radius:12px;border:1px solid rgba(244,114,182,.15);background:rgba(18,18,38,.9);color:#f1f5f9;font-size:14px;font-weight:500;font-family:inherit;cursor:pointer;outline:none;min-width:300px;transition:all .25s;-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M6 8L1 3h10z' fill='%2394a3b8'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center}
+.duel-topic select:hover{border-color:rgba(244,114,182,.3);background:rgba(22,22,46,.95)}
+.duel-topic select:focus{border-color:rgba(244,114,182,.5);box-shadow:0 0 0 3px rgba(244,114,182,.06),0 0 20px rgba(244,114,182,.08)}
+.duel-topic select option{background:#181830;color:#e2e8f0;padding:10px 14px}
+.duel-topic select option:hover,.duel-topic select option:checked{background:rgba(244,114,182,.12)}
+.duel-compare{margin-top:20px;display:none}
+.duel-compare.show{display:block}
+.duel-charts{display:flex;gap:20px;flex-wrap:wrap}
+.duel-chart{flex:1;min-width:250px}
+.duel-chart h4{font-size:13px;color:#94a3b8;text-align:center;margin-bottom:8px}
+.duel-chart canvas{width:100%;max-width:300px;display:block;margin:0 auto}
+.duel-table{width:100%;margin-top:20px;border-collapse:collapse}
+.duel-table th{font-size:10px;color:#64748b;text-transform:uppercase;letter-spacing:1px;padding:8px 12px;text-align:left;border-bottom:1px solid rgba(255,255,255,.06)}
+.duel-table td{font-size:13px;color:#cbd5e1;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.04);line-height:1.5}
+.duel-table tr:hover td{background:rgba(255,255,255,.02)}
+.duel-btn{display:block;margin:20px auto 0;padding:10px 32px;border-radius:100px;border:1px solid rgba(129,140,248,.3);background:rgba(129,140,248,.15);color:#c7d2fe;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;letter-spacing:.5px;transition:all .25s}
+.duel-btn:hover{background:rgba(129,140,248,.25);border-color:rgba(129,140,248,.5);box-shadow:0 0 20px rgba(129,140,248,.15);transform:translateY(-1px)}
+
+/* ═══════════════ PHILOSOPHY QUIZ ═══════════════ */
+#quiz-overlay{position:fixed;inset:0;z-index:30;background:rgba(0,0,8,.85);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center}
+#quiz-overlay.active{display:flex}
+#quiz-modal{background:rgba(14,14,32,.96);border:1px solid rgba(255,255,255,.1);border-radius:20px;width:min(640px,92vw);max-height:90vh;overflow-y:auto;padding:32px 36px;box-shadow:0 16px 64px rgba(0,0,0,.6)}
+#quiz-modal::-webkit-scrollbar{width:4px}
+#quiz-modal::-webkit-scrollbar-thumb{background:rgba(255,255,255,.08);border-radius:2px}
+#quiz-modal .qz-header{text-align:center;margin-bottom:24px}
+#quiz-modal .qz-header h2{font-size:20px;font-weight:700;color:#f1f5f9}
+#quiz-modal .qz-header p{font-size:12px;color:#64748b;margin-top:4px}
+.qz-progress{height:4px;border-radius:2px;background:rgba(255,255,255,.06);margin-bottom:24px;overflow:hidden}
+.qz-progress-bar{height:100%;background:linear-gradient(90deg,#818cf8,#f472b6);transition:width .4s;border-radius:2px}
+.qz-question{margin-bottom:20px}
+.qz-q-num{font-size:10px;color:#64748b;text-transform:uppercase;letter-spacing:2px;margin-bottom:6px}
+.qz-q-text{font-size:16px;font-weight:600;color:#f1f5f9;line-height:1.5;margin-bottom:16px}
+.qz-options{display:flex;flex-direction:column;gap:8px}
+.qz-option{padding:14px 18px;border-radius:12px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.03);color:#cbd5e1;font-size:14px;cursor:pointer;transition:all .25s;text-align:left;font-family:inherit;line-height:1.4}
+.qz-option:hover{border-color:rgba(255,255,255,.25);background:rgba(255,255,255,.06);color:#f1f5f9;transform:translateX(3px)}
+.qz-option.selected{border-color:rgba(129,140,248,.4);background:rgba(129,140,248,.1);color:#c7d2fe;font-weight:600}
+/* Quiz result */
+.qz-result{text-align:center;display:none}
+.qz-result.show{display:block}
+.qz-result h3{font-size:18px;color:#f1f5f9;margin-bottom:6px}
+.qz-result .qz-subtitle{font-size:12px;color:#64748b;margin-bottom:20px}
+.qz-dna-bars{display:flex;flex-direction:column;gap:10px;max-width:400px;margin:0 auto 24px}
+.qz-dna-bar{display:flex;align-items:center;gap:10px}
+.qz-dna-bar .qz-dna-name{width:70px;text-align:right;font-size:13px;font-weight:600;color:#e2e8f0;flex-shrink:0}
+.qz-dna-bar .qz-dna-track{flex:1;height:22px;border-radius:11px;background:rgba(255,255,255,.04);position:relative;overflow:hidden}
+.qz-dna-bar .qz-dna-fill{height:100%;border-radius:11px;position:absolute;left:0;top:0;transition:width .8s ease-out}
+.qz-dna-bar .qz-dna-pct{width:48px;font-size:12px;color:#94a3b8;font-weight:600;text-align:left}
+.qz-share-card{width:360px;margin:20px auto;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.08)}
+.qz-share-card canvas{display:block;width:100%}
+.qz-btns{display:flex;gap:10px;justify-content:center;margin-top:16px;flex-wrap:wrap}
+.qz-btns button{padding:8px 20px;border-radius:100px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .25s}
+.qz-btn-retry{border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.05);color:#cbd5e1}
+.qz-btn-retry:hover{background:rgba(255,255,255,.1);color:#f1f5f9;border-color:rgba(255,255,255,.3)}
+.qz-btn-share{border:1px solid rgba(129,140,248,.3);background:rgba(129,140,248,.15);color:#c7d2fe}
+.qz-btn-share:hover{background:rgba(129,140,248,.25);border-color:rgba(129,140,248,.5);box-shadow:0 0 16px rgba(129,140,248,.12)}
+.qz-close{position:absolute;top:16px;right:16px;width:30px;height:30px;border-radius:50%;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#94a3b8;font-size:13px;cursor:pointer;transition:all .2s}
+.qz-close:hover{background:rgba(239,68,68,.15);border-color:rgba(239,68,68,.3);color:#f87171}
+
+/* ═══════════════ SPECTRUM VIEW ═══════════════ */
+#spectrum-view{position:fixed;inset:0;z-index:3;background:radial-gradient(ellipse at 50% 50%,#0a0a20,#000008);display:none;flex-direction:column}
+#spectrum-view.active{display:flex}
+.spec-controls{display:flex;justify-content:center;gap:16px;padding:8px 0 12px;flex-shrink:0;align-items:center}
+.spec-controls label{font-size:10px;color:#64748b;text-transform:uppercase;letter-spacing:1px;margin-right:4px}
+.spec-controls select{padding:6px 32px 6px 12px;border-radius:8px;border:1px solid rgba(255,255,255,.1);background:rgba(18,18,38,.9);color:#e2e8f0;font-size:12px;font-family:inherit;cursor:pointer;outline:none;-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath d='M5 7L1 3h8z' fill='%2394a3b8'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center}
+.spec-controls select option{background:#181830;color:#e2e8f0}
+.spec-canvas-wrap{flex:1;position:relative;overflow:hidden}
+#spectrum-canvas{display:block}
+.spec-legend{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);display:flex;gap:16px;font-size:10px;color:#94a3b8;background:rgba(10,10,28,.8);padding:8px 16px;border-radius:100px;border:1px solid rgba(255,255,255,.06)}
+
+/* Duel select options */
+#duel-modal select option{background:#181830;color:#e2e8f0}
+</style>
+</head>
+<body>
+
+<div id="loading"><div class="loader-ring"></div><p>思想星座排列中...</p></div>
+<canvas id="bg-canvas"></canvas>
+<svg id="graph-svg"></svg>
+
+<div id="header">
+  <h1>脉络 Philomap</h1>
+  <div class="subtitle">在群星闪耀时，发现思想的引力</div>
+  <div class="view-toggle">
+    <button class="active" data-view="star">✨ 思想星图</button>
+    <button data-view="river">⏳ 时光长河</button>
+    <button data-view="spectrum">📊 哲学光谱</button>
+    <button data-view="duel" style="background:rgba(244,114,182,.1);border-color:rgba(244,114,182,.2)">⚔️ 哲学对决</button>
+    <button data-view="quiz" style="background:rgba(52,211,153,.1);border-color:rgba(52,211,153,.2)">🧬 基因测试</button>
+    <button data-view="twin" style="background:rgba(201,168,76,.1);border-color:rgba(201,168,76,.2)">🧬 孪生宇宙</button>
+  </div>
+</div>
+
+<!-- ═══════════ SCHOOL TIP ═══════════ -->
+<div id="school-tip">
+  <div class="st-name"></div>
+  <div class="st-desc"></div>
+  <div class="st-dev-label">发展脉络</div>
+  <div class="st-dev"></div>
+</div>
+<div class="concept-net-tip" id="cn-tip"></div>
+<!-- ═══════════ TOOLTIP ═══════════ -->
+<div id="tooltip">
+  <div class="tt-name"></div>
+  <div class="tt-years"></div>
+  <div class="tt-school"></div>
+  <div class="tt-quote"></div>
+  <div class="tt-quote-src"></div>
+</div>
+
+<!-- ═══════════ FILTER PANEL (left) ═══════════ -->
+<div id="filter-panel">
+  <div class="fp-header">
+    <h3>🔭 星图筛选</h3>
+    <span class="fp-badge" id="filter-count">0</span>
+  </div>
+  <div id="search-wrap">
+    <span id="search-icon">🔍</span>
+    <input id="search-input" type="text" placeholder="搜索哲人、概念、金句…" autocomplete="off">
+    <div id="search-results"></div>
+  </div>
+  <div class="filter-group">
+    <div class="filter-group-label">文明圈</div>
+    <div class="filter-btns" data-filter="civilization"></div>
+  </div>
+  <div class="filter-group">
+    <div class="filter-group-label">流派</div>
+    <div class="filter-btns" data-filter="school" style="max-height:150px;overflow-y:auto"></div>
+  </div>
+  <div class="filter-group">
+    <div class="filter-group-label">时代</div>
+    <div class="filter-btns" data-filter="era"></div>
+  </div>
+  <button id="filter-reset">重置全部筛选</button>
+</div>
+<button id="filter-toggle" title="展开/收起">▶</button>
+
+<!-- ═══════════ DETAIL PANEL (right) ═══════════ -->
+<div id="detail-panel">
+  <div class="dp-accent"></div>
+  <button class="dp-close" title="关闭">✕</button>
+  <button class="dp-export" title="导出 Markdown">⬇</button>
+  <div class="dp-scroll">
+    <!-- Hero -->
+    <div class="dp-hero">
+      <div class="dp-portrait"><div class="dp-glow"></div><span class="dp-initial"></span></div>
+      <div class="dp-name"></div>
+      <div class="dp-name-en"></div>
+      <div class="dp-meta"></div>
+      <div class="dp-badges"></div>
+      <div class="dp-influence"><span>影响力</span><div class="dp-stars"></div></div>
+    </div>
+
+    <!-- Quote -->
+    <div class="dp-quote-block">
+      <div class="dp-quote-text"></div>
+      <div class="dp-quote-src"></div>
+      <div class="dp-quote-nav"></div>
+    </div>
+
+    <!-- Summary -->
+    <div class="dp-summary"></div>
+
+    <!-- Thought Evolution -->
+    <div class="dp-section" id="dp-evolution" style="display:none">
+      <div class="dp-section-title"><span class="dp-section-icon">🌊</span>思想演化</div>
+      <div class="dp-evolution"><div class="dp-evolution-text"></div></div>
+    </div>
+
+    <!-- Timeline -->
+    <div class="dp-section" id="dp-timeline" style="display:none">
+      <div class="dp-section-title"><span class="dp-section-icon">📅</span>人生时间轴</div>
+      <div class="dp-tl-legend" style="display:flex;gap:14px;margin-bottom:10px;font-size:10px">
+        <span style="color:#fbbf24">● 生平</span><span style="color:#818cf8">● 著作</span><span style="color:#34d399">● 世界事件</span>
+      </div>
+      <div class="dp-timeline" id="dp-tl-content"></div>
+    </div>
+
+    <!-- Core Thoughts -->
+    <div class="dp-section" id="dp-core" style="display:none">
+      <div class="dp-section-title"><span class="dp-section-icon">💡</span>核心思想</div>
+      <div class="dp-concept-list"></div>
+      <svg class="dp-concept-net" id="dp-concept-net" style="display:none"></svg>
+    </div>
+
+    <!-- Works -->
+    <div class="dp-section" id="dp-works" style="display:none">
+      <div class="dp-section-title"><span class="dp-section-icon">📖</span>代表著作</div>
+      <div class="dp-works-list"></div>
+    </div>
+
+    <!-- Events -->
+    <div class="dp-section" id="dp-events" style="display:none">
+      <div class="dp-section-title"><span class="dp-section-icon">⚡</span>著名事件</div>
+      <div class="dp-event-list"></div>
+    </div>
+
+    <!-- Anecdote -->
+    <div class="dp-section" id="dp-anecdote" style="display:none">
+      <div class="dp-section-title"><span class="dp-section-icon">📜</span>逸闻趣事</div>
+      <div class="dp-anecdote"><div class="dp-anecdote-label">你知道吗</div><div class="dp-anecdote-text"></div></div>
+    </div>
+
+    <!-- Scientific Eval -->
+    <div class="dp-section" id="dp-eval" style="display:none">
+      <div class="dp-section-title"><span class="dp-section-icon">🔬</span>科学视角</div>
+      <div class="dp-eval"></div>
+    </div>
+
+    <!-- AI Review -->
+    <div class="dp-section" id="dp-ai-review" style="display:none">
+      <div class="dp-section-title"><span class="dp-section-icon">🤖</span>AI 智慧点评</div>
+      <div class="dp-ai-review">
+        <div class="dp-ai-text"></div>
+      </div>
+    </div>
+
+    <!-- Influence Map -->
+    <div class="dp-section" id="dp-infl" style="display:none">
+      <div class="dp-section-title"><span class="dp-section-icon">🌐</span>影响力地图</div>
+      <div class="dp-infl-grid"></div>
+    </div>
+    <!-- Contemporary Applications -->
+    <div class="dp-section" id="dp-contemp" style="display:none">
+      <div class="dp-section-title"><span class="dp-section-icon">🔮</span>当代应用</div>
+      <div class="dp-contemp-list"></div>
+    </div>
+    <!-- Further Reading -->
+    <div class="dp-section" id="dp-reading" style="display:none">
+      <div class="dp-section-title"><span class="dp-section-icon">📚</span>拓展阅读</div>
+      <div class="dp-reading-list"></div>
+    </div>
+
+    <!-- Genealogy -->
+    <div class="dp-section" id="dp-gen" style="display:none">
+      <div class="dp-section-title"><span class="dp-section-icon">🌳</span>学术家谱</div>
+      <div class="dp-gen-tree"></div>
+    </div>
+    <!-- Related -->
+    <div class="dp-section" id="dp-related" style="display:none">
+      <div class="dp-section-title"><span class="dp-section-icon">🪐</span>关联哲人</div>
+      <div class="dp-related-list"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ TIME RIVER ═══════════ -->
+<div id="time-river">
+  <div class="tr-now">← 滚轮缩放 · 拖拽浏览 →</div>
+  <div class="tr-zoom"><button id="tr-zoom-out" title="缩小">−</button><span class="tr-zoom-label" id="tr-zoom-label">100%</span><button id="tr-zoom-in" title="放大">+</button></div>
+  <div class="tr-header"><h2>⏳ 时光长河</h2><p>公元前600年 — 公元2000年 · 跨越2600年的人类思想之旅</p></div>
+  <div class="tr-scroll"><div class="tr-canvas" id="tr-canvas"></div></div>
+</div>
+
+<!-- ═══════════ SPECTRUM VIEW ═══════════ -->
+<div id="spectrum-view">
+  <div class="spec-controls" style="padding-top:6px">
+    <span><label>X 轴</label><select id="spec-x"><option value="rationalism">理性主义</option><option value="idealism">唯心倾向</option><option value="individualism">个体主义</option><option value="transcendence">超越性</option><option value="tradition">传统</option></select></span>
+    <span style="color:rgba(255,255,255,.2);font-size:18px">×</span>
+    <span><label>Y 轴</label><select id="spec-y"><option value="empiricism">经验主义</option><option value="materialism">唯物倾向</option><option value="collectivism">共同体</option><option value="immanence">内在性</option><option value="innovation">革新</option></select></span>
+  </div>
+  <div class="spec-canvas-wrap"><canvas id="spectrum-canvas"></canvas></div>
+  <div class="spec-legend">
+    <span style="color:#818cf8">● 西方</span><span style="color:#fbbf24">● 东方</span><span style="color:#f472b6">● 印度</span><span style="color:#34d399">● 伊斯兰</span><span>大小=影响力</span>
+  </div>
+</div>
+
+<!-- ═══════════ TWIN UNIVERSE ═══════════ -->
+<div id="twin-view">
+  <div class="tw-header">
+    <h2>🧬 知识孪生宇宙</h2>
+    <p>我的其他项目 · 点击跳转</p>
+  </div>
+  <div class="tw-container" id="twin-container"></div>
+</div>
+
+<!-- ═══════════ DUEL OVERLAY ═══════════ -->
+<div id="duel-overlay">
+  <div id="duel-modal">
+    <div class="duel-header"><h2>⚔️ 哲学对决</h2><button class="duel-close" id="duel-close">✕</button></div>
+    <div class="duel-body">
+      <div class="duel-picker"><label>哲人 A</label><select id="duel-a"></select></div>
+      <div class="duel-vs">VS</div>
+      <div class="duel-picker"><label>哲人 B</label><select id="duel-b"></select></div>
+    </div>
+    <div class="duel-topic"><label>辩论议题</label><select id="duel-topic-select"><option value="">选择议题...</option></select></div>
+    <button class="duel-btn" id="duel-trigger">开始对决</button>
+    <div class="duel-compare" id="duel-result">
+      <div class="duel-charts">
+        <div class="duel-chart"><h4 id="duel-name-a"></h4><canvas id="duel-radar-a"></canvas></div>
+        <div class="duel-chart"><h4 id="duel-name-b"></h4><canvas id="duel-radar-b"></canvas></div>
+      </div>
+      <table class="duel-table" id="duel-table"><thead><tr><th>维度</th><th id="duel-th-a">哲人A</th><th id="duel-th-b">哲人B</th></tr></thead><tbody></tbody></table>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ QUIZ OVERLAY ═══════════ -->
+<div id="quiz-overlay">
+  <div id="quiz-modal" style="position:relative">
+    <button class="qz-close" id="quiz-close">✕</button>
+    <div class="qz-header"><h2>🧬 哲学基因测试</h2><p>20 道趣味选择题 · 发现你的哲学 DNA</p></div>
+    <div class="qz-progress"><div class="qz-progress-bar" id="qz-bar" style="width:0%"></div></div>
+    <div id="qz-body"><div class="qz-question"><div class="qz-q-num"></div><div class="qz-q-text"></div><div class="qz-options"></div></div></div>
+    <div class="qz-result" id="qz-result">
+      <h3>你的哲学DNA</h3><p class="qz-subtitle">你的思想基因与以下哲人最为契合</p>
+      <div class="qz-dna-bars" id="qz-dna-bars"></div>
+      <div class="qz-share-card"><canvas id="qz-share-canvas" width="720" height="480"></canvas></div>
+      <div class="qz-btns"><button class="qz-btn-retry" id="qz-retry">重新测试</button><button class="qz-btn-share" id="qz-copy">复制分享图片</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ TIME SLIDER ═══════════ -->
+<div id="time-bar">
+  <div class="time-header">
+    <div class="time-label"><span>⏳</span>时代筛选</div>
+    <div class="time-hint">拖拽滑块筛选思想家</div>
+  </div>
+  <div class="time-track-wrap">
+    <div class="time-eras">
+      <div class="time-era-seg" style="flex:1;background:#818cf8"></div>
+      <div class="time-era-seg" style="flex:1;background:#6366f1"></div>
+      <div class="time-era-seg" style="flex:1;background:#4f46e5"></div>
+      <div class="time-era-seg" style="flex:1;background:#818cf8"></div>
+      <div class="time-era-seg" style="flex:1;background:#a78bfa"></div>
+      <div class="time-era-seg" style="flex:1;background:#c084fc"></div>
+      <div class="time-era-seg" style="flex:1;background:#a78bfa"></div>
+      <div class="time-era-seg" style="flex:1;background:#818cf8"></div>
+      <div class="time-era-seg" style="flex:1;background:#6366f1"></div>
+    </div>
+    <div class="time-track-bg"></div>
+    <div class="time-track-fill" id="time-fill" style="left:0;right:0"></div>
+    <input type="range" id="time-start" min="0" max="100" value="0">
+    <input type="range" id="time-end" min="0" max="100" value="100">
+  </div>
+  <div class="time-ticks">
+    <span class="time-tick">前600</span>
+    <span class="time-tick">前400</span>
+    <span class="time-tick">前200</span>
+    <span class="time-tick">0</span>
+    <span class="time-tick">500</span>
+    <span class="time-tick">1000</span>
+    <span class="time-tick">1500</span>
+    <span class="time-tick">1800</span>
+    <span class="time-tick">2000</span>
+  </div>
+  <div class="time-value" id="time-display">全部时代</div>
+</div>
+
+<script>
+// ═══════════════ COSMIC BACKGROUND ═══════════════
+const bgCanvas=document.getElementById('bg-canvas'),bgCtx=bgCanvas.getContext('2d');
+let stars=[],nebulas=[];
+
+function resizeCanvas(){bgCanvas.width=window.innerWidth;bgCanvas.height=window.innerHeight}
+function createStars(){
+  stars=[];for(let i=0;i<500;i++)stars.push({x:Math.random()*bgCanvas.width,y:Math.random()*bgCanvas.height,r:Math.random()*2+.5,opacity:Math.random()*.7+.2,phase:Math.random()*Math.PI*2,speed:Math.random()*.02+.005});
+  nebulas=[{x:.2,y:.2,r:300,color:'129,140,248',o:.04},{x:.75,y:.25,r:250,color:'251,191,36',o:.04},{x:.3,y:.7,r:220,color:'244,114,182',o:.03},{x:.55,y:.55,r:280,color:'52,211,153',o:.03}];
+}
+function drawBg(){
+  const w=bgCanvas.width,h=bgCanvas.height,t=performance.now()/1000;
+  bgCtx.clearRect(0,0,w,h);
+  const g=bgCtx.createRadialGradient(w*.4,h*.35,0,w*.5,h*.5,Math.max(w,h)*.8);
+  g.addColorStop(0,'#0d0d24');g.addColorStop(.5,'#060615');g.addColorStop(1,'#000008');
+  bgCtx.fillStyle=g;bgCtx.fillRect(0,0,w,h);
+  for(const n of nebulas){const ng=bgCtx.createRadialGradient(n.x*w,n.y*h,0,n.x*w,n.y*h,n.r);ng.addColorStop(0,`rgba(${n.color},${n.o})`);ng.addColorStop(.5,`rgba(${n.color},${n.o*.3})`);ng.addColorStop(1,'rgba(0,0,0,0)');bgCtx.fillStyle=ng;bgCtx.fillRect(n.x*w-n.r,n.y*h-n.r,n.r*2,n.r*2)}
+  for(const s of stars){const a=s.opacity*(.6+.4*Math.sin(t*s.speed+s.phase));bgCtx.fillStyle=`rgba(255,255,255,${a})`;bgCtx.beginPath();bgCtx.arc(s.x,s.y,s.r,0,Math.PI*2);bgCtx.fill()}
+  requestAnimationFrame(drawBg);
+}
+resizeCanvas();createStars();drawBg();
+window.addEventListener('resize',()=>{resizeCanvas();createStars()});
+
+// ═══════════════ DATA & STATE ═══════════════
+const svg=d3.select('#graph-svg'),gRoot=svg.append('g').attr('class','root'),
+  gEdges=gRoot.append('g').attr('class','edges'),gNodes=gRoot.append('g').attr('class','nodes'),
+  tooltip=document.getElementById('tooltip'),detailPanel=document.getElementById('detail-panel'),
+  loadingEl=document.getElementById('loading');
+let simData=null,simulation=null,selectedNode=null,
+  currentFilters={civilization:new Set(),school:new Set(),era:new Set()},
+  timeRange=[-9999,9999],dataRef=null;
+
+const civColors={western:{color:'#818cf8',glow:'#a78bfa'},eastern:{color:'#fbbf24',glow:'#fcd34d'},indian:{color:'#f472b6',glow:'#f9a8d4'},islamic:{color:'#34d399',glow:'#6ee7b7'}};
+function formatYear(y){return y<0?`公元前${Math.abs(y)}年`:`公元${y}年`}
+function formatYears(birth,death){return formatYear(birth)+' — '+formatYear(death)}
+const civDisplay={western:'西方',eastern:'东方',indian:'印度',islamic:'伊斯兰'};
+
+// ═══════════════ SVG DEFS ═══════════════
+function setupDefs(){
+  const defs=svg.append('defs');
+  const f1=defs.append('filter').attr('id','glow').attr('x','-50%').attr('y','-50%').attr('width','200%').attr('height','200%');
+  f1.append('feGaussianBlur').attr('stdDeviation','3.5').attr('result','blur');
+  const m1=f1.append('feMerge');m1.append('feMergeNode').attr('in','blur');m1.append('feMergeNode').attr('in','SourceGraphic');
+  const f2=defs.append('filter').attr('id','glow-strong').attr('x','-50%').attr('y','-50%').attr('width','200%').attr('height','200%');
+  f2.append('feGaussianBlur').attr('stdDeviation','6').attr('result','blur');
+  const m2=f2.append('feMerge');m2.append('feMergeNode').attr('in','blur');m2.append('feMergeNode').attr('in','SourceGraphic');
+  const combos=[['western','eastern'],['western','indian'],['eastern','indian'],['western','islamic'],['eastern','islamic'],['indian','islamic'],['western','western'],['eastern','eastern'],['indian','indian'],['islamic','islamic']];
+  for(const[a,b]of combos){const gr=defs.append('linearGradient').attr('id',`edge-${a}-${b}`).attr('gradientUnits','userSpaceOnUse');gr.append('stop').attr('offset','0%').attr('stop-color',civColors[a]?.color||'#818cf8').attr('stop-opacity',.7);gr.append('stop').attr('offset','100%').attr('stop-color',civColors[b]?.color||'#fbbf24').attr('stop-opacity',.7)}
+}
+
+// ═══════════════ TIME SLIDER ═══════════════
+const timeStartSlider=document.getElementById('time-start'),timeEndSlider=document.getElementById('time-end'),timeDisplay=document.getElementById('time-display');
+function sliderToYear(v){
+  if(v<=12)return Math.round(-600+v/12*600);if(v<=25)return Math.round((v-12)/13*500);if(v<=40)return Math.round(500+(v-25)/15*500);if(v<=55)return Math.round(1000+(v-40)/15*500);if(v<=70)return Math.round(1500+(v-55)/15*300);if(v<=85)return Math.round(1800+(v-70)/15*100);return Math.round(1900+(v-85)/15*100);
+}
+function updateTimeRange(){
+  let s=parseInt(timeStartSlider.value),e=parseInt(timeEndSlider.value);
+  if(s>e){[s,e]=[e,s];timeStartSlider.value=s;timeEndSlider.value=e}
+  timeRange=[sliderToYear(s),sliderToYear(e)];
+  // Update fill bar
+  document.getElementById('time-fill').style.left=s+'%';
+  document.getElementById('time-fill').style.right=(100-e)+'%';
+  const eras=[[-600,0,'古代'],[0,500,'古典晚期'],[500,1500,'中世纪'],[1500,1800,'近代早期'],[1800,1900,'19世纪'],[1900,2000,'20世纪']];
+  let label=`${timeRange[0]}年 — ${timeRange[1]}年`;
+  for(const[a,b,n]of eras)if(timeRange[0]>=a&&timeRange[1]<=b){label=n;break}
+  if(s===0&&e===100)label='全部时代';
+  timeDisplay.textContent=label;applyAllFilters();
+}
+timeStartSlider.addEventListener('input',updateTimeRange);timeEndSlider.addEventListener('input',updateTimeRange);
+
+// ═══════════════ FILTER PANEL ═══════════════
+const filterPanel=document.getElementById('filter-panel'),filterToggle=document.getElementById('filter-toggle'),filterCount=document.getElementById('filter-count');
+let panelOpen=true;
+filterToggle.addEventListener('click',()=>{panelOpen=!panelOpen;filterPanel.classList.toggle('collapsed',!panelOpen);filterToggle.textContent=panelOpen?'◀':'▶'});
+function updateFilterCount(){let c=0;for(const s of Object.values(currentFilters))c+=s.size;filterCount.textContent=c;filterCount.classList.toggle('show',c>0)}
+function toggleFilter(key,value,btn){
+  const set=currentFilters[key];
+  if(set.has(value)){set.delete(value);btn.classList.remove('active')}else{set.add(value);btn.classList.add('active')}
+  updateFilterCount();applyAllFilters();
+}
+function resetFilters(){
+  for(const k of Object.keys(currentFilters))currentFilters[k].clear();
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  timeStartSlider.value=0;timeEndSlider.value=100;timeRange=[-9999,9999];timeDisplay.textContent='全部时代';
+  document.getElementById('time-fill').style.left='0%';document.getElementById('time-fill').style.right='0%';
+  updateFilterCount();applyAllFilters();
+}
+document.getElementById('filter-reset').addEventListener('click',resetFilters);
+
+function buildFilterPanel(data){
+  const civContainer=document.querySelector('[data-filter="civilization"]');
+  for(const c of data.civilizations){const btn=document.createElement('button');btn.className='filter-btn '+c.id;btn.dataset.key='civilization';btn.dataset.value=c.id;btn.textContent=c.name;btn.addEventListener('click',()=>toggleFilter('civilization',c.id,btn));civContainer.appendChild(btn)}
+  const schoolContainer=document.querySelector('[data-filter="school"]');
+  const schools=[...new Set(data.philosophers.map(p=>p.school))].map(s=>data.schools.find(sc=>sc.id===s)).filter(Boolean);
+  const schoolTip=document.getElementById('school-tip');
+  for(const s of schools){const btn=document.createElement('button');btn.className='filter-btn';btn.dataset.key='school';btn.dataset.value=s.id;btn.textContent=s.name;btn.addEventListener('click',()=>toggleFilter('school',s.id,btn));
+    if(s.description){btn.addEventListener('mouseenter',function(e){schoolTip.querySelector('.st-name').textContent=s.name;schoolTip.querySelector('.st-desc').textContent=s.description;schoolTip.querySelector('.st-dev').textContent=s.development||'';const x=e.clientX+12,y=e.clientY-10;schoolTip.style.left=(x+300>window.innerWidth?x-316:x)+'px';schoolTip.style.top=(y+180>window.innerHeight?y-196:y)+'px';schoolTip.style.opacity=1});btn.addEventListener('mouseleave',()=>{schoolTip.style.opacity=0})}
+    schoolContainer.appendChild(btn)}
+  const eraContainer=document.querySelector('[data-filter="era"]');
+  const eras=[...new Set(data.philosophers.map(p=>p.era))].map(e=>data.eras.find(er=>er.id===e)).filter(Boolean);
+  for(const e of eras){const btn=document.createElement('button');btn.className='filter-btn';btn.dataset.key='era';btn.dataset.value=e.id;btn.textContent=e.name;btn.addEventListener('click',()=>toggleFilter('era',e.id,btn));eraContainer.appendChild(btn)}
+}
+
+// ═══════════════ FILTERING ═══════════════
+function isNodeVisible(d){
+  const midLife=d.birth+30;if(midLife<timeRange[0]||d.birth>timeRange[1])return false;
+  if(currentFilters.civilization.size>0&&!currentFilters.civilization.has(d.civilization))return false;
+  if(currentFilters.school.size>0&&!currentFilters.school.has(d.school))return false;
+  if(currentFilters.era.size>0&&!currentFilters.era.has(d.era))return false;
+  return true;
+}
+function applyAllFilters(){
+  if(!simData)return;
+  const visibleIds=new Set(simData.nodes.filter(isNodeVisible).map(n=>n.id));
+  gNodes.selectAll('.node-group').each(function(d){const vis=visibleIds.has(d.id);d3.select(this).selectAll('circle,text').transition().duration(500).attr('opacity',vis?null:.04).attr('display',vis?null:'none');if(!vis){d.fx=null;d.fy=null}});
+  gEdges.selectAll('line').each(function(d){const vis=visibleIds.has(d.source.id||d.source)&&visibleIds.has(d.target.id||d.target);d3.select(this).transition().duration(500).attr('opacity',vis?null:0).attr('display',vis?null:'none')});
+  if(simulation){
+    const activeNodes=simData.allNodes.filter(n=>visibleIds.has(n.id));
+    const activeEdges=simData.allEdges.filter(e=>visibleIds.has(e.source.id||e.source)&&visibleIds.has(e.target.id||e.target));
+    simulation.nodes(activeNodes);simulation.force('link',d3.forceLink(activeEdges).id(d=>d.id).distance(d=>70+(10-d.strength)*16));simulation.alpha(.3).restart();
+  }
+  if(selectedNode&&!visibleIds.has(selectedNode.id))closeDetailPanel();
+}
+
+// ═══════════════ DETAIL PANEL ═══════════════
+function openDetailPanel(d){
+  selectedNode=d;const c=civColors[d.civilization]||civColors.western,data=dataRef;
+  const panel=detailPanel,scroll=panel.querySelector('.dp-scroll');
+  // Accent bar
+  panel.querySelector('.dp-accent').style.background=`linear-gradient(180deg,${c.color},${c.glow})`;
+  // Portrait
+  const initials={western:'Σ',eastern:'哲',indian:'ॐ',islamic:'ح'};
+  panel.querySelector('.dp-initial').textContent=initials[d.civilization]||d.name[0];
+  const portrait=panel.querySelector('.dp-portrait');
+  const existingImg=portrait.querySelector('img');if(existingImg)existingImg.remove();
+  if(d.portrait&&d.portrait.startsWith('http')){
+    portrait.classList.add('has-img');
+    const img=document.createElement('img');img.src=d.portrait;img.alt=d.name;img.onerror=()=>{img.style.display='none';portrait.classList.remove('has-img')};
+    portrait.insertBefore(img,portrait.firstChild);
+  }else{portrait.classList.remove('has-img')}
+  portrait.style.background=`radial-gradient(circle at 40% 35%, ${c.glow}50, ${c.color}15, rgba(0,0,0,.3))`;
+  portrait.style.borderColor=c.glow+'60';
+  panel.querySelector('.dp-glow').style.boxShadow=`0 0 32px ${c.glow}50`;
+  // Name & meta
+  panel.querySelector('.dp-name').textContent=d.name;
+  panel.querySelector('.dp-name-en').textContent=d.nameEn||'';
+  panel.querySelector('.dp-meta').textContent=formatYears(d.birth,d.death)+' · '+d.nationality;
+  // Badges
+  const badges=panel.querySelector('.dp-badges');badges.innerHTML='';
+  const civBadge=document.createElement('span');civBadge.className='dp-badge';
+  civBadge.style.background=civColors[d.civilization]?`rgba(${d.civilization==='eastern'?'251,191,36':d.civilization==='indian'?'244,114,182':d.civilization==='islamic'?'52,211,153':'129,140,248'},.2)`:'rgba(255,255,255,.06)';
+  civBadge.style.color=c.color;civBadge.textContent=civDisplay[d.civilization]||d.civilization;badges.appendChild(civBadge);
+  const school=data.schools.find(s=>s.id===d.school);
+  if(school){const sBadge=document.createElement('span');sBadge.className='dp-badge';sBadge.style.background='rgba(255,255,255,.05)';sBadge.style.color='#cbd5e1';sBadge.style.cursor='pointer';sBadge.textContent=school.name;
+    if(school.description){const st=document.getElementById('school-tip');sBadge.addEventListener('mouseenter',function(e){st.querySelector('.st-name').textContent=school.name;st.querySelector('.st-desc').textContent=school.description;st.querySelector('.st-dev').textContent=school.development||'';const x=e.clientX+12,y=e.clientY-10;st.style.left=(x+300>window.innerWidth?x-316:x)+'px';st.style.top=(y+180>window.innerHeight?y-196:y)+'px';st.style.opacity=1});sBadge.addEventListener('mouseleave',()=>{st.style.opacity=0})}
+    badges.appendChild(sBadge)}
+  // Influence stars
+  const stars=panel.querySelector('.dp-stars');stars.innerHTML='';
+  for(let i=0;i<10;i++){const st=document.createElement('div');st.className='dp-star';st.style.background=i<d.influence?c.color:'rgba(255,255,255,.1)';stars.appendChild(st)}
+  // Summary
+  panel.querySelector('.dp-summary').innerHTML=d.summary||'';
+  // Quotes (support both goldenQuotes array and goldenQuote single)
+  const qb=panel.querySelector('.dp-quote-block');
+  const quotes=d.goldenQuotes||(d.goldenQuote?[d.goldenQuote]:[]);
+  if(quotes.length>0){qb.style.display='block';qb.style.setProperty('--quote-accent',c.color);
+    let qIdx=0;
+    function showQuote(i){
+      qb.querySelector('.dp-quote-text').innerHTML='&#x201C;'+quotes[i].text+'&#x201D;';
+      qb.querySelector('.dp-quote-src').innerHTML='—— '+quotes[i].source;
+      const nav=qb.querySelector('.dp-quote-nav');
+      if(quotes.length>1){nav.innerHTML='';for(let j=0;j<quotes.length;j++){const dot=document.createElement('span');dot.className='dp-quote-dot'+(j===i?' active':'');dot.addEventListener('click',e=>{e.stopPropagation();showQuote(j)});nav.appendChild(dot)}nav.style.display='flex'}else{nav.style.display='none'}
+    }
+    showQuote(0);if(quotes.length>1){if(qb.dataset.interval)clearInterval(+qb.dataset.interval);let auto=setInterval(()=>{qIdx=(qIdx+1)%quotes.length;showQuote(qIdx)},5000);qb.dataset.interval=auto}
+  }else{qb.style.display='none'}
+  // Thought evolution
+  const evSec=document.getElementById('dp-evolution');
+  if(d.thoughtEvolution){evSec.style.display='block';evSec.querySelector('.dp-evolution-text').innerHTML=d.thoughtEvolution;const dot=evSec.querySelector('.dp-evolution-text');dot.style.setProperty('--dot-color',c.color)}else{evSec.style.display='none'}
+  // Timeline
+  const tlSec=document.getElementById('dp-timeline'),tlContent=document.getElementById('dp-tl-content');
+  if(d.timeline&&d.timeline.length){tlSec.style.display='block';tlContent.innerHTML='';const displayEvents=d.timeline.slice(0,12);for(const e of displayEvents){tlContent.innerHTML+=`<div class="dp-tl-item ${e.type}"><div class="dp-tl-year">${formatYear(e.year)}</div><div class="dp-tl-title">${e.title}</div>${e.desc?`<div class="dp-tl-desc">${e.desc}</div>`:''}</div>`}}else{tlSec.style.display='none'}
+  // Core thoughts
+  const coreSec=document.getElementById('dp-core'),coreList=coreSec.querySelector('.dp-concept-list'),coreNet=document.getElementById('dp-concept-net');
+  if(d.coreThoughts&&d.coreThoughts.length){coreSec.style.display='block';coreList.innerHTML='';
+    for(let ci=0;ci<d.coreThoughts.length;ci++){const ct=d.coreThoughts[ci];const hasL1=!!ct.l1,hasL2=!!ct.l2,hasL3=!!ct.l3;const defaultLevel=hasL1?'l1':hasL2?'l2':'l3';
+      const item=document.createElement('div');item.className='dp-concept-item';item.dataset.ci=ci;
+      const levels=[{k:'l1',label:'入门'},{k:'l2',label:'类比'},{k:'l3',label:'研究'}];
+      item.innerHTML=`<div class="dp-concept-name"><span style="color:${c.color}">${ct.concept}</span><div class="dp-level-btns">${levels.map(lv=>`<button class="dp-level-btn${lv.k===defaultLevel?' active':''}${ct[lv.k]?'':' disabled'}" data-level="${lv.k}">${lv.label}</button>`).join('')}</div></div><div class="dp-concept-desc" data-ci="${ci}">${ct[defaultLevel]||ct.desc}</div>`;
+      // Level switch logic
+      item.querySelectorAll('.dp-level-btn').forEach(btn=>{btn.addEventListener('click',e=>{e.stopPropagation();const lv=btn.dataset.level;if(!ct[lv])return;item.querySelectorAll('.dp-level-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');item.querySelector('.dp-concept-desc').textContent=ct[lv]})});
+      coreList.appendChild(item)}
+    // Concept network
+    renderConceptNet(d,c,coreNet);
+  }else{coreSec.style.display='none';coreNet.style.display='none'}
+  // Works
+  const worksSec=document.getElementById('dp-works'),worksList=worksSec.querySelector('.dp-works-list');
+  if(d.representativeWorks&&d.representativeWorks.length){worksSec.style.display='block';worksList.innerHTML='';for(const w of d.representativeWorks){let html=`<div class="dp-work-item"><div class="dp-work-icon" style="background:${c.color}"></div><div class="dp-work-info"><span class="dp-work-title">${w.title}</span>${w.type?`<span class="dp-work-meta">${w.type}${w.year?` · ${formatYear(w.year)}`:''}</span>`:''}`;if(w.content)html+=`<div class="dp-work-content">${w.content}</div>`;html+='</div></div>';worksList.innerHTML+=html}}else{worksSec.style.display='none'}
+  // Events
+  const eventsSec=document.getElementById('dp-events'),eventsList=eventsSec.querySelector('.dp-event-list');
+  if(d.famousEvents&&d.famousEvents.length){eventsSec.style.display='block';eventsList.innerHTML='';for(const ev of d.famousEvents){eventsList.innerHTML+=`<div class="dp-event-item"><strong>${ev.title}</strong>${ev.year?`（${formatYear(ev.year)}）` : ''}：${ev.desc}</div>`}}else{eventsSec.style.display='none'}
+  // Anecdote
+  const anecdoteSec=document.getElementById('dp-anecdote');
+  if(d.anecdote){anecdoteSec.style.display='block';anecdoteSec.querySelector('.dp-anecdote-text').innerHTML=d.anecdote}else{anecdoteSec.style.display='none'}
+  // Scientific eval
+  const evalSec=document.getElementById('dp-eval');
+  if(d.scientificEval){evalSec.style.display='block';evalSec.querySelector('.dp-eval').innerHTML=d.scientificEval}else{evalSec.style.display='none'}
+  // AI Review
+  const aiSec=document.getElementById('dp-ai-review');
+  if(d.aiReview){aiSec.style.display='block';aiSec.querySelector('.dp-ai-text').innerHTML=d.aiReview}else{aiSec.style.display='none'}
+  // Influence Map
+  const inflSec=document.getElementById('dp-infl'),inflGrid=inflSec.querySelector('.dp-infl-grid');
+  const inflData=d.layers?.L7_legacy?.influenceMap;
+  if(inflData&&inflData.length){inflSec.style.display='block';inflGrid.innerHTML=inflData.map(i=>
+    '<div class="dp-infl-item"><span class="dp-infl-icon">'+i.icon+'</span><div class="dp-infl-content"><div class="dp-infl-domain">'+i.domain+'</div><div class="dp-infl-desc">'+i.desc+'</div></div></div>'
+  ).join('')}else{inflSec.style.display='none'}
+  // Contemporary Applications
+  const contempSec=document.getElementById('dp-contemp'),contempList=contempSec.querySelector('.dp-contemp-list');
+  const contempData=d.layers?.L7_legacy?.contemporaryApplications;
+  if(contempData&&contempData.length){contempSec.style.display='block';contempList.innerHTML=contempData.map(i=>
+    '<div class="dp-contemp-item"><span class="dp-contemp-icon">'+i.icon+'</span><div class="dp-contemp-info"><div class="dp-contemp-title">'+i.title+'</div><div class="dp-contemp-desc">'+i.desc+'</div></div></div>'
+  ).join('')}else{contempSec.style.display='none'}
+  // Further reading
+  const readSec=document.getElementById('dp-reading'),readList=readSec.querySelector('.dp-reading-list');
+  if(d.furtherReading&&d.furtherReading.length){readSec.style.display='block';readList.innerHTML='';
+    const typeIcons={book:'📖',concept:'💭',video:'🎬',article:'📄'};
+    for(const fr of d.furtherReading){const hasUrl=fr.url&&fr.url.startsWith('http');readList.innerHTML+=`<${hasUrl?'a':'div'} class="dp-reading-item"${hasUrl?` href="${fr.url}" target="_blank" rel="noopener"`:''}><span class="dp-reading-icon">${typeIcons[fr.type]||'📌'}</span><div class="dp-reading-info"><div class="dp-reading-title">${fr.title}${hasUrl?' ↗':''}</div><div class="dp-reading-desc">${fr.desc}</div></div><span class="dp-reading-type">${fr.type}</span></${hasUrl?'a':'div'}>`}
+  }else{readSec.style.display='none'}
+  // Related
+  const relSec=document.getElementById('dp-related'),relList=relSec.querySelector('.dp-related-list');
+  if(d.relationships&&d.relationships.length){relSec.style.display='block';relList.innerHTML='';const nodeMap=new Map(simData.allNodes.map(n=>[n.id,n]));
+    for(const rel of d.relationships){const target=nodeMap.get(rel.target);if(!target)continue;const tag=document.createElement('span');tag.className='dp-related-tag';
+      tag.style.borderColor=target.color+'40';
+      tag.innerHTML=`${target.name}<span class="dp-rel-type">${rel.type==='teacher-student'?'师承':rel.type==='influence'?'影响':'论战'}</span>`;
+      tag.addEventListener('click',()=>{closeDetailPanel();setTimeout(()=>{const n=simData.allNodes.find(x=>x.id===target.id);if(n)openDetailPanel(n)},300)});relList.appendChild(tag)}
+  }else{relSec.style.display='none'}
+  // Genealogy
+  renderGenealogy(d,simData);
+  // Civilization-specific theming
+  panel.dataset.civ=d.civilization;
+  const eraThemes={eastern:{bg:'radial-gradient(ellipse at 50% 0%,rgba(251,191,36,.06) 0%,transparent 60%)',accent:'linear-gradient(180deg,#fbbf24,#d97706)'},western:{bg:'radial-gradient(ellipse at 50% 0%,rgba(129,140,248,.06) 0%,transparent 60%)',accent:`linear-gradient(180deg,${c.color},${c.glow})`},indian:{bg:'radial-gradient(ellipse at 50% 0%,rgba(244,114,182,.06) 0%,transparent 60%)',accent:'linear-gradient(180deg,#f472b6,#db2777)'},islamic:{bg:'radial-gradient(ellipse at 50% 0%,rgba(52,211,153,.06) 0%,transparent 60%)',accent:'linear-gradient(180deg,#34d399,#059669)'}};
+  const theme=eraThemes[d.civilization]||eraThemes.western;
+  panel.style.background=`${theme.bg},linear-gradient(180deg,rgba(12,12,32,.95) 0%,rgba(10,10,28,.92) 100%)`;
+  panel.querySelector('.dp-accent').style.background=theme.accent;
+  panel.classList.add('open');scroll.scrollTop=0;
+  highlightConnections(d);
+}
+function renderConceptNet(philosopher,civColor,svgEl){
+  const concepts=philosopher.coreThoughts||[];
+  if(concepts.length<2){svgEl.style.display='none';return}
+  svgEl.style.display='block';svgEl.innerHTML='';
+  const W=svgEl.clientWidth||340,H=220,cx=W/2,cy=H/2;
+  // Extract keywords
+  const stopWords=new Set(['的','了','是','在','和','也','就','都','而','及','与','或','不','这','那','有','人','一个','一种','不是','这个','那个','可以','我们','他们','它们','自己','什么','怎么','为什么','因为','所以','如果','但是','虽然','而且','然后','就是','还是','不过','只是']);
+  const conceptWords=concepts.map(c=>{const text=(c.concept+c.desc).replace(/[，。、；：""''（）《》！？\s,.、]/g,' ');return new Set(text.split(' ').filter(w=>w.length>=2&&!stopWords.has(w)))});
+  // Build edges by shared keywords
+  const nodes=concepts.map((c,i)=>({id:i,concept:c.concept,desc:c.desc,r:12+Math.min(c.desc.length/30,14),x:cx+(Math.random()-.5)*120,y:cy+(Math.random()-.5)*100}));
+  const edges=[];
+  for(let i=0;i<concepts.length;i++){for(let j=i+1;j<concepts.length;j++){const shared=[...conceptWords[i]].filter(w=>conceptWords[j].has(w));if(shared.length>=2)edges.push({source:i,target:j,weight:shared.length})}}
+  // SVG setup
+  const svg=d3.select(svgEl).attr('viewBox',`0 0 ${W} ${H}`).style('background','rgba(0,0,0,.15)');
+  const gEdges=svg.append('g');
+  const gNodes=svg.append('g');
+  // Render edges
+  gEdges.selectAll('line').data(edges).join('line').attr('class','cn-edge').attr('stroke-width',d=>Math.max(.5,d.weight*.6)).attr('stroke',`rgba(255,255,255,${edges.length>0?.18:.06})`);
+  // Render nodes
+  const nodeG=gNodes.selectAll('g').data(nodes).join('g').attr('class','cn-node').style('cursor','pointer');
+  nodeG.append('circle').attr('r',d=>d.r).attr('fill',civColor.color).attr('opacity',.7).attr('stroke',civColor.glow).attr('stroke-width',1.5);
+  nodeG.append('text').text(d=>d.concept.length>5?d.concept.substring(0,4)+'…':d.concept).attr('text-anchor','middle').attr('dy','.3em').attr('fill','#fff').attr('font-size','10px').attr('font-weight','600').style('pointer-events','none');
+  // Tooltip & click
+  const cnTip=document.getElementById('cn-tip');
+  nodeG.on('mouseenter',function(e,d){cnTip.textContent=d.concept;cnTip.style.opacity=1}).on('mousemove',function(e){cnTip.style.left=(e.clientX+12)+'px';cnTip.style.top=(e.clientY-12)+'px'}).on('mouseleave',()=>{cnTip.style.opacity=0});
+  nodeG.on('click',function(e,d){const items=document.querySelectorAll('.dp-concept-item');items.forEach((el,i)=>{el.style.background=i===d.id?'rgba(255,255,255,.06)':'rgba(255,255,255,.02)';el.style.borderColor=i===d.id?civColor.color+'44':'rgba(255,255,255,.05)'});if(items[d.id])items[d.id].scrollIntoView({behavior:'smooth',block:'center'})});
+  // Mini force sim
+  const sim=d3.forceSimulation(nodes).force('link',d3.forceLink(edges).distance(60)).force('charge',d3.forceManyBody().strength(-100)).force('center',d3.forceCenter(cx,cy)).force('collide',d3.forceCollide(d=>d.r+8)).alphaDecay(.03).on('tick',()=>{gEdges.selectAll('line').attr('x1',d=>d.source.x).attr('y1',d=>d.source.y).attr('x2',d=>d.target.x).attr('y2',d=>d.target.y);nodeG.attr('transform',d=>`translate(${d.x},${d.y})`)});
+  nodeG.call(d3.drag().on('start',function(e,d){if(!e.active)sim.alphaTarget(.3).restart();d.fx=d.x;d.fy=d.y}).on('drag',function(e,d){d.fx=e.x;d.fy=e.y}).on('end',function(e,d){if(!e.active)sim.alphaTarget(0);d.fx=null;d.fy=null}));
+}
+function closeDetailPanel(){selectedNode=null;detailPanel.classList.remove('open');clearHighlights();const qb=document.querySelector('.dp-quote-block');if(qb&&qb.dataset.interval){clearInterval(+qb.dataset.interval);delete qb.dataset.interval}}
+function exportMD(d){
+  const civName=(civDisplay[d.civilization]||d.civilization);
+  const schoolName=(dataRef.schools.find(s=>s.id===d.school)||{}).name||'';
+  let md=[`# ${d.name}（${d.nameEn||''}）`,'',
+    `> ${d.goldenQuotes&&d.goldenQuotes[0]?d.goldenQuotes[0].text:''}`,'',
+    `- **生卒**：${formatYears(d.birth,d.death)}`,'',
+    `- **国籍**：${d.nationality}`,'',
+    `- **文明**：${civName}`,'',
+    `- **流派**：${schoolName}`,'',
+    `- **角色**：${d.role||''}`,'',
+    `- **影响力**：${'★'.repeat(d.influence||0)}${'☆'.repeat(10-(d.influence||0))}`,'',
+    '',`## 概述`,'',`${d.summary||''}`,'',
+  ];
+  if(d.thoughtEvolution){md.push('','## 思想演变','',d.thoughtEvolution)}
+  if(d.goldenQuotes&&d.goldenQuotes.length){
+    md.push('','## 金句','');
+    d.goldenQuotes.forEach((q,i)=>{md.push(`${i+1}. **${q.text}** —— ${q.source}`,'')})
+  }
+  if(d.coreThoughts&&d.coreThoughts.length){
+    md.push('','## 核心思想','');
+    d.coreThoughts.forEach(ct=>{md.push(`### ${ct.concept}`,'',`${ct.desc}`,'')})
+  }
+  if(d.representativeWorks&&d.representativeWorks.length){
+    md.push('','## 代表作品','');
+    d.representativeWorks.forEach(w=>{md.push(`### ${w.title}`,`- **类型**：${w.type||''}${w.year?` · ${formatYear(w.year)}`:''}`,'',`${w.content||''}`,'')})
+  }
+  if(d.famousEvents&&d.famousEvents.length){
+    md.push('','## 著名事件','');
+    d.famousEvents.forEach(ev=>{md.push(`- **${ev.title}**${ev.year?`（${formatYear(ev.year)}）` : ''}：${ev.desc}`,'')})
+  }
+  if(d.anecdote){md.push('','## 轶事','',d.anecdote.replace(/<[^>]+>/g,''))}
+  const inflMd=d.layers?.L7_legacy?.influenceMap;
+  if(inflMd&&inflMd.length){md.push('','## 影响力地图','');inflMd.forEach(i=>{md.push('- **'+i.domain+'**：'+i.desc,'')})}
+  const contMd=d.layers?.L7_legacy?.contemporaryApplications;
+  if(contMd&&contMd.length){md.push('','## 当代应用','');contMd.forEach(c=>{md.push('- **'+c.title+'**：'+c.desc,'')})}
+  if(d.scientificEval){md.push('','## 学术评价','',d.scientificEval.replace(/<[^>]+>/g,''))}
+  if(d.aiReview){md.push('','## AI 点评','',d.aiReview.replace(/<[^>]+>/g,''))}
+  if(d.furtherReading&&d.furtherReading.length){
+    md.push('','## 拓展阅读','');
+    d.furtherReading.forEach(fr=>{md.push(`- [${fr.title}](${fr.url||'#'}) —— ${fr.desc}（${fr.type}）`)});md.push('')
+  }
+  if(d.relationships&&d.relationships.length){
+    md.push('','## 关联哲人','');
+    const nm=new Map(simData.allNodes.map(n=>[n.id,n]));
+    d.relationships.forEach(r=>{const t=nm.get(r.target);if(t){md.push(`- **${t.name}**：${r.description||''}（${r.type==='teacher-student'?'师承':r.type==='influence'?'影响':'论战'}）`)}});md.push('')
+  }
+  md.push('','---','','*由「脉络 Philomap」导出*');
+  const blob=new Blob([md.join('\n')],{type:'text/markdown;charset=utf-8'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`${d.name}.md`;a.click();URL.revokeObjectURL(a.href)
+}
+document.querySelector('.dp-close').addEventListener('click',closeDetailPanel);
+document.querySelector('.dp-export').addEventListener('click',()=>{if(selectedNode)exportMD(selectedNode)});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&detailPanel.classList.contains('open'))closeDetailPanel()});
+
+function highlightConnections(d){
+  const connectedIds=new Set([d.id]);
+  simData.allEdges.forEach(e=>{const s=e.source.id||e.source,t=e.target.id||e.target;if(s===d.id)connectedIds.add(t);if(t===d.id)connectedIds.add(s)});
+  gNodes.selectAll('.node-group').each(function(n){
+    const conn=connectedIds.has(n.id),isSel=n.id===d.id;
+    // Body
+    d3.select(this).select('.node-body').transition().duration(400)
+      .attr('r',isSel?d.radius*1.3:n.radius).attr('opacity',isSel?1:conn?.8:.08);
+    // Glow
+    const glow=d3.select(this).select('.node-glow');
+    if(isSel){glow.attr('filter','url(#glow-strong)').attr('r',d.radius*1.5).attr('stroke-width',6).style('animation','pulse-glow 2s ease-in-out infinite')}
+    else{glow.transition().duration(400).attr('r',n.radius+6).attr('stroke-width',conn?3:0).attr('opacity',conn?.55:.02)}
+    // Highlight dot
+    d3.select(this).select('.node-highlight').transition().duration(400).attr('opacity',isSel?.4:conn?.2:.02);
+    // Label
+    d3.select(this).select('.node-label').transition().duration(400)
+      .attr('opacity',isSel?1:conn?.7:.04).attr('font-weight',isSel?'700':'500')
+      .attr('font-size',isSel?(12+d.influence*.45)+'px':(10+d.influence*.3)+'px');
+    // Halo ring for selected
+    if(isSel&&!d3.select(this).select('.node-halo').size()){
+      d3.select(this).insert('circle','.node-body').attr('class','node-halo').attr('r',d.radius*1.6).attr('fill','none').attr('stroke',d.glowColor).attr('stroke-width',1.5).attr('opacity',0).transition().duration(600).attr('opacity',.4).attr('r',d.radius*2);
+    }
+  });
+  gEdges.selectAll('line').each(function(e){const s=e.source.id||e.source,t=e.target.id||e.target;const relevant=s===d.id||t===d.id;d3.select(this).transition().duration(400).attr('stroke-opacity',relevant?.85:.02).attr('stroke-width',relevant?Math.max(1.5,e.strokeWidth*2):.2)});
+}
+function clearHighlights(){
+  gNodes.selectAll('.node-group').each(function(n){
+    d3.select(this).select('.node-body').transition().duration(500).attr('r',n.radius).attr('opacity',.9);
+    d3.select(this).select('.node-glow').attr('filter','url(#glow)').style('animation','none').transition().duration(500).attr('r',n.radius+6).attr('stroke-width',3).attr('opacity',.55);
+    d3.select(this).select('.node-highlight').transition().duration(500).attr('opacity',.25);
+    d3.select(this).select('.node-label').transition().duration(500).attr('opacity',.95).attr('font-weight','700').attr('font-size',(12+n.influence*.5)+'px');
+    d3.select(this).select('.node-halo').transition().duration(500).attr('opacity',0).remove();
+  });
+  gEdges.selectAll('line').each(function(d){d3.select(this).transition().duration(500).attr('stroke-opacity',.55).attr('stroke-width',d.strokeWidth)});
+}
+
+// ═══════════════ SEARCH ═══════════════
+const searchInput=document.getElementById('search-input'),searchResults=document.getElementById('search-results');
+let searchTimeout=null;
+function buildSearchIndex(){
+  if(!dataRef)return[];
+  const idx=[];
+  for(const p of dataRef.philosophers){
+    const school=dataRef.schools.find(s=>s.id===p.school);
+    const tokens=[p.name,p.nameEn||'',p.nationality||'',school?.name||'',p.summary||''];
+    if(p.coreThoughts)for(const ct of p.coreThoughts){tokens.push(ct.concept,ct.desc)}
+    if(p.goldenQuotes)for(const q of p.goldenQuotes){tokens.push(q.text,q.source)}
+    if(p.goldenQuote){tokens.push(p.goldenQuote.text,p.goldenQuote.source)}
+    idx.push({id:p.id,name:p.name,en:p.nameEn||'',civ:p.civilization,tokens:tokens.join(' ').toLowerCase()});
+  }
+  return idx;
+}
+let searchIndex=[];
+function doSearch(q){
+  if(!q||q.length<1){searchResults.classList.remove('show');return}
+  const term=q.toLowerCase();const matches=[];
+  for(const item of searchIndex){
+    let score=0;
+    if(item.name.toLowerCase().includes(term))score+=10;
+    if(item.en.toLowerCase().includes(term))score+=5;
+    if(item.tokens.includes(term))score+=3;
+    // Word-level match
+    const words=item.tokens.split(/[\s,，。、；；：""''（）()]+/);
+    for(const w of words)if(w===term){score+=8;break}
+    if(score>0)matches.push({...item,score});
+  }
+  matches.sort((a,b)=>b.score-a.score);
+  const top=matches.slice(0,8);
+  if(top.length===0){searchResults.innerHTML='<div class="sr-empty">未找到匹配的哲人或概念</div>';searchResults.classList.add('show');return}
+  const nodeMap=new Map(simData.allNodes.map(n=>[n.id,n]));
+  searchResults.innerHTML=top.map(m=>{
+    const n=nodeMap.get(m.id);const c=civColors[m.civ]||civColors.western;
+    return `<div class="sr-item" data-id="${m.id}"><div class="sr-dot" style="background:${c.color}"></div><span class="sr-name">${m.name}</span><span class="sr-meta">${m.en||''}</span></div>`;
+  }).join('');
+  searchResults.classList.add('show');
+  searchResults.querySelectorAll('.sr-item').forEach(el=>{
+    el.addEventListener('click',()=>{
+      searchResults.classList.remove('show');searchInput.value='';
+      const n=simData.allNodes.find(x=>x.id===el.dataset.id);
+      if(n){closeDetailPanel();setTimeout(()=>openDetailPanel(n),200);zoomToNode(n)}
+    });
+  });
+}
+function zoomToNode(d){
+  const w=window.innerWidth,h=window.innerHeight;
+  svg.transition().duration(600).call(d3.zoom().transform,d3.zoomIdentity.translate(w*.45-d.x,h*.48-d.y).scale(1.2));
+  if(!selectedNode||selectedNode.id!==d.id){setTimeout(()=>{
+    const n=simData.allNodes.find(x=>x.id===d.id);if(n)openDetailPanel(n)
+  },400)}
+}
+searchInput.addEventListener('input',()=>{
+  clearTimeout(searchTimeout);
+  searchTimeout=setTimeout(()=>doSearch(searchInput.value),150);
+});
+searchInput.addEventListener('blur',()=>setTimeout(()=>searchResults.classList.remove('show'),200));
+searchInput.addEventListener('focus',()=>{if(searchInput.value.length>0)doSearch(searchInput.value)});
+
+// ═══════════════ GENEALOGY ═══════════════
+function renderGenealogy(d,data){
+  const sec=document.getElementById('dp-gen'),tree=sec.querySelector('.dp-gen-tree');
+  if(!d.relationships||d.relationships.length===0){sec.style.display='none';return}
+  const nodeMap=new Map(data.allNodes.map(n=>[n.id,n]));
+  const older=[],younger=[]; // older=teachers/influencers, younger=students/influenced
+  const myBirth=d.birth||0;
+  // Direct relationships from this philosopher
+  for(const rel of d.relationships){
+    const target=nodeMap.get(rel.target);if(!target)continue;
+    if(rel.type==='debate')continue;
+    if(myBirth<target.birth)younger.push({node:target,type:rel.type==='teacher-student'?'弟子':'受惠'});
+    else older.push({node:target,type:rel.type==='teacher-student'?'导师':'影响'});
+  }
+  // Reverse relationships (others pointing to this philosopher)
+  for(const p of data.allNodes){
+    if(p.id===d.id)continue;
+    for(const rel of (p.relationships||[])){
+      if(rel.target!==d.id||rel.type==='debate')continue;
+      const n=nodeMap.get(p.id);if(!n)continue;
+      if(p.birth<myBirth)older.push({node:n,type:rel.type==='teacher-student'?'导师':'影响'});
+      else younger.push({node:n,type:rel.type==='teacher-student'?'弟子':'受惠'});
+    }
+  }
+  // Deduplicate and limit
+  const seen=new Set();
+  const unique=(arr)=>arr.filter(x=>{const k=x.node.id;if(seen.has(k))return false;seen.add(k);return true}).slice(0,5);
+  const uniqueOlder=unique(older);
+  const uniqueYounger=unique(younger);
+  if(uniqueOlder.length===0&&uniqueYounger.length===0){sec.style.display='none';return}
+  sec.style.display='block';
+  const civ=civColors[d.civilization]||civColors.western;
+  let html='<div class="dp-gen-tree">';
+  // Older (teachers / influencers)
+  for(const item of uniqueOlder){
+    const tc=civColors[item.node.civilization]||civColors.western;
+    html+='<div class="dp-gen-node" data-id="'+item.node.id+'"><div class="dp-gen-dot" style="background:'+tc.color+'"></div><span class="dp-gen-name">'+item.node.name+'</span><span class="dp-gen-meta">'+item.type+'</span></div>';
+  }
+  if(uniqueOlder.length>0)html+='<div class="dp-gen-line">↑</div>';
+  // Self
+  html+='<div class="dp-gen-self"><div class="dp-gen-name" style="color:'+civ.color+'">'+d.name+'</div></div>';
+  if(uniqueYounger.length>0)html+='<div class="dp-gen-line">↓</div>';
+  // Younger (students / influenced)
+  for(const item of uniqueYounger){
+    const sc=civColors[item.node.civilization]||civColors.western;
+    html+='<div class="dp-gen-node" data-id="'+item.node.id+'"><div class="dp-gen-dot" style="background:'+sc.color+'"></div><span class="dp-gen-name">'+item.node.name+'</span><span class="dp-gen-meta">'+item.type+'</span></div>';
+  }
+  html+='</div>';
+  tree.innerHTML=html;
+  // Click handlers
+  tree.querySelectorAll('.dp-gen-node').forEach(el=>{
+    el.addEventListener('click',()=>{
+      closeDetailPanel();const n=simData.allNodes.find(x=>x.id===el.dataset.id);
+      if(n)setTimeout(()=>openDetailPanel(n),300)
+    });
+  });
+}
+
+
+// TWIN UNIVERSE
+const TWIN_SITES=[
+  {name:'morris-quotes',desc:'Morris语录集·100条认知洞察与智慧点评',icon:'✨',cat:'content'},
+  {name:'research-frontiers',desc:'全球科研突破聚合与AI解读',icon:'🔬',cat:'ai'},
+  {name:'ai-chat-room',desc:'多模型AI对话界面',icon:'💬',cat:'ai'},
+  {name:'cosmic-discussion',desc:'宇宙大爆炸·AI终端深度对话',icon:'🌌',cat:'ai'},
+  {name:'being-towards-death',desc:'向死而生·AI终端哲学对话',icon:'🕯️',cat:'ai'},
+  {name:'cognitive-biases-atlas',desc:'认知星图·21种思维谬误可视化',icon:'🧠',cat:'tool'},
+];
+const TWIN_CATS={ai:{label:'AI 对话',emoji:'🤖',cls:'ai'},tool:{label:'工具',emoji:'🛠️',cls:'tool'},content:{label:'内容精选',emoji:'📖',cls:'content'},data:{label:'数据分析',emoji:'📊',cls:'data'}};
+function buildTwinUniverse(){
+  const container=document.getElementById('twin-container');
+  const byCat={};TWIN_SITES.forEach(s=>{(byCat[s.cat]=byCat[s.cat]||[]).push(s)});
+  const order=['ai','tool','content','data'];let html='';
+  order.forEach(cat=>{
+    const list=byCat[cat];if(!list)return;
+    const info=TWIN_CATS[cat];
+    html+='<div class="tw-section"><div class="tw-section-title"><span>'+info.emoji+'</span>'+info.label+'</div><div class="tw-grid">';
+    list.forEach(s=>{
+      html+='<a class="tw-card" href="https://yun-ai-base.github.io/'+s.name+'/" target="_blank" rel="noopener"><div class="tw-card-icon '+info.cls+'">'+s.icon+'</div><div class="tw-card-info"><div class="tw-card-name">'+s.name+'</div><div class="tw-card-desc">'+s.desc+'</div></div><span class="tw-card-arrow">→</span></a>';
+    });
+    html+='</div></div>';
+  });
+  container.innerHTML=html;
+}
+// ═══════════════ MAIN RENDER ═══════════════
+async function init(){
+  try{
+    const res=await fetch('data/philosophers.json');dataRef=await res.json();
+    simData=processData(dataRef);setupDefs();buildFilterPanel(dataRef);renderGraph(simData);
+    searchIndex=buildSearchIndex();
+    loadingEl.classList.add('hidden');setTimeout(()=>loadingEl.remove(),700);
+  }catch(err){console.error(err);loadingEl.innerHTML='<p style="color:#ef4444;">加载失败，请使用 npx serve 启动本地服务器</p>'}
+}
+function processData(data){
+  const nodes=data.philosophers.map(p=>{const c=civColors[p.civilization]||civColors.western;return{...p,radius:8+p.influence*3.2,color:c.color,glowColor:c.glow,x:undefined,y:undefined,fx:null,fy:null}});
+  const nodeMap=new Map(nodes.map(n=>[n.id,n]));const edges=[];
+  for(const p of data.philosophers){if(!p.relationships)continue;for(const rel of p.relationships){const target=nodeMap.get(rel.target);if(!target)continue;const typeDef=data.relationshipTypes.find(t=>t.id===rel.type)||{lineStyle:'dashed',strokeWidth:1.2};edges.push({source:p.id,target:target.id,sourceNode:nodeMap.get(p.id),targetNode:target,type:rel.type,lineStyle:typeDef.lineStyle,strokeWidth:rel.strength*.22,strength:rel.strength,description:rel.description})}}
+  return{nodes,edges,allNodes:[...nodes],allEdges:[...edges],metadata:data.metadata};
+}
+function renderGraph(data){
+  const w=window.innerWidth,h=window.innerHeight;svg.attr('width',w).attr('height',h);
+  const edgeLines=gEdges.selectAll('line').data(data.edges).join('line')
+    .attr('stroke',d=>`url(#edge-${d.sourceNode.civilization}-${d.targetNode.civilization})`)
+    .attr('stroke-width',d=>Math.max(.8,d.strokeWidth))
+    .attr('stroke-dasharray',d=>d.lineStyle==='dashed'?'6,4':d.lineStyle==='dotted'?'2,3':'none').attr('stroke-opacity',.55);
+  const nodeGroups=gNodes.selectAll('.node-group').data(data.nodes).join('g').attr('class','node-group').style('cursor','pointer');
+  nodeGroups.append('circle').attr('class','node-glow').attr('r',d=>d.radius+6).attr('fill','none').attr('stroke',d=>d.glowColor).attr('stroke-width',3).attr('filter','url(#glow)').attr('opacity',.55);
+  nodeGroups.append('circle').attr('class','node-body').attr('r',d=>d.radius).attr('fill',d=>d.color).attr('opacity',.9).attr('stroke',d=>d.glowColor).attr('stroke-width',1.5);
+  nodeGroups.append('circle').attr('class','node-highlight').attr('r',d=>d.radius*.35).attr('fill','white').attr('opacity',.25).attr('cx',d=>-d.radius*.25).attr('cy',d=>-d.radius*.25);
+  nodeGroups.append('text').attr('class','node-label').attr('text-anchor','middle').attr('y',d=>d.radius+16).attr('fill','#f1f5f9').attr('font-size',d=>12+d.influence*.5).attr('font-weight','700').attr('opacity',.95).text(d=>d.name).attr('stroke','rgba(0,0,0,.4)').attr('stroke-width','1px').attr('paint-order','stroke');
+
+  nodeGroups.on('mouseenter',function(event,d){
+    if(selectedNode&&selectedNode.id===d.id)return;d3.select(this).select('.node-glow').transition().duration(200).attr('stroke-width',5).attr('opacity',.85);d3.select(this).select('.node-body').transition().duration(200).attr('opacity',1);
+    tooltip.querySelector('.tt-name').textContent=d.name+(d.nameEn?' ('+d.nameEn+')':'');tooltip.querySelector('.tt-years').textContent=formatYears(d.birth,d.death)+' · '+d.nationality;
+    const se=dataRef?.schools.find(s=>s.id===d.school);const scEl=tooltip.querySelector('.tt-school');scEl.textContent=se?.name||'';scEl.style.background=civColors[d.civilization]?`rgba(${d.civilization==='eastern'?'251,191,36':d.civilization==='indian'?'244,114,182':d.civilization==='islamic'?'52,211,153':'129,140,248'},.2)`:'rgba(255,255,255,.1)';scEl.style.color=(civColors[d.civilization]||civColors.western).color;
+    const q=d.goldenQuotes?d.goldenQuotes[0]:d.goldenQuote;tooltip.querySelector('.tt-quote').textContent=q?.text||'';tooltip.querySelector('.tt-quote-src').textContent=q?.source||'';tooltip.style.opacity=1;
+  }).on('mousemove',function(event){const x=event.clientX+16,y=event.clientY-16;tooltip.style.left=(x+260>window.innerWidth?x-276:x)+'px';tooltip.style.top=(y+160>window.innerHeight?y-176:y)+'px'})
+  .on('mouseleave',function(event,d){if(selectedNode&&selectedNode.id===d.id)return;d3.select(this).select('.node-glow').transition().duration(300).attr('stroke-width',3).attr('opacity',.55);d3.select(this).select('.node-body').transition().duration(300).attr('opacity',.9);tooltip.style.opacity=0})
+  .on('click',function(event,d){event.stopPropagation();if(selectedNode&&selectedNode.id===d.id){closeDetailPanel();return}closeDetailPanel();setTimeout(()=>openDetailPanel(d),150)});
+
+  svg.on('click',function(event){if(event.target===svg.node()&&selectedNode)closeDetailPanel()});
+  const zoom=d3.zoom().scaleExtent([.2,4]).on('zoom',event=>{gRoot.attr('transform',event.transform)});svg.call(zoom);
+  svg.call(zoom.transform,d3.zoomIdentity.translate(w*.15,h*.15).scale(.7));
+  const drag=d3.drag().on('start',function(event,d){if(!event.active)simulation.alphaTarget(.1).restart();d.fx=d.x;d.fy=d.y;svg.classed('dragging-node',true)})
+    .on('drag',function(event,d){d.fx=event.x;d.fy=event.y}).on('end',function(event,d){if(!event.active)simulation.alphaTarget(0);svg.classed('dragging-node',false)});
+  nodeGroups.call(drag);
+  simulation=d3.forceSimulation(data.nodes).force('link',d3.forceLink(data.edges).id(d=>d.id).distance(d=>70+(10-d.strength)*16))
+    .force('charge',d3.forceManyBody().strength(d=>-180-d.influence*35)).force('collide',d3.forceCollide(d=>d.radius+16).iterations(3))
+    .force('center',d3.forceCenter(w*.45,h*.48)).force('x',d3.forceX(w*.45).strength(.015)).force('y',d3.forceY(h*.48).strength(.015))
+    .alphaDecay(.015).velocityDecay(.35).on('tick',()=>{edgeLines.attr('x1',d=>d.source.x).attr('y1',d=>d.source.y).attr('x2',d=>d.target.x).attr('y2',d=>d.target.y);nodeGroups.attr('transform',d=>`translate(${d.x},${d.y})`)});
+  window.addEventListener('resize',()=>{const nw=window.innerWidth,nh=window.innerHeight;svg.attr('width',nw).attr('height',nh);simulation.force('center',d3.forceCenter(nw*.45,nh*.48)).force('x',d3.forceX(nw*.45).strength(.015)).force('y',d3.forceY(nh*.48).strength(.015));simulation.alpha(.1).restart()});
+}
+document.addEventListener('keydown',e=>{if(e.key==='f'&&!e.ctrlKey&&!e.metaKey&&document.activeElement===document.body){panelOpen=!panelOpen;filterPanel.classList.toggle('collapsed',!panelOpen);filterToggle.textContent=panelOpen?'◀':'▶'}});
+
+// ═══════════════ VIEW TOGGLE ═══════════════
+const timeRiver=document.getElementById('time-river'),timeSlider=document.getElementById('time-bar');
+const duelOverlay=document.getElementById('duel-overlay');
+const viewBtns=document.querySelectorAll('.view-toggle button');
+let currentView='star';
+const spectrumView=document.getElementById('spectrum-view');
+function switchView(view){
+  currentView=view;
+  viewBtns.forEach(b=>b.classList.toggle('active',b.dataset.view===view));
+  const isStar=view==='star',isRiver=view==='river',isDuel=view==='duel',isSpec=view==='spectrum',isQuiz=view==='quiz',isTwin=view==='twin';
+  const headerTitle=document.querySelector('#header h1'),headerSub=document.querySelector('#header .subtitle');
+  headerTitle.style.display=isStar?'':'none';headerSub.style.display=isStar?'':'none';
+  bgCanvas.style.display=isStar?'block':'none';
+  document.getElementById('graph-svg').style.display=isStar?'block':'none';
+  filterPanel.style.display=(isStar||isRiver)?'':'none';
+  filterToggle.style.display=(isStar||isRiver)?'':'none';
+  timeSlider.style.display=(isStar||isRiver)?'':'none';
+  timeRiver.classList.toggle('active',isRiver);
+  duelOverlay.classList.toggle('active',isDuel);
+  spectrumView.classList.toggle('active',isSpec);
+  quizOverlay.classList.toggle('active',isQuiz);
+  document.getElementById('twin-view').classList.toggle('active',view==='twin');
+  if(view==='twin'&&!document.getElementById('twin-container').children.length)buildTwinUniverse();
+  if(isRiver&&!timeRiverBuilt)buildTimeRiver();
+  if(isDuel&&!duelReady)setupDuel();
+  if(isSpec){buildSpectrum();renderSpectrum()}
+  if(isQuiz){if(!quizReady){setupQuiz();quizReady=true}else{document.getElementById('qz-retry').click()}}
+}
+viewBtns.forEach(b=>b.addEventListener('click',()=>{
+  switchView(b.dataset.view);
+}));
+
+// ═══════════════ TIME RIVER ═══════════════
+let timeRiverBuilt=false,trZoom=1;
+function buildTimeRiver(){
+  timeRiverBuilt=true;
+  renderTimeRiver();
+  // Zoom buttons
+  document.getElementById('tr-zoom-in').addEventListener('click',()=>{trZoom=Math.min(2.5,trZoom+.25);renderTimeRiver()});
+  document.getElementById('tr-zoom-out').addEventListener('click',()=>{trZoom=Math.max(.5,trZoom-.25);renderTimeRiver()});
+  // Wheel zoom + drag scroll on time river
+  const scrollEl=document.querySelector('.tr-scroll');
+  scrollEl.addEventListener('wheel',e=>{
+    if(e.ctrlKey||e.metaKey)return;
+    if(Math.abs(e.deltaY)>Math.abs(e.deltaX)){
+      e.preventDefault();
+      const oldWidth=2600*trZoom;
+      const rect=scrollEl.getBoundingClientRect();
+      const mx=e.clientX-rect.left+scrollEl.scrollLeft;
+      const ratio=mx/oldWidth;
+      const newZoom=Math.max(.5,Math.min(2.5,trZoom-(e.deltaY>0?.25:-.25)));
+      trZoom=newZoom;
+      renderTimeRiver();
+      const newScrollEl=document.querySelector('.tr-scroll');
+      setTimeout(()=>{newScrollEl.scrollLeft=ratio*(2600*newZoom)-mx+scrollEl.scrollLeft},10);
+    }
+  },{passive:false});
+  // Drag to scroll
+  let dragging=false,startX=0,startScroll=0;
+  scrollEl.addEventListener('mousedown',e=>{if(e.target.closest('.tr-card')||e.target.closest('button'))return;dragging=true;startX=e.clientX;startScroll=scrollEl.scrollLeft;scrollEl.style.cursor='grabbing';e.preventDefault()});
+  document.addEventListener('mousemove',e=>{if(!dragging)return;scrollEl.scrollLeft=startScroll+(startX-e.clientX)});
+  document.addEventListener('mouseup',()=>{if(dragging){dragging=false;scrollEl.style.cursor='grab'}});
+}
+function renderTimeRiver(){
+  const scrollEl=document.querySelector('.tr-scroll');
+  const savedRatio=scrollEl?scrollEl.scrollLeft/Math.max(1,scrollEl.scrollWidth):0;
+  const canvas=document.getElementById('tr-canvas');
+  canvas.style.minWidth=(2600*trZoom)+'px';
+  const all=dataRef.philosophers;
+  const minYear=-600,maxYear=2000,totalSpan=maxYear-minYear;
+  const totalWidth=2600*trZoom;
+  const yearToX=y=>((y-minYear)/totalSpan)*totalWidth+40;
+  const eras=[{id:'ancient',label:'古希腊/轴心时代',start:-600,end:200,color:'129,140,248'},{id:'classical',label:'古典晚期/中世纪',start:200,end:1400,color:'148,163,184'},{id:'renaissance',label:'文艺复兴/近代早期',start:1400,end:1700,color:'251,191,36'},{id:'enlightenment',label:'启蒙时代',start:1700,end:1800,color:'52,211,153'},{id:'modern',label:'19世纪',start:1800,end:1900,color:'244,114,182'},{id:'contemporary',label:'20世纪/当代',start:1900,end:2000,color:'129,140,248'}];
+  let html='<div class="tr-era-bands">';
+  for(const era of eras){
+    const x1=yearToX(era.start),x2=yearToX(era.end);
+    html+=`<div class="tr-era-band" style="left:${x1}px;width:${x2-x1}px;background:rgb(${era.color})"></div>`;
+  }
+  html+='</div><div class="tr-axis"></div>';
+  for(const era of eras){
+    const cx=yearToX((era.start+era.end)/2);
+    html+=`<div class="tr-era-label" style="left:${cx}px;color:rgba(${era.color},.7)">${era.label}</div>`;
+  }
+  const topCivs=new Set(['western','islamic']);
+  const top=[],bottom=[];
+  for(const p of all){
+    const node=simData.allNodes.find(n=>n.id===p.id);
+    if(!node)continue;
+    const x=yearToX(p.birth);
+    const c=civColors[p.civilization]||civColors.western;
+    const card=`<div class="tr-card" data-id="${p.id}" style="left:${x}px;border-color:${c.color}22" onmouseenter="this.style.borderColor='${c.color}88'" onmouseleave="this.style.borderColor='${c.color}22'"><div class="trc-avatar" style="background:${c.color}33;color:${c.color}">${p.name.charAt(0)}</div><div class="trc-name">${p.name}</div><div class="trc-years">${formatYears(p.birth,p.death)}</div></div>`;
+    if(topCivs.has(p.civilization))top.push({x,card,id:p.id});else bottom.push({x,card,id:p.id});
+  }
+  html+=`<div class="tr-row top">${top.map(t=>t.card).join('')}</div>`;
+  html+=`<div class="tr-row bottom">${bottom.map(t=>t.card).join('')}</div>`;
+  canvas.innerHTML=html;
+  // Click handlers
+  canvas.querySelectorAll('.tr-card').forEach(card=>{
+    card.addEventListener('click',()=>{
+      const n=simData.allNodes.find(x=>x.id===card.dataset.id);
+      if(n){switchView('star');setTimeout(()=>openDetailPanel(n),400)}
+    });
+  });
+  // Update zoom label
+  document.getElementById('tr-zoom-label').textContent=Math.round(trZoom*100)+'%';
+  // Restore proportional scroll position (only if there was a previous position)
+  setTimeout(()=>{
+    const sl=document.querySelector('.tr-scroll');
+    if(sl&&savedRatio>.001)sl.scrollLeft=savedRatio*sl.scrollWidth;
+  },50);
+}
+
+// ═══════════════ PHILOSOPHY DUEL ═══════════════
+let duelReady=false;
+function setupDuel(){
+  duelReady=true;
+  const selA=document.getElementById('duel-a'),selB=document.getElementById('duel-b');
+  const opts=dataRef.philosophers.map(p=>`<option value="${p.id}">${p.name}（${formatYears(p.birth,p.death)}）</option>`).join('');
+  selA.innerHTML=selB.innerHTML=opts;
+  selA.value='confucius';selB.value='plato';
+
+  // Topic definitions with concept keywords for matching
+  const topics=[
+    {id:'knowledge',label:'知识的来源是什么？',
+      keywords:['知','认识','理性','经验','感知','真理','理念','逻辑','归纳','演绎','先验','格物','良知','心即理'],
+      dims:['理性推导','经验观察','直觉体悟','经典权威','怀疑精神'],
+      dimKeys:['理性|逻辑|演绎|先验','经验|感知|归纳|观察','直觉|体悟|顿悟|内省','权威|经典|传统|经','怀疑|批判|证伪|不可知']},
+    {id:'reality',label:'世界的本质是什么？',
+      keywords:['存在','本质','物自体','道','理','气','心','理念','实体','上帝','宇宙','本体','现象','自在'],
+      dims:['唯心倾向','唯物倾向','一元论','多元论','不可知论'],
+      dimKeys:['唯心|理念|心即|精神','唯物|物质|原子|气本','一元|道|太一|实体|上帝','多元|差异|流变','不可知|物自体|怀疑']},
+    {id:'ethics',label:'善恶的标准何在？',
+      keywords:['善','恶','德性','仁','义','道德','幸福','义务','功利','良知','慈悲','正义','美','伦理'],
+      dims:['理性判断','情感共鸣','功利计算','义务准则','德性修养'],
+      dimKeys:['理性|义务|绝对命令','情感|恻隐|慈悲|同情','功利|结果|幸福|利益','义务|责任|规则|律法','德性|修养|人格|中道']},
+    {id:'governance',label:'理想的政治秩序是什么？',
+      keywords:['政','治','法','礼','仁政','王道','民主','共和','契约','权力','自由','平等','正义','革命','乌托邦'],
+      dims:['德治礼教','法治契约','无为而治','社会革命','个体自由'],
+      dimKeys:['德治|礼|王道|仁政|教化','法治|契约|宪政|民主|共和','无为|自然|不干涉|自发','革命|阶级|改造|重建','个体|自由|权利|私有']},
+    {id:'meaning',label:'人生的意义何在？',
+      keywords:['人生','意义','幸福','自由','逍遥','解脱','涅槃','审美','虚无','超人','存在','荒谬','信仰','救赎'],
+      dims:['理性求索','宗教信仰','审美体验','实践创造','直面虚无'],
+      dimKeys:['理性|求知|沉思|哲学生活','信仰|上帝|救赎|天国|安拉','审美|逍遥|游|艺术|诗','实践|劳动|创造|改造世界','虚无|荒谬|超人|直面']},
+  ];
+  const topicSel=document.getElementById('duel-topic-select');
+  topicSel.innerHTML='<option value="">选择议题...</option>'+topics.map(t=>`<option value="${t.id}">${t.label}</option>`).join('');
+
+  // Score a philosopher on a dimension by keyword matching in coreThoughts, summary, thoughtEvolution
+  function scoreByKeywords(p,dimKeys){
+    const texts=[p.summary||'',p.thoughtEvolution||'',...(p.coreThoughts||[]).flatMap(c=>[c.concept,c.desc])].join(' ');
+    const names=p.coreThoughts?.map(c=>c.concept).join(' ')||'';
+    const allText=texts+' '+names;
+    const dimScores=dimKeys.map(keys=>{
+      let score=0;const kws=keys.split('|');
+      for(const kw of kws){const re=new RegExp(kw,'g');const m=allText.match(re);if(m)score+=Math.min(m.length*2,10)}
+      return Math.min(score,10);
+    });
+    const total=dimScores.reduce((a,b)=>a+b,0);
+    if(total===0)return dimScores.map(()=>5);
+    // Normalize to ensure good contrast
+    const max=Math.max(...dimScores,1);
+    return dimScores.map(s=>Math.max(2,Math.round(s/max*9)));
+  }
+
+  // Find matching concepts for the topic
+  function findRelevantConcepts(p,keywords){
+    const found=[];
+    const allText=[p.summary||'',...p.coreThoughts.map(c=>c.concept+' '+c.desc)].join(' ');
+    for(const ct of(p.coreThoughts||[])){
+      for(const kw of keywords){
+        if(ct.concept.includes(kw)||ct.desc.includes(kw)){if(!found.find(f=>f.concept===ct.concept))found.push(ct);break}
+      }
+    }
+    if(found.length===0&&p.coreThoughts)found.push(...p.coreThoughts.slice(0,2));
+    return found.slice(0,3);
+  }
+
+  function hexToRgb(hex){const h=hex.replace('#','');return [parseInt(h.substring(0,2),16),parseInt(h.substring(2,4),16),parseInt(h.substring(4,6),16)].join(',')}
+  function drawRadar(canvasId,labels,scores,hexColor){
+    const canvas=document.getElementById(canvasId);
+    if(!canvas)return;
+    const size=260,dpr=window.devicePixelRatio||1;
+    canvas.width=size*dpr;canvas.height=size*dpr;
+    const ctx=canvas.getContext('2d');ctx.scale(dpr,dpr);
+    const cx=size/2,cy=size/2,r=size/2-44,n=labels.length;
+    ctx.clearRect(0,0,size,size);
+    for(let i=5;i>=1;i--){
+      ctx.beginPath();
+      for(let j=0;j<n;j++){const a=(Math.PI*2/n)*j-Math.PI/2;const px=cx+(r*i/5)*Math.cos(a),py=cy+(r*i/5)*Math.sin(a);j===0?ctx.moveTo(px,py):ctx.lineTo(px,py)}
+      ctx.closePath();ctx.fillStyle=`rgba(255,255,255,${i===1?.08:.04})`;ctx.fill();ctx.strokeStyle='rgba(255,255,255,.1)';ctx.lineWidth=.5;ctx.stroke();
+    }
+    for(let j=0;j<n;j++){
+      const a=(Math.PI*2/n)*j-Math.PI/2;
+      ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+r*Math.cos(a),cy+r*Math.sin(a));ctx.strokeStyle='rgba(255,255,255,.08)';ctx.lineWidth=.5;ctx.stroke();
+      const lx=cx+(r+20)*Math.cos(a),ly=cy+(r+20)*Math.sin(a);
+      ctx.fillStyle='#94a3b8';ctx.font='11px system-ui,"Microsoft YaHei",sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(labels[j],lx,ly);
+    }
+    ctx.beginPath();
+    for(let j=0;j<n;j++){const a=(Math.PI*2/n)*j-Math.PI/2;const px=cx+(r*scores[j]/10)*Math.cos(a),py=cy+(r*scores[j]/10)*Math.sin(a);j===0?ctx.moveTo(px,py):ctx.lineTo(px,py)}
+    ctx.closePath();
+    const rgb=hexToRgb(hexColor);
+    ctx.fillStyle=`rgba(${rgb},.18)`;ctx.fill();
+    ctx.strokeStyle=hexColor;ctx.lineWidth=2.5;ctx.stroke();
+    for(let j=0;j<n;j++){const a=(Math.PI*2/n)*j-Math.PI/2;const px=cx+(r*scores[j]/10)*Math.cos(a),py=cy+(r*scores[j]/10)*Math.sin(a);ctx.beginPath();ctx.arc(px,py,5,0,Math.PI*2);ctx.fillStyle=hexColor;ctx.fill();ctx.beginPath();ctx.arc(px,py,3,0,Math.PI*2);ctx.fillStyle='white';ctx.fill()}
+  }
+
+  document.getElementById('duel-trigger').addEventListener('click',()=>{
+    const aId=selA.value,bId=selB.value,topicId=topicSel.value;
+    if(!aId||!bId||!topicId||aId===bId)return;
+    const phA=dataRef.philosophers.find(p=>p.id===aId),phB=dataRef.philosophers.find(p=>p.id===bId);
+    if(!phA||!phB)return;
+    const topic=topics.find(t=>t.id===topicId);
+    const cA=civColors[phA.civilization]||civColors.western;
+    const cB=civColors[phB.civilization]||civColors.western;
+
+    // Score by keyword matching
+    const valsA=scoreByKeywords(phA,topic.dimKeys);
+    const valsB=scoreByKeywords(phB,topic.dimKeys);
+
+    // Update names
+    document.getElementById('duel-name-a').innerHTML=`<span style="color:${cA.color}">${phA.name}</span>`;
+    document.getElementById('duel-name-b').innerHTML=`<span style="color:${cB.color}">${phB.name}</span>`;
+    document.getElementById('duel-th-a').innerHTML=`<span style="color:${cA.color}">${phA.name}</span>`;
+    document.getElementById('duel-th-b').innerHTML=`<span style="color:${cB.color}">${phB.name}</span>`;
+
+    // Draw topic-specific radars
+    setTimeout(()=>{
+      drawRadar('duel-radar-a',topic.dims,valsA,cA.color);
+      drawRadar('duel-radar-b',topic.dims,valsB,cB.color);
+    },100);
+
+    // Build substantive comparison table
+    const conceptsA=findRelevantConcepts(phA,topic.keywords);
+    const conceptsB=findRelevantConcepts(phB,topic.keywords);
+    const tbody=document.querySelector('#duel-table tbody');
+
+    // Dimension comparison
+    let html='';
+    for(let i=0;i<topic.dims.length;i++){
+      html+=`<tr><td style="font-weight:600">${topic.dims[i]}</td><td style="color:${cA.color}">${'▮'.repeat(Math.round(valsA[i]/2))}${'▯'.repeat(5-Math.round(valsA[i]/2))} ${valsA[i]}/10</td><td style="color:${cB.color}">${'▮'.repeat(Math.round(valsB[i]/2))}${'▯'.repeat(5-Math.round(valsB[i]/2))} ${valsB[i]}/10</td></tr>`;
+    }
+    // Core stance row
+    html+=`<tr style="border-top:1px solid rgba(255,255,255,.1)"><td style="font-weight:700;color:#f1f5f9">核心立场</td><td style="color:${cA.color}">${phA.summary||''}</td><td style="color:${cB.color}">${phB.summary||''}</td></tr>`;
+    // Key concepts
+    html+=`<tr><td style="font-weight:700;color:#f1f5f9">关键概念</td><td style="color:${cA.color}">${conceptsA.map(c=>c.concept).join('、')||'—'}</td><td style="color:${cB.color}">${conceptsB.map(c=>c.concept).join('、')||'—'}</td></tr>`;
+    // Detailed views
+    const maxLen=Math.max(conceptsA.length,conceptsB.length);
+    for(let i=0;i<maxLen;i++){
+      html+=`<tr><td style="font-weight:600;vertical-align:top">观点 ${i+1}</td><td style="color:${cA.color};vertical-align:top">${conceptsA[i]?`<strong>${conceptsA[i].concept}</strong>：${conceptsA[i].desc}`:'—'}</td><td style="color:${cB.color};vertical-align:top">${conceptsB[i]?`<strong>${conceptsB[i].concept}</strong>：${conceptsB[i].desc}`:'—'}</td></tr>`;
+    }
+    // School context
+    const sA=dataRef.schools.find(s=>s.id===phA.school);
+    const sB=dataRef.schools.find(s=>s.id===phB.school);
+    html+=`<tr style="border-top:1px solid rgba(255,255,255,.1)"><td style="font-weight:700;color:#f1f5f9">学派背景</td><td style="color:${cA.color}">${sA?.name||''}：${(sA?.description||'').slice(0,80)}</td><td style="color:${cB.color}">${sB?.name||''}：${(sB?.description||'').slice(0,80)}</td></tr>`;
+    // Golden quote
+    const qA=phA.goldenQuotes?.[0],qB=phB.goldenQuotes?.[0];
+    if(qA||qB){
+      html+=`<tr><td style="font-weight:700;color:#f1f5f9">代表金句</td><td style="color:${cA.color};font-style:italic">${qA?qA.text+' —— '+qA.source:'—'}</td><td style="color:${cB.color};font-style:italic">${qB?qB.text+' —— '+qB.source:'—'}</td></tr>`;
+    }
+
+    tbody.innerHTML=html;
+    document.getElementById('duel-result').classList.add('show');
+  });
+
+  document.getElementById('duel-close').addEventListener('click',()=>switchView('star'));
+  duelOverlay.addEventListener('click',e=>{if(e.target===duelOverlay)switchView('star')});
+}
+
+// ═══════════════ PHILOSOPHY QUIZ ═══════════════
+const quizOverlay=document.getElementById('quiz-overlay');
+let quizState={current:0,answers:[]};
+const quizQuestions=[
+  {q:'你更相信哪种方式获得真知？',opts:[{t:'通过逻辑推理和数学证明',s:{plato:3,kant:3,descartes:2,leibniz:2,hegel:1}},{t:'通过观察、实验和亲身经验',s:{aristotle:3,locke:3,hume:2,bacon:2,democritus:1}},{t:'通过内心的直觉与顿悟',s:{laozi:3,zhuangzi:3,buddha:2,zen:2,husserl:1}},{t:'真理不可知，唯有不断追问',s:{socrates:3,wittgenstein:2,nietzsche:2,heraclitus:2,montaigne:1}}]},
+  {q:'面对人生的痛苦，你会怎么做？',opts:[{t:'接纳它，顺应自然之道',s:{laozi:3,zhuangzi:3,buddha:2,marcus:2,epictetus:1}},{t:'反抗它，在抗争中创造意义',s:{nietzsche:3,camus:2,marx:2,sartre:2,beauvoir:1}},{t:'用理性分析它，找到解决方案',s:{kant:3,spinoza:2,descartes:2,aristotle:2,confucius:1}},{t:'投身快乐，用美好的事物冲淡它',s:{epicurus:3,bentham:2,mill:2,montaigne:2,aristotle:1}}]},
+  {q:'道德判断应该根据什么？',opts:[{t:'行为的结果——让人幸福的才是对的',s:{bentham:3,mill:3,epicurus:2,aristotle:1,hume:1}},{t:'行为的动机——发自良心和责任的才是对的',s:{kant:3,confucius:2,mencius:2,rousseau:1,spinoza:1}},{t:'品格的修养——成为有德之人自然做对的事',s:{aristotle:3,confucius:3,mencius:2,plato:1,aquinas:1}},{t:'没有绝对道德——善恶不过是立场和权力',s:{nietzsche:3,foucault:2,marx:1,machiavelli:1,spinoza:1}}]},
+  {q:'理想的社会应该如何组织？',opts:[{t:'由有德行的贤者治理',s:{plato:3,confucius:3,mencius:2,aristotle:1,aquinas:1}},{t:'由法律和制度来约束权力',s:{locke:3,montesquieu:2,rousseau:2,machiavelli:1,hobbes:1}},{t:'无为而治，减少干预',s:{laozi:3,zhuangzi:2,smith:2,hayek:1,nozick:1}},{t:'彻底改造社会结构，追求平等',s:{marx:3,rousseau:2,rawls:2,lenin:1,gramsci:1}}]},
+  {q:'你觉得自己和世界的关系是怎样的？',opts:[{t:'我与世界是一体的，天人合一',s:{laozi:3,zhuangzi:3,buddha:2,spinoza:2,hegel:1}},{t:'我是独立的主体，世界是我认识和改造的对象',s:{descartes:3,kant:2,marx:2,bacon:2,sartre:1}},{t:'我是社会中的人，意义在关系之中',s:{confucius:3,mencius:2,aristotle:2,hegel:1,marx:1}},{t:'"我"不过是个虚幻的标签',s:{buddha:3,hume:2,nietzsche:2,foucault:1,wittgenstein:1}}]},
+  {q:'你如何看待传统和权威？',opts:[{t:'尊重传统，它承载了千年的智慧',s:{confucius:3,aquinas:2,aristotle:2,augustine:1,burke:1}},{t:'批判审视，有价值的才保留',s:{kant:3,socrates:2,descartes:2,locke:1,voltaire:1}},{t:'推翻重建，旧的不去新的不来',s:{nietzsche:3,marx:2,rousseau:2,bakunin:1,lenin:1}},{t:'无所谓——传统不传统不重要',s:{laozi:3,zhuangzi:2,diogenes:1,montaigne:1,wittgenstein:1}}]},
+  {q:'你更欣赏哪种生活方式？',opts:[{t:'简约淡泊，返璞归真',s:{laozi:3,zhuangzi:3,epictetus:2,thoreau:2,diogenes:1}},{t:'积极进取，不断超越自我',s:{nietzsche:3,aristotle:2,confucius:2,marx:1,hegel:1}},{t:'追求智慧，以沉思为最高快乐',s:{plato:3,aristotle:2,spinoza:2,descartes:1,aquinas:1}},{t:'及时行乐，把握当下的每一刻',s:{epicurus:3,montaigne:2,bentham:1,diogenes:1,alain:1}}]},
+  {q:'对"美"你相信什么？',opts:[{t:'美是客观的，有内在的比例与和谐',s:{plato:3,aristotle:2,pythagoras:2,aquinas:1,hegel:1}},{t:'美是主观的，每个人感受不同',s:{hume:3,kant:2,locke:1,montaigne:1,wittgenstein:1}},{t:'美是一种超越体验，让人接近真理',s:{kant:3,schopenhauer:2,plotinus:2,heidegger:1,schelling:1}},{t:'美不重要——真实比美更有力量',s:{nietzsche:3,socrates:2,diogenes:1,marx:1,camus:1}}]},
+  {q:'如果有天你获得巨大权力，第一件事做什么？',opts:[{t:'建立公正的制度，然后退居幕后',s:{locke:3,washington:2,montesquieu:2,rawls:2,aristotle:1}},{t:'教化民众，提升整个社会的道德水平',s:{confucius:3,mencius:3,plato:2,rousseau:1,aquinas:1}},{t:'什么也不做，权力越用越坏事',s:{laozi:3,zhuangzi:2,thoreau:1,epictetus:1,diogenes:1}},{t:'彻底颠覆旧秩序，建立新世界',s:{marx:3,rousseau:2,che:2,mao:1,lenin:1}}]},
+  {q:'你怎么看待"信仰"？',opts:[{t:'信仰是人生的根基，没有信仰就没有方向',s:{augustine:3,aquinas:3,kierkegaard:2,pascal:2,buddha:1}},{t:'信仰必须经过理性的检验',s:{kant:3,descartes:2,spinoza:2,leibniz:1,hegel:1}},{t:'信仰是一种幻觉，但有时也是必要的谎言',s:{nietzsche:3,marx:2,feuerbach:2,freud:1,dawkins:1}},{t:'我不需要信仰——我靠自己的经验和理性生活',s:{hume:3,locke:2,bacon:2,mill:1,russell:1}}]},
+  {q:'你认为时间是什么？',opts:[{t:'时间是循环的，万物都在永恒的轮回之中',s:{nietzsche:3,buddha:2,heraclitus:2,zhuangzi:1,schopenhauer:1}},{t:'时间是线性的，向着一个终点不断前进',s:{augustine:3,hegel:2,marx:2,kant:1,christianity:1}},{t:'时间只是人类的主观感受，并非真实存在',s:{kant:3,wittgenstein:2,mctaggart:2,spinoza:1,plato:1}},{t:'时间就是变化——没有变化就没有时间',s:{aristotle:3,newton:2,einstein:1,leibniz:1,descartes:1}}]},
+  {q:'你觉得人应该怎样面对死亡？',opts:[{t:'坦然接受，死亡是自然的归宿',s:{epictetus:3,marcus:2,laozi:2,spinoza:2,montaigne:1}},{t:'正是因为会死，生命才有意义和价值',s:{heidegger:3,nietzsche:2,camus:2,sartre:2,beauvoir:1}},{t:'追求不朽——通过德行、著作或事业留下永恒',s:{plato:3,confucius:2,aristotle:2,aquinas:1,augustine:1}},{t:'不要想它——活在当下，死的问题留给死亡本身',s:{epicurus:3,montaigne:2,diogenes:1,alain:1,wittgenstein:1}}]},
+  {q:'你认同哪种教育理念？',opts:[{t:'教育是唤醒人内心本有的潜能',s:{plato:3,confucius:3,rousseau:2,mencius:2,montessori:1}},{t:'教育是传授知识和技能，培养理性',s:{aristotle:3,kant:2,locke:2,descartes:1,bacon:1}},{t:'教育是解放思想，让人敢于运用自己的理性',s:{kant:3,socrates:2,descartes:2,mill:1,dewey:1}},{t:'真正的教育来自生活，不是学校',s:{laozi:3,zhuangzi:3,rousseau:2,thoreau:2,illich:1}}]},
+  {q:'你如何处理分歧和冲突？',opts:[{t:'通过对话和辩论寻求共识',s:{socrates:3,habermas:2,popper:2,mill:1,rawls:1}},{t:'坚持原则，不妥协——真理比和谐重要',s:{kant:3,nietzsche:2,luther:2,sartre:1,che:1}},{t:'退一步海阔天空，求同存异',s:{confucius:3,laozi:2,zhuangzi:2,montaigne:1,gandhi:1}},{t:'用实力说话——强者制定规则',s:{machiavelli:3,nietzsche:2,hobbes:2,marx:1,schmitt:1}}]},
+  {q:'你觉得幸福是什么？',opts:[{t:'幸福是灵魂合乎德性的活动',s:{aristotle:3,confucius:2,aquinas:2,plato:1,mencius:1}},{t:'幸福是快乐最大化，痛苦最小化',s:{bentham:3,mill:3,epicurus:2,democritus:1,hobbes:1}},{t:'幸福是不被欲望所累，心灵宁静',s:{epictetus:3,buddha:2,marcus:2,laozi:2,schopenhauer:1}},{t:'幸福不存在的——生活就是痛苦和挣扎',s:{schopenhauer:3,nietzsche:2,camus:2,beckett:1,dostoevsky:1}}]},
+  {q:'你的时间观念是怎样的？',opts:[{t:'过去塑造了我的现在——了解传统和历史很重要',s:{confucius:3,augustine:2,burke:2,aristotle:1,hegel:1}},{t:'活在当下——过去的已过去，未来的不可知',s:{epicurus:3,zhuangzi:2,buddha:2,montaigne:2,heraclitus:1}},{t:'着眼未来——人生的意义在于想要成为什么',s:{nietzsche:3,sartre:3,marx:2,heidegger:1,beauvoir:1}},{t:'时间是幻象——真正的存在超越时间',s:{plato:3,kant:2,buddha:2,spinoza:2,plotinus:1}}]},
+  {q:'与人交往时你最看重什么？',opts:[{t:'真诚——不伪饰，言行一致',s:{confucius:3,socrates:2,mencius:2,kant:1,montaigne:1}},{t:'智慧——和聪明有趣的灵魂交流才有价值',s:{plato:3,aristotle:2,nietzsche:2,wittgenstein:1,voltaire:1}},{t:'自由——彼此独立，互不干涉',s:{laozi:3,zhuangzi:3,epictetus:2,thoreau:1,nozick:1}},{t:'权力和地位——人际关系本质是权力博弈',s:{machiavelli:3,nietzsche:2,hobbes:2,foucault:1,marx:1}}]},
+  {q:'面对未知和不确定性，你的态度是？',opts:[{t:'用科学和理性去探索它',s:{bacon:3,descartes:2,kant:2,popper:2,aristotle:1}},{t:'接纳它——不确定本身就是万物的本相',s:{laozi:3,zhuangzi:2,heraclitus:2,buddha:1,montaigne:1}},{t:'在不确定中创造自己的确定性',s:{nietzsche:3,sartre:3,camus:2,kierkegaard:1,beauvoir:1}},{t:'通过信仰和终极关怀来安顿自己',s:{augustine:3,aquinas:3,kierkegaard:2,pascal:2,tillich:1}}]},
+  {q:'哪句话最能代表你的人生信条？',opts:[{t:'己所不欲，勿施于人。',s:{confucius:3,mencius:2,kant:1,mill:1,rousseau:1}},{t:'认识你自己。',s:{socrates:3,plato:2,aristotle:2,descartes:1,wittgenstein:1}},{t:'成为你自己。',s:{nietzsche:3,sartre:2,kierkegaard:2,beauvoir:1,emerson:1}},{t:'道法自然。',s:{laozi:3,zhuangzi:3,buddha:1,spinoza:1,thoreau:1}}]},
+  {q:'如果让你选择一种"超能力"，你选什么？',opts:[{t:'看透一切事物本质的洞察力',s:{plato:3,kant:2,spinoza:2,schopenhauer:1,wittgenstein:1}},{t:'让所有人都幸福的能力',s:{bentham:3,mill:2,confucius:2,mencius:1,jesus:1}},{t:'超越一切限制的自由',s:{nietzsche:3,sartre:2,camus:2,beauvoir:1,marx:1}},{t:'什么也不需要——现在就很好',s:{laozi:3,zhuangzi:3,epictetus:2,diogenes:1,seneca:1}}]},
+];
+
+// Map answer scores → ranked results
+function computeQuizResults(){
+  const scores={};
+  for(const ans of quizState.answers){
+    for(const [phId,pts] of Object.entries(ans)){
+      scores[phId]=(scores[phId]||0)+pts;
+    }
+  }
+  // Map quiz IDs to actual philosopher IDs
+  const idMap={socrates:'socrates',plato:'plato',aristotle:'aristotle',kant:'kant',hegel:'hegel',marx:'marx',nietzsche:'nietzsche',descartes:'descartes',spinoza:'spinoza',locke:'locke',hume:'hume',leibniz:'leibniz',bacon:'bacon',rousseau:'rousseau',confucius:'confucius',mencius:'mencius',laozi:'laozi',zhuangzi:'zhuangzi',buddha:'buddha',augustine:'augustine',aquinas:'aquinas',machiavelli:'machiavelli',wittgenstein:'wittgenstein',husserl:'husserl',democritus:'democritus',heraclitus:'heraclitus'};
+  const merged={};
+  for(const [key,pts] of Object.entries(scores)){
+    const realId=idMap[key]||key;
+    if(dataRef.philosophers.find(p=>p.id===realId))merged[realId]=(merged[realId]||0)+pts;
+  }
+  const sorted=Object.entries(merged).sort((a,b)=>b[1]-a[1]);
+  const total=sorted.reduce((s,e)=>s+e[1],0)||1;
+  return sorted.slice(0,5).map(([id,pts])=>({id,pts,pct:Math.round(pts/total*100)}));
+}
+
+function setupQuiz(){
+  const body=document.getElementById('qz-body'),bar=document.getElementById('qz-bar'),result=document.getElementById('qz-result'),dnaBars=document.getElementById('qz-dna-bars');
+  function showQuestion(i){
+    if(i>=quizQuestions.length){showResults();return}
+    const q=quizQuestions[i];
+    body.innerHTML=`<div class="qz-question"><div class="qz-q-num">第 ${i+1} / ${quizQuestions.length} 题</div><div class="qz-q-text">${q.q}</div><div class="qz-options">${q.opts.map((o,oi)=>`<button class="qz-option${quizState.answers[i]===o.s?' selected':''}" data-oi="${oi}">${o.t}</button>`).join('')}</div></div>`;
+    body.querySelectorAll('.qz-option').forEach(btn=>btn.addEventListener('click',function(){
+      const oi=parseInt(this.dataset.oi);
+      quizState.answers[i]=q.opts[oi].s;
+      quizState.current=i+1;
+      bar.style.width=(quizState.current/quizQuestions.length*100)+'%';
+      setTimeout(()=>showQuestion(i+1),250);
+    }));
+  }
+  function showResults(){
+    body.innerHTML='';result.classList.add('show');bar.style.width='100%';
+    const ranked=computeQuizResults();let html='';
+    const colors=['#fbbf24','#c0c0c0','#cd7f32','#94a3b8','#64748b'];
+    for(let i=0;i<ranked.length;i++){
+      const r=ranked[i];const p=dataRef.philosophers.find(x=>x.id===r.id);if(!p)continue;
+      const c=civColors[p.civilization]||civColors.western;
+      html+=`<div class="qz-dna-bar"><span class="qz-dna-name">${p.name}</span><div class="qz-dna-track"><div class="qz-dna-fill" style="width:${r.pct}%;background:${c.color}"></div></div><span class="qz-dna-pct">${r.pct}%</span></div>`;
+    }
+    dnaBars.innerHTML=html;
+    drawShareCard(ranked);
+  }
+  function drawShareCard(ranked){
+    const canvas=document.getElementById('qz-share-canvas'),ctx=canvas.getContext('2d');
+    const w=720,h=480;canvas.width=w;canvas.height=h;
+    // Background
+    const bg=ctx.createRadialGradient(w*.4,h*.3,0,w*.5,h*.5,h*.8);bg.addColorStop(0,'#0a0a20');bg.addColorStop(1,'#000008');
+    ctx.fillStyle=bg;ctx.fillRect(0,0,w,h);
+    // Stars
+    for(let i=0;i<80;i++){ctx.fillStyle=`rgba(255,255,255,${Math.random()*.4+.1})`;ctx.beginPath();ctx.arc(Math.random()*w,Math.random()*h,Math.random()*1.5+.3,0,Math.PI*2);ctx.fill()}
+    // Title
+    ctx.fillStyle='#f1f5f9';ctx.font='bold 28px system-ui,"Microsoft YaHei",sans-serif';ctx.textAlign='center';ctx.fillText('🧬 我的哲学DNA',w/2,60);
+    ctx.fillStyle='#64748b';ctx.font='14px system-ui,"Microsoft YaHei",sans-serif';ctx.fillText('脉络 Philomap · 哲学基因测试',w/2,90);
+    // Bars
+    const barY=130,barH=44,barGap=16,bx=120,barW=380;
+    for(let i=0;i<Math.min(3,ranked.length);i++){
+      const r=ranked[i];const p=dataRef.philosophers.find(x=>x.id===r.id);if(!p)continue;
+      const c=civColors[p.civilization]||civColors.western;
+      const y=barY+i*(barH+barGap);
+      ctx.fillStyle='rgba(255,255,255,.03)';ctx.beginPath();roundRect(ctx,bx,y,barW,barH,12);ctx.fill();
+      const fillW=barW*r.pct/100;
+      const grad=ctx.createLinearGradient(bx,0,bx+fillW,0);grad.addColorStop(0,c.color);grad.addColorStop(1,c.glow);
+      ctx.fillStyle=grad;ctx.beginPath();roundRect(ctx,bx,y,Math.max(10,fillW),barH,12);ctx.fill();
+      ctx.fillStyle='#f1f5f9';ctx.font='bold 16px system-ui,"Microsoft YaHei",sans-serif';ctx.textAlign='left';ctx.fillText(p.name,bx+16,y+29);
+      ctx.fillStyle='#e2e8f0';ctx.textAlign='right';ctx.fillText(r.pct+'%',bx+barW-16,y+29);
+    }
+    // Philosophers row
+    if(ranked.length>=3){
+      const py=barY+3*(barH+barGap)+40;
+      for(let i=0;i<3;i++){
+        const r=ranked[i];const p=dataRef.philosophers.find(x=>x.id===r.id);if(!p)continue;
+        const c=civColors[p.civilization]||civColors.western;
+        const px=w/2+(i-1)*140;
+        ctx.fillStyle=c.color;ctx.beginPath();ctx.arc(px,py+20,24,0,Math.PI*2);ctx.fill();
+        ctx.fillStyle='rgba(255,255,255,.2)';ctx.beginPath();ctx.arc(px,py+20,28,0,Math.PI*2);ctx.stroke();
+        ctx.fillStyle='#f1f5f9';ctx.textAlign='center';ctx.font='bold 14px system-ui,"Microsoft YaHei",sans-serif';ctx.fillText(p.name,px,py+60);
+        ctx.fillStyle='cbd5e1';ctx.font='12px system-ui,"Microsoft YaHei",sans-serif';ctx.fillText(r.pct+'%',px,py+78);
+      }
+    }
+    // Footer
+    ctx.fillStyle='#475569';ctx.font='11px system-ui,"Microsoft YaHei",sans-serif';ctx.textAlign='center';ctx.fillText('脉络 Philomap — 在群星闪耀时，发现思想的引力',w/2,h-20);
+  }
+  function roundRect(ctx,x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.arcTo(x+w,y,x+w,y+r,r);ctx.lineTo(x+w,y+h-r);ctx.arcTo(x+w,y+h,x+w-r,y+h,r);ctx.lineTo(x+r,y+h);ctx.arcTo(x,y+h,x,y+h-r,r);ctx.lineTo(x,y+r);ctx.arcTo(x,y,x+r,y,r);ctx.closePath()}
+  // Start
+  quizState={current:0,answers:[]};result.classList.remove('show');bar.style.width='0%';showQuestion(0);
+  // Events
+  document.getElementById('qz-retry').addEventListener('click',()=>{quizState={current:0,answers:[]};result.classList.remove('show');bar.style.width='0%';showQuestion(0)});
+  document.getElementById('qz-copy').addEventListener('click',()=>{const canvas=document.getElementById('qz-share-canvas');canvas.toBlob(blob=>{const item=new ClipboardItem({'image/png':blob});navigator.clipboard.write([item]).then(()=>{const btn=document.getElementById('qz-copy');const orig=btn.textContent;btn.textContent='已复制！';setTimeout(()=>btn.textContent=orig,1500)}).catch(()=>{const a=document.createElement('a');a.download='我的哲学DNA.png';a.href=canvas.toDataURL();a.click()})})});
+  document.getElementById('quiz-close').addEventListener('click',()=>switchView('star'));
+  quizOverlay.addEventListener('click',e=>{if(e.target===quizOverlay)switchView('star')});
+}
+let quizReady=false;
+
+// ═══════════════ GLOBAL PHILOSOPHICAL SCORING ═══════════════
+const specDims={
+  rationalism:{label:'理性主义',opposite:'经验主义',keys:'理性|逻辑|演绎|先验|理型|理念|几何|必然|绝对命令|分析'},
+  empiricism:{label:'经验主义',opposite:'理性主义',keys:'经验|感知|观察|归纳|实证|感觉|实验|现象|习惯|联想'},
+  idealism:{label:'唯心倾向',opposite:'唯物倾向',keys:'理念|心即|精神|意识|主体|观念|理|绝对精神|意志|表象'},
+  materialism:{label:'唯物倾向',opposite:'唯心倾向',keys:'物质|原子|实践|现实|客观|存在|生产|阶级|经济|自然'},
+  individualism:{label:'个体主义',opposite:'共同体',keys:'个体|自我|自由|独立|权利|个人|私有|意志|选择|存在'},
+  collectivism:{label:'共同体',opposite:'个体主义',keys:'仁|礼|共同体|社会|阶级|关系|孝|悌|民本|天下'},
+  transcendence:{label:'超越性',opposite:'内在性',keys:'超越|上帝|道|涅槃|物自体|彼岸|天国|信仰|理型|天'},
+  immanence:{label:'内在性',opposite:'超越性',keys:'内在|现世|此岸|生活|实践|日常|自然|功利|经验|感官'},
+  tradition:{label:'传统',opposite:'革新',keys:'经典|传统|先王|古|继承|礼仪|秩序|权威|师承|六经'},
+  innovation:{label:'革新',opposite:'传统',keys:'批判|革命|解放|怀疑|新|创造|颠覆|自由|进步|变革'}
+};
+function scorePhilosopher(p,dimKey){
+  const dim=specDims[dimKey];if(!dim)return 5;
+  const texts=[p.summary||'',p.thoughtEvolution||'',...(p.coreThoughts||[]).flatMap(c=>[c.concept,c.desc])].join(' ');
+  const kws=dim.keys.split('|');let score=0;
+  for(const kw of kws){const re=new RegExp(kw,'g');const m=texts.match(re);if(m)score+=Math.min(m.length*2,10)}
+  return Math.max(2,Math.min(10,Math.round(score)));
+}
+
+// ═══════════════ PHILOSOPHY SPECTRUM ═══════════════
+let spectrumBuilt=false,specScores=null;
+function buildSpectrum(){
+  if(spectrumBuilt)return;spectrumBuilt=true;
+  specScores={};
+  for(const p of dataRef.philosophers){
+    specScores[p.id]={};
+    for(const dk of Object.keys(specDims))specScores[p.id][dk]=scorePhilosopher(p,dk);
+  }
+  document.getElementById('spec-x').addEventListener('change',renderSpectrum);
+  document.getElementById('spec-y').addEventListener('change',renderSpectrum);
+}
+function renderSpectrum(){
+  const xKey=document.getElementById('spec-x').value,yKey=document.getElementById('spec-y').value;
+  const canvas=document.getElementById('spectrum-canvas');
+  const wrap=canvas.parentElement;
+  const W=wrap.clientWidth,H=wrap.clientHeight;
+  const dpr=window.devicePixelRatio||1;
+  canvas.width=W*dpr;canvas.height=H*dpr;canvas.style.width=W+'px';canvas.style.height=H+'px';
+  const ctx=canvas.getContext('2d');ctx.setTransform(1,0,0,1,0,0);ctx.scale(dpr,dpr);
+  ctx.clearRect(0,0,W,H);
+  // Grid
+  const margin=80,plotW=W-margin*2,plotH=H-margin*2;
+  ctx.strokeStyle='rgba(255,255,255,.04)';ctx.lineWidth=.5;
+  for(let i=1;i<5;i++){const x=margin+i*plotW/5,y=margin+i*plotH/5;ctx.beginPath();ctx.moveTo(x,margin);ctx.lineTo(x,margin+plotH);ctx.stroke();ctx.beginPath();ctx.moveTo(margin,y);ctx.lineTo(margin+plotW,y);ctx.stroke()}
+  // Axes
+  ctx.strokeStyle='rgba(255,255,255,.15)';ctx.lineWidth=1.5;
+  ctx.beginPath();ctx.moveTo(margin,margin+plotH/2);ctx.lineTo(margin+plotW,margin+plotH/2);ctx.stroke(); // X
+  ctx.beginPath();ctx.moveTo(margin+plotW/2,margin);ctx.lineTo(margin+plotW/2,margin+plotH);ctx.stroke(); // Y
+  // Labels
+  ctx.fillStyle='#94a3b8';ctx.font='11px system-ui,"Microsoft YaHei",sans-serif';ctx.textAlign='center';
+  ctx.fillText(`← ${specDims[xKey].opposite}`,margin,margin-10);
+  ctx.fillText(`${specDims[xKey].label} →`,margin+plotW,margin-10);
+  ctx.textAlign='left';
+  ctx.save();ctx.translate(margin-16,margin);ctx.rotate(-Math.PI/2);ctx.fillText(`← ${specDims[yKey].opposite}`,0,0);ctx.restore();
+  ctx.save();ctx.translate(margin-16,margin+plotH);ctx.rotate(Math.PI/2);ctx.fillText(`${specDims[yKey].label} →`,0,0);ctx.restore();
+  // Data points — force layout to spread bubbles while keeping quadrant
+  const all=dataRef.philosophers;
+  const nodes=all.map(p=>{
+    const sx=specScores[p.id][xKey],sy=specScores[p.id][yKey];
+    return {id:p.id,p,r:4+p.influence*1.6,tx:margin+(sx/10)*plotW,ty:margin+((10-sy)/10)*plotH,x:margin+(sx/10)*plotW,y:margin+((10-sy)/10)*plotH};
+  });
+  // Run a quick force sim to push apart
+  const sim=d3.forceSimulation(nodes).alphaDecay(.08).velocityDecay(.4)
+    .force('x',d3.forceX(d=>d.tx).strength(.15))
+    .force('y',d3.forceY(d=>d.ty).strength(.15))
+    .force('collide',d3.forceCollide(d=>d.r+10).iterations(3))
+    .stop();
+  for(let i=0;i<80;i++)sim.tick();
+  // Bounding box to keep inside plot area
+  for(const n of nodes){n.x=Math.max(margin+n.r,Math.min(margin+plotW-n.r,n.x));n.y=Math.max(margin+n.r,Math.min(margin+plotH-n.r,n.y))}
+  // Render
+  const posMap=new Map();
+  for(const n of nodes){
+    const p=n.p,c=civColors[p.civilization]||civColors.western;
+    const px=n.x,py=n.y,r=n.r;
+    posMap.set(p.id,{x:px,y:py,r});
+    // Glow
+    const glow=ctx.createRadialGradient(px,py,0,px,py,r*2.5);
+    glow.addColorStop(0,c.glow+'88');glow.addColorStop(1,'transparent');
+    ctx.fillStyle=glow;ctx.beginPath();ctx.arc(px,py,r*2.5,0,Math.PI*2);ctx.fill();
+    // Body
+    ctx.fillStyle=c.color;ctx.beginPath();ctx.arc(px,py,r,0,Math.PI*2);ctx.fill();
+    ctx.strokeStyle='rgba(255,255,255,.4)';ctx.lineWidth=1.5;ctx.stroke();
+    // Label
+    ctx.fillStyle='rgba(255,255,255,.9)';ctx.font=`bold ${10+r*.35}px system-ui,"Microsoft YaHei",sans-serif`;ctx.textAlign='center';
+    ctx.fillText(p.name,px,py-r-10);
+  }
+  // Center title at cross intersection
+  const Cx=margin+plotW/2,Cy=margin+plotH/2;
+  ctx.fillStyle='rgba(8,8,24,.82)';ctx.beginPath();ctx.arc(Cx,Cy,52,0,Math.PI*2);ctx.fill();
+  ctx.strokeStyle='rgba(255,255,255,.1)';ctx.lineWidth=1;ctx.beginPath();ctx.arc(Cx,Cy,52,0,Math.PI*2);ctx.stroke();
+  ctx.fillStyle='#f1f5f9';ctx.font='bold 13px system-ui,"Microsoft YaHei",sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.fillText('📊 哲学光谱',Cx,Cy-5);
+  ctx.fillText('定位',Cx,Cy+14);
+  // Quadrant labels with background
+  const quadrants=[
+    {x:margin+plotW*.75,y:margin+plotH*.22,t:specDims[xKey].label+' + '+specDims[yKey].label},
+    {x:margin+plotW*.25,y:margin+plotH*.22,t:specDims[xKey].opposite+' + '+specDims[yKey].label},
+    {x:margin+plotW*.75,y:margin+plotH*.78,t:specDims[xKey].label+' + '+specDims[yKey].opposite},
+    {x:margin+plotW*.25,y:margin+plotH*.78,t:specDims[xKey].opposite+' + '+specDims[yKey].opposite},
+  ];
+  ctx.font='bold 12px system-ui,"Microsoft YaHei",sans-serif';
+  for(const q of quadrants){
+    const tw=ctx.measureText(q.t).width;
+    ctx.fillStyle='rgba(8,8,24,.85)';ctx.fillRect(q.x-tw/2-8,q.y-9,tw+16,20);
+    ctx.strokeStyle='rgba(255,255,255,.1)';ctx.lineWidth=.5;ctx.strokeRect(q.x-tw/2-8,q.y-9,tw+16,20);
+    ctx.fillStyle='#e2e8f0';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(q.t,q.x,q.y+1);
+  }
+  // Hover detection
+  canvas.onmousemove=function(e){
+    const rect=canvas.getBoundingClientRect();
+    const mx=e.clientX-rect.left,my=e.clientY-rect.top;
+    let found=null;
+    for(const [id,pos] of posMap){
+      if(Math.hypot(mx-pos.x,my-pos.y)<pos.r+12){found=all.find(p=>p.id===id);break}
+    }
+    canvas.style.cursor=found?'pointer':'default';
+    canvas.title=found?found.name+' — '+specDims[xKey].label+':'+specScores[found.id][xKey]+'/10 '+specDims[yKey].label+':'+specScores[found.id][yKey]+'/10':'';
+  };
+  canvas.onclick=function(e){
+    const rect=canvas.getBoundingClientRect();
+    const mx=e.clientX-rect.left,my=e.clientY-rect.top;
+    for(const [id,pos] of posMap){
+      if(Math.hypot(mx-pos.x,my-pos.y)<pos.r+12){
+        const n=simData.allNodes.find(x=>x.id===id);
+        if(n){switchView('star');setTimeout(()=>openDetailPanel(n),400)}return;
+      }
+    }
+  };
+}
+window.addEventListener('resize',()=>{if(currentView==='spectrum')renderSpectrum()});
+
+init();
+</script>
+</body>
+</html>
