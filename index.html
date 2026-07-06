@@ -136,13 +136,18 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
 #detail-panel .dp-close:hover{background:rgba(239,68,68,.15);border-color:rgba(239,68,68,.3);color:#f87171}
 #detail-panel .dp-export{position:absolute;top:18px;right:62px;z-index:2;width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);color:#94a3b8;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .25s}
 #detail-panel .dp-export:hover{background:rgba(129,140,248,.15);border-color:rgba(129,140,248,.3);color:#a5b4fc}
-#dp-fs-btn{position:absolute;top:18px;right:106px;z-index:2;width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);color:#94a3b8;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;transition:all .25s}
-#dp-fs-btn:hover{background:rgba(129,140,248,.15);border-color:rgba(129,140,248,.3);color:#a5b4fc}
 #detail-panel .dp-scroll{flex:1;overflow-y:auto;padding:32px 28px 48px;scroll-behavior:smooth;overscroll-behavior:contain}
 #detail-panel .dp-scroll::-webkit-scrollbar{width:4px}
 #detail-panel .dp-scroll::-webkit-scrollbar-track{background:transparent}
 #detail-panel .dp-scroll::-webkit-scrollbar-thumb{background:rgba(255,255,255,.06);border-radius:2px}
 
+/* Font size selector */
+.dp-fs-row{display:flex;align-items:center;gap:6px;margin-left:auto}
+#time-bar .dp-fs-row .dp-fs-label{font-size:10px;color:#64748b;letter-spacing:.3px}
+.dp-fs-btns{display:flex;gap:1px;border-radius:6px;overflow:hidden;border:1px solid rgba(255,255,255,.08)}
+.dp-fs-btn{padding:2px 8px;border:none;background:rgba(255,255,255,.04);color:#94a3b8;cursor:pointer;font-family:inherit;font-size:11px;transition:all .2s;line-height:1.5}
+.dp-fs-btn:hover{background:rgba(255,255,255,.08);color:#e2e8f0}
+.dp-fs-btn.active{background:rgba(129,140,248,.2);color:#c7d2fe;font-weight:600}
 /* Hero */
 .dp-hero{text-align:center;margin-bottom:24px}
 .dp-portrait{width:96px;height:96px;border-radius:50%;margin:0 auto 16px;display:flex;align-items:center;justify-content:center;font-size:40px;font-weight:700;position:relative;border:2.5px solid rgba(255,255,255,.2);transition:all .3s;overflow:hidden}
@@ -343,6 +348,8 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
   #time-bar{bottom:8px;padding:10px 10px 8px;width:96vw;border-radius:12px}
   #time-bar .time-label{font-size:10px}
   #time-bar .time-hint{display:none}
+  #time-bar .dp-fs-row .dp-fs-label{display:none}
+  #time-bar .dp-fs-btn{padding:1px 5px;font-size:10px}
   #time-bar .time-track-wrap{height:28px;margin:0 2px}
   #time-bar .time-header{margin-bottom:4px}
   #time-bar input[type="range"]{height:28px}
@@ -645,7 +652,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
   <div class="dp-accent"></div>
   <button class="dp-close" title="关闭">✕</button>
   <button class="dp-export" title="导出 Markdown">⬇</button>
-  <button class="dp-fs-btn" id="dp-fs-btn" title="切换字号">A</button>
   <div class="dp-scroll">
     <!-- Hero -->
     <div class="dp-hero">
@@ -822,6 +828,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
   <div class="time-header">
     <div class="time-label"><span>⏳</span>时代筛选</div>
     <div class="time-hint">拖拽滑块筛选思想家</div>
+    <div class="dp-fs-row"><span class="dp-fs-label">字号</span><div class="dp-fs-btns"><button class="dp-fs-btn" data-size="small">小</button><button class="dp-fs-btn active" data-size="medium">中</button><button class="dp-fs-btn" data-size="large">大</button></div></div>
   </div>
   <div class="time-track-wrap">
     <div class="time-eras">
@@ -1041,18 +1048,15 @@ filterOverlay.addEventListener('click',()=>{filterPanel.classList.remove('mob-op
 resetFilters=((orig)=>function(){orig();if(window.innerWidth<=768){filterPanel.classList.remove('mob-open');filterOverlay.classList.remove('show')}})(resetFilters);
 // Font size
 (function(){
-  var dpBtn=document.getElementById('dp-fs-btn'),sizes=['small','medium','large'];
+  var btns=document.querySelectorAll('.dp-fs-btn');
   function setSize(sz){
     document.documentElement.setAttribute('data-font-size',sz);
-    if(dpBtn)dpBtn.style.opacity=sz==='large'?'1':'.6';
+    btns.forEach(function(b){b.classList.toggle('active',b.dataset.size===sz)});
     try{localStorage.setItem('philomap-font-size',sz)}catch(e){}
   }
   var saved=function(){try{return localStorage.getItem('philomap-font-size')}catch(e){return null}}()||'medium';
+  btns.forEach(function(b){b.addEventListener('click',function(){setSize(b.dataset.size)})});
   setSize(saved);
-  if(dpBtn)dpBtn.addEventListener('click',function(){
-    var cur=document.documentElement.getAttribute('data-font-size')||'medium';
-    setSize(sizes[(sizes.indexOf(cur)+1)%sizes.length]);
-  });
 })();
 
 function buildFilterPanel(data){
