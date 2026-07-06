@@ -142,10 +142,10 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
 #detail-panel .dp-scroll::-webkit-scrollbar-thumb{background:rgba(255,255,255,.06);border-radius:2px}
 
 /* Font size selector */
-.dp-fs-row{display:flex;align-items:center;gap:6px;margin-left:auto}
-#time-bar .dp-fs-row .dp-fs-label{font-size:10px;color:#64748b;letter-spacing:.3px}
-.dp-fs-btns{display:flex;gap:1px;border-radius:6px;overflow:hidden;border:1px solid rgba(255,255,255,.08)}
-.dp-fs-btn{padding:2px 8px;border:none;background:rgba(255,255,255,.04);color:#94a3b8;cursor:pointer;font-family:inherit;font-size:11px;transition:all .2s;line-height:1.5}
+.dp-fs-row{display:flex;align-items:center;justify-content:center;gap:8px;margin:18px 0 6px;padding:8px 0;border-top:1px solid rgba(255,255,255,.04);border-bottom:1px solid rgba(255,255,255,.04)}
+.dp-fs-label{font-size:11px;color:#64748b;letter-spacing:.5px}
+.dp-fs-btns{display:flex;gap:2px;border-radius:6px;overflow:hidden;border:1px solid rgba(255,255,255,.08)}
+.dp-fs-btn{padding:3px 12px;border:none;background:rgba(255,255,255,.04);color:#94a3b8;cursor:pointer;font-family:inherit;font-size:12px;transition:all .2s;line-height:1.5}
 .dp-fs-btn:hover{background:rgba(255,255,255,.08);color:#e2e8f0}
 .dp-fs-btn.active{background:rgba(129,140,248,.2);color:#c7d2fe;font-weight:600}
 /* Hero */
@@ -320,7 +320,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
   #filter-panel.collapsed{transform:translateX(-100%);opacity:1;pointer-events:auto}
   #filter-panel.mob-open{transform:translateX(0)}
   #filter-toggle{display:none}
-  #mob-filter-btn{display:flex;bottom:160px}
+  #mob-filter-btn{display:flex}
 
   /* Detail */
   #detail-panel{width:100vw;border-radius:16px 0 0 16px}
@@ -348,8 +348,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
   #time-bar{bottom:8px;padding:10px 10px 8px;width:96vw;border-radius:12px}
   #time-bar .time-label{font-size:10px}
   #time-bar .time-hint{display:none}
-  #time-bar .dp-fs-row .dp-fs-label{display:none}
-  #time-bar .dp-fs-btn{padding:1px 5px;font-size:10px}
   #time-bar .time-track-wrap{height:28px;margin:0 2px}
   #time-bar .time-header{margin-bottom:4px}
   #time-bar input[type="range"]{height:28px}
@@ -663,6 +661,9 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
       <div class="dp-influence"><span>影响力</span><div class="dp-stars"></div></div>
     </div>
 
+    <!-- Font size -->
+    <div class="dp-fs-row"><span class="dp-fs-label">字号</span><div class="dp-fs-btns"><button class="dp-fs-btn" data-size="small">小</button><button class="dp-fs-btn active" data-size="medium">中</button><button class="dp-fs-btn" data-size="large">大</button></div></div>
+
     <!-- Quote -->
     <div class="dp-quote-block">
       <div class="dp-quote-text"></div>
@@ -828,7 +829,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
   <div class="time-header">
     <div class="time-label"><span>⏳</span>时代筛选</div>
     <div class="time-hint">拖拽滑块筛选思想家</div>
-    <div class="dp-fs-row"><span class="dp-fs-label">字号</span><div class="dp-fs-btns"><button class="dp-fs-btn" data-size="small">小</button><button class="dp-fs-btn active" data-size="medium">中</button><button class="dp-fs-btn" data-size="large">大</button></div></div>
   </div>
   <div class="time-track-wrap">
     <div class="time-eras">
