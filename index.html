@@ -1075,7 +1075,7 @@ function applyAllFilters(){
 // ═══════════════ DETAIL PANEL ═══════════════
 function lf(d,f){return lang==='en'&&d[f+'En']?d[f+'En']:d[f]}
 function openDetailPanel(d){
-  selectedNode=d;const c=civColors[d.civilization]||civColors.western,data=dataRef;
+  selectedNode=d;tooltip.style.opacity=0;const c=civColors[d.civilization]||civColors.western,data=dataRef;
   const panel=detailPanel,scroll=panel.querySelector('.dp-scroll');
   // Accent bar
   panel.querySelector('.dp-accent').style.background=`linear-gradient(180deg,${c.color},${c.glow})`;
