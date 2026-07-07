@@ -302,6 +302,60 @@
       "development": "管仲先驱→商鞅变法实践→申不害术治→韩非子集大成→影响两千年帝制。",
       "nameEn": "Legalism",
       "descriptionEn": "Ancient Chinese political philosophy advocating rule by law and institutional power."
+    },
+    {
+      "id": "skepticism",
+      "name": "怀疑论",
+      "civilization": "western",
+      "description": "皮浪创立，主张对一切事物的真实本质悬搁判断（epoche），因为感官不可靠、理性也无能为力。达到悬搁后心灵便进入不动心（ataraxia）的宁静状态，这是最高的善。",
+      "development": "皮浪创立（随亚历山大大帝东征接触到印度哲学可能对其有影响）→ 蒂蒙继承 → 中期学园派（阿尔克西劳）→ 晚期学园派（卡尔内亚德）→ 恩培里柯系统总结。怀疑论通过塞克斯都·恩培里柯的著作保存下来，深刻影响了蒙田、休谟和现代科学哲学。",
+      "nameEn": "Skepticism",
+      "descriptionEn": "Philosophical school founded by Pyrrho, advocating suspension of judgment (epoche) to achieve tranquility (ataraxia)."
+    },
+    {
+      "id": "cynicism",
+      "name": "犬儒学派",
+      "civilization": "western",
+      "description": "安提斯泰尼创立、第欧根尼发扬光大的哲学流派，主张极简生活、回归自然、蔑视社会习俗和物质欲望。\"犬儒\"（kyon=狗）得名于其信徒像狗一样生活——在公共场合吃喝、睡觉、交配，毫不掩饰。",
+      "development": "安提斯泰尼（苏格拉底弟子，创立犬儒学派）→ 第欧根尼（标志性人物，住木桶、白天打灯笼找真人）→ 克拉特斯（传承）→ 通过斯多亚学派（芝诺受犬儒深刻影响）传入主流哲学。现代意义上的\"犬儒主义\"（玩世不恭）已偏离原旨。",
+      "nameEn": "Cynicism",
+      "descriptionEn": "Ancient Greek school advocating extreme simplicity, shamelessness, and criticism of social conventions."
+    },
+    {
+      "id": "pragmatism",
+      "name": "实用主义",
+      "civilization": "western",
+      "description": "美国土生土长的哲学流派，主张一个概念的意义在于它的实际效果。思想是行动的指南，真理是\"行之有效\"的假设。拒绝追求绝对真理，关注现实问题的解决。",
+      "development": "皮尔士（实用主义创始人，意义即效果）→ 詹姆斯（真理即有用，宗教经验多样化）→ 杜威（工具主义、教育哲学、实验主义）→ 奎因（实用主义与分析哲学融合）→ 罗蒂（新实用主义）。实用主义深刻影响了美国的教育学、法学和社会科学。",
+      "nameEn": "Pragmatism",
+      "descriptionEn": "American philosophical tradition holding that meaning and truth are found in practical consequences."
+    },
+    {
+      "id": "philosophy-of-science",
+      "name": "科学哲学",
+      "civilization": "western",
+      "description": "探讨科学的基础、方法和逻辑结构的哲学分支。核心问题包括：科学与非科学的划界标准是什么？科学理论如何被验证？科学革命如何发生？",
+      "development": "维也纳学派（逻辑实证主义）→ 波普尔（证伪主义）→ 库恩（科学革命、范式理论）→ 拉卡托斯（研究纲领）→ 费耶阿本德（无政府主义知识论）。科学哲学在20世纪成为独立的哲学分支，深刻影响了科学史和科学社会学。",
+      "nameEn": "Philosophy of Science",
+      "descriptionEn": "Branch of philosophy examining the foundations, methods, and implications of science."
+    },
+    {
+      "id": "mohism",
+      "name": "墨家",
+      "civilization": "eastern",
+      "description": "墨子创立的战国显学，与儒家并称\"儒墨显学\"。核心主张：兼爱（无差等的爱）、非攻（反对侵略战争）、尚贤（任人唯贤）、天志（天有意志赏善罚恶）、明鬼（相信鬼神存在）、节葬/节用（反对儒家厚葬和礼乐繁缛）。",
+      "development": "墨子创立 → 墨家发展为有严格组织（巨子制度）的学术团体 → 后期墨家发展出中国最早的逻辑学（墨辩）和科学思想（光学、力学）→ 汉代独尊儒术后墨家衰落→ 近代梁启超、胡适重新发掘墨学价值。墨子是中国古代唯一有宗教色彩的哲学体系。",
+      "nameEn": "Mohism",
+      "descriptionEn": "Ancient Chinese philosophical school advocating universal love, meritocracy, and pacifism."
+    },
+    {
+      "id": "military-strategy",
+      "name": "兵家",
+      "civilization": "eastern",
+      "description": "研究战争规律和战略战术的学派，将军事实践上升到哲学高度。孙子提出\"不战而屈人之兵\"的全胜思想和\"知己知彼，百战不殆\"的认识论原则，将战争视为关乎国家存亡的大事。",
+      "development": "孙子（《孙子兵法》，兵家经典）→ 吴起（《吴子》）→ 孙膑（《孙膑兵法》）→ 历代兵书不断丰富。孙子兵法不仅是中国军事思想的巅峰，更是全球最具影响力的战略哲学著作，被广泛应用于商业、管理和国际关系领域。",
+      "nameEn": "Military Strategy",
+      "descriptionEn": "Ancient Chinese strategic philosophy treating war as a rational, calculable activity guided by principle."
     }
   ],
   "eras": [
@@ -398,6 +452,22 @@
       "name": "战国",
       "period": "公元前475—前221年，春秋之后的战国时期，百家争鸣后期。",
       "nameEn": "Warring States"
+    },
+    {
+      "id": "tang",
+      "name": "唐代",
+      "start": 618,
+      "end": 907,
+      "civilization": "eastern",
+      "nameEn": "Tang Dynasty"
+    },
+    {
+      "id": "song",
+      "name": "宋辽金",
+      "start": 960,
+      "end": 1279,
+      "civilization": "eastern",
+      "nameEn": "Song Dynasty"
     }
   ],
   "relationshipTypes": [
@@ -11100,6 +11170,2898 @@
       "scientificEvalEn": "Nagarjuna's philosophical contributions, while primarily in the humanities, have had cross-disciplinary impact. Their methods and insights continue to be referenced in contemporary academic discourse across multiple fields.",
       "aiReviewEn": "Nagarjuna is a key figure in Buddhism. With an influence rating of 8/10, Nagarjuna's ideas continue to shape contemporary philosophical discourse. Their work raises fundamental questions about human existence, knowledge, and values that remain relevant today.",
       "anecdoteEn": "An interesting detail about Nagarjuna: their life and work continue to inspire new interpretations and scholarly debate, reflecting the enduring relevance of their philosophical vision."
+    },
+    {
+      "id": "zeno",
+      "name": "芝诺",
+      "nameEn": "Zeno of Elea",
+      "birth": -490,
+      "death": -430,
+      "nationality": "古希腊（埃利亚）",
+      "nationalityEn": "Ancient Greece (Elea)",
+      "portrait": "",
+      "civilization": "western",
+      "school": "eleatic",
+      "era": "ancient-greek",
+      "role": "哲学家，辩证法大师",
+      "influence": 7,
+      "summary": "芝诺是埃利亚学派的核心成员，巴门尼德的学生。他以一系列著名的悖论（芝诺悖论）捍卫老师的'存在是一'的理论，通过归谬法证明运动、变化和多样性在逻辑上是不可能的。他的悖论——阿喀琉斯追不上龟、飞矢不动、二分法悖论等——揭示了我们日常经验与逻辑推理之间的深刻矛盾。亚里士多德称芝诺是'辩证法的发明者'。芝诺悖论直到两千多年后才被极限理论和无穷级数所解答，但仍在当代数学哲学和物理学（量子芝诺效应）中引发讨论。",
+      "summaryEn": "Zeno of Elea was a pre-Socratic philosopher and the most famous student of Parmenides. He created a series of paradoxes—Achilles and the Tortoise, the Dichotomy, the Arrow—to argue that motion, change, and plurality are logically impossible. Aristotle called him the inventor of dialectic.",
+      "representativeWorks": [
+        {
+          "title": "芝诺悖论",
+          "type": "论辩",
+          "year": -450,
+          "content": "以归谬法论证运动和多样性不可能的四五十个论证，留存至今的主要有四个（阿喀琉斯与龟、二分法、飞矢不动、运动场）。",
+          "titleEn": "Zeno's Paradoxes",
+          "contentEn": "Arguments against motion and plurality using reductio ad absurdum. Only a few survive through Aristotle's Physics."
+        }
+      ],
+      "coreThoughts": [
+        {
+          "concept": "阿喀琉斯追不上龟",
+          "desc": "阿喀琉斯（快跑者）让乌龟先跑一段距离，然后去追。要追上乌龟，他必须先到达乌龟的起点；但当他到达时，乌龟已经往前移动了一段；如此无限重复，阿喀琉斯永远追不上乌龟。",
+          "l1": "快的东西永远追不上慢的东西？——这是悖论让你怀疑常识。",
+          "l2": "就像你永远数不完无穷多个点才能到达终点——可你明明一步就走到了。",
+          "l3": "这个悖论揭示了连续性（continuum）的深刻奥秘。直到19世纪极限理论（无穷级数收敛）才'解决'了它：阿喀琉斯确实需要在有限时间内经过无穷多个点，但无穷级数的和是有限的。然而对于芝诺来说，他正是要证明如果存在运动就会导致这样的逻辑矛盾，所以运动是不可能的。",
+          "conceptEn": "Achilles and the Tortoise",
+          "descEn": "Swift Achilles can never catch the tortoise because each time he reaches where the tortoise was, it has moved ahead—an infinite regress requiring an infinite number of steps in finite time.",
+          "l1En": "Common sense and logic conflict: we see motion every day, but can logic prove it impossible?",
+          "l2En": "The paradox wasn't fully resolved until the 19th-century development of limits and convergent infinite series.",
+          "l3En": "The mathematical solution (finite sum of an infinite series) shows that Zeno was actually asking a profound question about the nature of continuity—one that still resonates in philosophy of physics today."
+        },
+        {
+          "concept": "飞矢不动",
+          "desc": "飞行中的箭在每一瞬间都占据一个与自身相等的空间位置，因此在每一瞬间都是静止的。既然时间由无数个这样的'现在'组成，那么箭在每一刻都不动，所以飞矢实际上是静止的。",
+          "l1": "一支飞行的箭，在任何一个瞬间都是静止的——那么运动从哪里来？",
+          "l2": "像电影胶片——每一帧都是静止的，但连续播放就有了运动。芝诺说：连续播放也不能改变每一帧都是静止的事实。",
+          "l3": "这个悖论触及了时间的本质：如果时间由不可分的'瞬间'构成，那么运动在每一瞬间都没有发生。柏格森后来用'绵延'（durée）的概念回应：时间不是离散的点的序列，而是连续的流。现代量子力学则发现，在足够小的尺度上，时间确实可能不是连续的——芝诺的直觉或许没有全错。",
+          "conceptEn": "The Arrow",
+          "descEn": "At any instant, a flying arrow occupies a space equal to itself, so at every instant it is at rest. Since time is composed of instants, the arrow is always at rest.",
+          "l1En": "The arrow paradox questions whether motion can exist if time is composed of discrete moments.",
+          "l2En": "Henri Bergson's response: time is qualitative duration (durée), not a discrete series of points.",
+          "l3En": "Modern physics: the Planck time suggests there may indeed be a fundamental 'grain' to time. Zeno's paradox, rather than being a mere logical trick, anticipates deep questions about the nature of spacetime."
+        }
+      ],
+      "famousEvents": [
+        {
+          "title": "发明辩证法",
+          "year": -450,
+          "desc": "亚里士多德记载芝诺发明了辩证法——通过归谬法（假设对方观点为真→推出矛盾→证明对方观点不可成立），成为后世逻辑论辩的典范。",
+          "titleEn": "Invented Dialectic",
+          "descEn": "Aristotle credits Zeno with inventing dialectic—arguing by reductio ad absurdum."
+        }
+      ],
+      "scientificEval": "芝诺悖论直接促成了极限理论和微积分的严格化。柯西、魏尔斯特拉斯等人在19世纪对无穷级数和极限的严格定义，本质上是在回应芝诺提出的连续性难题。量子芝诺效应（Quantum Zeno Effect）——频繁观测会阻止量子态演化——更是让芝诺的名字载入物理学词典。",
+      "thoughtEvolution": "芝诺是巴门尼德最钟爱的学生。他随老师从埃利亚来到雅典，在一次讲座中提出了自己的悖论。他的一生都在为老师的'存在是一不是多'做辩护，但他的悖论的影响远远超出了这个目的，成为后世数学和哲学的重要议题。据传芝诺曾参与反对僭主的政治活动，最终被捕并处决。",
+      "aiReview": "芝诺是人类历史上第一个真正意义上的'智力恐怖分子'——他用逻辑制造了认知上的不可解困境。某种意义上他是幸运的：他活在连续性和无穷还没有被严格定义的时代，那时悖论还能保持完全的杀伤力。今天数学'解决'了芝诺悖论，但仔细想想，数学的解不过是用一套语言替换了另一套——芝诺真正触及的是经验与逻辑之间的永恒裂痕。",
+      "goldenQuotes": [
+        {
+          "text": "如果存在是多，那么它既是有限的又是无限的——这是不可能的。",
+          "source": "芝诺残篇",
+          "textEn": "If there are many things, they must be both limited and unlimited — which is impossible.",
+          "sourceEn": "Zeno's fragment"
+        }
+      ],
+      "anecdote": "芝诺曾因参与推翻僭主的密谋被捕。据传他在审讯中咬掉了僭主的耳朵，最终被处决。他的死法也极其哲学：被放入石臼中捣死——一种缓慢而暴力的处决方式。",
+      "relationships": [
+        {
+          "target": "parmenides",
+          "type": "teacher-student",
+          "strength": 10,
+          "description": "芝诺是巴门尼德最忠实的弟子，用悖论为老师的'存在是一'辩护"
+        },
+        {
+          "target": "socrates",
+          "type": "influence",
+          "strength": 5,
+          "description": "芝诺的辩证法和归谬推理影响了苏格拉底的诘问法"
+        },
+        {
+          "target": "aristotle",
+          "type": "influence",
+          "strength": 6,
+          "description": "亚里士多德在《物理学》中记载和回应了芝诺悖论，是最早的严肃讨论"
+        }
+      ],
+      "furtherReading": [
+        {
+          "title": "《物理学》",
+          "desc": "亚里士多德，第6卷记载芝诺悖论",
+          "type": "book"
+        }
+      ],
+      "layers": {
+        "L2_era": {
+          "timeline": [],
+          "decisiveMoments": [],
+          "travelMap": []
+        },
+        "L3_philosophy": {
+          "conceptNetwork": [],
+          "threeLevelReading": [],
+          "problemMatrix": []
+        },
+        "L4_evolution": {
+          "thoughtPeriods": [],
+          "turningPoints": []
+        },
+        "L6_debates": {
+          "confrontations": [],
+          "spectrumPosition": {}
+        },
+        "L7_legacy": {
+          "influenceMap": [],
+          "contemporaryApplications": []
+        }
+      }
+    },
+    {
+      "id": "pyrrho",
+      "name": "皮浪",
+      "nameEn": "Pyrrho",
+      "birth": -360,
+      "death": -270,
+      "nationality": "古希腊（伊利斯）",
+      "nationalityEn": "Ancient Greece (Elis)",
+      "portrait": "",
+      "civilization": "western",
+      "school": "skepticism",
+      "era": "ancient-greek",
+      "role": "哲学家，怀疑论创始人",
+      "influence": 7,
+      "summary": "皮浪是古希腊怀疑论（皮浪主义）的创始人，也是西方哲学史上最彻底地实践自己哲学的人。他认为事物的真实本质不可知，因此最明智的态度是'悬搁判断'（epochē）——对任何命题都不肯定也不否定。通过悬搁判断，心灵达到'不动心'（ataraxia）的宁静状态，这便是最高的幸福。皮浪本人将这哲学践行到极致：他不躲避任何危险（马车、悬崖、疯狗），朋友时刻跟着保护他——因为他认为不能确定这些是否真的危险。第欧根尼·拉尔修记载，有次皮浪面对风暴在船上淡定吃猪肉，说'猪都不怕，我何必要怕？'",
+      "summaryEn": "Pyrrho of Elis was the founder of ancient Greek skepticism (Pyrrhonism). He argued that since the true nature of things is unknowable, the wise person suspends judgment (epoche), achieving tranquility (ataraxia). His radical consistency in living his philosophy made him a legendary figure.",
+      "representativeWorks": [
+        {
+          "title": "皮浪学说",
+          "type": "语录",
+          "year": -300,
+          "content": "皮浪本人未著书，其学说主要通过弟子蒂蒙的著作和后来塞克斯都·恩培里柯的《皮浪主义概要》保存。",
+          "titleEn": "Pyrrhonism",
+          "contentEn": "Pyrrho wrote nothing. His teachings survive through his student Timon and Sextus Empiricus's Outlines of Pyrrhonism."
+        }
+      ],
+      "coreThoughts": [
+        {
+          "concept": "悬搁判断",
+          "desc": "对一切事物的真实本质，我们既不能肯定也不能否定，因为感官和理性都不可靠。正确的态度是不做任何判断（epochē），保持心灵的开放。",
+          "l1": "不要急着下结论——你看到的未必是真的，你想的也未必是对的。",
+          "l2": "就像你看到一根棍子在水里是弯的，拿出来是直的——它到底是弯的还是直的？也许最好的回答是'我不知道'。",
+          "l3": "悬搁不是消极的放弃判断，而是一种主动的、有意识的认识论选择。皮浪发现：任何命题都有同等有力的反面论证（isostheneia）。既然无法裁决，不如悬搁。而悬搁之后意外地获得了心灵的宁静——这是皮浪主义的核心洞见：幸福不在真理中，而在放弃对真理的执着中。",
+          "conceptEn": "Suspension of Judgment (Epoche)",
+          "descEn": "Since neither sense perception nor reason can deliver certainty, the wise person refrains from all judgment about the true nature of things.",
+          "l1En": "Don't jump to conclusions — appearances can deceive, and reason can contradict itself.",
+          "l2En": "The same wind feels cold to one person and warm to another. Who is right? Maybe the wise answer is: I don't know.",
+          "l3En": "Epoche is not passive indecision but an active philosophical choice. Pyrrho noticed that for every argument there is an equally compelling counterargument. Suspending judgment leads unexpectedly to mental tranquility — happiness lies not in finding truth but in relinquishing the demand for certainty."
+        },
+        {
+          "concept": "不动心",
+          "desc": "当不再执着于判断事物的真假好坏，心灵便获得了内在的宁静（ataraxia）。这是皮浪主义的终极目标——不是真理，而是安宁。",
+          "l1": "与其非要分出个对错，不如让自己平静下来。",
+          "l2": "就像你纠结一部电影的结局到底是什么意思——放下纠结，反而轻松了。",
+          "l3": "皮浪的独特之处：ataraxia（不动心）不是通过追求快乐或美德达到的，而是通过认识论的放弃。这是一个悖论式的路径——你越追求确定性，越焦虑；你越接受不确定性，越安宁。后来斯多亚学派和伊壁鸠鲁学派也追求ataraxia，但只有皮浪主义是通过悬搁判断而非通过理性认知来达到它。",
+          "conceptEn": "Tranquility (Ataraxia)",
+          "descEn": "By suspending judgment about the true nature of things, one achieves a state of undisturbed calm — not as a separate goal, but as a natural consequence of epoche.",
+          "l1En": "Stop chasing certainty, and peace follows naturally.",
+          "l2En": "The more you insist on knowing what's really true, the more anxious you become. Let go of the need to know.",
+          "l3En": "Pyrrho's innovation: ataraxia comes not through achieving virtue or pleasure, but through epistemological surrender. Unlike the Stoics (who use reason) or Epicureans (who use pleasure), Pyrrhonists achieve peace by refusing to commit to any view at all."
+        }
+      ],
+      "famousEvents": [
+        {
+          "title": "随亚历山大大帝东征",
+          "year": -327,
+          "desc": "皮浪随亚历山大大帝的军队远征印度。据传他接触了印度的裸形外道（可能是耆那教或怀疑论者），东方哲学的影响可能深化了他的怀疑论。",
+          "titleEn": "Traveled with Alexander to India",
+          "descEn": "Pyrrho accompanied Alexander the Great's expedition to India, where exposure to Eastern philosophy may have influenced his skepticism."
+        }
+      ],
+      "scientificEval": "皮浪的怀疑论通过塞克斯都·恩培里柯的著作在文艺复兴时期重新被发现，直接影响了蒙田的《随笔》和笛卡尔的'方法论怀疑'。休谟的经验主义怀疑论是皮浪主义的近代复兴。现代科学哲学中，皮浪式的'悬搁'与胡塞尔的现象学方法有结构上的相似。",
+      "thoughtEvolution": "皮浪最初是一个画家，后来在哲学上受到德谟克利特的原子论和麦加拉学派辩证法的影响。他在随亚历山大东征后在印度获得了新的思想资源，回到伊利斯后开始教学。他的生活极端简朴，他的学说以口头方式传承。",
+      "aiReview": "皮浪的重要性不在于他的结论（什么都不可知），而在于他的方法——悬搁判断作为一种认识论策略，至今仍在对抗教条主义。有趣的是，皮浪主义有一个内在矛盾：'我什么都不能确定'——这个命题本身是不是确定的？皮浪主义者对此不慌不忙地表示：我们也不确定这一点。这恰恰证明了他们的彻底性。",
+      "goldenQuotes": [
+        {
+          "text": "不做任何判断，保持心灵不动。",
+          "source": "第欧根尼·拉尔修《名哲言行录》转述",
+          "textEn": "Nothing matters; I do not determine; everything is indifferent.",
+          "sourceEn": "Attributed by Diogenes Laertius"
+        },
+        {
+          "text": "没有任何事物本身是美的或丑的、正当的或不正当的——一切都只是习俗和习惯。",
+          "source": "皮浪学说",
+          "textEn": "Nothing is in itself beautiful or ugly, just or unjust — everything is a matter of custom and habit.",
+          "sourceEn": "Pyrrhonic doctrine"
+        }
+      ],
+      "anecdote": "皮浪的牛是出了名的：有次他的老师阿那克萨尔科掉进了泥沟，皮浪径直走过也不拉一把。众人责备他见死不救，阿那克萨尔科却称赞他'对一切都不动心'的彻底践行。还有一次皮浪面对一条疯狗，朋友们吓坏了，皮浪说'人尚且分不清好坏，何况狗？——它可能不是疯的呢。'",
+      "relationships": [
+        {
+          "target": "democritus",
+          "type": "influence",
+          "strength": 5,
+          "description": "皮浪的怀疑论部分受到德谟克利特关于感官不可靠观点的影响"
+        },
+        {
+          "target": "socrates",
+          "type": "influence",
+          "strength": 5,
+          "description": "苏格拉底'我知道我一无所知'是皮浪怀疑论的精神先驱"
+        }
+      ],
+      "furtherReading": [
+        {
+          "title": "《皮浪主义概要》",
+          "desc": "塞克斯都·恩培里柯，怀疑论最系统的经典文本",
+          "type": "book"
+        }
+      ],
+      "layers": {
+        "L2_era": {
+          "timeline": [],
+          "decisiveMoments": [],
+          "travelMap": []
+        },
+        "L3_philosophy": {
+          "conceptNetwork": [],
+          "threeLevelReading": [],
+          "problemMatrix": []
+        },
+        "L4_evolution": {
+          "thoughtPeriods": [],
+          "turningPoints": []
+        },
+        "L6_debates": {
+          "confrontations": [],
+          "spectrumPosition": {}
+        },
+        "L7_legacy": {
+          "influenceMap": [],
+          "contemporaryApplications": []
+        }
+      }
+    },
+    {
+      "id": "diogenes",
+      "name": "第欧根尼",
+      "nameEn": "Diogenes of Sinope",
+      "birth": -412,
+      "death": -323,
+      "nationality": "古希腊（锡诺普）",
+      "nationalityEn": "Ancient Greece (Sinope)",
+      "portrait": "",
+      "civilization": "western",
+      "school": "cynicism",
+      "era": "ancient-greek",
+      "role": "哲学家，犬儒学派标志人物",
+      "influence": 6,
+      "summary": "第欧根尼是古希腊犬儒学派最具标志性的人物，将简朴生活推向极致。他住在一个木桶里，以乞讨为生，当街吃喝如厕，毫不理睬社会规范。他的哲学不是写在纸上而是活出来的：通过极端的行为展示文明生活的荒谬，告诉人们'幸福不是拥有很多，而是需要很少'。最著名的故事是亚历山大大帝来访，问他想要求什么赏赐，第欧根尼只说了一句：'请不要挡住我的阳光。'他白天提着灯笼在雅典街头走，别人问他找什么，他说：'我在找一个真人。'",
+      "summaryEn": "Diogenes of Sinope was the most famous Cynic philosopher, known for living in a barrel, begging, and publicly flouting social conventions. His radical lifestyle was his philosophy: happiness comes not from having much but from needing little. To Alexander the Great's offer of anything he desired, Diogenes replied, 'Stand out of my sunlight.'",
+      "representativeWorks": [
+        {
+          "title": "第欧根尼言行录",
+          "type": "语录",
+          "year": -350,
+          "content": "第欧根尼本人可能写过一些对话和悲剧，但全部失传。他的生平和思想主要保存在第欧根尼·拉尔修的《名哲言行录》中。",
+          "titleEn": "Sayings of Diogenes",
+          "contentEn": "Diogenes' writings (dialogues and tragedies) are all lost. His life and teachings are preserved mainly through Diogenes Laertius's Lives of the Philosophers."
+        }
+      ],
+      "coreThoughts": [
+        {
+          "concept": "自然生活",
+          "desc": "文明和习俗使人堕落。回归自然，像动物一样生活，才是真正幸福的生活方式。动物不需要钱、房子、衣服或社会礼仪——人也不需要。",
+          "l1": "人需要的其实很少——是文明让你以为自己需要很多。",
+          "l2": "像一个野猫——它不需要名牌、不用考虑面子、不用遵守餐桌礼仪——但它活得比大多数人都开心。",
+          "l3": "犬儒（cynic）这个词来自希腊语kyon（狗）。第欧根尼欣然接受这个称呼：狗在公共场所吃喝拉撒，睡在露天，不羞耻、不虚伪、忠于自己的本能。人类用'文明'包装了太多不必要的欲望——这是第欧根尼用一生在表演的真理。",
+          "conceptEn": "Life According to Nature",
+          "descEn": "Civilization and social conventions corrupt human nature. True happiness comes from living like animals — without possessions, shame, or artificial needs.",
+          "l1En": "Humans need very little — civilization creates artificial desires that make us miserable.",
+          "l2En": "Watch a stray dog: it doesn't need brands, status, or etiquette, yet it lives more happily than most humans.",
+          "l3En": "Cynic (kyon = dog) was not an insult to Diogenes but a badge of honor. Dogs eat, sleep, and defecate in public without shame or hypocrisy. They are loyal to their nature. Human 'civilization' has layered unnatural conventions on top of simple needs — Diogenes spent his life tearing away those layers."
+        },
+        {
+          "concept": "无耻即自由",
+          "desc": "社会规范本质上是一种控制。打破它，你就自由了。当众做别人私下做的事——吃饭、排泄、性——是第欧根尼用来证明社会规范不过是虚伪偏见的行为艺术。",
+          "l1": "你所谓的'羞耻'其实是别人教你的——甩掉它，你就自由了。",
+          "l2": "既然吃饭和上厕所在家里可以，在广场上为什么不可以？——第欧根尼就是这么活的。",
+          "l3": "第欧根尼的行为不是动物性的粗野，而是精心设计的社会批判。他意在表明：我们所谓的'文明'不过是集体伪善——把自然功能藏起来不等于它们不存在。弗洛伊德后来用'文明及其不满'呼应了这一洞见。",
+          "conceptEn": "Shamelessness as Freedom",
+          "descEn": "Social norms are instruments of control. Breaking them is liberation. Diogenes performed everyday private acts in public to expose the hypocrisy of civilized politeness.",
+          "l1En": "Shame is taught — unlearn it and you are free.",
+          "l2En": "If eating and sleeping in private is acceptable, why not in the public square? Diogenes saw no difference.",
+          "l3En": "Diogenes' public acts were not primitive behavior but sophisticated performance art. His point: 'civilization' is collective hypocrisy about natural functions. Freud's Civilization and Its Discontents makes a similar argument 2300 years later."
+        }
+      ],
+      "famousEvents": [
+        {
+          "title": "亚历山大大帝来访",
+          "year": -336,
+          "desc": "亚历山大大帝慕名而来，站在第欧根尼的木桶前，问他需要什么赏赐。第欧根尼头也不抬：'请别挡住我的阳光。'亚历山大感叹：'如果我不是亚历山大，我愿做第欧根尼。'",
+          "titleEn": "Alexander and the Sunlight",
+          "descEn": "Alexander the Great visited Diogenes and offered him anything. Diogenes: 'Stand out of my sunlight.' Alexander: 'If I were not Alexander, I would be Diogenes.'"
+        },
+        {
+          "title": "提着灯笼找真人",
+          "year": -350,
+          "desc": "大白天第欧根尼提着一盏点亮的灯笼在雅典街头走。人们围过来问他在找什么，他说：'我在找一个真人。'——讽刺雅典人中没有真正'像人一样活着'的。",
+          "titleEn": "Searching for an Honest Man",
+          "descEn": "Diogenes walked the streets of Athens at noon with a lighted lantern, claiming to be looking for a real human being."
+        }
+      ],
+      "thoughtEvolution": "第欧根尼原本是锡诺普的一个银行家之子，因伪造货币（或参与政治阴谋）被逐出城邦。流亡中他来到雅典，被安提斯泰尼（犬儒学派创始人）的简朴生活所吸引，成为其弟子。他在雅典的生活越来越极端——起初住在一个木桶里（实际上是雅典城郊的一个大陶罐），靠乞讨和民众施舍度日，活到近九十岁。",
+      "aiReview": "第欧根尼是哲学史上的'活体实验'。他不是用概念而是用自己的肉身来检验'人真正需要什么'这个问题的答案。他证明了人类可以在几乎零物质条件下活得很快乐——这一点在后世被各种极简主义运动反复验证。但第欧根尼的另一个遗产有些尴尬：现代意义上的'犬儒主义'（cynicism）变成了'玩世不恭'——恰恰背叛了他的原意，因为他其实是理想主义者：他相信人本可以活得更好、更真实。",
+      "goldenQuotes": [
+        {
+          "text": "请不要挡住我的阳光。",
+          "source": "对亚历山大大帝的回答",
+          "textEn": "Stand out of my sunlight.",
+          "sourceEn": "Response to Alexander the Great"
+        },
+        {
+          "text": "我在找一个真人。",
+          "source": "白天提着灯笼在雅典街头",
+          "textEn": "I am looking for a real human being.",
+          "sourceEn": "Walking with a lantern at noon"
+        },
+        {
+          "text": "狗和哲学家给予的比索取的多——狗摇尾巴、哲学家教导；其他人只会摇尾乞怜。",
+          "source": "第欧根尼语录",
+          "textEn": "Dogs and philosophers do the greatest good and get the fewest rewards.",
+          "sourceEn": "Attributed saying"
+        }
+      ],
+      "anecdote": "第欧根尼曾在柏拉图的学园踩脏了柏拉图的地毯，说'我踩碎了柏拉图的骄傲'。柏拉图称他是'发疯的苏格拉底'。第欧根尼反驳：'我们是同时代的人，但你是哲学家的奴隶（指对理念论的迷信），而我是自由的。'他被葬在科林斯，墓碑上刻着一只狗（犬儒的象征）。",
+      "relationships": [
+        {
+          "target": "plato",
+          "type": "debate",
+          "strength": 7,
+          "description": "第欧根尼多次公开嘲讽柏拉图，用行为反驳柏拉图的理论论"
+        },
+        {
+          "target": "socrates",
+          "type": "influence",
+          "strength": 7,
+          "description": "第欧根尼延续了苏格拉底的简朴生活方式和反习俗精神，被称为'发疯的苏格拉底'"
+        }
+      ],
+      "furtherReading": [
+        {
+          "title": "《名哲言行录》",
+          "desc": "第欧根尼·拉尔修，第6卷记载犬儒学派",
+          "type": "book"
+        }
+      ],
+      "layers": {
+        "L2_era": {
+          "timeline": [],
+          "decisiveMoments": [],
+          "travelMap": []
+        },
+        "L3_philosophy": {
+          "conceptNetwork": [],
+          "threeLevelReading": [],
+          "problemMatrix": []
+        },
+        "L4_evolution": {
+          "thoughtPeriods": [],
+          "turningPoints": []
+        },
+        "L6_debates": {
+          "confrontations": [],
+          "spectrumPosition": {}
+        },
+        "L7_legacy": {
+          "influenceMap": [],
+          "contemporaryApplications": []
+        }
+      }
+    },
+    {
+      "id": "ockham",
+      "name": "奥卡姆",
+      "nameEn": "William of Ockham",
+      "birth": 1287,
+      "death": 1347,
+      "nationality": "英格兰",
+      "nationalityEn": "England",
+      "portrait": "",
+      "civilization": "western",
+      "school": "scholasticism",
+      "era": "medieval",
+      "role": "哲学家，神学家，唯名论者",
+      "influence": 8,
+      "summary": "奥卡姆是中世纪晚期最伟大的逻辑学家和哲学家，唯名论（Nominalism）的旗手。他最为人知的是'奥卡姆剃刀'（Ockham's Razor）：如无必要，勿增实体（Entities should not be multiplied without necessity）。这一原则成为科学方法论的核心工具。在哲学上，他激烈反对实在论，认为共相（普遍概念）只是心灵的抽象符号，没有独立实在性。这一立场直接动摇了经院哲学的基础，被看作通向近代经验主义和科学革命的关键一步。他还是最早提出政教分离的哲学家之一。",
+      "summaryEn": "William of Ockham was the most important logician and philosopher of the late Middle Ages, champion of nominalism. His famous principle 'Ockham's Razor' — entities should not be multiplied without necessity — became foundational to scientific method. His nominalist critique of universals shook the foundations of scholastic philosophy and paved the way for modern empiricism.",
+      "representativeWorks": [
+        {
+          "title": "逻辑大全",
+          "type": "逻辑学",
+          "year": 1323,
+          "content": "中世纪最系统的逻辑学著作之一，发展了词项逻辑和命题逻辑，为后世逻辑学奠定了重要基础。",
+          "titleEn": "Summa Logicae",
+          "contentEn": "The most comprehensive logical treatise of the Middle Ages, developing term logic and propositional logic."
+        },
+        {
+          "title": "箴言书注疏",
+          "type": "神学",
+          "year": 1318,
+          "content": "对彼得·隆巴德《箴言书》的评注，系统阐述了他的唯名论哲学和神学观点。",
+          "titleEn": "Commentary on the Sentences",
+          "contentEn": "Ockham's commentary on Peter Lombard's Sentences, expounding his nominalist philosophy."
+        }
+      ],
+      "coreThoughts": [
+        {
+          "concept": "奥卡姆剃刀",
+          "desc": "'如无必要，勿增实体'——在解释现象时，不应假设多余的原因或实体。最简单的解释往往是最好的。",
+          "l1": "事情越简单越好——不要编造不必要的解释。",
+          "l2": "如果你听到马蹄声，先想马而不是斑马——最简单的解释通常是对的。",
+          "l3": "剃刀原则不是'最简单的就一定正确'，而是一种方法论优先原则：在没有充分证据时，不要增加理论假设。现代科学中的'简约性'（parsimony）原则直接源于奥卡姆剃刀。但要注意奥卡姆的本意：他认为共相（普遍概念）是多余的假设，应当'剃掉'——这在中世纪是一个激进的哲学立场。",
+          "conceptEn": "Ockham's Razor",
+          "descEn": "Entities should not be multiplied without necessity — the simplest explanation that accounts for the facts is to be preferred.",
+          "l1En": "Don't complicate things unnecessarily — in explanations, less is more.",
+          "l2En": "If you hear hoofbeats, think horses, not zebras — the simplest explanation is usually correct.",
+          "l3En": "Ockham's Razor is not a rule of truth but a methodological principle: don't multiply theoretical assumptions beyond what is needed. Modern science calls this parsimony. For Ockham, universals (like 'humanity' as a real entity) were exactly the kind of unnecessary entities to be 'shaved away' — a radical move against medieval realism that anticipated modern nominalism."
+        },
+        {
+          "concept": "唯名论",
+          "desc": "共相（如'人'、'美'、'正义'）不是独立存在的实在，而是人心对个别事物的抽象名称（nomen）或概念。只有个体事物才是真实存在的。",
+          "l1": "没有抽象的'人'——只有具体的张三、李四。普遍概念只是标签。",
+          "l2": "就像'水果'这个概念——世界上没有抽象的'水果'，只有苹果、橘子、香蕉。'水果'只是一个方便的名字。",
+          "l3": "唯名论是中世纪最重大的哲学争论之一。实在论者（如阿奎那）认为共相是真实存在的（理念论的回响），唯名论者认为共相只是名称。这一分歧的影响远超中世纪：唯名论倾向经验主义、个体主义和科学实验精神；实在论倾向理性主义、本质主义和系统哲学。可以说近代哲学的经验论/唯理论之争的种子就种在这里。",
+          "conceptEn": "Nominalism",
+          "descEn": "Universals (like 'humanity' or 'justice') are not real entities — only names or mental concepts we use to group similar individuals. Only individual things truly exist.",
+          "l1En": "There is no abstract 'chair' — only individual chairs you can sit on. The universal is just a convenient label.",
+          "l2En": "Nominalism vs. realism was the defining philosophical battle of the late Middle Ages. Its echoes persist in every debate about whether our categories reflect reality or are human constructions.",
+          "l3En": "The nominalist turn had revolutionary consequences: if only individual things exist, then knowledge must come from observing individuals — empirical science becomes possible. Nominalism thus prepared the ground for the Scientific Revolution by undermining the metaphysical confidence that reason alone can discover the essence of things."
+        }
+      ],
+      "famousEvents": [
+        {
+          "title": "被教皇指控异端",
+          "year": 1323,
+          "desc": "奥卡姆因哲学立场被阿维尼翁教廷传讯审查，被软禁四年。1228年他与教宗决裂，逃亡慕尼黑投靠神圣罗马帝国皇帝路易四世。",
+          "titleEn": "Accused of Heresy",
+          "descEn": "Ockham was summoned to Avignon to answer charges of heresy, placed under house arrest, and ultimately fled to Munich under the protection of Louis IV."
+        },
+        {
+          "title": "提出政教分离",
+          "year": 1330,
+          "desc": "流亡期间奥卡姆撰写大量政治论文，论证教宗权力不应凌驾于世俗政权之上，成为政教分离理论的重要先驱。",
+          "titleEn": "Argued for Separation of Church and State",
+          "descEn": "In exile, Ockham wrote political treatises arguing that papal authority should not supersede secular power."
+        }
+      ],
+      "scientificEval": "奥卡姆剃刀是科学方法论中应用最广泛的原则之一——从牛顿的'不假设多余原因'到爱因斯坦的'一切应尽可能简单但不过于简单'，再到现代机器学习中的正则化（防止过拟合），都在运用这个思想。但剃刀不是铁律：有时正确的解释恰好是更复杂的那个。",
+      "thoughtEvolution": "奥卡姆在牛津大学求学并教学，被视为方济各会中最敏锐的思想家。他在哲学上追随邓斯·司各脱但走向了更激进的唯名论。因为政治观点与教宗对立，他后半生在慕尼黑流亡中度过。据说他临终前说了一句'主啊，我愿一直保卫你的事业'——他的'事业'是真理，哪怕和教宗对著干。",
+      "aiReview": "奥卡姆的伟大在于他用一把'剃刀'切开了经院哲学千年积累的概念冗余。他的唯名论比后世许多经验主义者还要激进：只有个体存在，一切普遍范畴都是人为约定。这个立场的终极后果是——如果连'本质'都不存在，那么科学不是在发现自然的真理，而是在发明描述自然最经济的方式。这种'激进唯名论'在20世纪被罗蒂等人重新发掘，成为新实用主义的理论武器。",
+      "goldenQuotes": [
+        {
+          "text": "如无必要，勿增实体。",
+          "source": "奥卡姆剃刀原则",
+          "textEn": "Entities should not be multiplied without necessity.",
+          "sourceEn": "Ockham's Razor"
+        },
+        {
+          "text": "对于可理解的事物，不要假设超过必要的原因。",
+          "source": "奥卡姆剃刀的另一种表述",
+          "textEn": "Plurality should not be posited without necessity.",
+          "sourceEn": "Alternative formulation"
+        }
+      ],
+      "anecdote": "奥卡姆剃刀原文是拉丁文：'Entia non sunt multiplicanda praeter necessitatem'——有趣的是，奥卡姆本人从未写过这句话。他表达过同样的意思（'Pluralitas non est ponenda sine necessitate'），但名言的精简版是后人总结的。这说明了一个悖论：奥卡姆剃刀本身就被后人'剃'过一刀。",
+      "relationships": [
+        {
+          "target": "thomas-aquinas",
+          "type": "debate",
+          "strength": 8,
+          "description": "奥卡姆的唯名论在根本上反对阿奎那的实在论立场"
+        },
+        {
+          "target": "hobbes",
+          "type": "influence",
+          "strength": 6,
+          "description": "奥卡姆的唯名论通过霍布斯的语言哲学影响了近代经验主义"
+        }
+      ],
+      "furtherReading": [
+        {
+          "title": "《逻辑大全》",
+          "desc": "奥卡姆，中世纪最系统的逻辑学著作",
+          "type": "book"
+        }
+      ],
+      "layers": {
+        "L2_era": {
+          "timeline": [],
+          "decisiveMoments": [],
+          "travelMap": []
+        },
+        "L3_philosophy": {
+          "conceptNetwork": [],
+          "threeLevelReading": [],
+          "problemMatrix": []
+        },
+        "L4_evolution": {
+          "thoughtPeriods": [],
+          "turningPoints": []
+        },
+        "L6_debates": {
+          "confrontations": [],
+          "spectrumPosition": {}
+        },
+        "L7_legacy": {
+          "influenceMap": [],
+          "contemporaryApplications": []
+        }
+      }
+    },
+    {
+      "id": "berkeley",
+      "name": "贝克莱",
+      "nameEn": "George Berkeley",
+      "birth": 1685,
+      "death": 1753,
+      "nationality": "爱尔兰",
+      "nationalityEn": "Ireland",
+      "portrait": "",
+      "civilization": "western",
+      "school": "empiricism",
+      "era": "early-modern",
+      "role": "哲学家，主教，主观唯心论者",
+      "influence": 7,
+      "summary": "乔治·贝克莱是爱尔兰哲学家、主教，英国经验主义的重要代表，以'存在即被感知'（Esse est percipi）闻名。他认为物质实体不存在——我们所谓的'物'不过是感觉观念的集合。一个苹果不过是红色、圆形、甜味、香气的组合——我们无法感知到'苹果本身'。他并非否定世界的真实存在，而是认为世界存在于上帝的感知中：物在被人感知时存在于人的心灵中，不被感知时存在于上帝的心灵中。贝克莱的哲学虽然常被嘲笑（一个荒谬到必须大声反驳的地步的体系——约翰逊博士踢石头的著名反驳），但它在哲学上极为严密，至今仍在认识论和心灵哲学中占据重要地位。",
+      "summaryEn": "George Berkeley was an Irish philosopher and bishop who advanced radical empiricism with the principle 'esse est percipi' (to be is to be perceived). He argued that material substance does not exist — objects are collections of sense perceptions. His philosophy remains philosophically rigorous and influential in epistemology and philosophy of mind.",
+      "representativeWorks": [
+        {
+          "title": "人类知识原理",
+          "type": "哲学",
+          "year": 1710,
+          "content": "贝克莱系统阐述唯心经验论的著作，论证物质实体不存在、存在即被感知的核心命题。",
+          "titleEn": "A Treatise Concerning the Principles of Human Knowledge",
+          "contentEn": "Berkeley's systematic exposition of immaterialism: to be is to be perceived."
+        },
+        {
+          "title": "海拉斯与斐洛诺斯对话录",
+          "type": "对话录",
+          "year": 1713,
+          "content": "以通俗对话形式重新阐述《人类知识原理》的核心论证，是哲学史上最精彩的对话体哲学作品之一。",
+          "titleEn": "Three Dialogues between Hylas and Philonous",
+          "contentEn": "A masterpiece of philosophical dialogue, defending immaterialism against common objections."
+        }
+      ],
+      "coreThoughts": [
+        {
+          "concept": "存在即被感知",
+          "desc": "对于可感事物来说，存在（esse）就是被感知（percipi）。一个苹果不是具有各种属性的独立实体——它就是红色、圆形、甜味等感觉的集合。脱离感知而存在的'物质实体'是不可理解的假设。",
+          "l1": "你所谓的'东西'其实就是你感知到的一切——没有感知就没有东西。",
+          "l2": "一棵树在无人的森林里倒下有没有声音？贝克莱会说：没有声音本身——有的只是被感知的声音。无人听到就没有声音。",
+          "l3": "贝克莱不是在否定常识，而是在做哲学上的'奥卡姆剃刀'：既然我们从未感知过'物质实体'这个概念所指称的任何东西，为什么还要假设它的存在？他的论证极其简洁：我们只能感知到感觉观念（颜色、声音、气味等），从未感知过'物质'本身。因此'物质'是一个不必要的假设，剃掉它，我们的世界观反而更简洁、也更符合经验主义的'一切知识来源于经验'的基本原则。",
+          "conceptEn": "To Be Is to Be Perceived",
+          "descEn": "For sensible things, existence consists in being perceived. An object is nothing but a collection of sense perceptions. The idea of material substance existing independently of perception is an unnecessary metaphysical hypothesis.",
+          "l1En": "There is no 'thing-in-itself' behind your perceptions — what you perceive is all there is.",
+          "l2En": "Does a falling tree in an empty forest make a sound? For Berkeley: sound is a perception. No perception, no sound.",
+          "l3En": "Berkeley is not denying common sense but applying Ockham's Razor: we never perceive 'matter' itself, only qualities. Why posit an unperceivable material substance behind the perceptions? His immaterialism is more parsimonious than materialism — a remarkable inversion of how we usually think about simplicity."
+        },
+        {
+          "concept": "非物质论",
+          "desc": "世界不是由物质构成的，而是由心灵（精神）和其中的观念构成的。存在的东西分为两类：感知的心灵和心灵中的观念。所谓'物理世界'不过是在不同心灵中稳定呈现的观念集合——其稳定性由上帝保证。",
+          "l1": "世界不是物质的——世界是由'感知'和'被感知'构成的。",
+          "l2": "你醒来发现窗外一棵树还在那里——那不是因为'物质'继续存在，而是因为上帝一直在感知它。",
+          "l3": "贝克莱的非物质论面临一个经典难题：如果'存在即被感知'，那么当没有人感知某个东西时，它还存在吗？贝克莱的答案：它存在于上帝的心灵中。因此世界是连续的，因为上帝永远在感知一切。这个答案在神学上合理但在哲学上引发了新的问题——'上帝的心灵'是不是一个不必要的假设？不过即使抛开上帝的部分，贝克莱对'物质实体'概念的批判仍然是哲学史上最犀利的之一。",
+          "conceptEn": "Immaterialism",
+          "descEn": "Reality consists solely of minds and their ideas. The physical world is a stable collection of ideas in minds, with God as the perpetual perceiver ensuring continuity.",
+          "l1En": "Reality is mental, not material. What we call 'things' are patterns of perception.",
+          "l2En": "When you close your eyes, the room doesn't vanish — God continues to perceive it.",
+          "l3En": "The famous objection: 'I refute it thus!' (Dr. Johnson kicking a stone). But philosophical refutation requires argument, not kicking. Berkeley's response: Johnson perceived the stone by kicking it — the pain, hardness, and visual impression ARE the stone. The kick doesn't prove matter exists; it proves that kicking produces perceptions, which is exactly what immaterialism predicts."
+        }
+      ],
+      "famousEvents": [
+        {
+          "title": "约翰逊博士的反驳",
+          "year": 1763,
+          "desc": "塞缪尔·约翰逊博士听说贝克莱的理论后，用力踢了一块大石头，说'我就这样驳斥他！'——但贝克莱的追随者会说：你恰恰证明了石头是感觉到的硬度和疼痛，而不是物质实体。",
+          "titleEn": "Dr. Johnson's Refutation",
+          "descEn": "Samuel Johnson famously kicked a stone to refute Berkeley's immaterialism. (Berkeleyans would note: the kick proved only that kicking produces sensations of hardness and pain, exactly as immaterialism predicts.)"
+        },
+        {
+          "title": "百慕大计划",
+          "year": 1725,
+          "desc": "贝克莱曾计划在百慕大建立一所学院，培训殖民地的传教士和美洲土著。他在罗德岛等了三年但英国政府最终没有拨款。",
+          "titleEn": "Bermuda Project",
+          "descEn": "Berkeley planned to establish a college in Bermuda for training missionaries and educating Native Americans. He spent three years in Rhode Island awaiting funding that never came."
+        }
+      ],
+      "scientificEval": "贝克莱对'物质实体'的批判在哲学上从未被真正驳倒。现代科学哲学中，反实在论（如范·弗拉森的建构经验论）在某种意义上复活了贝克莱的立场——科学理论不是对不可观察的实在的描述，而是'拯救现象'的工具。量子力学中'波函数是否真实存在'的争论也带有贝克莱式的色彩。",
+      "thoughtEvolution": "贝克莱早年在都柏林三一学院求学时就形成了自己的哲学方向。他阅读洛克和笛卡尔后，发现他们的理论中存在一个致命漏洞：如果知识来自经验（感觉），那凭什么假设感觉背后有'物质实体'？这个洞察在他20多岁时就已成熟。他后来成为主教，在哲学之外还以焦油水治疗闻名。",
+      "aiReview": "贝克莱的哲学有趣的地方在于：它既荒谬又无法被反驳。你无法用经验证明物质存在，因为任何证明都需要诉诸经验——而经验恰恰是他说的'观念'。这个困境至今困扰着认识论。更讽刺的是，当代物理学（量子力学中的观测者问题、宇宙学中的人择原理）在某种意义上为贝克莱提供了意想不到的同盟。",
+      "goldenQuotes": [
+        {
+          "text": "存在就是被感知。",
+          "source": "《人类知识原理》",
+          "textEn": "To be is to be perceived. (Esse est percipi)",
+          "sourceEn": "A Treatise Concerning the Principles of Human Knowledge"
+        },
+        {
+          "text": "我就像一座孤立于知识大海上的一座小岛，在这个自由的哲学世界中漂泊。",
+          "source": "贝克莱书信",
+          "textEn": "Westward the course of empire takes its way; the first four Acts already past, a fifth shall close the Drama with the day; Time's noblest offspring is the last.",
+          "sourceEn": "Verses on the Prospect of Planting Arts and Learning in America"
+        }
+      ],
+      "anecdote": "贝克莱的知名度很大程度上来自两个意外：一是约翰逊踢石头（几乎每个学哲学的人都知道这个故事），二是加州大学伯克利分校（Berkeley）以他命名——虽然发音不同（Berkeley在英式英语中发'bark-lee'）。美国人去掉了第一个'r'的发音，使得校名的读法偏离了哲学家的原音。",
+      "relationships": [
+        {
+          "target": "locke",
+          "type": "influence",
+          "strength": 8,
+          "description": "贝克莱从洛克的经验论出发，但批判洛克的第一性质/第二性质区分"
+        },
+        {
+          "target": "hume",
+          "type": "influence",
+          "strength": 7,
+          "description": "休谟继承了贝克莱对物质实体的批判，进一步扩展到对心灵实体的怀疑"
+        }
+      ],
+      "furtherReading": [
+        {
+          "title": "人类知识原理",
+          "desc": "贝克莱，主观唯心论的经典",
+          "type": "book"
+        }
+      ],
+      "layers": {
+        "L2_era": {
+          "timeline": [],
+          "decisiveMoments": [],
+          "travelMap": []
+        },
+        "L3_philosophy": {
+          "conceptNetwork": [],
+          "threeLevelReading": [],
+          "problemMatrix": []
+        },
+        "L4_evolution": {
+          "thoughtPeriods": [],
+          "turningPoints": []
+        },
+        "L6_debates": {
+          "confrontations": [],
+          "spectrumPosition": {}
+        },
+        "L7_legacy": {
+          "influenceMap": [],
+          "contemporaryApplications": []
+        }
+      }
+    },
+    {
+      "id": "bentham",
+      "name": "边沁",
+      "nameEn": "Jeremy Bentham",
+      "birth": 1748,
+      "death": 1832,
+      "nationality": "英国",
+      "nationalityEn": "England",
+      "portrait": "",
+      "civilization": "western",
+      "school": "utilitarianism",
+      "era": "enlightenment-era",
+      "role": "哲学家，法学家，功利主义创始人",
+      "influence": 8,
+      "summary": "杰里米·边沁是英国哲学家、法学家和社会改革家，功利主义（Utilitarianism）的创始人。他的核心原则是'最大幸福原则'（Greatest Happiness Principle）：道德上正确的行为是能带来'最大多数人的最大幸福'的行为。他发明了'幸福计算'（felicific calculus）——一种量化快乐和痛苦的算法，用来评估任何行为的道德价值。他是社会改革的激进倡导者：主张废除奴隶制、改革监狱和刑法、支持妇女权利、反对殖民主义、推动动物权利（最早提出'动物也能感受痛苦'的哲学家之一）。",
+      "summaryEn": "Jeremy Bentham was the founder of utilitarianism, one of the most influential ethical theories in Western philosophy. His Greatest Happiness Principle holds that the morally right action maximizes happiness for the greatest number. He was a radical social reformer: advocating prison reform, abolition of slavery, women's rights, animal rights, and decolonization.",
+      "representativeWorks": [
+        {
+          "title": "道德与立法原理导论",
+          "type": "哲学/法学",
+          "year": 1789,
+          "content": "边沁功利主义的奠基之作，系统阐述了最大幸福原则和幸福计算，将道德哲学和法律改革统一在一个框架下。",
+          "titleEn": "An Introduction to the Principles of Morals and Legislation",
+          "contentEn": "Bentham's foundational work, laying out the principle of utility and the felicific calculus for moral and legal reasoning."
+        },
+        {
+          "title": "政府片论",
+          "type": "政治哲学",
+          "year": 1776,
+          "content": "边沁对布莱克斯通《英国法释义》的批判性评论，首次阐述了他的功利主义政治哲学。",
+          "titleEn": "A Fragment on Government",
+          "contentEn": "Bentham's critique of Blackstone's Commentaries on the Laws of England, his first major publication."
+        }
+      ],
+      "coreThoughts": [
+        {
+          "concept": "最大幸福原则",
+          "desc": "道德的最高原则是'最大多数人的最大幸福'。一个行为（或法律、制度）在道德上对错取决于它产生的快乐与痛苦的总量。一切道德问题本质上都是效用计算问题。",
+          "l1": "什么是对的？能让最多人最幸福的就是对的。就这么简单。",
+          "l2": "想象你在分配一块蛋糕——分给十个人每人一块，比给一个人十块蛋糕更好，因为总幸福更大。",
+          "l3": "边沁的功利主义是革命性的：它把道德从宗教（上帝的意志）、理性（康德的义务）和情感（休谟的同情心）中解放出来，将道德还原为可计算的经验事实。这一思路直接催生了现代经济学中的福利经济学和成本-效益分析。但也面临经典难题：如果为了多数人的幸福可以牺牲少数人——比如把一个人扔给狮子取悦观众——这是对的吗？",
+          "conceptEn": "Greatest Happiness Principle",
+          "descEn": "The fundamental principle of morality: act so as to produce the greatest possible balance of happiness over unhappiness for the greatest number of people affected.",
+          "l1En": "What's right? What makes the most people happiest. Simple, democratic, and radical for its time.",
+          "l2En": "Utilitarianism treats all pleasures as comparable in principle — the pleasure of poetry and the pleasure of pushpin (a simple game) can be measured on the same scale.",
+          "l3En": "Bentham's move from theological to consequentialist ethics was revolutionary: right and wrong depend not on God or abstract duty but on actual outcomes — quantifiable pleasure and pain. This paved the way for modern welfare economics. The classic objection: what if maximizing happiness requires injustice, like punishing an innocent person to prevent riots?"
+        },
+        {
+          "concept": "幸福计算",
+          "desc": "边沁设计了一套量化算法来评估快乐和痛苦，包括七个维度：强度、持续时间、确定性、远近、丰产性（后续快乐）、纯度（不伴随痛苦）、范围（涉及人数）。",
+          "l1": "快乐是可以被'计算'的——边沁像科学家一样衡量快乐。",
+          "l2": "就像给餐厅打分：食物口味、服务态度、环境、性价比——每项打分最后算总分。边沁对快乐就是这么做的。",
+          "l3": "幸福计算是边沁最受批评但也最具影响力的概念。批评者说快乐和痛苦无法量化（'诗歌和推针游戏的快乐怎么比较？'——边沁的回答是：如果同一个人更喜欢推针，那推针就更好）。但这一概念开创了定量研究人类福祉的方法论，影响了现代心理学中的快乐测量和经济学的效用理论。",
+          "conceptEn": "Felicific Calculus",
+          "descEn": "A quantitative method for measuring pleasure and pain across seven dimensions: intensity, duration, certainty, propinquity, fecundity, purity, and extent.",
+          "l1En": "Can happiness be calculated? Bentham thought so — like a scientist measuring outcomes.",
+          "l2En": "Bentham's calculus anticipates modern happiness indices, quality-of-life measurements, and cost-benefit analysis.",
+          "l3En": "The famous criticism: 'Pushpin is as good as poetry' — if a child enjoys pushpin more than poetry, utilitarianism says pushpin is better. John Stuart Mill (Bentham's godson and student) later tried to fix this by distinguishing higher and lower pleasures. But Bentham's refusal to rank pleasures is actually more consistent — who really has the right to say your pleasure is inferior to mine?"
+        }
+      ],
+      "famousEvents": [
+        {
+          "title": "全息边沁——自我标本",
+          "year": 1832,
+          "desc": "边沁在遗嘱中要求将自己的遗体解剖后制成标本（auto-icon），穿着衣服坐在椅子上，出现在伦敦大学学院的董事会会议上。至今他的标本仍在UCL公开展示。",
+          "titleEn": "The Auto-Icon",
+          "descEn": "Bentham left instructions for his body to be dissected and preserved as an 'auto-icon' — a dressed, seated figure. It is on public display at University College London."
+        }
+      ],
+      "scientificEval": "功利主义是影响最为深广的道德哲学之一，直接催生了现代经济学、福利经济学、成本效益分析和公共政策评估。边沁的痛苦-快乐量化思想为后来的行为主义心理学（斯金纳的操作条件反射）和精神药理学（抗抑郁药的研发）提供了理论基础。当代AI伦理中的'功利主义对齐'问题也延续了这一传统。",
+      "thoughtEvolution": "边沁是一个神童——3岁开始学拉丁文，12岁进入牛津大学皇后学院。他最初是一名律师，但对英国法律的混乱和残酷深感不满，于是转向立法理论的研究，终其一生致力于用法学和社会改革来实现他的功利主义理念。他虽然没有直接参与政治，但他的思想影响了整整一代改革家。",
+      "aiReview": "边沁的功利主义有一种令人不安的直白——它把一切道德问题都变成了算术题。这很荒谬吗？如果你在做公共政策决策（例如：要不要封城？），你本质上就是在做边沁式的计算：权衡痛苦和快乐的总量。而当你开始讨厌这种计算时，边沁会微笑着说：你讨厌它，但你正在用它。不过他的理论的阿喀琉斯之踵是：它无法解释为什么有些人愿意为自己的原则去死——这在幸福计算中是荒谬的非理性行为，但也是人类道德中最崇高的部分。",
+      "goldenQuotes": [
+        {
+          "text": "最大多数人的最大幸福是道德与立法的基础。",
+          "source": "《道德与立法原理导论》",
+          "textEn": "The greatest happiness of the greatest number is the foundation of morals and legislation.",
+          "sourceEn": "Introduction to the Principles of Morals and Legislation"
+        },
+        {
+          "text": "大自然将人类置于两个至高无上的主人之下：痛苦和快乐。",
+          "source": "《道德与立法原理导论》开篇",
+          "textEn": "Nature has placed mankind under the governance of two sovereign masters, pain and pleasure.",
+          "sourceEn": "Opening of the Principles of Morals and Legislation"
+        },
+        {
+          "text": "问题不在于它们能不能推理，也不在于它们能不能说话，而在于它们能不能感受痛苦。",
+          "source": "谈论动物权利",
+          "textEn": "The question is not, Can they reason? nor, Can they talk? but, Can they suffer?",
+          "sourceEn": "On animal rights"
+        }
+      ],
+      "anecdote": "边沁的auto-icon（自我标本）是哲学史上最古怪的遗产之一。他的骨架被穿上衣服、戴上蜡制面具，坐在一个他生前用过的椅子上，放在伦敦大学学院（UCL）的公共区域。有个传说（未证实）：在UCL董事会会议上，边沁的标本被记为'出席但未投票'。2013年，他的auto-icon被师生抬出来参加了UCL的校长就职典礼。",
+      "relationships": [
+        {
+          "target": "john-stuart-mill",
+          "type": "teacher-student",
+          "strength": 8,
+          "description": "边沁是密尔父亲的朋友，密尔从小受边沁功利主义思想的深刻影响"
+        },
+        {
+          "target": "hume",
+          "type": "influence",
+          "strength": 6,
+          "description": "休谟的情感伦理学（道德基于情感而非理性）是边沁功利主义的重要先驱"
+        }
+      ],
+      "furtherReading": [
+        {
+          "title": "道德与立法原理导论",
+          "desc": "边沁，功利主义奠基之作",
+          "type": "book"
+        }
+      ],
+      "layers": {
+        "L2_era": {
+          "timeline": [],
+          "decisiveMoments": [],
+          "travelMap": []
+        },
+        "L3_philosophy": {
+          "conceptNetwork": [],
+          "threeLevelReading": [],
+          "problemMatrix": []
+        },
+        "L4_evolution": {
+          "thoughtPeriods": [],
+          "turningPoints": []
+        },
+        "L6_debates": {
+          "confrontations": [],
+          "spectrumPosition": {}
+        },
+        "L7_legacy": {
+          "influenceMap": [],
+          "contemporaryApplications": []
+        }
+      }
+    },
+    {
+      "id": "dewey",
+      "name": "杜威",
+      "nameEn": "John Dewey",
+      "birth": 1859,
+      "death": 1952,
+      "nationality": "美国",
+      "nationalityEn": "United States",
+      "portrait": "",
+      "civilization": "western",
+      "school": "pragmatism",
+      "era": "20th-century",
+      "role": "哲学家，教育学家，心理学家",
+      "influence": 8,
+      "summary": "约翰·杜威是美国最具影响力的哲学家和教育家之一，实用主义（Pragmatism）的核心人物。他将实用主义发展为'工具主义'（Instrumentalism）：思想不是对实在的被动反映，而是解决问题的工具。真理不是静止的'符合实在'，而是'经过检验的有效指导'。他在教育学上的革命性贡献超过了他在纯哲学上的影响——提出'从做中学'（Learning by Doing），认为教育不是灌输知识而是引导生长。他的民主哲学强调公民参与和公共讨论，对20世纪的美国社会产生了深远影响。",
+      "summaryEn": "John Dewey was America's most influential philosopher and educational reformer, a leading figure in pragmatism. His instrumentalism treated ideas as tools for problem-solving. 'Learning by doing' made him the father of progressive education. His democratic theory emphasized participatory citizenship and public deliberation.",
+      "representativeWorks": [
+        {
+          "title": "民主与教育",
+          "type": "教育学",
+          "year": 1916,
+          "content": "杜威最具影响力的著作，系统阐述教育即生长、教育即生活、教育即经验改造的理念，将教育与民主社会紧密联系。",
+          "titleEn": "Democracy and Education",
+          "contentEn": "Dewey's most influential work, linking education to democratic participation and experiential learning."
+        },
+        {
+          "title": "经验与自然",
+          "type": "哲学",
+          "year": 1925,
+          "content": "杜威的形而上学著作，阐述他的经验自然主义——经验不是主观的意识流，而是有机体与环境之间的互动。",
+          "titleEn": "Experience and Nature",
+          "contentEn": "Dewey's metaphysical work, developing his empirical naturalism: experience is the transaction between organism and environment."
+        },
+        {
+          "title": "人的问题",
+          "type": "论文集",
+          "year": 1946,
+          "content": "杜威晚年论文集，涵盖知识论、伦理学、社会哲学等领域，体现了他哲学的广度和现实关怀。",
+          "titleEn": "Problems of Men",
+          "contentEn": "Late essays covering epistemology, ethics, and social philosophy."
+        }
+      ],
+      "coreThoughts": [
+        {
+          "concept": "工具主义",
+          "desc": "思想、概念和理论不是对世界的'镜像'，而是人类应对环境的工具。它们的'真'不在于正确反映实在，而在于有效指导行动。一个理论好用=真。",
+          "l1": "思想不是照相机——它不是拍下世界的样子，而是像锤子一样帮你解决问题。",
+          "l2": "如果一张地图能帮你找到目的地，它就是'真'的——不是因为地图和地形完全一致，而是因为它管用。",
+          "l3": "工具主义是杜威对传统真理理论（符合论、融贯论）的全面挑战。一个观念'是真的'意味着它'经过检验是可用的'——真理性是一个过程而非状态。这个观点听起来很激进，但想一想科学实践：当一个理论不再能解释新数据时，我们说它被'证伪'了——这不正说明'真理'在科学中就是'到目前为止最有效的工具'吗？",
+          "conceptEn": "Instrumentalism",
+          "descEn": "Ideas and theories are not mirrors of reality but tools for coping with problems. Truth is 'warranted assertibility' — what works in practice, validated through inquiry.",
+          "l1En": "Truth is not a snapshot of reality but a tool for navigating it. If it works, it's 'true enough.'",
+          "l2En": "Modern science is profoundly instrumentalist: theories are judged by predictive power, not by correspondence to 'ultimate reality.'",
+          "l3En": "Dewey's instrumentalism dissolves the traditional gap between theory and practice: thinking IS a form of doing. This was a radical break from the spectator theory of knowledge that dominated Western philosophy since Plato. Ideas are not contemplations but operations — they are plans of action, not pictures of the world."
+        },
+        {
+          "concept": "从做中学",
+          "desc": "教育不是把知识灌进空容器，而是引导学生在解决问题的活动中主动学习。学校应该模拟真实生活的场景，让学生在'做'中发现问题、提出假设、验证解决方案。",
+          "l1": "学游泳不能只看手册——你得下水。所有学习都是这样。",
+          "l2": "学历史不是背年代——而是模拟：如果我是当时的外交官，我会怎么做？",
+          "l3": "杜威的'从做中学'对美国教育产生了革命性影响，但也经常被误解为'放任自流'。杜威其实强调教师是引导者而非旁观者——教育的核心是创造有结构的探究环境。不过批评者指出，美国教育在实践中的确出现了'重活动轻基础'的倾向，这可能部分源于对杜威的庸俗化理解。",
+          "conceptEn": "Learning by Doing",
+          "descEn": "Education is not the transmission of ready-made knowledge but the reconstruction of experience through active problem-solving. Schools should model real-life situations where students learn through inquiry.",
+          "l1En": "Reading a swimming manual is not learning to swim. All genuine learning is active, experiential, and problem-driven.",
+          "l2En": "The teacher is not a 'sage on the stage' but a 'guide on the side' — creating structured environments for inquiry.",
+          "l3En": "Dewey's progressive education was a direct application of his instrumentalist philosophy: just as ideas are tools for living, education is growth through active engagement with problems. Critics argue it was misapplied in American schools as permissiveness, but Dewey himself stressed the need for structure and guidance, not unstructured 'free expression.'"
+        }
+      ],
+      "famousEvents": [
+        {
+          "title": "杜威实验学校",
+          "year": 1896,
+          "desc": "杜威在芝加哥大学创办实验学校（Laboratory School），将他的教育理论付诸实践，成为美国进步主义教育的标志性实验。",
+          "titleEn": "Dewey Laboratory School",
+          "descEn": "Dewey founded the University of Chicago Laboratory School to test his educational theories, becoming the model for progressive education."
+        }
+      ],
+      "scientificEval": "杜威的工具主义为科学方法论提供了哲学基础——科学是解决问题的探究过程，理论的'真'在于预测力和实用效果。他的思想通过波普尔和库恩影响了科学哲学的发展。杜威的民主哲学也为科技伦理和公众参与科学决策提供了重要框架。",
+      "thoughtEvolution": "杜威在佛蒙特大学读书时受到进化论（达尔文）的深刻影响，后来在约翰·霍普金斯大学跟皮尔士学习哲学。他早期是黑格尔式的观念论者，后来转向实用主义。他漫长的学术生涯（68年）横跨了美国从农业国到世界强国的全过程，他的哲学也始终关注如何让民主在工业时代和科技时代继续有效运转。",
+      "aiReview": "杜威的哲学有一种反直觉的当代性。在一个'后真相'时代，他的'真理即经过检验的有效指导'不是相对主义，而是对真理性质的重新理解：真理不是一成不变的被动发现，而是在面对新问题时的主动重建——这其实是科学共同体的实际操作方式。他最大的遗憾可能是：他一生致力于让学校成为民主的实验室，而今天的学校越来越像应试工厂。",
+      "goldenQuotes": [
+        {
+          "text": "教育不是为生活做准备，教育就是生活本身。",
+          "source": "《民主与教育》",
+          "textEn": "Education is not preparation for life; education is life itself.",
+          "sourceEn": "Democracy and Education"
+        },
+        {
+          "text": "给我们孩子什么样的教育，就给我们什么样的未来。",
+          "source": "杜威教育论著",
+          "textEn": "What the best and wisest parent wants for his own child, that must the community want for all of its children.",
+          "sourceEn": "The School and Society"
+        },
+        {
+          "text": "真正的思考起始于怀疑。",
+          "source": "《我们怎样思考》",
+          "textEn": "Genuine thinking begins with uncertainty and doubt.",
+          "sourceEn": "How We Think"
+        }
+      ],
+      "anecdote": "杜威的学术生涯极其漫长而稳定。他60岁时写了《民主与教育》——这本他最有名的书；70岁时写了《经验与自然》——他认为自己最重要的哲学著作；80多岁时仍然活跃写作。他的第二任妻子是他以前的学生（比他小25岁），他们收养了三个孩子。杜威90岁生日时收到超过5000封贺信。",
+      "relationships": [
+        {
+          "target": "john-stuart-mill",
+          "type": "influence",
+          "strength": 5,
+          "description": "杜威继承了密尔的自由主义传统，但以实用主义代替了功利主义"
+        },
+        {
+          "target": "hegel",
+          "type": "influence",
+          "strength": 6,
+          "description": "杜威早年深受黑格尔影响，其过程哲学（一切皆流变）保留了黑格尔的辩证法精神"
+        }
+      ],
+      "furtherReading": [
+        {
+          "title": "民主与教育",
+          "desc": "杜威，影响最大的教育学著作之一",
+          "type": "book"
+        }
+      ],
+      "layers": {
+        "L2_era": {
+          "timeline": [],
+          "decisiveMoments": [],
+          "travelMap": []
+        },
+        "L3_philosophy": {
+          "conceptNetwork": [],
+          "threeLevelReading": [],
+          "problemMatrix": []
+        },
+        "L4_evolution": {
+          "thoughtPeriods": [],
+          "turningPoints": []
+        },
+        "L6_debates": {
+          "confrontations": [],
+          "spectrumPosition": {}
+        },
+        "L7_legacy": {
+          "influenceMap": [],
+          "contemporaryApplications": []
+        }
+      }
+    },
+    {
+      "id": "russell",
+      "name": "罗素",
+      "nameEn": "Bertrand Russell",
+      "birth": 1872,
+      "death": 1970,
+      "nationality": "英国",
+      "nationalityEn": "United Kingdom",
+      "portrait": "",
+      "civilization": "western",
+      "school": "analytic-philosophy",
+      "era": "20th-century",
+      "role": "哲学家，逻辑学家，数学家，社会评论家",
+      "influence": 9,
+      "summary": "伯特兰·罗素是20世纪最重要的哲学家之一，分析哲学的奠基人。他与怀特海合著《数学原理》试图将数学还原为逻辑（逻辑主义），是现代数理逻辑的里程碑。他的摹状词理论（Theory of Descriptions）解决了'法国现任国王是秃头'之类的存在性难题，是分析哲学的典范。他一生撰写了超过60部著作和数千篇文章，从数学哲学到婚姻道德无所不包。他是坚定的和平主义者、反核运动领袖，因政治活动两次入狱，1950年获得诺贝尔文学奖。罗素以清晰的文笔和犀利的讽刺著称，是少数真正'出圈'的哲学家。",
+      "summaryEn": "Bertrand Russell was one of the most influential philosophers of the 20th century, co-founder of analytic philosophy and mathematical logic. With Whitehead, he authored Principia Mathematica, a monumental attempt to reduce mathematics to logic. His Theory of Descriptions became a paradigm of philosophical analysis. A prolific writer, peace activist, and Nobel laureate in literature.",
+      "representativeWorks": [
+        {
+          "title": "数学原理",
+          "type": "数学/逻辑",
+          "year": 1913,
+          "content": "与怀特海合著的三卷巨著（1910-1913），试图证明所有数学概念都可以从逻辑公理中推导出来。是20世纪逻辑学的里程碑。",
+          "titleEn": "Principia Mathematica",
+          "contentEn": "Three-volume work with Whitehead attempting to derive all mathematics from logical axioms. A landmark of 20th-century logic."
+        },
+        {
+          "title": "西方哲学史",
+          "type": "哲学史",
+          "year": 1945,
+          "content": "罗素最畅销的著作之一，以生动的文笔和独到的视角梳理西方哲学发展，曾获诺贝尔文学奖认可。",
+          "titleEn": "A History of Western Philosophy",
+          "contentEn": "Russell's best-selling survey of Western philosophy, noted for its wit and personal perspective, cited in his Nobel Prize award."
+        },
+        {
+          "title": "哲学问题",
+          "type": "哲学",
+          "year": 1912,
+          "content": "罗素最广为人知的通俗哲学著作，通过分析'物质对象是否真实存在'等基本问题，引入他的逻辑分析方法。",
+          "titleEn": "The Problems of Philosophy",
+          "contentEn": "Russell's classic introduction to philosophy, examining fundamental questions through the lens of logical analysis."
+        }
+      ],
+      "coreThoughts": [
+        {
+          "concept": "摹状词理论",
+          "desc": "罗素对'法国现任国王是秃头'这类句子的分析：这个句子不是在对一个不存在的实体做判断，而是包含三个命题——存在一个法国国王、只有一个法国国王、他是秃头。因为第一个命题为假，整个句子为假。这一分析解决了关于'不存在之物'的千年哲学困惑。",
+          "l1": "一句听起来有意义的话，分析之后可能发现它其实是在做几个不同的断言。",
+          "l2": "比如'火星上有外星人'——这句话包含：火星上有智慧生物、这些生物是'外星人'。第一个命题就错了，整句话自然就错了，不需要讨论'外星人'是什么。",
+          "l3": "摹状词理论是分析哲学的典范操作：它把一个看似本体论问题（'不存在的东西怎么可能被谈论？'）转化为逻辑问题（'这个句子的逻辑形式是什么？'）。罗素用这个方法解决了很多传统哲学难题——比如'金山不存在'——金山不是一个存在但缺席的东西，而是'有一个东西既是金山又是存在的'这个命题为假。维特根斯坦说摹状词理论是'哲学史上最重要的工作之一'。",
+          "conceptEn": "Theory of Descriptions",
+          "descEn": "Russell's analysis showing that 'The present King of France is bald' actually contains three assertions: there is a King of France, there is only one, and he is bald. Since the first is false, the whole is false — solving the puzzle of how we can meaningfully talk about non-existent things.",
+          "l1En": "A sentence that looks like it refers to something might actually be making several hidden claims.",
+          "l2En": "The theory dissolves philosophical puzzles by revealing the logical form hidden beneath grammatical form.",
+          "l3En": "The Theory of Descriptions was the first great triumph of analytic philosophy. It showed that many traditional philosophical problems (How can we talk about nothing? Does 'the present King of France' refer to something that doesn't exist?) are not genuine puzzles but artifacts of confusing grammatical form with logical form. Wittgenstein called it 'the most important work in philosophy ever.'"
+        },
+        {
+          "concept": "逻辑原子主义",
+          "desc": "世界由分散的'事实'（atomic facts）构成，语言通过'原子命题'对应这些事实。复杂命题是原子命题的真值函数组合。哲学的任务是通过逻辑分析将复杂命题还原为原子命题。",
+          "l1": "复杂的思想可以拆成简单的事实，就像物质可以拆成原子。",
+          "l2": "'太阳升起照亮了大地'——可以拆成'太阳升起'和'大地被照亮'两个事实的组合。",
+          "l3": "逻辑原子主义是罗素把数学上的逻辑分析方法推广到一般哲学上的尝试。它假设世界有最终的'事实原子'——简单得不能再分析的基本单元。这个思路后来受到维特根斯坦后期哲学的严厉批判（'语言是一套工具箱，不是现实的镜像'），但它是分析哲学史上最重要的大胆假设之一。",
+          "conceptEn": "Logical Atomism",
+          "descEn": "The world consists of independent atomic facts to which language corresponds through atomic propositions. Complex propositions are truth-functions of atomic ones. Philosophy's task is logical analysis — decomposing complex propositions into their simplest elements.",
+          "l1En": "Complex ideas can be broken down into simple facts, like matter into atoms.",
+          "l2En": "'The cat is on the mat and it is raining' contains two atomic facts combined.",
+          "l3En": "Logical atomism was Russell's most ambitious metaphysical project. It assumes the world has a definite logical structure that mirrors the structure of a perfect logical language. This 'picture theory' of meaning was adopted by the early Wittgenstein but later abandoned. Whether the world actually HAS atomic facts remains an open — perhaps permanently unanswerable — question."
+        }
+      ],
+      "famousEvents": [
+        {
+          "title": "罗素悖论",
+          "year": 1901,
+          "desc": "罗素发现了一个集合论悖论：'所有不包含自身的集合的集合是否包含自身？'这个发现摧毁了弗雷格和康托尔的朴素集合论基础，引发了第三次数学危机。",
+          "titleEn": "Russell's Paradox",
+          "descEn": "Russell discovered a paradox in set theory that undermined Frege's logical foundations of arithmetic: does the set of all sets that don't contain themselves contain itself?"
+        },
+        {
+          "title": "因反战入狱",
+          "year": 1918,
+          "desc": "第一次世界大战期间，罗素因反战言论被判处6个月监禁。他在狱中写了《数理哲学导论》。",
+          "titleEn": "Imprisoned for Pacifism",
+          "descEn": "Russell was imprisoned for six months during WWI for his anti-war activism. He wrote Introduction to Mathematical Philosophy in prison."
+        },
+        {
+          "title": "罗素-爱因斯坦宣言",
+          "year": 1955,
+          "desc": "与爱因斯坦联合发表宣言，呼吁世界领导人用和平方式解决国际冲突，警告核战争的毁灭性后果。",
+          "titleEn": "Russell-Einstein Manifesto",
+          "descEn": "Co-signed with Einstein, urging world leaders to resolve conflicts peacefully and warning of nuclear annihilation."
+        },
+        {
+          "title": "诺贝尔文学奖",
+          "year": 1950,
+          "desc": "罗素获诺贝尔文学奖，表彰'他在哲学作品中体现的思想自由和人道主义精神'。",
+          "titleEn": "Nobel Prize in Literature",
+          "descEn": "Awarded 'in recognition of his varied and significant writings in which he champions humanitarian ideals and freedom of thought.'"
+        }
+      ],
+      "scientificEval": "罗素在数理逻辑上的贡献具有根本性的科学意义。他与怀特海合著的《数学原理》是弗雷格之后逻辑学的最大突破，直接影响了哥德尔的不完全性定理和图灵的停机问题。他的摹状词理论至今是语言哲学的标准工具。罗素还是最早认真对待科学哲学的分析哲学家之一（《人类的知识》）。",
+      "thoughtEvolution": "罗素晚年是一位公众知识分子——他通过BBC广播、报纸专栏和大众读物传播理性和人道主义。他92岁时还因参与反核抗议被捕（1961年）。他的感情生活极其丰富（四段婚姻、多次风流韵事），他的道德立场（支持婚前性行为、同性恋合法化、离婚自由）在当时极为激进。",
+      "aiReview": "罗素可能是最后一个'通才型'哲学家——在数学、逻辑、认识论、伦理学、政治学、教育学和文学上都有建树。他的散文是哲学写作的标杆——清晰、诙谐、不做作。但他的名声中也包含一个悖论：他最畅销的《西方哲学史》被专业哲学史家批评为偏见太多，而他的专业著作（《数学原理》）几乎没人真正读完（三卷2000页）。这恰恰说明他是一个无法被简单归类的人——既是最严格的逻辑学家，也是最自由的公共知识分子。",
+      "goldenQuotes": [
+        {
+          "text": "三种激情支配了我的一生：对爱情的渴望、对知识的追求、对人类苦难不可遏制的同情。",
+          "source": "《我为何而活》自传序言",
+          "textEn": "Three passions, simple but overwhelmingly strong, have governed my life: the longing for love, the search for knowledge, and unbearable pity for the suffering of mankind.",
+          "sourceEn": "Prologue to his Autobiography"
+        },
+        {
+          "text": "战争没有赢家——只有输家。",
+          "source": "罗素反战演讲",
+          "textEn": "War does not determine who is right — only who is left.",
+          "sourceEn": "Anti-war speech"
+        },
+        {
+          "text": "担心即将发生的事是愚蠢的——因为如果它不可避免，担心也无用；如果它可以避免，有比担心更好的事情做。",
+          "source": "《幸福之路》",
+          "textEn": "Fear is the main source of superstition, and one of the main sources of cruelty. To conquer fear is the beginning of wisdom.",
+          "sourceEn": "Unpopular Essays"
+        }
+      ],
+      "anecdote": "罗素有一次公开演讲被一名女士质疑：'罗素先生，您主张人类不应恐惧——但您不也害怕地狱吗？'罗素想了想说：'女士，我害怕地狱就像您害怕独角兽一样——我明白它不存在。'罗素年轻时曾写过一本讨论宗教的短文，编辑担心被起诉，罗素说：'那就让我用笔名发表吧。'后来他想到一个笔名：'T.B. Russell'——意思是'Threatened by Bishop'（被主教威胁）。",
+      "aiReviewEn": "Witty as ever.",
+      "relationships": [
+        {
+          "target": "wittgenstein",
+          "type": "teacher-student",
+          "strength": 9,
+          "description": "罗素是维特根斯坦的导师和学术引路人，帮助出版《逻辑哲学论》"
+        },
+        {
+          "target": "whitehead",
+          "type": "influence",
+          "strength": 9,
+          "description": "与怀特海合著《数学原理》，罗素的逻辑分析方法深刻影响了怀特海的哲学"
+        },
+        {
+          "target": "hegel",
+          "type": "debate",
+          "strength": 6,
+          "description": "罗素是黑格尔唯心论最激烈的批评者，推动了英国哲学向分析哲学的转向"
+        }
+      ],
+      "furtherReading": [
+        {
+          "title": "西方哲学史",
+          "desc": "罗素，至今最畅销的哲学史之一",
+          "type": "book"
+        },
+        {
+          "title": "哲学问题",
+          "desc": "罗素，哲学入门经典",
+          "type": "book"
+        }
+      ],
+      "layers": {
+        "L2_era": {
+          "timeline": [],
+          "decisiveMoments": [],
+          "travelMap": []
+        },
+        "L3_philosophy": {
+          "conceptNetwork": [],
+          "threeLevelReading": [],
+          "problemMatrix": []
+        },
+        "L4_evolution": {
+          "thoughtPeriods": [],
+          "turningPoints": []
+        },
+        "L6_debates": {
+          "confrontations": [],
+          "spectrumPosition": {}
+        },
+        "L7_legacy": {
+          "influenceMap": [],
+          "contemporaryApplications": []
+        }
+      }
+    },
+    {
+      "id": "popper",
+      "name": "波普尔",
+      "nameEn": "Karl Popper",
+      "birth": 1902,
+      "death": 1994,
+      "nationality": "奥地利/英国",
+      "nationalityEn": "Austria/United Kingdom",
+      "portrait": "",
+      "civilization": "western",
+      "school": "philosophy-of-science",
+      "era": "20th-century",
+      "role": "哲学家，科学哲学泰斗",
+      "influence": 8,
+      "summary": "卡尔·波普尔是20世纪最具影响力的科学哲学家之一，以'证伪主义'（Falsificationism）闻名。他提出了科学与非科学的划界标准：一个理论是科学的当且仅当它是可证伪的（可以被经验证伪）。爱因斯坦的相对论是可证伪的（如果观测不符就是错的），而弗洛伊德的精神分析、阿德勒的个体心理学、马克思的历史唯物主义在他看来是'不可证伪'的——因此不是科学而是'伪科学'。波普尔还将证伪主义应用于政治哲学，提出了'开放社会'（Open Society）的理念——一个允许批判和试错的社会。",
+      "summaryEn": "Karl Popper was the most influential philosopher of science of the 20th century. His falsificationism proposed that scientific theories must be falsifiable — capable of being proven wrong by evidence. This distinguished genuine science (Einstein's relativity) from pseudoscience (Freud's psychoanalysis). He extended this critical rationalism to politics, defending the 'open society' against totalitarianism.",
+      "representativeWorks": [
+        {
+          "title": "科学发现的逻辑",
+          "type": "科学哲学",
+          "year": 1934,
+          "content": "波普尔的代表作，提出证伪主义作为科学与非科学的划界标准，批判逻辑实证主义的可证实原则。",
+          "titleEn": "The Logic of Scientific Discovery",
+          "contentEn": "Popper's magnum opus, introducing falsificationism as the demarcation criterion for science."
+        },
+        {
+          "title": "开放社会及其敌人",
+          "type": "政治哲学",
+          "year": 1945,
+          "content": "波普尔对极权主义的哲学批判，论证柏拉图、黑格尔和马克思的思想中蕴含了封闭社会的理论种子。",
+          "titleEn": "The Open Society and Its Enemies",
+          "contentEn": "Popper's critique of totalitarianism, arguing that Plato, Hegel, and Marx laid foundations for closed societies."
+        },
+        {
+          "title": "历史决定论的贫困",
+          "type": "政治哲学",
+          "year": 1957,
+          "content": "批判历史决定论——认为历史有必然规律的理论，论证历史发展是不可预测的。",
+          "titleEn": "The Poverty of Historicism",
+          "contentEn": "Critique of the idea that history follows predetermined laws, arguing that the course of history is fundamentally unpredictable."
+        }
+      ],
+      "coreThoughts": [
+        {
+          "concept": "证伪主义",
+          "desc": "一个理论是'科学的'当且仅当它有被经验证伪的可能。科学是通过'猜想与反驳'进步的：提出大胆的假说→努力证伪它→被证伪后提出更好的假说。",
+          "l1": "科学不在于'证实'而在于'证伪'——你永远不能证明一个理论是对的，但你能证明它是错的。",
+          "l2": "'所有的天鹅都是白的'——你看到一亿只白天鹅都不能'证明'这个理论，但一只黑天鹅就足以'证伪'它。",
+          "l3": "证伪主义解决了休谟的归纳问题：科学推理不是从个别到一般的归纳（这在逻辑上不成立），而是大胆假设+严格检验的试错法。爱因斯坦相对论战胜牛顿力学不是因为牛顿力学被'证明'错了——而是在某些领域（高速、强引力）被'证伪'了，爱因斯坦提供了更好的解释。科学史上所有的革命本质上都是证伪驱动。",
+          "conceptEn": "Falsificationism",
+          "descEn": "A theory is scientific if and only if it is falsifiable — capable of being refuted by empirical evidence. Science progresses through 'conjectures and refutations': proposing bold hypotheses and attempting to falsify them.",
+          "l1En": "Science doesn't 'prove' theories — it tries and fails to disprove them. A surviving theory is one that hasn't yet been falsified, not one that has been 'verified.'",
+          "l2En": "No number of white swans proves 'all swans are white'; one black swan falsifies it. This asymmetry is the key to falsificationism.",
+          "l3En": "Falsificationism solves Hume's problem of induction: science does not need induction. We don't infer general laws from particular observations; we propose bold conjectures and then try to show they are wrong. The ones that survive strenuous testing are the best current theories — not 'true' but 'not yet falsified.' This explains how science progresses without needing to claim certainty."
+        },
+        {
+          "concept": "开放社会",
+          "desc": "一个开放的社会允许对其制度和政策进行自由的批判和改革，而不是由单一的权威（王权、教权或某种历史必然性的信仰）来统治。开放社会的基础是批判理性主义。",
+          "l1": "好的社会允许批评，坏的社会禁止批评。就这么简单。",
+          "l2": "开放社会就像一个民主政府：你可以在选举中把他们投下去，不需要革命。",
+          "l3": "波普尔把证伪主义从科学扩展到政治：一个好的政治理论不是'完美的'（那是乌托邦），而是可以被和平修正的。民主的本质不是'人民当家作主'（波普尔认为这不可操作），而是提供了不用流血就能更换政府的制度安排。开放社会的敌人是那些声称掌握了历史必然规律的人——因为他们把反对者定义为'历史的障碍'而不是'合法的政治对手'。",
+          "conceptEn": "Open Society",
+          "descEn": "A society that allows free criticism of its institutions and policies, based on critical rationalism rather than authoritarian certainty. Democracy is not rule by the people but a system for replacing governments without violence.",
+          "l1En": "A good society can be criticized and changed peacefully. A bad society suppresses dissent.",
+          "l2En": "The key democratic institution is not 'the will of the people' (a fiction) but the ability to remove a government without bloodshed.",
+          "l3En": "Popper extended his epistemology to politics: just as scientific theories must be open to refutation, political systems must be open to peaceful change. The enemy of the open society is anyone who claims to know the inevitable course of history — because they treat dissent as an obstacle to be removed rather than a voice to be heard."
+        }
+      ],
+      "famousEvents": [
+        {
+          "title": "与维特根斯坦的火钳事件",
+          "year": 1946,
+          "desc": "在剑桥一个哲学研讨会上，波普尔与维特根斯坦发生激烈争论。据说维特根斯坦愤怒地挥舞着火钳，波普尔说'不要用火钳威胁客人'，维特根斯坦摔门而去。",
+          "titleEn": "The Poker Incident",
+          "descEn": "At a Cambridge seminar, Popper and Wittgenstein argued heatedly. Wittgenstein allegedly brandished a fireplace poker; Popper told him not to threaten visitors, and Wittgenstein stormed out."
+        }
+      ],
+      "scientificEval": "证伪主义作为科学划界标准在哲学上已被广泛挑战（库恩、拉卡托斯、费耶阿本德都指出了问题：科学史上理论被证伪时科学家常常不放弃理论而是修改辅助假设），但作为科学方法论的核心直觉——'好的科学是可检验的'——至今仍是科学家和公众理解科学的基础框架。",
+      "thoughtEvolution": "波普尔在维也纳长大，亲历了奥匈帝国的崩溃和两次世界大战。他年轻时曾是马克思主义者，但1919年一场游行中警察开枪打死数人，让他意识到革命理论的危险，转向批判马克思主义。纳粹上台后他流亡新西兰，1946年移居英国。他在伦敦政经学院（LSE）任教，成为20世纪最有影响力的科学哲学家。",
+      "aiReview": "波普尔的证伪主义有一个深刻的讽刺：他的理论本身是不可证伪的。他说'科学理论必须可证伪'——但这句话本身不是科学理论，无法被证伪。波普尔对此坦然承认：划界标准是一个哲学提议，不是一个科学假说。但这就带来了一个更深的麻烦：如果'好的理论就是可证伪的理论'，那这个元理论本身不可证伪，按照它自己的标准，它算什么呢？——这种“自指困境”一直是波普尔批评者最喜欢的攻击点。",
+      "goldenQuotes": [
+        {
+          "text": "好的理论是可以被证伪的——它的力量不在于它能解释一切，而在于它敢冒被推翻的风险。",
+          "source": "《科学发现的逻辑》",
+          "textEn": "The criterion of the scientific status of a theory is its falsifiability, or refutability, or testability.",
+          "sourceEn": "The Logic of Scientific Discovery"
+        },
+        {
+          "text": "开放社会最大的敌人是那些宣称掌握了历史必然规律的人。",
+          "source": "《开放社会及其敌人》",
+          "textEn": "The open society is one in which individuals are confronted with personal decisions.",
+          "sourceEn": "The Open Society and Its Enemies"
+        },
+        {
+          "text": "我们必须为自由而战，但自由不是放任——自由意味着责任。",
+          "source": "波普尔演讲",
+          "textEn": "We must plan for freedom, and not only for security, if for no other reason than that only freedom can make security secure.",
+          "sourceEn": "The Open Society and Its Enemies"
+        }
+      ],
+      "anecdote": "波普尔年轻时在维也纳家具厂当木工学徒。有一次他抱怨说用机器刨木料太吵影响思考，工头说：'你是在工作还是在思考？'波普尔说：'我在思考。'工头说：'那回家想去。'——这段经历让波普尔深刻体会到体力劳动与知识劳动的差别，也坚定了他对言论自由的信念。",
+      "relationships": [
+        {
+          "target": "wittgenstein",
+          "type": "debate",
+          "strength": 6,
+          "description": "波普尔与维特根斯坦在科学哲学和语言哲学上有根本分歧，著名的火钳事件"
+        },
+        {
+          "target": "russell",
+          "type": "influence",
+          "strength": 6,
+          "description": "罗素的逻辑分析方法和理性主义精神深深影响了波普尔"
+        },
+        {
+          "target": "kuhn",
+          "type": "debate",
+          "strength": 8,
+          "description": "波普尔与库恩关于科学革命是'革命性范式转换'而非'理性证伪'的争论是20世纪科学哲学最核心的辩论"
+        }
+      ],
+      "furtherReading": [
+        {
+          "title": "科学发现的逻辑",
+          "desc": "波普尔，证伪主义经典",
+          "type": "book"
+        },
+        {
+          "title": "开放社会及其敌人",
+          "desc": "波普尔，政治哲学名著",
+          "type": "book"
+        }
+      ],
+      "layers": {
+        "L2_era": {
+          "timeline": [],
+          "decisiveMoments": [],
+          "travelMap": []
+        },
+        "L3_philosophy": {
+          "conceptNetwork": [],
+          "threeLevelReading": [],
+          "problemMatrix": []
+        },
+        "L4_evolution": {
+          "thoughtPeriods": [],
+          "turningPoints": []
+        },
+        "L6_debates": {
+          "confrontations": [],
+          "spectrumPosition": {}
+        },
+        "L7_legacy": {
+          "influenceMap": [],
+          "contemporaryApplications": []
+        }
+      }
+    },
+    {
+      "id": "kuhn",
+      "name": "库恩",
+      "nameEn": "Thomas Kuhn",
+      "birth": 1922,
+      "death": 1996,
+      "nationality": "美国",
+      "nationalityEn": "United States",
+      "portrait": "",
+      "civilization": "western",
+      "school": "philosophy-of-science",
+      "era": "20th-century",
+      "role": "科学哲学家，科学史家",
+      "influence": 9,
+      "summary": "托马斯·库恩是20世纪最具影响力的科学哲学家之一，以'范式'（Paradigm）和'科学革命'（Scientific Revolution）的概念彻底改变了人们对科学如何发展的理解。他在《科学革命的结构》中论证：科学不是线性累积的进步，而是'常规科学→危机→革命→新范式'的循环。牛顿力学→爱因斯坦相对论不是'渐进改进'，而是一次世界观的格式塔转换——科学革命后，科学家生活在一个不同的世界里。'范式不可通约性'（Incommensurability）的概念对科学史、科学社会学和知识论产生了爆炸性影响。",
+      "summaryEn": "Thomas Kuhn revolutionized our understanding of science with his concept of 'paradigm shifts.' In The Structure of Scientific Revolutions, he argued that science progresses not through linear accumulation but through revolutionary transformations where one worldview (paradigm) replaces another. Paradigms are 'incommensurable' — there is no neutral standard to compare them.",
+      "representativeWorks": [
+        {
+          "title": "科学革命的结构",
+          "type": "科学哲学",
+          "year": 1962,
+          "content": "20世纪被引用最多的学术著作之一，提出了范式、常规科学、科学革命、不可通约性等核心概念，颠覆了以波普尔为代表的科学进步观。",
+          "titleEn": "The Structure of Scientific Revolutions",
+          "contentEn": "One of the most cited academic works of the 20th century, introducing paradigm shifts, normal science, scientific revolutions, and incommensurability."
+        },
+        {
+          "title": "哥白尼革命",
+          "type": "科学史",
+          "year": 1957,
+          "content": "库恩第一部重要著作，详细考察了哥白尼日心说从提出到被接受的历史过程，为后来的范式理论提供了历史基础。",
+          "titleEn": "The Copernican Revolution",
+          "contentEn": "Kuhn's first book, a detailed historical study of the Copernican transition that laid the groundwork for his later theory of scientific revolutions."
+        }
+      ],
+      "coreThoughts": [
+        {
+          "concept": "范式与科学革命",
+          "desc": "科学的发展不是持续积累的进步，而是'常规科学'（在已有范式内解题）→'危机'（反常积累）→'革命'（范式转换）的循环。一个新范式不只是在旧范式上加新知识——它改变了科学家看待世界的基本方式。",
+          "l1": "科学不是像盖楼一样越盖越高——它更像一次次推倒重来的重建。",
+          "l2": "爱因斯坦颠覆牛顿不是'在牛顿的基础上加东西'——而是把牛顿的整个框架换了一套完全不同的逻辑。",
+          "l3": "范式转换类似于视觉上的'格式塔转换'——就像鸭兔图：同一张图，你突然从看鸭子变成了看兔子。科学家在革命前后的工作不是在同一视角下看得更深更远，而是视角本身变了。这就是为什么库恩说'在革命之后，科学家们在不同的世界里工作'。",
+          "conceptEn": "Paradigm and Scientific Revolutions",
+          "descEn": "Science does not progress by linear accumulation but through cycles: normal science (puzzle-solving within a paradigm) → crisis (anomalies accumulate) → revolution (paradigm shift). After a revolution, scientists work in a different world.",
+          "l1En": "Science doesn't build steadily upward — it periodically tears down its foundations and rebuilds.",
+          "l2En": "Einstein didn't 'improve' Newton — he replaced Newton's entire framework with a different way of understanding space, time, and gravity.",
+          "l3En": "Paradigm shifts are like gestalt switches. The same data looks completely different after a revolution. This is why Kuhn says scientists 'work in a different world' after a revolution — not because the world has changed but because their way of seeing it has."
+        },
+        {
+          "concept": "范式不可通约性",
+          "desc": "竞争中的科学范式之间没有中立的评价标准。不同范式使用不同的概念、不同的方法论、不同的评价标准——它们无法被放在同一把尺子上比较。这不是说旧范式'错了'——它只是在新的框架里变得无意义了。",
+          "l1": "不同时代科学的衡量标准不是同一把尺子——它们用的根本就不是同一种尺子。",
+          "l2": "你无法用牛顿物理学的概念来'证明'爱因斯坦是对的——因为'质量'这个词在两个体系中的含义不同。",
+          "l3": "不可通约性是库恩最受争议的论点。批评者指责它导致了科学相对主义（'不能比较还怎么谈进步？'）。库恩否认自己是相对主义：虽然旧范式和新范式没有中立的比较语言，但新范式通常在解题能力上优于旧范式——'进步'不是朝向'真理'的进步，而是解题能力的增强。不过库恩的澄清是否成功，至今仍在争论中。",
+          "conceptEn": "Incommensurability",
+          "descEn": "Competing paradigms lack a neutral standard for comparison. They use different concepts, methods, and criteria — like measuring incommensurable units. This does not make the old paradigm 'wrong' but makes direct comparison impossible.",
+          "l1En": "Different scientific paradigms speak different languages — you can't directly translate between them.",
+          "l2En": "The word 'mass' in Newtonian physics does not mean the same thing as 'mass' in Einsteinian physics. They are not measuring the same quantity with different precision — they are different concepts.",
+          "l3En": "Incommensurability sparked the most heated debates in 20th-century philosophy of science. Critics charged it leads to relativism ('if we can't compare, how do we know science progresses?'). Kuhn denied being a relativist: later paradigms typically solve more problems than earlier ones. But the criteria for 'solving problems' are themselves paradigm-dependent — and that circularity is what makes the issue genuinely difficult."
+        }
+      ],
+      "famousEvents": [
+        {
+          "title": "《科学革命的结构》出版",
+          "year": 1962,
+          "desc": "库恩的这本小书彻底改变了科学哲学、科学史和科学社会学的面貌，是学术史上罕见的跨学科影响力事件。",
+          "titleEn": "Publication of The Structure of Scientific Revolutions",
+          "descEn": "This slim volume transformed the philosophy, history, and sociology of science, becoming one of the most cited academic works of all time."
+        }
+      ],
+      "scientificEval": "库恩的范式理论被广泛用于分析科学史，但也引发了'科学是理性的吗？'的深层质疑。科学社会学（SSK/STS）中的强纲领学派（爱丁堡学派）极端化了库恩的观点，认为科学知识是社会建构的。库恩本人后来多次澄清自己不是相对主义者。",
+      "thoughtEvolution": "库恩原本学的是理论物理学（哈佛博士），在学生时代对科学史产生了兴趣。有一次他边读亚里士多德的《物理学》边想：亚里士多德怎么会犯这么多明显的错误？然后他忽然意识到——亚里士多德不是在'糟糕地做牛顿物理学'，而是在做一种完全不同的物理学。这个顿悟时刻催生了范式理论。",
+      "aiReview": "库恩的理论提供了一个令人不安的思路：如果科学革命不是理性选择而是格式塔转换，那么科学进步是否是'进步'本身就是不可判定的——因为你用来判断进步的标准本身也是范式的一部分。这个洞见的威力远超科学哲学：它意味着任何领域（政治、道德、美学）的根本变革都不是在更好的理论替代了错误的理论，而是一种世界观替代了另一种——而两者之间没有中立的审判者。某种程度上，库恩是哲学界的哥白尼——不是因为他提出了革命性的新范式，而是因为他证明了'范式的不可通约性'同样适用于看待他自己的理论。",
+      "goldenQuotes": [
+        {
+          "text": "科学革命的实质是范式的转换——科学家在新的范式中看到的世界与旧世界是不可通约的。",
+          "source": "《科学革命的结构》",
+          "textEn": "The succession of paradigm shifts is the usual developmental pattern of mature science.",
+          "sourceEn": "The Structure of Scientific Revolutions"
+        },
+        {
+          "text": "范式转换不是渐进累积的结果——它是一次信仰的跳跃。",
+          "source": "《科学革命的结构》",
+          "textEn": "What were ducks in the scientist's world before the revolution become rabbits afterwards.",
+          "sourceEn": "The Structure of Scientific Revolutions"
+        },
+        {
+          "text": "常规科学是一种在范式框架内解谜的活动。",
+          "source": "《科学革命的结构》",
+          "textEn": "Normal science means research firmly based upon one or more past scientific achievements.",
+          "sourceEn": "The Structure of Scientific Revolutions"
+        }
+      ],
+      "anecdote": "库恩曾在一次讲座中被一位物理学家质问：'您的理论对物理学有什么影响？'库恩回答：'完全没有——物理学家不需要哲学家告诉他们如何搞物理。'这个回答体现了库恩的诚实：他的书不是写给科学家读的（当然很多科学家也读了），而是写给哲学家、历史学家和社会学家的——他要告诉人们科学实际上是怎样运作的，而不是科学家说自己怎样运作的。两者的差距正是他的理论的核心。",
+      "relationships": [
+        {
+          "target": "popper",
+          "type": "debate",
+          "strength": 8,
+          "description": "库恩与波普尔的争论是20世纪科学哲学最核心的对话——理性证伪 vs 历史革命"
+        }
+      ],
+      "furtherReading": [
+        {
+          "title": "科学革命的结构",
+          "desc": "库恩，20世纪被引用最多的学术著作之一",
+          "type": "book"
+        }
+      ],
+      "layers": {
+        "L2_era": {
+          "timeline": [],
+          "decisiveMoments": [],
+          "travelMap": []
+        },
+        "L3_philosophy": {
+          "conceptNetwork": [],
+          "threeLevelReading": [],
+          "problemMatrix": []
+        },
+        "L4_evolution": {
+          "thoughtPeriods": [],
+          "turningPoints": []
+        },
+        "L6_debates": {
+          "confrontations": [],
+          "spectrumPosition": {}
+        },
+        "L7_legacy": {
+          "influenceMap": [],
+          "contemporaryApplications": []
+        }
+      }
+    },
+    {
+      "id": "quine",
+      "name": "奎因",
+      "nameEn": "Willard Van Orman Quine",
+      "birth": 1908,
+      "death": 2000,
+      "nationality": "美国",
+      "nationalityEn": "United States",
+      "portrait": "",
+      "civilization": "western",
+      "school": "analytic-philosophy",
+      "era": "20th-century",
+      "role": "哲学家，逻辑学家，语言哲学家",
+      "influence": 9,
+      "summary": "威拉德·范·奥曼·奎因是20世纪下半叶最具影响力的分析哲学家之一。他的论文《经验论的两个教条》堪称分析哲学史上被引用最多的文章之一，摧毁了逻辑实证主义的两大基石——分析-综合区分和还原论。他提出了'知识整体论'（Holism）：我们的知识网络不是一个个孤立命题对应经验，而是作为一个整体面对经验的检验。他还提出了'本体论承诺'（Ontological Commitment）和'翻译的不确定性'（Indeterminacy of Translation）等影响深远的理论。奎因不是那种'写了一大堆书但只有一本重要'的哲学家——他几乎每一部著作都提出了原创性的洞见。",
+      "summaryEn": "Willard Van Orman Quine was the most influential American philosopher of the second half of the 20th century. His 'Two Dogmas of Empiricism' dismantled logical positivism by attacking the analytic-synthetic distinction. His holism holds that our network of knowledge confronts experience as a whole. His theses of ontological commitment and indeterminacy of translation reshaped analytic philosophy.",
+      "representativeWorks": [
+        {
+          "title": "从逻辑的观点看",
+          "type": "论文集",
+          "year": 1953,
+          "content": "奎因最重要的论文集，收录了《经验论的两个教条》《论有什么》等经典论文，彻底改变了分析哲学的面貌。",
+          "titleEn": "From a Logical Point of View",
+          "contentEn": "Quine's most important collection, including 'Two Dogmas of Empiricism' and 'On What There Is,' which reshaped analytic philosophy."
+        },
+        {
+          "title": "语词与对象",
+          "type": "语言哲学",
+          "year": 1960,
+          "content": "奎因系统地阐述了翻译的不确定性论题和行为主义意义理论，是语言哲学和心灵哲学的里程碑。",
+          "titleEn": "Word and Object",
+          "contentEn": "Quine's systematic exposition of the indeterminacy of translation and his behaviorist theory of meaning."
+        },
+        {
+          "title": "本体论的相对性",
+          "type": "哲学",
+          "year": 1969,
+          "content": "进一步发展了翻译的不确定性论题，将其推广到本体论层面。",
+          "titleEn": "Ontological Relativity",
+          "contentEn": "Extending the indeterminacy thesis to ontology itself."
+        }
+      ],
+      "coreThoughts": [
+        {
+          "concept": "经验论的两个教条",
+          "desc": "奎因论证逻辑实证主义的两个核心教条都是错的：(1)分析-综合区分——不存在纯粹'基于意义'的分析真理和'基于事实'的综合真理的截然区分；(2)还原论——不能把每个有意义的命题还原为直接经验。",
+          "l1": "你以为有些真理是'纯粹逻辑'（2+2=4），有些是'凭经验'（天在下雨）？奎因说：这两者分不开。",
+          "l2": "就像一张网——边缘接触经验，中心是逻辑和数学。当经验发生冲突时，你可以调整网的任何部分，没有哪个命题是绝对不可修改的。",
+          "l3": "奎因这一击对分析哲学是革命性的。如果分析-综合区分不成立，那么逻辑实证主义的整个计划——把一切知识还原为逻辑+经验——就破产了。这意味着哲学并不比科学更'基础'——它们是在同一艘船上修修补补。没有'第一哲学'，没有先验真理的领地——这直接影响了罗蒂等人走向新实用主义。",
+          "conceptEn": "Two Dogmas of Empiricism",
+          "descEn": "Quine attacked two core tenets of logical positivism: (1) the analytic-synthetic distinction — no clean division between truths of meaning and truths of fact; (2) reductionism — not every meaningful statement can be reduced to immediate experience.",
+          "l1En": "There is no sharp line between 'true by definition' and 'true by experience.' All our beliefs form a web that touches experience only at its edges.",
+          "l2En": "Our knowledge is like a field of force whose boundary conditions are experience. Any statement can be held true — even '2+2=4' — if we make drastic enough adjustments elsewhere in the system.",
+          "l3En": "This was a devastating blow to logical positivism. If there is no analytic-synthetic distinction, philosophy is not the 'foundation' of science but continuous with it. No first philosophy, no a priori truths — a conclusion that pushed analytic philosophy toward pragmatism."
+        },
+        {
+          "concept": "翻译的不确定性",
+          "desc": "一个语言学家在田野调查中遇到一个说陌生语言的土著——他能基于行为证据得出的'翻译手册'不是唯一的。多种不同的翻译手册可能全都与行为证据一致，却彼此不相容。这意味着'意义'不是确定的实体——没有'语言实际上在表达什么'这个事实。",
+          "l1": "两个人说的可能'意思完全不同'——但你不能通过检查他们说的话来证明，因为没有'真正含义'这回事。",
+          "l2": "一个土著说'gavagai'——翻译成'兔子'、'兔子的腿'、'兔子的一个时间片段'——只要调整其他词的翻译，三个版本都可以与所有行为证据一致。",
+          "l3": "翻译的不确定性是奎因最激进、也最受争议的论题。它不仅关乎翻译本身——它意味着意义不是心灵中的实体，意义不在头脑中。这一论题直接挑战了传统的语言观和心灵哲学，为戴维森的解释理论、普特南的语义外在论铺平了道路。它也意味着——如果你相信这一论题——那你连我刚说的话到底什么意思都没法确定。这正是奎因想要的哲学效果。",
+          "conceptEn": "Indeterminacy of Translation",
+          "descEn": "There can be multiple incompatible translation manuals for a language, all consistent with all behavioral evidence. Meaning is not a determinate entity. There is no 'fact of the matter' about what a sentence really means.",
+          "l1En": "Language doesn't have 'fixed meanings' — different translations can all fit the same behavioral data equally well.",
+          "l2En": "The native says 'gavagai' — does it mean 'rabbit,' 'rabbit-stage,' or 'undetached rabbit part'? You can't tell from pointing alone, and different translations can all work.",
+          "l3En": "This is Quine's most radical thesis. It implies: meanings are not entities in the mind; there is no 'fact of the matter' about what someone means. This undermines traditional philosophy of language and mind at their foundations. If meaning is indeterminate, then 'truth' and 'reference' are similarly relative — leading to Quine's 'ontological relativity': the question 'what exists?' only makes sense relative to a background language."
+        }
+      ],
+      "famousEvents": [
+        {
+          "title": "维也纳学派和逻辑实证主义的终结",
+          "year": 1951,
+          "desc": "奎因的'经验论的两个教条'发表于1951年，被广泛认为是维也纳学派逻辑实证主义终结的标志性事件。",
+          "titleEn": "The End of Logical Positivism",
+          "descEn": "Quine's 'Two Dogmas of Empiricism' is widely considered the final blow to the logical positivism of the Vienna Circle."
+        }
+      ],
+      "scientificEval": "奎因的知识整体论深刻影响了科学哲学。他的'没有教条的经验论'被看作对波普尔证伪主义的修正：当理论遇到反例时，科学家有很多选择（调整辅助假设、修改定义等），不是简单地被'证伪'。这为库恩和拉卡托斯的科学史分析提供了哲学工具。",
+      "thoughtEvolution": "奎因在奥伯林学院学数学，哈佛博士（导师怀特海），游历欧洲时接触了维也纳学派和逻辑实证主义。他后来在哈佛任教数十年，培养了整整一代分析哲学家。他精通多门语言，发表过学术论文也写过侦探小说。",
+      "aiReview": "奎因像是哲学界的'拆楼队长'——他专门拆解那些人们以为坚不可摧的区分：分析与综合、事实与意义、科学与哲学。他留下的是一片被清理过的空地，而不是一座新房。这正是他的立场：哲学不是建造基础，而是清理论文——把那些伪装成事实问题的语言混乱清理掉。他的风格——极度简洁、不废话、几乎没有任何情感色彩——本身就是他哲学的一部分：哲学是可以像数学一样精确做的工作。",
+      "goldenQuotes": [
+        {
+          "text": "作为经验论者，我们关于世界的知识是一个整体面对经验的法庭。",
+          "source": "《经验论的两个教条》",
+          "textEn": "The totality of our so-called knowledge or beliefs is a man-made fabric which impinges on experience only along the edges.",
+          "sourceEn": "Two Dogmas of Empiricism"
+        },
+        {
+          "text": "存在就是变元的值。",
+          "source": "《论有什么》",
+          "textEn": "To be is to be the value of a variable.",
+          "sourceEn": "On What There Is"
+        },
+        {
+          "text": "哲学不是一门自然科学，但它是科学的延伸。",
+          "source": "奎因《自然化的认识论》",
+          "textEn": "Philosophy is not a separate science, but it is continuous with science.",
+          "sourceEn": "Epistemology Naturalized"
+        }
+      ],
+      "anecdote": "奎因在数学上有一个有趣的『奎因悖论』（或RM系统）：他设计了一个逻辑系统，在其中你可以推导出'所有不自洽的系统都是自洽的'——这是一个精巧的智力玩笑。他还在论文集《悖论的方式》中展示了：很多哲学问题表面上深刻，其实不过是悖论式的语言混乱——用他的话说，'哲学问题变成了一堆语言谜题，而不是对世界本质的神秘洞察'。",
+      "relationships": [
+        {
+          "target": "russell",
+          "type": "influence",
+          "strength": 8,
+          "description": "奎因继承了罗素的逻辑分析方法，但拒绝了罗素的逻辑原子主义"
+        },
+        {
+          "target": "kuhn",
+          "type": "influence",
+          "strength": 5,
+          "description": "奎因的整体论和翻译不确定性为库恩的范式不可通约性提供了哲学论证"
+        },
+        {
+          "target": "carnap",
+          "type": "debate",
+          "strength": 8,
+          "description": "奎因与卡尔纳普关于分析性、本体论和逻辑基础的系统性争论是20世纪分析哲学最精彩的学术对话"
+        }
+      ],
+      "furtherReading": [
+        {
+          "title": "从逻辑的观点看",
+          "desc": "奎因，《经验论的两个教条》在此",
+          "type": "book"
+        }
+      ],
+      "layers": {
+        "L2_era": {
+          "timeline": [],
+          "decisiveMoments": [],
+          "travelMap": []
+        },
+        "L3_philosophy": {
+          "conceptNetwork": [],
+          "threeLevelReading": [],
+          "problemMatrix": []
+        },
+        "L4_evolution": {
+          "thoughtPeriods": [],
+          "turningPoints": []
+        },
+        "L6_debates": {
+          "confrontations": [],
+          "spectrumPosition": {}
+        },
+        "L7_legacy": {
+          "influenceMap": [],
+          "contemporaryApplications": []
+        }
+      }
+    },
+    {
+      "id": "mozi",
+      "name": "墨子",
+      "nameEn": "Mozi",
+      "birth": -468,
+      "death": -376,
+      "nationality": "中国（战国·鲁国）",
+      "nationalityEn": "China (State of Lu)",
+      "portrait": "",
+      "civilization": "eastern",
+      "school": "mohism",
+      "era": "spring-autumn",
+      "role": "哲学家，墨家创始人",
+      "influence": 8,
+      "summary": "墨子是中国战国初期最伟大的哲学家之一，墨家学派创始人。墨子创立的墨家在先秦与儒家并称'儒墨显学'，是唯一能与儒家抗衡的学派。他提出了十大主张：兼爱（无差等的爱）、非攻（反对侵略战争）、尚贤（选贤任能）、尚同（统一思想）、天志（天有意志）、明鬼（鬼神存在）、非乐（反对音乐奢侈）、非命（反对宿命论）、节用（节约）、节葬（薄葬）。墨家还发展出了中国古代最系统的逻辑学（墨辩）和科学思想，包括光学（小孔成像）、力学和几何学。",
+      "summaryEn": "Mozi was the founder of Mohism, the only school in ancient China that rivaled Confucianism. He taught universal love (jian'ai), opposition to aggressive war, meritocracy, and frugality. The Mohist school also developed China's most sophisticated ancient logic (Mohist Canons) and made early contributions to optics, mechanics, and geometry.",
+      "representativeWorks": [
+        {
+          "title": "墨子",
+          "type": "著作",
+          "year": -400,
+          "content": "墨家著作总集，包含墨子本人的语录（兼爱、非攻、尚贤等）和后期墨家的逻辑学、科学著作（墨经）。",
+          "titleEn": "Mozi (The Mohist Canon)",
+          "contentEn": "Collection of Mohist writings including Mozi's ethical teachings and the later Mohist Canons on logic and science."
+        },
+        {
+          "title": "墨经",
+          "type": "逻辑/科学",
+          "year": -350,
+          "content": "后期墨家著作，包含中国最早的逻辑学（名、辞、说三辩）和自然科学知识（光学、力学）。",
+          "titleEn": "Mohist Canons",
+          "contentEn": "Later Mohist writings on logic and science, including the earliest known description of the camera obscura."
+        }
+      ],
+      "coreThoughts": [
+        {
+          "concept": "兼爱",
+          "desc": "兼爱是墨子最核心的主张：人对所有人应当一视同仁地爱，不分亲疏贵贱。儒家的'仁爱'是差等之爱（先爱亲人后爱外人），墨家的兼爱是'视人之国若视其国，视人之家若视其家，视人之身若视其身'的无差别爱。",
+          "l1": "对所有人一视同仁地去爱——不要因为谁离你近就多爱他一点。",
+          "l2": "就像阳光——它照在好人身上也照在坏人身上，不分彼此。兼爱也是如此。",
+          "l3": "兼爱是墨子对战国乱世的诊断：为什么天下大乱？因为人们'不相爱'。如果人人都爱别人如爱自己，就不会有战争、掠夺和仇恨。儒家的差等之爱（爱有差等）在墨子看来正是问题的根源——如果爱分亲疏，那最终必然发展为自私。孟子的激烈反对（'兼爱是无父也'）恰恰证明了兼爱的颠覆性。在墨家之后的两千年里，兼爱精神以弱化的形式融入了中国民间宗教和侠义传统。",
+          "conceptEn": "Universal Love",
+          "descEn": "Love all people equally without distinction. Unlike Confucian graded love (closer family first), Mohist universal love (jian'ai) means treating others' families, states, and persons as one's own.",
+          "l1En": "Love everyone equally — not more for family, not less for strangers. All people deserve the same care.",
+          "l2En": "Like sunlight that shines on everyone without discrimination — universal love knows no boundaries of kin or rank.",
+          "l3En": "For Mozi, universal love was the cure for the warring chaos of his time. If everyone loved others as themselves, there would be no war, no exploitation, no injustice. The Confucian Mencius attacked this fiercely ('treating all equally is to deny one's father'), showing how radical Mozi's idea was. The ideal of universal love later survived in diluted form in Chinese folk religion and knight-errantry traditions."
+        },
+        {
+          "concept": "非攻",
+          "desc": "反对一切侵略战争。墨子不是绝对的和平主义者（他支持防御性战争），但坚决反对攻伐性的战争——因为它对进攻方和防守方的百姓都是灾难。墨子本人曾带领弟子为弱小的宋国守城，阻止了楚国的入侵。",
+          "l1": "打仗只有输家没有赢家——除非你是在保卫自己的家园。",
+          "l2": "两个邻居为了争一头羊大打出手，结果房子烧了、羊也跑了——这就是墨子眼中的战争。",
+          "l3": "非攻是兼爱的直接应用：如果你爱别人的国家如自己的国家，你就不会去侵略。但墨子不是空谈家——他亲自发展了一套完整的防御战术（'墨守'），帮助小国抵抗大国侵略。'墨守成规'这个成语就源于此（原意是墨子守城的方法很可靠）。",
+          "conceptEn": "Opposition to Aggressive War",
+          "descEn": "Aggressive war is always wrong because it harms both attacker and attacked. Mozi was not a pacifist (defensive war is justified) but argued that conquest never benefits anyone in the long run.",
+          "l1En": "War has no winners — only losers on both sides. The only justifiable war is self-defense.",
+          "l2En": "Mozi wasn't just a theorist — he developed actual defensive military techniques and led his followers to defend small states against invasion.",
+          "l3En": "Non-aggression follows from universal love: if you love another's state as your own, you cannot attack it. Mozi personally walked ten days to stop the Chu state from invading Song, demonstrating his principles in action — and the idiom 'mo shou cheng gui' (Mozi's defense is reliable) still reminds us of his practical military contributions."
+        }
+      ],
+      "famousEvents": [
+        {
+          "title": "止楚攻宋",
+          "year": -440,
+          "desc": "公输般（鲁班）为楚国造云梯准备攻宋。墨子步行十天十夜赶到楚国，以兼爱非攻说服楚王，并在模拟攻防中击败公输般的战术，成功阻止了一场战争。",
+          "titleEn": "Stopped Chu's Invasion of Song",
+          "descEn": "Mozi walked ten days to the Chu state, debated the military engineer Gongshu Ban, and demonstrated his defensive tactics, persuading the king to abandon the invasion of Song."
+        }
+      ],
+      "scientificEval": "后期墨家在《墨经》中记载了小孔成像实验（最早的光学实验记录之一）、杠杆原理、几何定义（点线面体）和逻辑分类学。这些成就直到近代以前在中国都未被超越。墨子本人的思想中还包含了一种朴素的'功利主义'——以'利'（实际效益）作为判断行为对错的标准，与边沁的功利主义形成了有趣的跨文明呼应。",
+      "thoughtEvolution": "墨子早年学习儒学，后来越来越不满意儒家的繁文缛节（厚葬、久丧、礼乐繁琐）和差等之爱，于是自立门户。他的追随者组成了一个高度组织化的团体——墨者以巨子为首领，纪律严明，赴汤蹈火在所不辞。墨家在秦汉之际衰落，但在清末民初被梁启超、胡适重新发掘，被视为中国古代最有科学精神和民主色彩的哲学流派。",
+      "aiReview": "墨子可能是中国哲学史上最被低估的巨人。在诸子百家中，他是唯一一个同时发展出了逻辑学、科学方法论和政治行动主义的思想家。他的兼爱思想如果成为中国文化主流，中国历史可能会有完全不同的走向。可惜墨家的组织性（准军事团体）在秦以后的中央集权体制下被视为威胁，它的消失是中国古代思想史上最大的损失之一。今天重读墨子，最震撼的不是他的结论，而是他的方法论——他要求所有主张都要有'本'（历史根据）、'原'（现实检验）、'用'（实际效果）——这本质上就是一种实证主义。",
+      "goldenQuotes": [
+        {
+          "text": "视人之国若视其国，视人之家若视其家，视人之身若视其身。",
+          "source": "《墨子·兼爱中》",
+          "textEn": "Regard others' states as you regard your own, others' families as your own, others' persons as your own.",
+          "sourceEn": "Mozi, Universal Love"
+        },
+        {
+          "text": "兼相爱，交相利。",
+          "source": "《墨子·兼爱中》",
+          "textEn": "Love all universally and exchange mutual benefit.",
+          "sourceEn": "Mozi, Universal Love"
+        },
+        {
+          "text": "无言而不应，无德而不报。投我以桃，报之以李。",
+          "source": "《墨子·兼爱下》",
+          "textEn": "No word goes unanswered, no kindness unrequited. Throw me a peach, I return a plum.",
+          "sourceEn": "Mozi"
+        }
+      ],
+      "anecdote": "墨子的团体有着严格的纪律——墨者'赴火蹈刃，死不旋踵'。有一次巨子孟胜为楚国阳城君守城，明知必败依然死战，派两个弟子把巨子之位传给田襄子后返回战场赴死——因为'接受守城之托就守到死，这是墨家的规矩。'这种舍生取义的侠义精神成为后世中国武侠文化的重要源头。",
+      "relationships": [
+        {
+          "target": "confucius",
+          "type": "debate",
+          "strength": 8,
+          "description": "墨子从儒家出走创立墨家，对儒家的差等之爱和繁文缛节进行系统批判"
+        },
+        {
+          "target": "mencius",
+          "type": "debate",
+          "strength": 8,
+          "description": "孟子激烈批判墨子'兼爱是无父也'，儒墨之争是先秦思想最核心的辩论"
+        }
+      ],
+      "furtherReading": [
+        {
+          "title": "墨子",
+          "desc": "墨家著作总集，含墨经",
+          "type": "book"
+        }
+      ],
+      "layers": {
+        "L2_era": {
+          "timeline": [],
+          "decisiveMoments": [],
+          "travelMap": []
+        },
+        "L3_philosophy": {
+          "conceptNetwork": [],
+          "threeLevelReading": [],
+          "problemMatrix": []
+        },
+        "L4_evolution": {
+          "thoughtPeriods": [],
+          "turningPoints": []
+        },
+        "L6_debates": {
+          "confrontations": [],
+          "spectrumPosition": {}
+        },
+        "L7_legacy": {
+          "influenceMap": [],
+          "contemporaryApplications": []
+        }
+      }
+    },
+    {
+      "id": "xunzi",
+      "name": "荀子",
+      "nameEn": "Xunzi",
+      "birth": -310,
+      "death": -235,
+      "nationality": "中国（战国·赵国）",
+      "nationalityEn": "China (State of Zhao)",
+      "portrait": "",
+      "civilization": "eastern",
+      "school": "confucianism",
+      "era": "warring-states",
+      "role": "哲学家，儒家大师",
+      "influence": 8,
+      "summary": "荀子是战国后期最伟大的儒家思想家之一。与孟子主张'性善论'针锋相对，荀子提出'性恶论'——人的自然本性是趋利避害、好逸恶劳的，一切善都是后天教化的结果（'化性起伪'）。他的'礼'不是孔子的内心德性修养，而是外在的社会规范和制度框架——通过礼来约束人的欲望、划分社会等级、维持秩序。他是法家理论的重要源头（韩非子和李斯都是他的学生）。他的《劝学》——'青出于蓝而胜于蓝'——是中国教育思想的第一声号角。",
+      "summaryEn": "Xunzi was the great Confucian philosopher of the late Warring States period. In direct opposition to Mencius's theory of innate goodness, Xunzi argued that human nature is evil — goodness is the result of deliberate cultivation (transforming nature through conscious effort). His emphasis on ritual, law, and education made him the bridge between Confucianism and Legalism.",
+      "representativeWorks": [
+        {
+          "title": "荀子",
+          "type": "著作",
+          "year": -260,
+          "content": "三十二篇论文集，涵盖哲学、伦理学、政治学、逻辑学、教育学等。以《劝学》《天论》《正名》《性恶》等篇最为著名。",
+          "titleEn": "Xunzi",
+          "contentEn": "Collection of 32 essays covering philosophy, ethics, politics, logic, and education. Most famous: Encouraging Learning, Discourse on Heaven, Rectifying Names, Human Nature is Evil."
+        }
+      ],
+      "coreThoughts": [
+        {
+          "concept": "性恶论",
+          "desc": "人的本性是恶的——生来好利、好声色、有嫉妒之心。善不是天生的，而是后天学习、教育和礼法约束的结果。'人之性恶，其善者伪也'——伪不是虚伪，而是'人为'（后天努力）。",
+          "l1": "人天生是自私的——所有的善良都是教育的结果。",
+          "l2": "就像一块木头——本身弯曲，但经过火烤矫正可以变直。人也是——本性有缺陷，但通过教育可以变好。",
+          "l3": "荀子的性恶论常被误解为'人性是坏的'，但荀子真正的意思是：人性本身是'中性的自然倾向'——趋利避害、好逸恶劳本身无所谓善恶，但如果不加约束地任其发展，就必然导致争夺和混乱。所以'恶'不是人性的本质，而是人性放任自流的必然结果。这一观点比孟子的性善论更接近现代进化心理学——人天生有合作倾向，也有自私倾向，文化教育的作用是强化前者、抑制后者。",
+          "conceptEn": "Human Nature is Evil",
+          "descEn": "Human nature is inherently inclined toward selfish desires. Goodness is not innate but achieved through conscious cultivation (wei) — learning, ritual, and law transform raw human nature into civilized conduct.",
+          "l1En": "People are born selfish — all virtue comes from education and discipline.",
+          "l2En": "Like a crooked piece of wood that must be steamed and straightened, human nature must be shaped by culture and law.",
+          "l3En": "Xunzi's view is often misunderstood as pessimism. In fact, it's optimistic about education: if evil is learned (from untrained nature), then good can be taught. His theory makes moral education central — unlike Mencius, who thought we just need to 'uncover' our innate goodness, Xunzi believed we must actively build it through ritual, music, and study. This emphasis on cultural construction is surprisingly modern and resonates with both behaviorist psychology and social contract theory."
+        },
+        {
+          "concept": "隆礼重法",
+          "desc": "礼不只是个人修养——它是治理国家和社会的基础。荀子将礼从孔子的内在德性转化为外在制度——礼规定社会等级、分配资源和约束行为。同时需要用法律来惩罚违反礼的人。礼法结合才是治国之道。",
+          "l1": "社会需要规则——礼是行为的规范，法是规则的底线。",
+          "l2": "礼就像交通规则——如果每个人都按自己的方式开车，社会就乱了。",
+          "l3": "荀子对礼的'制度化'理解是他对儒家最关键的改造。他把儒家从'个人道德修养'导向了'社会制度建设'。这个转变直接影响了韩非子和李斯——他们去掉礼只保留了法，发展出了法家。所以可以说：荀子既是儒家大师，也是法家的精神教父。",
+          "conceptEn": "Ritual and Law",
+          "descEn": "Ritual (li) is not merely personal cultivation but social infrastructure — it regulates desires, defines social roles, and maintains order. Law (fa) enforces the boundaries. Together, ritual and law provide the framework for a stable society.",
+          "l1En": "Good society needs both tradition (ritual) and enforcement (law) — one without the other is incomplete.",
+          "l2En": "Ritual shapes desires from within; law constrains behavior from without. Together they civilize humanity.",
+          "l3En": "Xunzi's institutional turn was the most significant transformation of Confucianism before the Song dynasty. By emphasizing the public, regulatory function of ritual over its private, spiritual function, he made Confucianism a political philosophy suitable for governing large states. His students Han Fei and Li Si carried this logic further, stripping away the ritual to create Legalism — a system that unified China under Qin."
+        }
+      ],
+      "famousEvents": [
+        {
+          "title": "稷下学宫祭酒",
+          "year": -280,
+          "desc": "荀子三次担任齐国稷下学宫的祭酒（学术领袖），这是战国时期最著名的学术中心，汇集了各派学者。",
+          "titleEn": "Head of Jixia Academy",
+          "descEn": "Xunzi served three times as the chief scholar (jijiu) of the Jixia Academy in Qi, the leading intellectual center of the Warring States period."
+        }
+      ],
+      "scientificEval": "荀子的'天论'是先秦最具科学精神的思想——他明确区分了自然规律（天行有常）和人类社会，主张'制天命而用之'（掌握自然规律并利用它），反对迷信和天人感应。这种朴素的自然主义在中国古代思想中弥足珍贵。",
+      "thoughtEvolution": "荀子年轻时游学齐国，在稷下学宫接触了各家学说。他一生批判了十二子（十二位其他思想家），包括他继承的儒家内部的子思和孟子。晚年他担任楚国兰陵令，教学终老。他的两个学生——韩非和李斯——将他的思想推向极端：韩非创造了法家理论、李斯帮助秦始皇统一了天下。",
+      "aiReview": "荀子在中国思想史上的地位有些尴尬：他是伟大的儒家，但他的性恶论在宋明理学后被边缘化（孟子成为官方正统）；他是法家的培育者，但法家在儒家传统中是被批判的。结果荀子成了一个'在中间的人'——两边都不完全认他。但他的思想恰恰在21世纪显得格外有洞见：强调制度（礼）的约束和社会化（教育）对人的塑造，与当代社会科学对人的理解高度一致。",
+      "goldenQuotes": [
+        {
+          "text": "青，取之于蓝，而青于蓝。",
+          "source": "《荀子·劝学》",
+          "textEn": "Blue comes from the indigo plant but is bluer than the plant itself.",
+          "sourceEn": "Xunzi, Encouraging Learning"
+        },
+        {
+          "text": "人之性恶，其善者伪也。",
+          "source": "《荀子·性恶》",
+          "textEn": "Human nature is evil — goodness is the result of conscious effort.",
+          "sourceEn": "Xunzi, Human Nature is Evil"
+        },
+        {
+          "text": "不积跬步，无以至千里；不积小流，无以成江海。",
+          "source": "《荀子·劝学》",
+          "textEn": "Without accumulating half-steps, you cannot reach a thousand miles; without accumulating small streams, you cannot form a river.",
+          "sourceEn": "Xunzi, Encouraging Learning"
+        }
+      ],
+      "anecdote": "荀子曾批评同属儒家的子思和孟子'饰邪说，文奸言'——说他们的理论是歪理邪说。但他对孔子极为推崇——'不依乎先王，不可以为治世。'这种'再传弟子骂亲传弟子'的格局在思想史上并不少见：荀子认为只有他自己才是孔子的真正传人。",
+      "relationships": [
+        {
+          "target": "mencius",
+          "type": "debate",
+          "strength": 9,
+          "description": "荀子与孟子的性恶vs性善之辨是儒家内部最核心的哲学争论"
+        },
+        {
+          "target": "confucius",
+          "type": "influence",
+          "strength": 9,
+          "description": "荀子以孔子继承者自居，将孔子的礼学从个人修养发展为制度哲学"
+        },
+        {
+          "target": "hanfeizi",
+          "type": "teacher-student",
+          "strength": 8,
+          "description": "荀子是韩非子的老师，法家思想的理论源头之一"
+        }
+      ],
+      "furtherReading": [
+        {
+          "title": "荀子",
+          "desc": "荀子著作集",
+          "type": "book"
+        }
+      ],
+      "layers": {
+        "L2_era": {
+          "timeline": [],
+          "decisiveMoments": [],
+          "travelMap": []
+        },
+        "L3_philosophy": {
+          "conceptNetwork": [],
+          "threeLevelReading": [],
+          "problemMatrix": []
+        },
+        "L4_evolution": {
+          "thoughtPeriods": [],
+          "turningPoints": []
+        },
+        "L6_debates": {
+          "confrontations": [],
+          "spectrumPosition": {}
+        },
+        "L7_legacy": {
+          "influenceMap": [],
+          "contemporaryApplications": []
+        }
+      }
+    },
+    {
+      "id": "sunzi",
+      "name": "孙子",
+      "nameEn": "Sun Tzu",
+      "birth": -544,
+      "death": -496,
+      "nationality": "中国（春秋·齐国）",
+      "nationalityEn": "China (State of Qi)",
+      "portrait": "",
+      "civilization": "eastern",
+      "school": "military-strategy",
+      "era": "spring-autumn",
+      "role": "军事家，战略哲学家",
+      "influence": 9,
+      "summary": "孙子（孙武）是中国春秋时期最伟大的军事家，《孙子兵法》的作者。这薄薄十三篇不仅是中国兵学的巅峰，更是世界上最具影响力的战略哲学著作之一。'知己知彼，百战不殆'、'不战而屈人之兵，善之善者也'——这些原则超越了军事领域，被广泛应用于商业、管理、外交、体育和日常生活中。孙子把战争看作关乎国家存亡的大事，强调理性计算而非蛮力对抗，其核心思想是'以最小的代价获得最大的收益'——最佳的战略是不打就赢。",
+      "summaryEn": "Sun Tzu was the author of The Art of War, the most influential military treatise ever written. Its thirteen chapters transcend warfare to become a universal philosophy of strategy: 'Know yourself and know your enemy, and you will never be defeated'; 'Supreme excellence is to subdue the enemy without fighting.' His principles are applied in business, management, and diplomacy worldwide.",
+      "representativeWorks": [
+        {
+          "title": "孙子兵法",
+          "type": "兵书",
+          "year": -500,
+          "content": "十三篇约6000字的军事哲学经典：始计、作战、谋攻、军形、兵势、虚实、军争、九变、行军、地形、九地、火攻、用间。",
+          "titleEn": "The Art of War",
+          "contentEn": "Thirteen chapters (~6000 words) covering military strategy from planning to intelligence: the most influential strategic text in world history."
+        }
+      ],
+      "coreThoughts": [
+        {
+          "concept": "不战而屈人之兵",
+          "desc": "最好的战略不是打赢战争，而是不用打就能让对手屈服。通过外交威慑、情报工作、心理战和经济压力达到目的，远比流血厮杀高明。'上兵伐谋，其次伐交，其次伐兵，其下攻城。'",
+          "l1": "真正的高手不是打赢了很多仗——而是根本不用打仗就赢了。",
+          "l2": "就像两个人对峙——如果你能让对方自己觉得打不过你而退让，这就是最高明的。",
+          "l3": "'不战而屈人之兵'是孙子思想最精华的部分。它超越了军事领域成为一条普遍的战略原则：在任何竞争环境中，迫使对方按照你的意愿行事而不发生正面冲突是最好的结果。在商业中这意味着通过创新和定位让竞争对手无法挑战；在政治上意味着通过联盟和外交手段达到目标而不诉诸武力。但这里有一个伦理维度：孙子的'不战'不是出于和平主义的道德，而是出于计算——战争太贵了。",
+          "conceptEn": "Subdue Without Fighting",
+          "descEn": "The highest form of strategy is to defeat the opponent without fighting. Use diplomacy, intelligence, psychological pressure, and economic leverage. 'The best policy is to attack strategy; next best, alliances; next, the army; the worst, cities.'",
+          "l1En": "A true master doesn't win many battles — he makes battles unnecessary.",
+          "l2En": "The supreme art of war is not winning every battle but making every battle avoidable.",
+          "l3En": "'Subdue without fighting' transcends military strategy: in business, win through market positioning that makes direct competition pointless; in diplomacy, achieve goals through alliances that make war unnecessary. Sun Tzu's brilliance is recognizing that 'winning' and 'fighting' are separable — the best victories are achieved before any engagement begins."
+        },
+        {
+          "concept": "知己知彼",
+          "desc": "'知己知彼，百战不殆'——了解自己和了解对手，在充分掌握信息的基础上做决策。孙子极为重视情报工作（最后一整篇专论'用间'——使用间谍），认为决策的质量取决于信息的质量。",
+          "l1": "胜败的关键不在战场上——在于你对对手和对自己了解多少。",
+          "l2": "就像下棋——你既要了解自己的棋子，更要了解对手的棋路。只知道自己的棋是下不赢的。",
+          "l3": "知己知彼的方法论意义远远超出了军事领域。在现代管理学中它体现为SWOT分析（优势、劣势、机会、威胁），在博弈论中体现为'共同知识'的概念。孙子的原创性在于：他在两千五百年前就把信息优势和决策质量直接挂钩——'知'是'战'的前提，没有充分的信息就贸然行动是最大的失败原因。",
+          "conceptEn": "Know Yourself and Know Your Enemy",
+          "descEn": "Knowledge is the foundation of victory. Thorough understanding of one's own capabilities and the opponent's situation — coupled with extensive intelligence gathering — is essential for sound strategic decisions.",
+          "l1En": "Battle is won or lost before it begins — in the quality of your intelligence and self-knowledge.",
+          "l2En": "Sun Tzu devotes an entire chapter to espionage, recognizing that information is the most valuable strategic asset.",
+          "l3En": "This principle has been universally adopted in modern strategic thinking. SWOT analysis, competitive intelligence, and even poker strategy all echo Sun Tzu's core insight: the quality of decisions depends on the quality of information. Information asymmetry — knowing more than your opponent — is a decisive advantage in any competitive domain."
+        }
+      ],
+      "famousEvents": [
+        {
+          "title": "吴宫斩美姬",
+          "year": -512,
+          "desc": "孙子以《兵法》十三篇见吴王阖闾。吴王让他用宫女示范，孙子任命吴王最爱的两个美姬为队长。训练中宫女嬉笑不止，孙子斩了两个队长，重新训练时队伍肃然。吴王虽然痛失爱姬，但知道孙子是真能用兵的人。",
+          "titleEn": "Training the Concubines",
+          "descEn": "To demonstrate his military principles, Sun Tzu trained palace concubines. When the king's favorite concubines laughed during drills, he executed them. The king was angry but acknowledged Sun Tzu's sincerity about discipline."
+        }
+      ],
+      "thoughtEvolution": "孙子是春秋晚期齐国人，后来因齐国动乱流亡到吴国，向吴王阖闾献上兵法十三篇，被任为将军。他辅佐吴王西破强楚、北威齐晋，使吴国成为春秋霸主之一。关于孙子生平的详细记载不多——这也可以理解：一个主张'知己知彼'和'用间'的人，自己的生平也无必要让历史全盘记录。",
+      "aiReview": "孙子兵法的惊人之处不在于它是一部关于'如何打仗'的书——而在于它在两千五百年后仍然被世界各地的人阅读，而且大多数读者根本不是军人。管理者读它寻求竞争策略，外交官读它学习谈判艺术，运动员读它训练心理素质。它的成功秘诀是：孙子从不谈具体的兵器或战术（那些早就过时了），他谈的是普适的战略原则——这也是为什么每一代人都能在其中找到自己的理解。",
+      "goldenQuotes": [
+        {
+          "text": "知己知彼，百战不殆。",
+          "source": "《孙子兵法·谋攻》",
+          "textEn": "Know yourself and know your enemy, and you will never be defeated in a hundred battles.",
+          "sourceEn": "The Art of War"
+        },
+        {
+          "text": "不战而屈人之兵，善之善者也。",
+          "source": "《孙子兵法·谋攻》",
+          "textEn": "To subdue the enemy without fighting is the supreme excellence.",
+          "sourceEn": "The Art of War"
+        },
+        {
+          "text": "兵者，诡道也。",
+          "source": "《孙子兵法·始计》",
+          "textEn": "All warfare is based on deception.",
+          "sourceEn": "The Art of War"
+        },
+        {
+          "text": "知彼知己，胜乃不殆；知天知地，胜乃不穷。",
+          "source": "《孙子兵法·地形》",
+          "textEn": "Know the enemy, know yourself, and victory is never in doubt; know the terrain, know the weather, and victory is complete.",
+          "sourceEn": "The Art of War"
+        }
+      ],
+      "anecdote": "孙子是竹简时代的畅销书作者——他的十三篇写在竹简上，总字数仅约6000字。但这6000字的影响力超过了历史上所有的军事著作。拿破仑在读，比尔·盖茨在读，当你在读这本书的时候，你的竞争对手可能也在读——这大概是孙子本人最欣赏的那种'知己知彼'的情报博弈吧。",
+      "relationships": [
+        {
+          "target": "confucius",
+          "type": "influence",
+          "strength": 5,
+          "description": "孙子与孔子同为春秋晚期人，兵家思想在战略文化层面与儒家形成互补"
+        },
+        {
+          "target": "hanfeizi",
+          "type": "influence",
+          "strength": 6,
+          "description": "兵家的权变思想和绝对服从原则是法家统治术的重要组成部分"
+        }
+      ],
+      "furtherReading": [
+        {
+          "title": "孙子兵法",
+          "desc": "十三篇兵学经典",
+          "type": "book"
+        }
+      ],
+      "layers": {
+        "L2_era": {
+          "timeline": [],
+          "decisiveMoments": [],
+          "travelMap": []
+        },
+        "L3_philosophy": {
+          "conceptNetwork": [],
+          "threeLevelReading": [],
+          "problemMatrix": []
+        },
+        "L4_evolution": {
+          "thoughtPeriods": [],
+          "turningPoints": []
+        },
+        "L6_debates": {
+          "confrontations": [],
+          "spectrumPosition": {}
+        },
+        "L7_legacy": {
+          "influenceMap": [],
+          "contemporaryApplications": []
+        }
+      }
+    },
+    {
+      "id": "huineng",
+      "name": "惠能",
+      "nameEn": "Huineng",
+      "birth": 638,
+      "death": 713,
+      "nationality": "中国（唐代）",
+      "nationalityEn": "China (Tang Dynasty)",
+      "portrait": "",
+      "civilization": "eastern",
+      "school": "buddhism",
+      "era": "tang",
+      "role": "禅宗六祖，佛教改革家",
+      "influence": 9,
+      "summary": "惠能是中国佛教史上最具影响力的人物，禅宗的实际开创者。他是中国八大宗派中唯一一个纯粹由中国人创立的宗派的实际奠基人（禅宗虽然自称'教外别传'始于菩提达摩，但惠能是禅宗中国化的关键人物）。他的核心教义是'直指人心，见性成佛'——觉悟不是靠读经、拜佛、修行累积来的，而是当下顿悟自己的本性。他的《坛经》是唯一一部被尊为'经'的中国僧人著作。惠能出身贫寒，不识字，但凭着极其锋利的直觉智慧战胜了神秀的渐修派，成为六祖。",
+      "summaryEn": "Huineng is the most influential figure in Chinese Buddhist history, the sixth and last patriarch of Chan (Zen) Buddhism and its de facto founder. He taught sudden enlightenment (dunwu): awakening is not gradual cultivation but immediate insight into one's own Buddha-nature. The Platform Sutra, his recorded teachings, is the only Chinese text honored as a 'sutra.'",
+      "representativeWorks": [
+        {
+          "title": "六祖坛经",
+          "type": "佛经",
+          "year": 700,
+          "content": "惠能的语录集，唯一被尊为'经'的中国僧人著作。中心思想是'菩提本无树，明镜亦非台，本来无一物，何处惹尘埃'的顿悟法门。",
+          "titleEn": "The Platform Sutra of the Sixth Patriarch",
+          "contentEn": "The only Chinese Buddhist text honored as a 'sutra' (jing). Records Huineng's teachings on sudden enlightenment, meditation, and the direct realization of one's true nature."
+        }
+      ],
+      "coreThoughts": [
+        {
+          "concept": "顿悟",
+          "desc": "觉悟不是渐进的修行过程——不是靠读佛经、打坐、布施、持戒慢慢积累功德——而是对自性的当下直接的、瞬间的领悟。'前念迷即凡夫，后念悟即佛'。",
+          "l1": "不是慢慢地变好——而是某一个瞬间'啪'的一下明白了。",
+          "l2": "不是在黑暗中一步步走向光明——而是一瞬间天就亮了。",
+          "l3": "惠能的顿悟说在中国佛教史上是革命性的。他的对手神秀主张渐修（'身是菩提树，心如明镜台，时时勤拂拭，勿使惹尘埃'），惠能则说'菩提本无树，明镜亦非台，本来无一物，何处惹尘埃。'这不是在修行的方式上有分歧——这是对'佛性'本身的理解不同。神秀认为佛性在'外面'（需要去达到），惠能认为佛性就在你心里（只需要去发现）。这个顿渐之争不仅影响了禅宗的分裂（北宗渐、南宗顿），也深刻影响了宋明理学的心学一派（王阳明的心即理）。",
+          "conceptEn": "Sudden Enlightenment",
+          "descEn": "Awakening is not gradual accumulation of merit or knowledge but an immediate, direct realization of one's own Buddha-nature. One can become a Buddha in an instant — not through lifetimes of cultivation but through sudden insight.",
+          "l1En": "Enlightenment is not a slow climb — it's the moment you realize you were already at the top.",
+          "l2En": "The famous verse contest: Shenxiu said 'Polish the mirror constantly'; Huineng replied 'Originally there is no mirror — where could dust gather?'",
+          "l3En": "Sudden enlightenment was a radical departure from mainstream Buddhism, which taught gradual cultivation over many lifetimes. Huineng's insight: if Buddha-nature is your true nature, you don't need to acquire it — you only need to realize it. This 'already there' teaching made Zen enormously appealing to the Chinese practical mind (why spend lifetimes if you can get it now?) and later deeply influenced Neo-Confucianism and Japanese Zen."
+        },
+        {
+          "concept": "不立文字",
+          "desc": "禅宗'教外别传，不立文字，直指人心，见性成佛。'真正的智慧不是写在书里的——它是一种超越语言的直接传递。惠能自己不识字，但正因如此最彻底地实践了这一原则。",
+          "l1": "真正的智慧不在书里——在书外面。",
+          "l2": "你无法从菜谱里尝到味道——你也无法从佛经里悟到佛性。你得自己去吃、自己去悟。",
+          "l3": "'不立文字'后来被禅宗发挥为一种独特的教育方法——棒喝（打人）、指月（指月亮表示不要看手指）、喝茶、砍柴——一切都是教学工具。禅师用各种荒诞的言行来打破弟子的概念执着。不是反对文字本身（禅宗留下了大量文字），而是反对把文字当作真理本身。惠能的不识字反而成了一个优势：他没有被经典的概念框架束缚住，能够直达问题的核心。",
+          "conceptEn": "No Dependence on Words",
+          "descEn": "The truth cannot be captured in words and scriptures. It is transmitted directly from mind to mind, beyond language. 'Point directly to the mind — see your nature and become a Buddha.'",
+          "l1En": "Words point to the truth — they ARE not the truth. Don't confuse the finger pointing at the moon for the moon itself.",
+          "l2En": "Huineng was illiterate — and this was considered an advantage, not a handicap, because it freed him from attachment to scripture.",
+          "l3En": "No dependence on words became the hallmark of Chan/Zen pedagogy: bizarre dialogues, sudden shouts, slaps, and seemingly nonsensical answers are all designed to shock the student out of conceptual thinking. 'What is the meaning of Bodhidharma coming from the West?' — 'The cypress tree in the courtyard.' This tradition profoundly influenced Chinese and Japanese culture, especially painting, poetry, and martial arts."
+        }
+      ],
+      "famousEvents": [
+        {
+          "title": "惠能偈语夺衣钵",
+          "year": 661,
+          "desc": "五祖弘忍令弟子作偈以传衣钵。神秀作偈'身是菩提树，心如明镜台'，惠能听后作了'菩提本无树，明镜亦非台'——弘忍认可其见地，夜传衣钵，令其南逃。",
+          "titleEn": "Verse Contest for the Patriarchate",
+          "descEn": "The Fifth Patriarch asked his monks to write verses to demonstrate their understanding. Shenxiu wrote about polishing the mind-mirror; Huineng, an illiterate laborer, replied with 'originally nothing exists' — and was secretly chosen as the Sixth Patriarch."
+        }
+      ],
+      "thoughtEvolution": "惠能出身贫寒，父亲早逝，以砍柴为生。偶然听人诵《金刚经》到'应无所住而生其心'，豁然有悟，决定北上黄梅参礼五祖弘忍。在寺中做了八个月的杂役（舂米），因体重不够在腰上绑了石头。后来以惊艳的偈语赢得衣钵，但为避迫害，在南方的猎人队伍中隐修了十五年，方才出世弘法。",
+      "aiReview": "惠能是佛教中'反智主义'传统的绝佳代表——而有趣的是，这种'反智'本身就是最高级别的智慧。当他连字都不认识的时候，他已经看穿了佛教最核心的秘密：佛性不是知识。他的《坛经》用一种极其朴实的语言（不是文人雅致的文言，而是老百姓能听懂的话）讲述最高深的哲理——这种'以平常心说最上乘法'的风格本身就是他哲学的一部分。",
+      "goldenQuotes": [
+        {
+          "text": "菩提本无树，明镜亦非台，本来无一物，何处惹尘埃。",
+          "source": "《六祖坛经》",
+          "textEn": "Bodhi originally has no tree, the bright mirror has no stand. Originally there is not a single thing — where could dust gather?",
+          "sourceEn": "The Platform Sutra"
+        },
+        {
+          "text": "不是风动，不是幡动，仁者心动。",
+          "source": "《六祖坛经》",
+          "textEn": "It is not the wind that moves, not the banner that moves — it is your mind that moves.",
+          "sourceEn": "The Platform Sutra"
+        },
+        {
+          "text": "迷时师度，悟了自度。",
+          "source": "《六祖坛经》",
+          "textEn": "When deluded, a teacher guides you; when enlightened, you guide yourself.",
+          "sourceEn": "The Platform Sutra"
+        }
+      ],
+      "anecdote": "惠能到达广州法性寺时，正值两个僧人争论堂前的幡在动——一个说是风动，一个说是幡动。惠能在旁边说：'不是风动，不是幡动，仁者心动。'——一句话让全寺震惊。这正是惠能式的思维：不从外部找原因，问题不在风也不在幡，在你的心。",
+      "relationships": [
+        {
+          "target": "buddha",
+          "type": "teacher-student",
+          "strength": 9,
+          "description": "惠能是禅宗的实际开创者，传承佛陀'拈花微笑'的心印法门"
+        },
+        {
+          "target": "nagarjuna",
+          "type": "influence",
+          "strength": 7,
+          "description": "惠能的'顿悟'和'不二法门'深受龙树中观思想的影响"
+        }
+      ],
+      "furtherReading": [
+        {
+          "title": "六祖坛经",
+          "desc": "惠能语录，唯一被称'经'的中国佛典",
+          "type": "book"
+        }
+      ],
+      "layers": {
+        "L2_era": {
+          "timeline": [],
+          "decisiveMoments": [],
+          "travelMap": []
+        },
+        "L3_philosophy": {
+          "conceptNetwork": [],
+          "threeLevelReading": [],
+          "problemMatrix": []
+        },
+        "L4_evolution": {
+          "thoughtPeriods": [],
+          "turningPoints": []
+        },
+        "L6_debates": {
+          "confrontations": [],
+          "spectrumPosition": {}
+        },
+        "L7_legacy": {
+          "influenceMap": [],
+          "contemporaryApplications": []
+        }
+      }
+    },
+    {
+      "id": "zhuxi",
+      "name": "朱熹",
+      "nameEn": "Zhu Xi",
+      "birth": 1130,
+      "death": 1200,
+      "nationality": "中国（南宋）",
+      "nationalityEn": "China (Southern Song)",
+      "portrait": "",
+      "civilization": "eastern",
+      "school": "neo-confucianism",
+      "era": "song",
+      "role": "哲学家，理学集大成者",
+      "influence": 10,
+      "summary": "朱熹是中国历史上仅次于孔子的第二大儒家思想家，宋明理学的集大成者。他建立了一个以'理'为核心的庞大哲学体系：理是世界万物的根本原理和终极实在，气是构成万物的物质材料，'性即理'——人的本质就是理在个体中的体现。他主张'存天理，灭人欲'，通过'格物穷理'来达到对理的领悟。他编纂的《四书章句集注》（《大学》《中庸》《论语》《孟子》的注释）成为元明清三代科举考试的标准答案和官方意识形态，支配了中国知识分子六百年之久。",
+      "summaryEn": "Zhu Xi was the second most influential Confucian philosopher after Confucius himself, the synthesizer of Neo-Confucianism. His system centered on li (principle/pattern) as the ultimate reality and qi (material force) as the physical substrate. His commentaries on the Four Books became the standard curriculum for imperial examinations for 600 years, shaping the minds of China's scholar-official class.",
+      "representativeWorks": [
+        {
+          "title": "四书章句集注",
+          "type": "儒学经典注释",
+          "year": 1190,
+          "content": "朱熹对《大学》《中庸》《论语》《孟子》的注释，成为元明清三代科举考试的标准教材和官方哲学。",
+          "titleEn": "Collected Commentaries on the Four Books",
+          "contentEn": "Zhu Xi's authoritative commentaries on the Four Books, which became the official curriculum for China's civil service examinations for over 600 years."
+        },
+        {
+          "title": "朱子语类",
+          "type": "语录",
+          "year": 1270,
+          "content": "朱熹与弟子问答的语录汇编，140卷，涵盖理气论、心性论、格物致知、读书法、政治哲学等各个领域。",
+          "titleEn": "Classified Conversations of Master Zhu",
+          "contentEn": "Recorded dialogues between Zhu Xi and his disciples, covering metaphysics, ethics, epistemology, and political philosophy."
+        }
+      ],
+      "coreThoughts": [
+        {
+          "concept": "理气论",
+          "desc": "理是宇宙的根本法则和本体——它使事物成为其所是。气是构成万物的物质能量——理必须通过气才能显现为具体事物。理与气不可分离（理在气中），但理在逻辑上先于气（理为本）。",
+          "l1": "世界有两个层面：'理'是规律和本质，'气'是物质和能量——就像船的图纸和造船的木头。",
+          "l2": "每一朵玫瑰之所以是玫瑰而不是别的花——是因为玫瑰的'理'赋予了它玫瑰的本质。",
+          "l3": "朱熹的理气论是对佛道两家形上学的回应，也是儒家哲学史上最系统、最精密的形上学体系。他吸收了佛家的'理'概念和道家的'道'概念，将其纳入儒家框架，使儒家从注重人伦日用的伦理学提升为一个涵盖宇宙论、本体论、人性论、认识论和实践论的完整哲学体系。这一套体系比康德还早了六百年。",
+          "conceptEn": "Principle and Material Force",
+          "descEn": "Li (principle) is the fundamental pattern/order of the universe, giving things their essential nature. Qi (material force) is the psycho-physical substance constituting all things. Li and qi are inseparable, but li is logically prior.",
+          "l1En": "Think of li as the software (the pattern) and qi as the hardware (the matter) of the universe — both are needed for anything to exist.",
+          "l2En": "Li makes a thing what it is — the 'rose-ness' that makes a rose a rose rather than a peony.",
+          "l3En": "Zhu Xi's synthesis was the greatest achievement of Chinese metaphysics. He integrated Buddhist depth (the concept of li as ultimate reality) with Confucian practicality (cultivating virtue and ordering society). His system anticipates German idealism in its ambition to provide a unified account of reality, human nature, and ethics — all from within the Confucian tradition, without importing Western categories."
+        },
+        {
+          "concept": "格物致知",
+          "desc": "出自《大学》——'格物'（研究事物的道理）→'致知'（达到真知）。朱熹认为要通过接触和探究万事万物中的'理'（从一草一木到君臣父子），积累到一定程度就会豁然贯通，领悟宇宙的根本原理。这是一种通过向外求知来向内完善自己的方法。",
+          "l1": "想知道世界是怎么运行的？那就去一件一件地研究事物——观察、思考、积累。",
+          "l2": "就像拼图——你没有看到整幅图，但拼得越多，图就越清晰。到最后'啪'的一声，你看到了全貌。",
+          "l3": "格物致知是朱熹认识论的核心，也是他最大的方法论遗产。他鼓励读书、观察、思考——这是一种严谨的唯理论认识论。王阳明后来挑战了格物说——他对着竹子'格'了七天七夜什么也没悟到反而病倒了，从此转向'心即理'的心学。朱王之争（理学vs心学）是中国哲学史上最核心的内部辩论，本质上是'理在外还是理在心？'——朱熹说要去万事万物中求理，王阳明说理就在你心里。",
+          "conceptEn": "Investigation of Things and Extension of Knowledge",
+          "descEn": "By investigating the principles (li) in all things — from natural phenomena to human relationships — one gradually accumulates knowledge until suddenly achieving comprehensive understanding of the ultimate principle.",
+          "l1En": "Study everything — from blades of grass to human relationships — each contains li (principle) waiting to be understood.",
+          "l2En": "Knowledge is like a jigsaw puzzle: piece by piece, the big picture emerges, until suddenly you see it all at once.",
+          "l3En": "This was Zhu Xi's answer to how to become a sage: not through meditation (Buddhist) or quiet sitting (Daoist) but through active intellectual engagement with the world. Wang Yangming famously tried 'investigating bamboos' by staring at them for seven days — and got sick instead of enlightened. This led him to reject Zhu Xi's approach: 'li is not in the bamboo — li is in the mind.' The Zhu-Wang debate defined Chinese philosophy for centuries."
+        }
+      ],
+      "famousEvents": [
+        {
+          "title": "鹅湖之会",
+          "year": 1175,
+          "desc": "朱熹与陆九渊（心学创始人）在江西鹅湖寺进行三天辩论——关于'格物'还是'明心'、'道问学'还是'尊德性'。这是中国哲学史上最著名的论辩之一。",
+          "titleEn": "The Goose Lake Debate",
+          "descEn": "Three-day debate between Zhu Xi and Lu Jiuyuan on whether learning should proceed through external investigation (Zhu) or inner reflection (Lu). The most famous philosophical debate in Chinese history."
+        }
+      ],
+      "scientificEval": "朱熹的'格物'精神包含了一定的科学方法论萌芽——他鼓励通过观察事物来发现理，虽然他的兴趣主要在道德和社会领域，但这一原则为中国古代科学技术（如宋代的科技高峰）提供了哲学基础。李约瑟称朱熹为'中国最伟大的科学家精神'之一。",
+      "thoughtEvolution": "朱熹19岁中进士，但一生在政治上的时间不多，大部分时间致力于著述和讲学。他在武夷山创立了武夷精舍，培养了数百弟子。他晚年被弹劾为'伪学'（庆元党禁），学说被禁，但他坦然面对，继续著书。去世后不久被平反，随后其学说地位不断上升——最终成为官方正统。",
+      "aiReview": "朱熹的体系令人敬畏的不仅是它的规模（宇宙论+人性论+伦理学+政治哲学+经典诠释+历史哲学），还有它的内部一致性。但他的问题也很典型：体系太完美了反而缺乏弹性。当六百年的中国知识分子都在'代圣贤立言'（用朱熹的话说话）时，创新也就被体系窒息了。清代学者戴震指责朱熹'以理杀人'——不是说他错了，而是说当'理'被官方垄断后，它变成了一种思想上的专制工具。这是所有被官方化的哲学的共同宿命。",
+      "goldenQuotes": [
+        {
+          "text": "读书有三到：心到、眼到、口到。",
+          "source": "《朱子语类》",
+          "textEn": "Reading requires three arrivals: the mind arrives, the eyes arrive, the mouth arrives.",
+          "sourceEn": "Classified Conversations of Master Zhu"
+        },
+        {
+          "text": "格物穷理。",
+          "source": "朱熹《大学章句》",
+          "textEn": "Investigate things to exhaustively understand their principles.",
+          "sourceEn": "Commentary on the Great Learning"
+        },
+        {
+          "text": "问渠那得清如许？为有源头活水来。",
+          "source": "朱熹《观书有感》",
+          "textEn": "How can the pond be so clear? Because fresh water flows from the source.",
+          "sourceEn": "Reflections on Reading"
+        }
+      ],
+      "anecdote": "朱熹晚年被禁'伪学'时，有弟子劝他少说话、少写文章以避祸。朱熹说：'吾之道，于天下无一物，此而不言，谁当言者？'他的学生蔡元定被流放，两人在寒夜中对坐相视，没有任何怨言。这种'以身殉道'的精神是道学家的最高品格。",
+      "relationships": [
+        {
+          "target": "confucius",
+          "type": "influence",
+          "strength": 10,
+          "description": "朱熹是孔子之后最伟大的儒家思想家，他的体系是对孔子学说的形上学重建"
+        },
+        {
+          "target": "wangyangming",
+          "type": "debate",
+          "strength": 9,
+          "description": "朱熹的理学与王阳明的心学的分歧是宋明理学内部最核心的辩论——理在外还是理在心"
+        },
+        {
+          "target": "mencius",
+          "type": "influence",
+          "strength": 8,
+          "description": "朱熹继承发展了孟子的性善论，以理气论重新解释性善的形上学基础"
+        },
+        {
+          "target": "lu-jiuyuan",
+          "type": "debate",
+          "strength": 8,
+          "description": "与陆九渊的鹅湖之会，理学与心学的第一次正面交锋"
+        }
+      ],
+      "furtherReading": [
+        {
+          "title": "四书章句集注",
+          "desc": "朱熹，科举标准教材六百年",
+          "type": "book"
+        }
+      ],
+      "layers": {
+        "L2_era": {
+          "timeline": [],
+          "decisiveMoments": [],
+          "travelMap": []
+        },
+        "L3_philosophy": {
+          "conceptNetwork": [],
+          "threeLevelReading": [],
+          "problemMatrix": []
+        },
+        "L4_evolution": {
+          "thoughtPeriods": [],
+          "turningPoints": []
+        },
+        "L6_debates": {
+          "confrontations": [],
+          "spectrumPosition": {}
+        },
+        "L7_legacy": {
+          "influenceMap": [],
+          "contemporaryApplications": []
+        }
+      }
+    },
+    {
+      "id": "zhangzai",
+      "name": "张载",
+      "nameEn": "Zhang Zai",
+      "birth": 1020,
+      "death": 1077,
+      "nationality": "中国（北宋）",
+      "nationalityEn": "China (Northern Song)",
+      "portrait": "",
+      "civilization": "eastern",
+      "school": "neo-confucianism",
+      "era": "song",
+      "role": "哲学家，宋明理学奠基人",
+      "influence": 8,
+      "summary": "张载是北宋五子中最具原创性的哲学家之一，宋明理学的真正奠基人。他提出了以'气'为核心的宇宙论——'太虚即气'：宇宙的本质不是虚无而是'气'（一种连续的、有运动能力的物质-能量）。万物的生成消亡是气的聚散变化。他的'民胞物与'（人民是我的同胞，万物是我的同伴）是儒家生态哲学的最高表达。他的横渠四句——'为天地立心，为生民立命，为往圣继绝学，为万世开太平'——是中国知识分子最崇高的精神宣言。",
+      "summaryEn": "Zhang Zai was one of the most original philosophers of the Northern Song, a founding figure of Neo-Confucianism. His cosmology centered on qi (material force) as the fundamental substance of the universe: 'The Great Void is qi.' His famous 'Western Inscription' teaches that all people are siblings and all things are companions. His four-sentence maxim — 'Set the heart for Heaven and Earth, establish destiny for the people, revive lost teachings for the sages, and create peace for all generations' — is the noblest expression of the Confucian scholar's mission.",
+      "representativeWorks": [
+        {
+          "title": "正蒙",
+          "type": "哲学",
+          "year": 1076,
+          "content": "张载的哲学代表作，系统阐述他的气本论宇宙观、人性论和认识论。'正蒙'意为'矫正蒙昧'。",
+          "titleEn": "Correcting Ignorance (Zhengmeng)",
+          "contentEn": "Zhang Zai's magnum opus, expounding his qi-based cosmology, theory of human nature, and epistemology."
+        },
+        {
+          "title": "西铭",
+          "type": "哲学短文",
+          "year": 1066,
+          "content": "原为《正蒙》最后一篇《乾称》中的一段，后被单独抽出成为宋明理学最重要的文献之一。全文仅250余字但浓缩了张载的全部哲学精神。",
+          "titleEn": "The Western Inscription",
+          "contentEn": "A short but immensely influential text (250 characters) expressing Zhang Zai's vision of universal kinship and the Confucian mission."
+        }
+      ],
+      "coreThoughts": [
+        {
+          "concept": "太虚即气",
+          "desc": "宇宙不是空的——所谓'虚空'其实是'气'的原始状态（太虚）。气是唯一的终极实在，万物由气的凝聚而成，消亡后气散归太虚。聚散不是生灭——气不增不减。",
+          "l1": "没有真正的'空'——你觉得空的地方其实是充满了看不见的'气'。",
+          "l2": "就像水——可以变成冰（凝聚为万物），也可以蒸发为水汽（散归太虚）。但水本身不增不减。",
+          "l3": "张载的气本论是宋明理学中最接近唯物主义的形上学。他用'气'取代了佛道两家的'空'和'无'——佛教认为世界是空的（虚幻的），张载说世界是实的（由气构成）。但他又不是简单的唯物论：气是有'神'（内在的能动性）的。这一体系为后来的理学奠定了宇宙论基础——朱熹的理气论就是在张载的气本论基础上发展出来的。",
+          "conceptEn": "The Great Void is Qi",
+          "descEn": "Empty space is not truly empty — the Great Void (taixu) is qi (material force) in its unmanifested state. All things are condensed qi; dissolution is qi returning to its original state. Nothing is truly created or destroyed.",
+          "l1En": "There is no 'emptiness' in the universe — what appears empty is actually qi in its invisible, unmanifested form.",
+          "l2En": "Like water: it condenses into ice (things), evaporates into vapor (returns to the Void), but the water itself is neither created nor destroyed — qi is indestructible.",
+          "l3En": "Zhang Zai's qi monism was the most materialist metaphysics in the Chinese tradition — a direct challenge to Buddhist emptiness (all is illusion) and Daoist non-being (all from nothing). His assertion that reality is fundamentally substantial and dynamic paved the way for Zhu Xi's more sophisticated li-qi dualism, but Zhang's system has the virtue of greater parsimony: one substance (qi) explains everything."
+        },
+        {
+          "concept": "民胞物与",
+          "desc": "出自《西铭》——'民吾同胞，物吾与也'：天下人都是我的兄弟姐妹，世间万物都是我的同伴。张载把宇宙理解为一家，把人与万物的关系理解为伦理关系。这不是诗意的比喻——而是基于他的气一元论的严格推论：既然万物都由同一的气构成，那么人与万物在本质上是相通的。",
+          "l1": "所有的人都是你的兄弟姐妹——不只是一个比喻，从宇宙的层面看这是事实。",
+          "l2": "你踩到一块石头和踩到一个人的脚——在气的层面上没有本质区别，都是'一气之聚'。",
+          "l3": "民胞物与是儒家仁爱思想的最極致表达：孔子的爱有差等→孟子的推己及人→张载的民胞物与——爱被扩展到了宇宙的尺度。这一思想在当代被重新发现为环境哲学和生态伦理学的宝贵资源：如果我们真的把万物当作同伴，就不会肆意破坏自然。两千多年前的中国哲学家已经给出了生态伦理的形上学基础。",
+          "conceptEn": "All People are Siblings, All Things are Companions",
+          "descEn": "From the Western Inscription: all people are my brothers and sisters, all things are my companions. This is not poetry but a metaphysical claim: since all things are constituted by the same qi, all beings are fundamentally connected. Universal love follows from cosmic unity.",
+          "l1En": "Every person you meet is, at the deepest level, your sibling — made of the same substance as you are.",
+          "l2En": "Zhang Zai extends Confucian love to its cosmic limit: not just family, not just humanity, but all beings are within the circle of care.",
+          "l3En": "This is arguably the most beautiful statement in all of Chinese philosophy. It extends Confucian ethics from human relationships to the entire cosmos — a genuinely ecological philosophy 800 years before the word 'ecology' existed. Zhang Zai gives the intuition 'everything is connected' a rigorous metaphysical foundation: we ARE connected, literally, because we are made of the same qi."
+        }
+      ],
+      "famousEvents": [
+        {
+          "title": "横渠先生与横渠四句",
+          "year": 1070,
+          "desc": "张载晚年辞官回到陕西眉县横渠镇，著书讲学，创立'关学'。他的横渠四句——'为天地立心，为生民立命，为往圣继绝学，为万世开太平'——成为中国知识分子最崇高的精神宣言。",
+          "titleEn": "The Four Maxims",
+          "descEn": "Zhang Zai's four-sentence mission statement for the Confucian scholar: 'Set the heart for Heaven and Earth, establish destiny for the people, revive lost teachings for the sages, and create peace for all generations.'"
+        }
+      ],
+      "thoughtEvolution": "张载年轻时喜欢谈兵，曾想组织义勇收复西夏侵占的洮西之地。后来被范仲淹指点：'儒者自有名教可乐，何事于兵！'于是改读《中庸》。但他对《中庸》仍不满意，转而钻研佛道两家多年，最终'反而求之六经'——回到儒家经典，融合佛道思想精华，创立了自己的气本论哲学。",
+      "aiReview": "张载的气本论有一种惊人的现代感：他说的'气'（一种连续的、能动的、不灭的物质-能量）与物理学中的场（field）概念有结构上的相似之处。当然这不是说张载'预言了场论'——但他对'真空不空'的直觉确实比西方哲学中的原子论更接近现代物理学的世界观。更重要的是他的伦理推论：既然万物同源（同气），那么万物平等——这个从宇宙论到伦理学的推导链条是儒家思想中最有生态哲学潜力的一支。",
+      "goldenQuotes": [
+        {
+          "text": "为天地立心，为生民立命，为往圣继绝学，为万世开太平。",
+          "source": "张载《横渠语录》",
+          "textEn": "Set the heart for Heaven and Earth, establish destiny for the people, revive lost teachings for the sages, and create peace for all generations.",
+          "sourceEn": "Zhang Zai's Four Maxims"
+        },
+        {
+          "text": "民吾同胞，物吾与也。",
+          "source": "张载《西铭》",
+          "textEn": "All people are my siblings; all things are my companions.",
+          "sourceEn": "The Western Inscription"
+        },
+        {
+          "text": "存，吾顺事；没，吾宁也。",
+          "source": "张载《西铭》",
+          "textEn": "Living, I follow the course of things; dying, I find peace.",
+          "sourceEn": "The Western Inscription"
+        }
+      ],
+      "anecdote": "张载年轻时喜欢军事，曾给陕西招讨副使范仲淹写信讨论边防。范仲淹没有采纳他的军事建议，但告诉他：'儒家的学问足以让你安身立命，何必去搞军事呢？'范仲淹送给他一本《中庸》让他回去读——这一读改变了张载一生的方向。",
+      "relationships": [
+        {
+          "target": "zhuxi",
+          "type": "influence",
+          "strength": 8,
+          "description": "朱熹高度推崇张载，在理气论中吸收了张载的气本论并将其融入自己的体系"
+        },
+        {
+          "target": "wangyangming",
+          "type": "influence",
+          "strength": 5,
+          "description": "张载的民胞物与思想间接影响了王阳明'万物一体之仁'的哲学"
+        },
+        {
+          "target": "confucius",
+          "type": "influence",
+          "strength": 8,
+          "description": "张载自认是孔子之道的真正继承者，他的全部哲学都在为儒家伦理提供形上学基础"
+        }
+      ],
+      "furtherReading": [
+        {
+          "title": "正蒙",
+          "desc": "张载，气本论哲学代表作",
+          "type": "book"
+        },
+        {
+          "title": "西铭",
+          "desc": "张载，宋明理学最重要的文献之一",
+          "type": "book"
+        }
+      ],
+      "layers": {
+        "L2_era": {
+          "timeline": [],
+          "decisiveMoments": [],
+          "travelMap": []
+        },
+        "L3_philosophy": {
+          "conceptNetwork": [],
+          "threeLevelReading": [],
+          "problemMatrix": []
+        },
+        "L4_evolution": {
+          "thoughtPeriods": [],
+          "turningPoints": []
+        },
+        "L6_debates": {
+          "confrontations": [],
+          "spectrumPosition": {}
+        },
+        "L7_legacy": {
+          "influenceMap": [],
+          "contemporaryApplications": []
+        }
+      }
+    },
+    {
+      "id": "sartre",
+      "name": "萨特",
+      "nameEn": "Jean-Paul Sartre",
+      "birth": 1905,
+      "death": 1980,
+      "nationality": "法国",
+      "nationalityEn": "France",
+      "portrait": "",
+      "civilization": "western",
+      "school": "existentialism",
+      "era": "20th-century",
+      "role": "哲学家，文学家，剧作家",
+      "influence": 9,
+      "summary": "让-保罗·萨特是20世纪存在主义哲学的旗手，也是最具社会影响力的公共知识分子之一。他的核心命题'存在先于本质'：人没有预定的本性或目的——人被'抛入'世界，通过自己的选择和行动来定义自己。人是自由的，因而也对自己的每一个行为负全部责任。这种自由是沉重的——人'注定自由'、'被判决为自由'。萨特还提出了'他人即地狱'的著名论断——我们的自我认识被他人的凝视所异化。他是1964年诺贝尔文学奖得主但拒绝领奖。他与波伏娃的伴侣关系、与加缪的决裂、对马克思主义的接近与疏离，构成了20世纪思想史最具戏剧性的篇章。",
+      "summaryEn": "Jean-Paul Sartre was the flagship philosopher of 20th-century existentialism and the most influential public intellectual of his time. His central doctrine — 'existence precedes essence' — held that humans have no predetermined nature: we are thrown into the world and must define ourselves through our choices and actions. We are 'condemned to be free.' He was awarded (and refused) the Nobel Prize in Literature.",
+      "representativeWorks": [
+        {
+          "title": "存在与虚无",
+          "type": "哲学",
+          "year": 1943,
+          "content": "萨特的哲学代表作，系统阐述了存在先于本质、自为存在与自在存在、自由与责任、他人即地狱等核心理论。",
+          "titleEn": "Being and Nothingness",
+          "contentEn": "Sartre's magnum opus, developing his existentialist ontology of being-for-itself, being-in-itself, freedom, and bad faith."
+        },
+        {
+          "title": "恶心",
+          "type": "小说",
+          "year": 1938,
+          "content": "萨特的文学代表作，以日记体记录主人公罗冈丹对存在之偶然性和荒谬性的'恶心'体验，是存在主义文学的开山之作。",
+          "titleEn": "Nausea",
+          "contentEn": "Sartre's literary masterpiece, a diary-style novel exploring the protagonist's visceral experience of the contingency and absurdity of existence."
+        },
+        {
+          "title": "存在主义是一种人道主义",
+          "type": "演讲",
+          "year": 1946,
+          "content": "萨特为回应各方批判所做的通俗演讲，简明扼要地阐述了存在主义的核心主张——自由、选择、责任——并论证为什么存在主义不是悲观主义而是一种积极的人道主义。",
+          "titleEn": "Existentialism Is a Humanism",
+          "contentEn": "Sartre's popular lecture defending existentialism against charges of pessimism and nihilism, arguing that it is a positive philosophy of human freedom and responsibility."
+        }
+      ],
+      "coreThoughts": [
+        {
+          "concept": "存在先于本质",
+          "desc": "人不像桌子或椅子那样先有'本质'（设计图）后才有'存在'（被制造出来）。人是先被抛入世界（存在），然后通过自由选择和行动来定义自己是谁（本质）。'人首先存在，遭遇自己，涌现于世界之中——然后才定义自己。'",
+          "l1": "你不是生来就'是'什么——你通过你的选择成为什么。",
+          "l2": "就像一块大理石——它没有被雕刻成特定的形状，你拿起凿子自己去刻。",
+          "l3": "'存在先于本质'是对一切预定论和本质主义的否定——拆掉了'人性'、'上帝的旨意'、'自然法则'这些天花板。这把自由提高到了令人眩晕的高度：你没有借口，因为你不是被任何东西决定的。懦夫使自己成为懦夫，英雄使自己成为英雄。萨特说的'人被判决为自由'——不是幸福地自由，而是不得不自由。",
+          "conceptEn": "Existence Precedes Essence",
+          "descEn": "Humans have no pre-defined nature or purpose. Unlike a paperknife which is designed (essence) before being made (existence), humans first exist — thrown into the world — and then define themselves through choices and actions.",
+          "l1En": "You are not born with a fixed nature — you create yourself through every choice you make.",
+          "l2En": "There is no 'human nature' that determines who you become. You are radically free — and radically responsible.",
+          "l3En": "This is the most liberating and the most terrifying idea in modern philosophy. Liberating because no cosmic plan constrains you; terrifying because you have no excuses. If you become a coward, you made yourself a coward. If you become a hero, you made yourself a hero. 'We are condemned to be free' — not happily free, but condemned to it, because freedom is inescapable."
+        },
+        {
+          "concept": "他人即地狱",
+          "desc": "萨特在戏剧《禁闭》中提出的名言。人的自我意识在很大程度上是通过他人的'凝视'构建的——我们按照别人看我们的方式来看自己。这种被他者异化的状态是一种'地狱'——我们的自由被他人的判断所捕获和扭曲。",
+          "l1": "别人怎么看你，常常比你怎么看自己更重要——这是一种束缚。",
+          "l2": "就像在社交网络上——你发一条状态后不停刷新看别人的点赞，你的自我价值被别人的反应绑架了。",
+          "l3": "'他人即地狱'常被误解为萨特讨厌人。他真正的意思是：我们与他人的关系在结构上存在冲突——因为我在看别人的同时，别人也在看我，我试图把别人对象化（定义他），别人也试图把我对象化（定义我）。这种相互对象化的斗争构成了人际关系的基本张力。萨特不是在说'不需要朋友'，而是在揭示人类关系中一个不可消除的冲突维度。",
+          "conceptEn": "Hell Is Other People",
+          "descEn": "From Sartre's play No Exit. Our self-understanding is profoundly shaped by how others see us (the 'Look' or 'Gaze'). This alienates our freedom — we become trapped in others' definitions of who we are.",
+          "l1En": "How others see you can become a prison that traps your authentic self.",
+          "l2En": "We constantly perform for an audience — and that audience's gaze shapes our very sense of who we are.",
+          "l3En": "This is not misanthropy but a structural analysis of human relations. In Sartre's view, the Look of the Other objectifies me — I become what they see, not what I am. Interpersonal conflict is built into the structure of consciousness because each of us tries to be the subject who defines, not the object who is defined. The drama of human relations is the endless struggle over who gets to be the looker and who gets to be the looked-at."
+        }
+      ],
+      "famousEvents": [
+        {
+          "title": "拒绝诺贝尔文学奖",
+          "year": 1964,
+          "desc": "萨特被授予诺贝尔文学奖，但他公开拒绝——理由是他拒绝接受任何来自机构的荣誉，认为作家不应被体制收编。",
+          "titleEn": "Refused the Nobel Prize",
+          "descEn": "Sartre was awarded the Nobel Prize in Literature but refused it, stating that a writer should not allow themselves to be turned into an institution."
+        },
+        {
+          "title": "1968年五月风暴",
+          "year": 1968,
+          "desc": "萨特积极支持巴黎学生运动，走上街头散发传单、发表演讲。他后来还参与了左翼报纸《人民事业报》的创办。",
+          "titleEn": "May 1968 Protests",
+          "descEn": "Sartre actively supported the student protests in Paris, distributing leaflets and giving speeches in the streets."
+        }
+      ],
+      "thoughtEvolution": "萨特早年受胡塞尔现象学影响，后来在柏林留学期间研读海德格尔的《存在与时间》，形成了自己的存在主义体系。二战后他试图将存在主义与马克思主义结合，写了《辩证理性批判》。他晚年政治立场越来越激进，但也在哲学上回归对道德问题的思考。他去世时数万人自发为他送葬。",
+      "aiReview": "萨特的魅力在于他不是一个书斋哲学家——他的哲学是行动的号召。'存在先于本质'不仅是理论命题，也是人生的实践纲领：去做、去选择、去承担。但他也有一个致命的问题：他的自由理论几乎无法解释'坏的选择'——如果人完全自由，为什么有人选择做懦夫？这说明'自由'这个概念在他的体系里承担了太多责任。另外，他和加缪的决裂也暴露了他的盲点：为了政治立场牺牲了友谊和道德判断的独立性。",
+      "goldenQuotes": [
+        {
+          "text": "他人即地狱。",
+          "source": "戏剧《禁闭》",
+          "textEn": "Hell is other people.",
+          "sourceEn": "No Exit"
+        },
+        {
+          "text": "人是注定要自由的——他背负着自由的重量。",
+          "source": "《存在与虚无》",
+          "textEn": "Man is condemned to be free — because once thrown into the world, he is responsible for everything he does.",
+          "sourceEn": "Being and Nothingness"
+        },
+        {
+          "text": "存在先于本质。",
+          "source": "《存在主义是一种人道主义》",
+          "textEn": "Existence precedes essence.",
+          "sourceEn": "Existentialism Is a Humanism"
+        }
+      ],
+      "anecdote": "萨特和波伏娃（Simone de Beauvoir）的关系是20世纪最著名的知识分子伴侣关系。他们从未结婚，保持着各自的独立住所，但有长达51年的深厚感情和智识交流。萨特去世后，波伏娃在他墓前发表了悼词，她去世后与萨特合葬在蒙帕纳斯公墓。",
+      "relationships": [
+        {
+          "target": "camus",
+          "type": "debate",
+          "strength": 9,
+          "description": "萨特与加缪的决裂（1952年，围绕苏联问题）是20世纪思想史的标志性事件——存在主义的两面走到了一起又最终分裂"
+        },
+        {
+          "target": "heidegger",
+          "type": "influence",
+          "strength": 8,
+          "description": "海德格尔的《存在与时间》是萨特存在主义的直接哲学来源"
+        },
+        {
+          "target": "nietzsche",
+          "type": "influence",
+          "strength": 7,
+          "description": "尼采的上帝已死和权力意志为萨特的存在主义提供了思想土壤"
+        },
+        {
+          "target": "beauvoir",
+          "type": "influence",
+          "strength": 8,
+          "description": "波伏娃是萨特终身的伴侣和思想对话者，两人的存在主义思想相互渗透"
+        }
+      ],
+      "furtherReading": [
+        {
+          "title": "存在与虚无",
+          "desc": "萨特，存在主义哲学代表作",
+          "type": "book"
+        },
+        {
+          "title": "恶心",
+          "desc": "萨特，存在主义文学经典",
+          "type": "book"
+        }
+      ],
+      "layers": {
+        "L2_era": {
+          "timeline": [],
+          "decisiveMoments": [],
+          "travelMap": []
+        },
+        "L3_philosophy": {
+          "conceptNetwork": [],
+          "threeLevelReading": [],
+          "problemMatrix": []
+        },
+        "L4_evolution": {
+          "thoughtPeriods": [],
+          "turningPoints": []
+        },
+        "L6_debates": {
+          "confrontations": [],
+          "spectrumPosition": {}
+        },
+        "L7_legacy": {
+          "influenceMap": [],
+          "contemporaryApplications": []
+        }
+      }
+    },
+    {
+      "id": "camus",
+      "name": "加缪",
+      "nameEn": "Albert Camus",
+      "birth": 1913,
+      "death": 1960,
+      "nationality": "法国",
+      "nationalityEn": "France",
+      "portrait": "",
+      "civilization": "western",
+      "school": "existentialism",
+      "era": "20th-century",
+      "role": "哲学家，文学家，荒诞主义代表",
+      "influence": 8,
+      "summary": "阿尔贝·加缪是20世纪法国最重要的思想家之一，荒诞主义（Absurdism）的代表。与萨特不同，加缪拒绝被贴上存在主义者的标签。他的核心问题是：在一个没有上帝、没有终极意义的世界里，人应该如何生活？他的答案是：承认荒诞——人对意义的渴望与世界无意义之间的不可调和——但不因此绝望或自杀，而是像西西弗斯一样，明知巨石会滚落仍一次次推上去——在这种反抗中找到了幸福。加缪是最年轻的诺贝尔文学奖得主之一（44岁），他的小说《局外人》《鼠疫》和哲学随笔《西西弗斯神话》是20世纪不可绕过的经典。",
+      "summaryEn": "Albert Camus was the voice of absurdism, arguing that life is meaningless but worth living precisely because of — not despite — its absurdity. His myth of Sisyphus — pushing a boulder uphill forever, knowing it will roll back down — became the defining image of 20th-century existential courage. He was the second-youngest Nobel laureate in literature.",
+      "representativeWorks": [
+        {
+          "title": "西西弗斯神话",
+          "type": "哲学随笔",
+          "year": 1942,
+          "content": "加缪的哲学代表作，论证荒诞——人渴望意义而世界无意义之间的冲突——以及面对荒诞的正确态度：不是自杀也不是希望，而是反抗、自由和激情。",
+          "titleEn": "The Myth of Sisyphus",
+          "contentEn": "Camus's philosophical essay on absurdism: the conflict between humanity's search for meaning and the world's indifference. The conclusion: one must imagine Sisyphus happy."
+        },
+        {
+          "title": "局外人",
+          "type": "小说",
+          "year": 1942,
+          "desc": "加缪的文学代表作，主人公默尔索对母亲去世、杀人、审判都表现出令人震惊的冷漠——他不是坏人，而是以彻底的诚实面对世界的荒诞。",
+          "titleEn": "The Stranger",
+          "contentEn": "Camus's most famous novel. Meursault, the emotionally detached protagonist, is convicted not for murder but for failing to perform the expected emotions at his mother's funeral."
+        },
+        {
+          "title": "鼠疫",
+          "type": "小说",
+          "year": 1947,
+          "content": "以鼠疫隐喻纳粹占领和人类普遍的荒谬处境。主人公里厄医生在明知无法战胜瘟疫的情况下仍然坚持战斗——这是加缪意义上的反抗。",
+          "titleEn": "The Plague",
+          "contentEn": "An allegorical novel about resistance against absurdity and evil, where Dr. Rieux continues fighting the plague despite knowing he cannot defeat it."
+        }
+      ],
+      "coreThoughts": [
+        {
+          "concept": "荒诞",
+          "desc": "荒诞不是世界的属性，也不是人的属性——荒诞产生于'人对意义的呼唤'与'世界无意义的沉默'之间的碰撞。就像一个人站在墙前大喊却听不到回声——荒诞就是那种碰撞感。",
+          "l1": "世界没有答案——你不断追问为什么，但世界只是沉默。这就是荒诞。",
+          "l2": "就像你不停地按门铃但没有人开门——那一刻的荒谬感就是荒诞。",
+          "l3": "加缪对荒诞的定义是他全部哲学的起点。荒诞是一个'离婚'——人与世界的离婚：人想要理解（意义、秩序、幸福），但世界不提供答案。关键不是消除荒诞（要么自杀放弃，要么跳到宗教信仰中——这两种都'逃避'了荒诞），而是'保持荒诞活着'——承认荒诞但不屈服。加缪的三部曲——小说《局外人》、散文《西西弗斯神话》、戏剧《卡利古拉》——从三个角度处理同一个问题。",
+          "conceptEn": "The Absurd",
+          "descEn": "The absurd is not in the world nor in humans alone — it arises from the collision between humanity's demand for meaning and the world's silent indifference. It is the 'divorce' between the human desire for clarity and the universe's refusal to provide it.",
+          "l1En": "The universe does not answer our questions. The silence of the world is the source of the absurd.",
+          "l2En": "Absurdity is like a man shouting at a wall and hearing no echo. The silence is the answer.",
+          "l3En": "Camus distinguishes his position from both suicide (giving up) and hope (religious or philosophical faith). Both 'evade' the absurd. The only honest response is to live with the absurd — to acknowledge it without surrendering to it. 'The important thing is not to be cured, but to live with one's ailments.'"
+        },
+        {
+          "concept": "西西弗斯的幸福",
+          "desc": "西西弗斯被诸神惩罚——把一块巨石推上山顶，每次快到山顶巨石又滚落，他必须重新开始，永无止境。加缪说：'我们必须想象西西弗斯是幸福的'——因为他在推石头的过程中、在他反抗无意义的命运的行动中找到了意义。",
+          "l1": "明知努力没有结果，但还是要努力——这就是人的尊严所在。",
+          "l2": "就像每天起床、上班、吃饭、睡觉——日复一日——如果你觉得这是荒诞的，你就理解了西西弗斯。",
+          "l3": "西西弗斯神话是加缪对荒诞的回答：不是希望（'下一次石头就不会掉下来了'），不是自杀（'我不推了'），而是清醒的反抗。西西弗斯知道石头会掉下来，但他选择继续推——正是在这个选择中他成为自由的。他'高于他的命运'，因为他用蔑视战胜了惩罚。最后一句话是整本书最震撼的宣言：'我们必须想象西西弗斯是幸福的。'",
+          "conceptEn": "The Happiness of Sisyphus",
+          "descEn": "Sisyphus is condemned to push a boulder uphill forever — it rolls back down each time. Camus declares: 'One must imagine Sisyphus happy.' His happiness lies in his conscious rebellion against his fate. He is stronger than his rock because he knows the full extent of his hopeless condition and accepts it.",
+          "l1En": "Happiness is not the absence of struggle — it's the choice to struggle with full awareness of the struggle's futility.",
+          "l2En": "Sisyphus is stronger than his punishment because he knows the rock will roll back down — and pushes it anyway.",
+          "l3En": "This is the triumph of the absurd hero: not victory over fate (impossible) but consciousness of fate. Sisyphus 'is superior to his fate. He is stronger than his rock.' Because he knows — and the gods who designed the punishment didn't account for the possibility that he might find joy in the struggle. 'The struggle itself toward the heights is enough to fill a man's heart.'"
+        }
+      ],
+      "famousEvents": [
+        {
+          "title": "与萨特的决裂",
+          "year": 1952,
+          "desc": "加缪发表《反抗者》批判革命暴力，萨特的学生和《现代》杂志的同仁激烈批判加缪。萨特亲自撰文回应，两人多年的友谊彻底破裂，加缪离开巴黎，陷入长期的创作低谷。",
+          "titleEn": "Break with Sartre",
+          "descEn": "Camus published The Rebel, criticizing revolutionary violence as justified by abstract ideology. Sartre's journal Les Temps Modernes attacked Camus, and Sartre himself wrote a devastating response. The two existentialist giants never reconciled."
+        },
+        {
+          "title": "诺贝尔文学奖",
+          "year": 1957,
+          "desc": "44岁的加缪获得诺贝尔文学奖，是当时第二年轻的获奖者。他在颁奖演说中呼吁作家'为那些不能发声的人说话'。",
+          "titleEn": "Nobel Prize in Literature",
+          "descEn": "At age 44, Camus became the second-youngest Nobel laureate in literature. In his acceptance speech, he urged writers to 'serve those who suffer history.'"
+        }
+      ],
+      "thoughtEvolution": "加缪出生于法属阿尔及利亚的贫困家庭，父亲在第一次世界大战中阵亡。他在贫民区长大，靠奖学金完成学业。早年加入共产党又退出，做过记者，二战期间在法国参加抵抗运动，主编地下报纸《战斗报》。他一生都在南方（阿尔及利亚的阳光）和北方（法国的阴郁）之间拉扯——这也许是他理解荒诞的根源。",
+      "aiReview": "加缪和萨特的区别是有趣的：萨特相信自由，加缪相信尊严；萨特向左走，加缪站在中间；萨特是系统构建者，加缪是散文思想家；萨特的哲学需要几本书来展开，加缪的思想用三个词就能概括：荒诞、反抗、幸福。加缪的作品最动人之处不是他的论证而是他的语调——一种在绝望中保持克制的阳光般的清晰。他死于车祸（47岁）——一个荒诞的死亡本身，就像西西弗斯的巨石被命运本人踢了一脚。",
+      "goldenQuotes": [
+        {
+          "text": "真正严肃的哲学问题只有一个：自杀。",
+          "source": "《西西弗斯神话》开篇",
+          "textEn": "There is only one truly serious philosophical problem, and that is suicide.",
+          "sourceEn": "The Myth of Sisyphus"
+        },
+        {
+          "text": "我们必须想象西西弗斯是幸福的。",
+          "source": "《西西弗斯神话》终章",
+          "textEn": "One must imagine Sisyphus happy.",
+          "sourceEn": "The Myth of Sisyphus"
+        },
+        {
+          "text": "在冬天的正中心，我终于发现在我心里有一个不可战胜的夏天。",
+          "source": "加缪手记",
+          "textEn": "In the depth of winter, I finally learned that within me there lay an invincible summer.",
+          "sourceEn": "Camus, Return to Tipasa"
+        },
+        {
+          "text": "我反抗，故我们存在。",
+          "source": "《反抗者》",
+          "textEn": "I rebel, therefore we exist.",
+          "sourceEn": "The Rebel"
+        }
+      ],
+      "anecdote": "1957年加缪在斯德哥尔摩领诺贝尔奖时，一个阿尔及利亚学生当众质问他：'你为阿尔及利亚做了什么？'加缪回答：'我一直在为阿尔及利亚的和平而呼吁——但我不希望他们伤害我的母亲。'这句话有两个层面的含义：他的母亲仍然住在阿尔及尔的贫民区；也表达了他拒绝支持独立运动中的暴力。这个回答让他在左翼知识界中孤立，但他坚持了自己的立场。",
+      "relationships": [
+        {
+          "target": "sartre",
+          "type": "debate",
+          "strength": 9,
+          "description": "加缪与萨特的友谊与决裂是20世纪思想史上最动人的故事——从惺惺相惜到因政治立场分道扬镳"
+        }
+      ],
+      "furtherReading": [
+        {
+          "title": "西西弗斯神话",
+          "desc": "加缪，荒诞主义哲学经典",
+          "type": "book"
+        },
+        {
+          "title": "局外人",
+          "desc": "加缪，20世纪最经典的小说之一",
+          "type": "book"
+        }
+      ],
+      "layers": {
+        "L2_era": {
+          "timeline": [],
+          "decisiveMoments": [],
+          "travelMap": []
+        },
+        "L3_philosophy": {
+          "conceptNetwork": [],
+          "threeLevelReading": [],
+          "problemMatrix": []
+        },
+        "L4_evolution": {
+          "thoughtPeriods": [],
+          "turningPoints": []
+        },
+        "L6_debates": {
+          "confrontations": [],
+          "spectrumPosition": {}
+        },
+        "L7_legacy": {
+          "influenceMap": [],
+          "contemporaryApplications": []
+        }
+      }
+    },
+    {
+      "id": "beauvoir",
+      "name": "波伏娃",
+      "nameEn": "Simone de Beauvoir",
+      "birth": 1908,
+      "death": 1986,
+      "nationality": "法国",
+      "nationalityEn": "France",
+      "portrait": "",
+      "civilization": "western",
+      "school": "existentialism",
+      "era": "20th-century",
+      "role": "哲学家，作家，女权主义理论家",
+      "influence": 8,
+      "summary": "西蒙娜·德·波伏娃是20世纪最重要的女权主义哲学家之一，存在主义的代表人物。她的《第二性》是第二波女权主义运动的奠基之作，提出了'女人不是天生的，而是后天成为的'（One is not born, but rather becomes, a woman）这一核心论断。她系统分析了女性在历史中被构建为'他者'（the Other）的过程——男人是主体（Self），女人是被定义的对象（Other）。她与萨特长达51年的伴侣关系是20世纪思想史最著名的知识分子的结合，两人互相影响但保持独立的创作和住所。她还以小说《名士风流》（获得龚古尔文学奖）和四卷本自传闻名。",
+      "summaryEn": "Simone de Beauvoir was one of the most influential feminist philosophers of the 20th century and a leading figure in existentialism. Her landmark work The Second Sex — 'One is not born, but rather becomes, a woman' — laid the foundation for second-wave feminism. She analyzed how women have been systematically constructed as the 'Other' in patriarchal societies. Her lifelong partnership with Sartre became legendary in intellectual history.",
+      "representativeWorks": [
+        {
+          "title": "第二性",
+          "type": "哲学/女权主义",
+          "year": 1949,
+          "content": "女权主义的圣经级著作，分两卷（事实与神话/实际经验），从生物学、精神分析、历史唯物主义和存在主义四个角度分析女性被构建为'他者'的过程。",
+          "titleEn": "The Second Sex",
+          "contentEn": "The foundational text of second-wave feminism. Beauvoir analyzes woman's condition as the 'Other' from biological, psychoanalytic, historical materialist, and existentialist perspectives."
+        },
+        {
+          "title": "名士风流",
+          "type": "小说",
+          "year": 1954,
+          "content": "以二战前后法国知识分子圈为背景的小说，主角影射萨特、加缪和波伏娃自己。获龚古尔文学奖。",
+          "titleEn": "The Mandarins",
+          "contentEn": "A novel set in post-WWII French intellectual circles, featuring characters based on Sartre, Camus, and Beauvoir herself. Winner of the Prix Goncourt."
+        }
+      ],
+      "coreThoughts": [
+        {
+          "concept": "女人是后天成为的",
+          "desc": "'女人不是天生的，而是后天成为的。'没有所谓的'女性本质'——社会文化通过教育、习俗、语言和制度将生理女性塑造成'女人'，赋予她特定的角色、性格和期待。性别（gender）是社会建构的。",
+          "l1": "没有天生的'女人味'——所谓的女性特质是社会教出来的。",
+          "l2": "就像给一个空容器贴上标签——婴儿出生时没有性别意识，是社会不断告诉ta'你是女孩所以应该…'才灌出了'女人'。",
+          "l3": "'女人是后天成为的'是女权主义哲学中最著名的单句命题。它的力量在于把'女性'从自然（biology is destiny）问题变成了社会问题。如果女性不是天生就是'那样的'，那么改变社会条件就能改变女性的处境。这个论证是存在主义的直接应用：存在先于本质——没有一个预定的'女性本质'，每个女性通过自己的选择和行动定义自己。",
+          "conceptEn": "One Is Not Born a Woman",
+          "descEn": "'One is not born, but rather becomes, a woman.' There is no fixed 'feminine nature' — culture and society construct gender roles through education, custom, language, and institutions. Gender is a social construction, not a biological destiny.",
+          "l1En": "What we call 'femininity' is not innate — it's learned, performed, and enforced by society.",
+          "l2En": "A baby is born with biological sex, but 'becoming a woman' is a lifelong social process of being shaped into expected roles.",
+          "l3En": "This sentence is the most famous single line in feminist philosophy. It transforms 'woman' from a natural kind into a social category: if femininity is produced, not given, then changing social conditions can change women's situation. This is existentialism applied: existence precedes essence — no predetermined 'feminine essence,' each woman defines herself through her choices."
+        },
+        {
+          "concept": "她者",
+          "desc": "在人类历史中，男人将自己定义为主体（Self/Subject），而将女人定义为'他者'（the Other）——即相对于男人的、被定义的、次要的存在。女人不是作为独立的主体被认识的，而是作为男人的补充、对象和镜像。",
+          "l1": "在男人的世界里，女人永远是'另一个'——她的价值不是由她自己定义的。",
+          "l2": "就像月亮本身不发光——它反射太阳的光。女性在整个历史中就像这样：反射男性的光芒。",
+          "l3": "波伏娃的'她者'概念借用了黑格尔的主奴辩证法（通过萨特的解读）：自我意识通过与他者的对立来确立自己。但在男女关系中，这种辩证过程不对称——男人获得了主体的地位，女人被固定在'他者'的位置无法翻转。这不是生物决定论而是历史分析：女性被剥夺了作为独立主体参与历史进程的机会，从而被锁在了他者位置上。",
+          "conceptEn": "Woman as the Other",
+          "descEn": "Throughout history, man has defined himself as the Self/Subject and woman as the 'Other' — the secondary, defined-in-relation-to-man being. Woman is not known as an independent subject but as man's complement, object, and mirror.",
+          "l1En": "In a patriarchal world, woman exists primarily as 'that which is not man' — defined by her difference from the male standard.",
+          "l2En": "Like the moon reflecting the sun's light — woman has reflected man's image back to him, never shining with her own light.",
+          "l3En": "Beauvoir adapts the Hegelian master-slave dialectic: consciousness defines itself against an Other. But in gender relations this process is asymmetrical — man attains the Subject position while woman is locked in Otherness. This is not biological determinism (she explicitly rejects it) but a structural analysis of how patriarchal systems have systematically denied women access to subjectivity."
+        }
+      ],
+      "famousEvents": [
+        {
+          "title": "《第二性》出版与争议",
+          "year": 1949,
+          "desc": "《第二性》在法国出版引发轩然大波，梵蒂冈将其列为禁书，许多著名作家（包括加缪和莫里亚克）批评它'肮脏'和'恶心'。但它在普通女性读者中引发了爆炸性反响——波伏娃收到了数千封读者来信。",
+          "titleEn": "The Second Sex Published",
+          "descEn": "The book caused scandal across Europe. The Vatican banned it; Camus and Mauriac attacked it. But it received thousands of letters from ordinary women whose lives it had transformed."
+        },
+        {
+          "title": "签署《343宣言》",
+          "year": 1971,
+          "desc": "波伏娃签署了《343宣言》——343名法国女性公开声明自己曾堕胎（当时堕胎是非法的），推动了法国堕胎合法化运动。",
+          "titleEn": "The 343 Manifesto",
+          "descEn": "Beauvoir signed the manifesto of 343 women who publicly declared having had illegal abortions, a landmark act in the French abortion rights movement."
+        }
+      ],
+      "thoughtEvolution": "波伏娃在巴黎索邦大学学习哲学时遇到萨特，两人通过教师资格考试（aggregation），分列第一和第二。她早期受萨特存在主义影响，但《第二性》展现了她独立的思想——她将存在主义的自由概念应用于女性处境，这是萨特从未尝试过的。晚年她活跃于女权运动，并撰写了四卷本自传，成为20世纪最完整的思想自画像之一。",
+      "aiReview": "波伏娃最伟大的成就是把存在主义从纯粹的哲学理论变成了社会批判的武器。萨特谈论'自由'——抽象的、人人平等的自由；波伏娃问：女性的自由在哪里？她的思考路径是存在主义中最有生产力的分支之一。但她在哲学史上的地位有些争议：她常被归类为'萨特的追随者'而不是独立哲学家，很大程度上是因为她没有像萨特那样构建一个系统哲学——但也许这正是她的自觉选择：'第二性'就是一种反体系的哲学行动。",
+      "goldenQuotes": [
+        {
+          "text": "女人不是天生的，而是后天成为的。",
+          "source": "《第二性》",
+          "textEn": "One is not born, but rather becomes, a woman.",
+          "sourceEn": "The Second Sex"
+        },
+        {
+          "text": "男人将女人定义为'他者'——因为她相对于他而存在，而不是他相对于她而存在。",
+          "source": "《第二性》",
+          "textEn": "He is the Subject, he is the Absolute — she is the Other.",
+          "sourceEn": "The Second Sex"
+        },
+        {
+          "text": "如果你活得够长，就会发现每个胜利最终都会变成失败。",
+          "source": "波伏娃晚年访谈",
+          "textEn": "If you live long enough, you'll see that every victory turns into a defeat.",
+          "sourceEn": "Late interview"
+        }
+      ],
+      "anecdote": "波伏娃和萨特的关系契约是20世纪最著名的开放性关系——他们约定'彼此是主伴侣'但可以有'偶然的爱情'，彼此完全坦诚。波伏娃有过多段重要的女性和男性恋情（包括与美国作家纳尔逊·阿尔格伦的著名跨国恋）。萨特死后，波伏娃写的悼念文字极为动人，她说'二十岁那年，我们相遇了——从此以后，我再也没有羡慕过任何人。'",
+      "relationships": [
+        {
+          "target": "sartre",
+          "type": "influence",
+          "strength": 9,
+          "description": "波伏娃与萨特是终身的伴侣和思想对话者，两人互相影响但保持独立创作"
+        },
+        {
+          "target": "camus",
+          "type": "influence",
+          "strength": 5,
+          "description": "波伏娃与加缪一度关系密切（曾有过暧昧），但在《第二性》出版后加缪公开批评她"
+        }
+      ],
+      "furtherReading": [
+        {
+          "title": "第二性",
+          "desc": "波伏娃，女权主义奠基之作",
+          "type": "book"
+        }
+      ],
+      "layers": {
+        "L2_era": {
+          "timeline": [],
+          "decisiveMoments": [],
+          "travelMap": []
+        },
+        "L3_philosophy": {
+          "conceptNetwork": [],
+          "threeLevelReading": [],
+          "problemMatrix": []
+        },
+        "L4_evolution": {
+          "thoughtPeriods": [],
+          "turningPoints": []
+        },
+        "L6_debates": {
+          "confrontations": [],
+          "spectrumPosition": {}
+        },
+        "L7_legacy": {
+          "influenceMap": [],
+          "contemporaryApplications": []
+        }
+      }
     }
   ]
 }
