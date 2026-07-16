@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>脉络 Philomap — 人类思想星图</title>
-<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
@@ -22,7 +21,8 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
 
 /* ── Canvas & SVG layers ── */
 #bg-canvas{position:fixed;inset:0;z-index:0}
-#graph-svg{position:fixed;inset:0;z-index:1;cursor:grab}
+#graph-svg{position:fixed;inset:0;z-index:1;cursor:grab;opacity:0;transition:opacity .9s ease}
+#graph-svg.ready{opacity:1}
 #graph-svg:active{cursor:grabbing}
 #graph-svg.dragging-node{cursor:grabbing}
 
@@ -861,28 +861,40 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
   <div class="time-value" id="time-display">全部时代</div>
 </div>
 
+<script src="vendor/d3.min.js"></script>
 <script>
 // ═══════════════ COSMIC BACKGROUND ═══════════════
 const bgCanvas=document.getElementById('bg-canvas'),bgCtx=bgCanvas.getContext('2d');
-let stars=[],nebulas=[];
+let stars=[],nebulas=[],bgGrad=null,bgNebGrad=[],bgRunning=false,bgRafId=0;
 
-function resizeCanvas(){bgCanvas.width=window.innerWidth;bgCanvas.height=window.innerHeight}
-function createStars(){
-  stars=[];for(let i=0;i<500;i++)stars.push({x:Math.random()*bgCanvas.width,y:Math.random()*bgCanvas.height,r:Math.random()*2+.5,opacity:Math.random()*.7+.2,phase:Math.random()*Math.PI*2,speed:Math.random()*.02+.005});
-  nebulas=[{x:.2,y:.2,r:300,color:'129,140,248',o:.04},{x:.75,y:.25,r:250,color:'251,191,36',o:.04},{x:.3,y:.7,r:220,color:'244,114,182',o:.03},{x:.55,y:.55,r:280,color:'52,211,153',o:.03}];
+function buildGradients(){
+  const w=bgCanvas.width,h=bgCanvas.height;
+  bgGrad=bgCtx.createRadialGradient(w*.4,h*.35,0,w*.5,h*.5,Math.max(w,h)*.8);
+  bgGrad.addColorStop(0,'#0d0d24');bgGrad.addColorStop(.5,'#060615');bgGrad.addColorStop(1,'#000008');
+  bgNebGrad=nebulas.map(n=>{const ng=bgCtx.createRadialGradient(n.x*w,n.y*h,0,n.x*w,n.y*h,n.r);ng.addColorStop(0,`rgba(${n.color},${n.o})`);ng.addColorStop(.5,`rgba(${n.color},${n.o*.3})`);ng.addColorStop(1,'rgba(0,0,0,0)');return ng});
 }
+function resizeCanvas(){bgCanvas.width=window.innerWidth;bgCanvas.height=window.innerHeight;buildGradients();}
+function createStars(){
+  stars=[];const w=bgCanvas.width,h=bgCanvas.height;
+  for(let i=0;i<170;i++)stars.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*2+.5,opacity:Math.random()*.7+.2,phase:Math.random()*Math.PI*2,speed:Math.random()*.02+.005});
+  nebulas=[{x:.2,y:.2,r:300,color:'129,140,248',o:.04},{x:.75,y:.25,r:250,color:'251,191,36',o:.04},{x:.3,y:.7,r:220,color:'244,114,182',o:.03},{x:.55,y:.55,r:280,color:'52,211,153',o:.03}];
+  buildGradients();
+}
+// 星空仅在「思想星图」视图运行，切走或标签页隐藏即停止，避免空转耗 CPU
 function drawBg(){
+  if(!bgRunning)return;
   const w=bgCanvas.width,h=bgCanvas.height,t=performance.now()/1000;
   bgCtx.clearRect(0,0,w,h);
-  const g=bgCtx.createRadialGradient(w*.4,h*.35,0,w*.5,h*.5,Math.max(w,h)*.8);
-  g.addColorStop(0,'#0d0d24');g.addColorStop(.5,'#060615');g.addColorStop(1,'#000008');
-  bgCtx.fillStyle=g;bgCtx.fillRect(0,0,w,h);
-  for(const n of nebulas){const ng=bgCtx.createRadialGradient(n.x*w,n.y*h,0,n.x*w,n.y*h,n.r);ng.addColorStop(0,`rgba(${n.color},${n.o})`);ng.addColorStop(.5,`rgba(${n.color},${n.o*.3})`);ng.addColorStop(1,'rgba(0,0,0,0)');bgCtx.fillStyle=ng;bgCtx.fillRect(n.x*w-n.r,n.y*h-n.r,n.r*2,n.r*2)}
+  bgCtx.fillStyle=bgGrad;bgCtx.fillRect(0,0,w,h);
+  for(let i=0;i<bgNebGrad.length;i++){const n=nebulas[i];bgCtx.fillStyle=bgNebGrad[i];bgCtx.fillRect(n.x*w-n.r,n.y*h-n.r,n.r*2,n.r*2)}
   for(const s of stars){const a=s.opacity*(.6+.4*Math.sin(t*s.speed+s.phase));bgCtx.fillStyle=`rgba(255,255,255,${a})`;bgCtx.beginPath();bgCtx.arc(s.x,s.y,s.r,0,Math.PI*2);bgCtx.fill()}
-  requestAnimationFrame(drawBg);
+  bgRafId=requestAnimationFrame(drawBg);
 }
-resizeCanvas();createStars();drawBg();
+function startBg(){if(bgRunning)return;bgRunning=true;bgRafId=requestAnimationFrame(drawBg)}
+function stopBg(){bgRunning=false;if(bgRafId)cancelAnimationFrame(bgRafId);bgRafId=0}
+resizeCanvas();createStars();startBg();
 window.addEventListener('resize',()=>{resizeCanvas();createStars()});
+document.addEventListener('visibilitychange',()=>{if((currentView||'star')==='star'&&!document.hidden)startBg();else stopBg()});
 
 // ═══════════════ DATA & STATE ═══════════════
 const svg=d3.select('#graph-svg'),gRoot=svg.append('g').attr('class','root'),
@@ -1540,10 +1552,18 @@ function renderGraph(data){
   const drag=d3.drag().on('start',function(event,d){if(!event.active)simulation.alphaTarget(.1).restart();d.fx=d.x;d.fy=d.y;svg.classed('dragging-node',true)})
     .on('drag',function(event,d){d.fx=event.x;d.fy=event.y}).on('end',function(event,d){if(!event.active)simulation.alphaTarget(0);svg.classed('dragging-node',false)});
   nodeGroups.call(drag);
+  const ticked=()=>{edgeLines.attr('x1',d=>d.source.x).attr('y1',d=>d.source.y).attr('x2',d=>d.target.x).attr('y2',d=>d.target.y);nodeGroups.attr('transform',d=>`translate(${d.x},${d.y})`)};
   simulation=d3.forceSimulation(data.nodes).force('link',d3.forceLink(data.edges).id(d=>d.id).distance(d=>70+(10-d.strength)*16))
     .force('charge',d3.forceManyBody().strength(d=>-180-d.influence*35)).force('collide',d3.forceCollide(d=>d.radius+16).iterations(3))
     .force('center',d3.forceCenter(w*.45,h*.48)).force('x',d3.forceX(w*.45).strength(.015)).force('y',d3.forceY(h*.48).strength(.015))
-    .alphaDecay(.015).velocityDecay(.35).on('tick',()=>{edgeLines.attr('x1',d=>d.source.x).attr('y1',d=>d.source.y).attr('x2',d=>d.target.x).attr('y2',d=>d.target.y);nodeGroups.attr('transform',d=>`translate(${d.x},${d.y})`)});
+    .velocityDecay(.35).on('tick',ticked);
+  // 预计算布局：同步跑足够多的 tick 把位置算好，避免首屏逐帧强制布局造成的长时间卡顿
+  simulation.stop();
+  for(let i=0;i<150;i++)simulation.tick();
+  ticked();
+  // 仅做极短收尾动画后自动停止（alphaDecay 调高），立即释放主线程，杜绝持续重排
+  simulation.alpha(.28).alphaDecay(.05).alphaMin(.003).restart();
+  document.getElementById('graph-svg').classList.add('ready');
   window.addEventListener('resize',()=>{const nw=window.innerWidth,nh=window.innerHeight;svg.attr('width',nw).attr('height',nh);simulation.force('center',d3.forceCenter(nw*.45,nh*.48)).force('x',d3.forceX(nw*.45).strength(.015)).force('y',d3.forceY(nh*.48).strength(.015));simulation.alpha(.1).restart()});
 }
 document.addEventListener('keydown',e=>{if(e.key==='f'&&!e.ctrlKey&&!e.metaKey&&document.activeElement===document.body){panelOpen=!panelOpen;filterPanel.classList.toggle('collapsed',!panelOpen);filterToggle.textContent=panelOpen?'◀':'▶'}});
@@ -1561,6 +1581,7 @@ function switchView(view){
   const headerTitle=document.querySelector('#header h1'),headerSub=document.querySelector('#header .subtitle');
   headerTitle.style.display=isStar?'':'none';headerSub.style.display=isStar?'':'none';
   bgCanvas.style.display=isStar?'block':'none';
+  if(isStar)startBg();else stopBg();
   document.getElementById('graph-svg').style.display=isStar?'block':'none';
   filterPanel.style.display=(isStar||isRiver)?'':'none';
   filterToggle.style.display=(isStar||isRiver)?'':'none';
@@ -2075,8 +2096,8 @@ function renderSpectrum(){
 window.addEventListener('resize',()=>{if(currentView==='spectrum')renderSpectrum()});
 
 init();
-// Visit counter
-fetch('http://localhost:3456/hit/philomap').catch(()=>{});
+// Visit counter（仅本地调试时触发，避免线上控制台报错）
+if(location.hostname==='localhost'||location.hostname==='127.0.0.1'){fetch('http://localhost:3456/hit/philomap').catch(()=>{})}
 </script>
 </body>
 </html>
