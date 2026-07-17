@@ -584,6 +584,21 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
 
 /* Duel select options */
 #duel-modal select option{background:#181830;color:#e2e8f0}
+/* ── A 类体验增强：标签缩放淡入 / 收藏 / 键盘聚焦 ── */
+.node-group:hover .node-label{opacity:1!important}
+.node-group.selected .node-label{opacity:1!important}
+.node-group.kb-focus .node-label{opacity:1!important}
+.node-group.kb-focus .node-body{stroke:#fbbf24;stroke-width:3!important}
+.node-group.kb-focus .node-glow{stroke:#fbbf24!important;stroke-width:5!important;opacity:.9!important}
+.fav-star{opacity:0;transition:opacity .2s;pointer-events:none;font-weight:700}
+.node-group.faved .fav-star{opacity:1!important}
+.fp-actions{display:flex;gap:8px;margin:12px 0 4px}
+.fp-actions button{flex:1;padding:8px 6px;border-radius:10px;border:1px solid var(--border-subtle);background:rgba(255,255,255,.04);color:#cbd5e1;font-size:12px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:4px}
+.fp-actions button:hover{background:rgba(255,255,255,.1);color:#f1f5f9}
+.fp-actions button.active{background:rgba(251,191,36,.18);border-color:rgba(251,191,36,.5);color:#fbbf24}
+#detail-panel .dp-fav{position:absolute;top:18px;right:150px;z-index:2;width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);color:#94a3b8;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .25s}
+#detail-panel .dp-fav:hover{color:#fbbf24;border-color:rgba(251,191,36,.4)}
+#detail-panel .dp-fav.on{color:#fbbf24;border-color:rgba(251,191,36,.5)}
 </style>
 </head>
 <body>
@@ -634,7 +649,11 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
   <div id="search-wrap">
     <span id="search-icon">🔍</span>
     <input id="search-input" type="text" placeholder="搜索哲人、概念、金句…" autocomplete="off">
-    <div id="search-results"></div>
+  <div id="search-results"></div>
+</div>
+  <div class="fp-actions">
+    <button id="fp-random" title="随机一位哲人">🎲 随机</button>
+    <button id="fp-fav" title="只看收藏">⭐ 收藏</button>
   </div>
   <div class="filter-group">
     <div class="filter-group-label">文明圈</div>
@@ -661,6 +680,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
   <button class="dp-close" title="关闭">✕</button>
   <button class="dp-export" title="导出 Markdown">⬇</button>
   <button class="dp-share" title="复制分享链接">🔗</button>
+  <button class="dp-fav" title="收藏 / 取消收藏">☆</button>
   <div class="dp-scroll">
     <!-- Hero -->
     <div class="dp-hero">
@@ -933,7 +953,7 @@ const I18N={
     quizTitle:'🧬 哲学基因测试',quizSub:'20 道趣味选择题 · 发现你的哲学 DNA',quizRetry:'重新测试',quizShare:'复制分享图片',
     twinTitle:'🧬 知识孪生宇宙',twinSub:'我的其他项目 · 点击跳转',
     teacher:'导师',student:'弟子',influenceLabel:'影响',influenced:'受惠',
-    loading:'思想星座排列中...'},
+    loading:'思想星座排列中...',randomBtn:'🎲 随机哲人',favBtn:'⭐ 收藏夹',dpFavTitle:'收藏 / 取消收藏'},
   en:{subtitle:'Where great minds meet across time',hint:'Drag to filter philosophers',allEra:'All Eras',searchPlh:'Search philosopher, idea, quote…',filterTitle:'🔭 Filters',civLabel:'Civilization',schoolLabel:'School',eraLabel:'Era',resetBtn:'Reset All',
     vStar:'✨ Star Map',vRiver:'⏳ Time River',vSpec:'📊 Spectrum',vDuel:'⚔️ Duel',vQuiz:'🧬 Quiz',vTwin:'🧬 Twinverse',
     secEvo:'Evolution',secTL:'Timeline',secCore:'Core Ideas',secWorks:'Works',secEvents:'Events',secAnec:'Anecdote',secSci:'Evaluation',secAI:'AI Review',secInfl:'Influence Map',secCont:'Applications',secRead:'Further Reading',secGen:'Genealogy',secRel:'Relations',
@@ -942,7 +962,7 @@ const I18N={
     quizTitle:'🧬 Philosophy DNA Quiz',quizSub:'20 questions to discover your philosophical DNA',quizRetry:'Retry',quizShare:'Copy Image',
     twinTitle:'🧬 Knowledge Twinverse',twinSub:'My other projects — click to visit',
     teacher:'Teacher',student:'Student',influenceLabel:'Influence',influenced:'Influenced',
-    loading:'Arranging the constellation of thought...'}
+    loading:'Arranging the constellation of thought...',randomBtn:'🎲 Random',favBtn:'⭐ Favorites',dpFavTitle:'Favorite / Unfavorite'}
 };
 function t(key){return (I18N[lang]||I18N.zh)[key]||key}
 function applyLang(){
@@ -961,6 +981,9 @@ function applyLang(){
   document.querySelector('[data-filter="era"]').previousElementSibling.textContent=t('eraLabel');
   document.getElementById('filter-reset').textContent=t('resetBtn');
   document.getElementById('search-input').placeholder=t('searchPlh');
+  const fpRandom=document.getElementById('fp-random');if(fpRandom)fpRandom.textContent=t('randomBtn');
+  const fpFavEl=document.getElementById('fp-fav');if(fpFavEl)fpFavEl.textContent=t('favBtn');
+  const dpFavBtn=document.querySelector('.dp-fav');if(dpFavBtn)dpFavBtn.title=t('dpFavTitle');
   document.querySelector('#twin-view .tw-header h2').textContent=t('twinTitle');
   document.querySelector('#twin-view .tw-header p').textContent=t('twinSub');
   document.querySelector('#time-bar .time-hint').textContent=t('hint');
@@ -1105,6 +1128,7 @@ function isNodeVisible(d){
   if(currentFilters.civilization.size>0&&!currentFilters.civilization.has(d.civilization))return false;
   if(currentFilters.school.size>0&&!currentFilters.school.has(d.school))return false;
   if(currentFilters.era.size>0&&!currentFilters.era.has(d.era))return false;
+  if(favOnly&&!favSet.has(d.id))return false;
   return true;
 }
 function applyAllFilters(){
@@ -1124,6 +1148,8 @@ function applyAllFilters(){
 function lf(d,f){return lang==='en'&&d[f+'En']?d[f+'En']:d[f]}
 function openDetailPanel(d){
   selectedNode=d;tooltip.style.opacity=0;const c=civColors[d.civilization]||civColors.western,data=dataRef;
+  if(typeof gNodes!=='undefined'&&gNodes&&gNodes.selectAll)gNodes.selectAll('.node-group').classed('selected',n=>n&&n.id===d.id);
+  const dpFav=detailPanel.querySelector('.dp-fav');if(dpFav){dpFav.textContent=favSet.has(d.id)?'★':'☆';dpFav.classList.toggle('on',favSet.has(d.id))}
   const panel=detailPanel,scroll=panel.querySelector('.dp-scroll');
   // Accent bar
   panel.querySelector('.dp-accent').style.background=`linear-gradient(180deg,${c.color},${c.glow})`;
@@ -1286,7 +1312,7 @@ function renderConceptNet(philosopher,civColor,svgEl){
   conceptSim=sim;
   nodeG.call(d3.drag().on('start',function(e,d){if(!e.active)sim.alphaTarget(.3).restart();d.fx=d.x;d.fy=d.y}).on('drag',function(e,d){d.fx=e.x;d.fy=e.y}).on('end',function(e,d){if(!e.active)sim.alphaTarget(0);d.fx=null;d.fy=null}));
 }
-function closeDetailPanel(){selectedNode=null;detailPanel.classList.remove('open');clearHighlights();const qb=document.querySelector('.dp-quote-block');if(qb&&qb.dataset.interval){clearInterval(+qb.dataset.interval);delete qb.dataset.interval};syncHash()}
+function closeDetailPanel(){selectedNode=null;detailPanel.classList.remove('open');clearHighlights();if(typeof gNodes!=='undefined'&&gNodes&&gNodes.selectAll)gNodes.selectAll('.node-group').classed('selected',false);const qb=document.querySelector('.dp-quote-block');if(qb&&qb.dataset.interval){clearInterval(+qb.dataset.interval);delete qb.dataset.interval};syncHash()}
 function exportMD(d){
   const civName=lang==='en'?(civDisplayEn[d.civilization]||d.civilization):(civDisplay[d.civilization]||d.civilization);
   const schoolName=(dataRef.schools.find(s=>s.id===d.school)||{}).name||'';
@@ -1342,6 +1368,7 @@ function exportMD(d){
 document.querySelector('.dp-close').addEventListener('click',closeDetailPanel);
 document.querySelector('.dp-export').addEventListener('click',()=>{if(selectedNode)exportMD(selectedNode)});
 document.querySelector('.dp-share').addEventListener('click',()=>{const url=location.href;const done=()=>{const b=document.querySelector('.dp-share');const t=b.textContent;b.textContent='✓';setTimeout(()=>b.textContent='🔗',1500)};if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(url).then(done).catch(()=>prompt('复制此链接分享：',url))}else{prompt('复制此链接分享：',url)}});
+document.querySelector('.dp-fav').addEventListener('click',()=>{if(selectedNode)toggleFav(selectedNode.id)});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&detailPanel.classList.contains('open'))closeDetailPanel()});
 
 function highlightConnections(d){
@@ -1565,6 +1592,7 @@ function renderGraph(data){
   nodeGroups.append('circle').attr('class','node-body').attr('r',d=>d.radius).attr('fill',d=>d.color).attr('opacity',.9).attr('stroke',d=>d.glowColor).attr('stroke-width',1.5);
   nodeGroups.append('circle').attr('class','node-highlight').attr('r',d=>d.radius*.35).attr('fill','white').attr('opacity',.25).attr('cx',d=>-d.radius*.25).attr('cy',d=>-d.radius*.25);
   nodeGroups.append('text').attr('class','node-label').attr('text-anchor','middle').attr('y',d=>d.radius+16).attr('fill','#f1f5f9').attr('font-size',d=>12+d.influence*.5).attr('font-weight','700').attr('opacity',.95).text(d=>d.name).attr('stroke','rgba(0,0,0,.4)').attr('stroke-width','1px').attr('paint-order','stroke');
+  nodeGroups.append('text').attr('class','fav-star').attr('text-anchor','middle').attr('x',d=>d.radius*.78).attr('y',d=>-d.radius*.78).attr('fill','#fbbf24').attr('font-size',d=>11+d.influence*.4).text('★');
 
   nodeGroups.on('mouseenter',function(event,d){
     if(selectedNode&&selectedNode.id===d.id)return;d3.select(this).select('.node-glow').transition().duration(200).attr('stroke-width',5).attr('opacity',.85);d3.select(this).select('.node-body').transition().duration(200).attr('opacity',1);
@@ -1576,7 +1604,7 @@ function renderGraph(data){
   .on('click',function(event,d){event.stopPropagation();if(selectedNode&&selectedNode.id===d.id){closeDetailPanel();return}closeDetailPanel();setTimeout(()=>openDetailPanel(d),150)});
 
   svg.on('click',function(event){if(event.target===svg.node()&&selectedNode)closeDetailPanel()});
-  const zoom=d3.zoom().scaleExtent([.2,4]).on('zoom',event=>{gRoot.attr('transform',event.transform)});svg.call(zoom);
+  const zoom=d3.zoom().scaleExtent([.2,4]).on('zoom',event=>{gRoot.attr('transform',event.transform);currentZoomK=event.transform.k;updateLabelOpacity(currentZoomK)});svg.call(zoom);
   svg.call(zoom.transform,d3.zoomIdentity.translate(w*.15,h*.15).scale(.7));
   const drag=d3.drag().on('start',function(event,d){if(!event.active)simulation.alphaTarget(.1).restart();d.fx=d.x;d.fy=d.y;svg.classed('dragging-node',true)})
     .on('drag',function(event,d){d.fx=event.x;d.fy=event.y}).on('end',function(event,d){if(!event.active)simulation.alphaTarget(0);svg.classed('dragging-node',false)});
@@ -1590,18 +1618,48 @@ function renderGraph(data){
   simulation.stop();
   for(let i=0;i<150;i++)simulation.tick();
   ticked();
+  nodeGroups.classed('faved',d=>favSet.has(d.id));
+  kbOrder=[...data.nodes].sort((a,b)=>(b.influence||0)-(a.influence||0));
+  currentZoomK=.7;updateLabelOpacity(currentZoomK);
   // 仅做极短收尾动画后自动停止（alphaDecay 调高），立即释放主线程，杜绝持续重排
   simulation.alpha(.28).alphaDecay(.05).alphaMin(.003).restart();
   document.getElementById('graph-svg').classList.add('ready');
   window.addEventListener('resize',()=>{const nw=window.innerWidth,nh=window.innerHeight;svg.attr('width',nw).attr('height',nh);simulation.force('center',d3.forceCenter(nw*.45,nh*.48)).force('x',d3.forceX(nw*.45).strength(.015)).force('y',d3.forceY(nh*.48).strength(.015));simulation.alpha(.1).restart()});
 }
-document.addEventListener('keydown',e=>{if(e.key==='f'&&!e.ctrlKey&&!e.metaKey&&document.activeElement===document.body){panelOpen=!panelOpen;filterPanel.classList.toggle('collapsed',!panelOpen);filterToggle.textContent=panelOpen?'◀':'▶'}});
+document.addEventListener('keydown',e=>{
+  const ae=document.activeElement;
+  const typing=ae&&(ae.tagName==='INPUT'||ae.tagName==='TEXTAREA'||ae.isContentEditable);
+  if(e.key==='Escape'){if(typing){ae.blur();}else if(selectedNode){closeDetailPanel();}return;}
+  if(typing)return;
+  if(e.key==='/'&&currentView==='star'){e.preventDefault();if(!panelOpen){panelOpen=true;filterPanel.classList.remove('collapsed');filterToggle.textContent='◀';}searchInput.focus();return;}
+  if(e.key==='f'&&!e.ctrlKey&&!e.metaKey){panelOpen=!panelOpen;filterPanel.classList.toggle('collapsed',!panelOpen);filterToggle.textContent=panelOpen?'◀':'▶';return;}
+  const viewMap={'1':'star','2':'river','3':'spectrum','4':'duel','5':'quiz','6':'twin'};
+  if(viewMap[e.key]){switchView(viewMap[e.key]);return;}
+  if(e.key==='Enter'&&kbFocusIdx>=0&&currentView==='star'){e.preventDefault();const n=kbOrder[kbFocusIdx];if(gNodes&&gNodes.selectAll)gNodes.selectAll('.node-group').classed('kb-focus',false);if(n)openDetailPanel(n);return;}
+  if(currentView==='star'&&['ArrowRight','ArrowDown','ArrowLeft','ArrowUp'].includes(e.key)){e.preventDefault();navigateNodes(e.key==='ArrowRight'||e.key==='ArrowDown'?1:-1);return;}
+});
 
 // ═══════════════ VIEW TOGGLE ═══════════════
 const timeRiver=document.getElementById('time-river'),timeSlider=document.getElementById('time-bar');
 const duelOverlay=document.getElementById('duel-overlay');
 const viewBtns=document.querySelectorAll('.view-toggle button');
 let currentView='star';
+// ═══════════════ A 类体验增强：收藏 / 标签淡入 / 键盘导航 ═══════════════
+let favSet=new Set();try{favSet=new Set(JSON.parse(localStorage.getItem('philomap_favs')||'[]'))}catch(e){}
+let favOnly=false;
+let currentZoomK=.7;
+let kbFocusIdx=-1;
+let kbOrder=[];
+function saveFavs(){try{localStorage.setItem('philomap_favs',JSON.stringify([...favSet]))}catch(e){}}
+function labelOpacityFor(d,k){const inf=d.influence||0;if(k>=1.05)return .95;if(k>=.8)return inf>=3?.9:.3;if(k>=.6)return inf>=5?.85:0;return 0}
+function updateLabelOpacity(k){if(typeof gNodes==='undefined'||!gNodes||!gNodes.selectAll)return;gNodes.selectAll('.node-label').attr('opacity',d=>labelOpacityFor(d,k))}
+function refreshFavMarker(id){if(typeof gNodes==='undefined'||!gNodes||!gNodes.selectAll)return;gNodes.selectAll('.node-group').filter(n=>n.id===id).classed('faved',favSet.has(id))}
+function refreshFavUI(id){refreshFavMarker(id);const dpFav=detailPanel.querySelector('.dp-fav');if(dpFav&&selectedNode&&selectedNode.id===id){dpFav.textContent=favSet.has(id)?'★':'☆';dpFav.classList.toggle('on',favSet.has(id))}}
+function toggleFav(id){if(favSet.has(id))favSet.delete(id);else favSet.add(id);saveFavs();refreshFavUI(id);if(favOnly)applyAllFilters()}
+function navigateNodes(dir){if(!kbOrder.length)return;kbFocusIdx=Math.max(0,Math.min(kbOrder.length-1,kbFocusIdx+dir));const n=kbOrder[kbFocusIdx];if(gNodes&&gNodes.selectAll)gNodes.selectAll('.node-group').classed('kb-focus',x=>x&&x.id===n.id);const w=window.innerWidth,h=window.innerHeight;svg.transition().duration(400).call(d3.zoom().transform,d3.zoomIdentity.translate(w*.45-n.x,h*.48-n.y).scale(1.1))}
+// 收藏筛选 + 随机哲人
+const fpFavBtn=document.getElementById('fp-fav');if(fpFavBtn)fpFavBtn.addEventListener('click',function(){favOnly=!favOnly;this.classList.toggle('active',favOnly);applyAllFilters()});
+const fpRandomBtn=document.getElementById('fp-random');if(fpRandomBtn)fpRandomBtn.addEventListener('click',function(){if(currentView!=='star')switchView('star');const arr=simData?simData.allNodes:[];if(!arr.length)return;const n=arr[Math.floor(Math.random()*arr.length)];setTimeout(()=>{if(n)zoomToNode(n)},250)});
 const spectrumView=document.getElementById('spectrum-view');
 // ═══════════════ DEEP LINK / SHAREABLE STATE ═══════════════
 function readHash(){const h=location.hash.replace(/^#/,'');if(!h)return{};const o={};h.split('&').forEach(kv=>{const i=kv.indexOf('=');if(i>=0)o[kv.slice(0,i)]=decodeURIComponent(kv.slice(i+1))});return o}
