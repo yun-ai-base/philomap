@@ -224,6 +224,10 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
 .dp-concept-net .cn-edge{stroke:rgba(255,255,255,.15);fill:none}
 .dp-concept-net .cn-label-bg{stroke:rgba(0,0,0,.6);stroke-width:3;fill:none;stroke-linejoin:round}
 .concept-net-tip{position:fixed;z-index:25;pointer-events:none;opacity:0;background:rgba(12,12,30,.94);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:8px 12px;font-size:var(--fs-small);color:#cbd5e1;max-width:200px;transition:opacity .15s;box-shadow:0 4px 16px rgba(0,0,0,.4)}
+#edge-tip{position:fixed;z-index:20;pointer-events:none;opacity:0;background:rgba(15,15,32,.96);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:12px 16px;max-width:300px;transition:opacity .15s;box-shadow:0 8px 32px rgba(0,0,0,.5)}
+#edge-tip .et-title{font-size:13px;font-weight:700;color:#f1f5f9;margin-bottom:4px}
+#edge-tip .et-type{font-size:10px;color:#64748b;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+#edge-tip .et-desc{font-size:12px;color:#cbd5e1;line-height:1.6}
 
 /* Works */
 .dp-works-list{display:flex;flex-direction:column;gap:4px}
@@ -423,6 +427,10 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
 .view-toggle button{padding:6px 18px;border-radius:100px;font-size:12px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.05);color:#94a3b8;cursor:pointer;font-family:inherit;letter-spacing:.5px;transition:all .25s}
 .view-toggle button:hover{border-color:rgba(255,255,255,.35);color:#e2e8f0}
 .view-toggle button.active{background:rgba(129,140,248,.2);border-color:rgba(129,140,248,.45);color:#c7d2fe;font-weight:600;box-shadow:0 0 16px rgba(129,140,248,.15)}
+/* ── Civilization legend ── */
+#civ-legend{position:fixed;z-index:5;top:16px;right:16px;display:flex;gap:14px;background:var(--panel-bg);backdrop-filter:blur(16px);border:1px solid var(--border-subtle);border-radius:12px;padding:8px 14px;font-size:11px}
+#civ-legend .cl-item{display:flex;align-items:center;gap:6px;color:#cbd5e1;letter-spacing:.3px}
+#civ-legend .cl-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
 #lang-btn{position:absolute;right:-2px;top:-2px;font-size:10px;color:#64748b;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:6px;padding:2px 8px;cursor:pointer;font-family:inherit;letter-spacing:.5px;transition:all .2s;z-index:2;pointer-events:auto}
 #lang-btn:hover{background:rgba(129,140,248,.12);color:#a5b4fc;border-color:rgba(129,140,248,.25)}
 
@@ -597,6 +605,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
     <button data-view="twin" style="background:rgba(201,168,76,.1);border-color:rgba(201,168,76,.2)">🧬 孪生宇宙</button>
   </div>
 </div>
+<div id="civ-legend"></div>
 
 <!-- ═══════════ SCHOOL TIP ═══════════ -->
 <div id="school-tip">
@@ -606,6 +615,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
   <div class="st-dev"></div>
 </div>
 <div class="concept-net-tip" id="cn-tip"></div>
+<div id="edge-tip"><div class="et-title"></div><div class="et-type"></div><div class="et-desc"></div></div>
 <!-- ═══════════ TOOLTIP ═══════════ -->
 <div id="tooltip">
   <div class="tt-name"></div>
@@ -650,6 +660,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
   <div class="dp-accent"></div>
   <button class="dp-close" title="关闭">✕</button>
   <button class="dp-export" title="导出 Markdown">⬇</button>
+  <button class="dp-share" title="复制分享链接">🔗</button>
   <div class="dp-scroll">
     <!-- Hero -->
     <div class="dp-hero">
@@ -683,7 +694,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
     <!-- Timeline -->
     <div class="dp-section" id="dp-timeline" style="display:none">
       <div class="dp-section-title"><span class="dp-section-icon">📅</span>人生时间轴</div>
-      <div class="dp-tl-legend" style="display:flex;gap:14px;margin-bottom:10px;font-size:10px">
+      <div class="dp-tl-legend" id="dp-tl-legend" style="display:flex;gap:14px;margin-bottom:10px;font-size:10px">
         <span style="color:#fbbf24">● 生平</span><span style="color:#818cf8">● 著作</span><span style="color:#34d399">● 世界事件</span>
       </div>
       <div class="dp-timeline" id="dp-tl-content"></div>
@@ -993,6 +1004,9 @@ function applyLang(){
     if(!g||!g.__data__)return;
     el.textContent=lang==='en'?(g.__data__.nameEn||g.__data__.name):g.__data__.name;
   });
+  // Civilization legend
+  const cl=document.getElementById('civ-legend');
+  if(cl){cl.innerHTML=['western','eastern','indian','islamic'].map(c=>`<span class="cl-item"><span class="cl-dot" style="background:${civColors[c].color}"></span>${lang==='en'?civDisplayEn[c]:civDisplay[c]}</span>`).join('')}
 }
 document.getElementById('lang-btn').addEventListener('click',()=>{
   lang=lang==='zh'?'en':'zh';
@@ -1229,7 +1243,7 @@ function openDetailPanel(d){
   const theme=eraThemes[d.civilization]||eraThemes.western;
   panel.style.background=`${theme.bg},linear-gradient(180deg,rgba(12,12,32,.95) 0%,rgba(10,10,28,.92) 100%)`;
   panel.querySelector('.dp-accent').style.background=theme.accent;
-  panel.classList.add('open');scroll.scrollTop=0;
+  panel.classList.add('open');scroll.scrollTop=0;syncHash();
   highlightConnections(d);
   // Update section titles for current language
   document.querySelectorAll('.dp-section-title').forEach(function(el){
@@ -1239,7 +1253,9 @@ function openDetailPanel(d){
     if(map[id]){el.innerHTML='<span class="dp-section-icon">'+map[id][1]+'</span>'+t(map[id][0])+'<span style="flex:1;height:1px;background:rgba(255,255,255,.06);margin-left:4px"></span>'}
   });
 }
+let conceptSim=null;
 function renderConceptNet(philosopher,civColor,svgEl){
+  if(conceptSim)conceptSim.stop();
   const concepts=philosopher.coreThoughts||[];
   if(concepts.length<2){svgEl.style.display='none';return}
   svgEl.style.display='block';svgEl.innerHTML='';
@@ -1266,10 +1282,11 @@ function renderConceptNet(philosopher,civColor,svgEl){
   nodeG.on('mouseenter',function(e,d){cnTip.textContent=d.concept;cnTip.style.opacity=1}).on('mousemove',function(e){cnTip.style.left=(e.clientX+12)+'px';cnTip.style.top=(e.clientY-12)+'px'}).on('mouseleave',()=>{cnTip.style.opacity=0});
   nodeG.on('click',function(e,d){const items=document.querySelectorAll('.dp-concept-item');items.forEach((el,i)=>{el.style.background=i===d.id?'rgba(255,255,255,.06)':'rgba(255,255,255,.02)';el.style.borderColor=i===d.id?civColor.color+'44':'rgba(255,255,255,.05)'});if(items[d.id])items[d.id].scrollIntoView({behavior:'smooth',block:'center'})});
   // Mini force sim
-  const sim=d3.forceSimulation(nodes).force('link',d3.forceLink(edges).distance(60)).force('charge',d3.forceManyBody().strength(-100)).force('center',d3.forceCenter(cx,cy)).force('collide',d3.forceCollide(d=>d.r+8)).alphaDecay(.03).on('tick',()=>{gEdges.selectAll('line').attr('x1',d=>d.source.x).attr('y1',d=>d.source.y).attr('x2',d=>d.target.x).attr('y2',d=>d.target.y);nodeG.attr('transform',d=>`translate(${d.x},${d.y})`)});
+  const sim=d3.forceSimulation(nodes).force('link',d3.forceLink(edges).distance(60)).force('charge',d3.forceManyBody().strength(-100)).force('center',d3.forceCenter(cx,cy)).force('collide',d=>d.r+8).alphaDecay(.03).on('tick',()=>{gEdges.selectAll('line').attr('x1',d=>d.source.x).attr('y1',d=>d.source.y).attr('x2',d=>d.target.x).attr('y2',d=>d.target.y);nodeG.attr('transform',d=>`translate(${d.x},${d.y})`)});
+  conceptSim=sim;
   nodeG.call(d3.drag().on('start',function(e,d){if(!e.active)sim.alphaTarget(.3).restart();d.fx=d.x;d.fy=d.y}).on('drag',function(e,d){d.fx=e.x;d.fy=e.y}).on('end',function(e,d){if(!e.active)sim.alphaTarget(0);d.fx=null;d.fy=null}));
 }
-function closeDetailPanel(){selectedNode=null;detailPanel.classList.remove('open');clearHighlights();const qb=document.querySelector('.dp-quote-block');if(qb&&qb.dataset.interval){clearInterval(+qb.dataset.interval);delete qb.dataset.interval}}
+function closeDetailPanel(){selectedNode=null;detailPanel.classList.remove('open');clearHighlights();const qb=document.querySelector('.dp-quote-block');if(qb&&qb.dataset.interval){clearInterval(+qb.dataset.interval);delete qb.dataset.interval};syncHash()}
 function exportMD(d){
   const civName=lang==='en'?(civDisplayEn[d.civilization]||d.civilization):(civDisplay[d.civilization]||d.civilization);
   const schoolName=(dataRef.schools.find(s=>s.id===d.school)||{}).name||'';
@@ -1324,6 +1341,7 @@ function exportMD(d){
 }
 document.querySelector('.dp-close').addEventListener('click',closeDetailPanel);
 document.querySelector('.dp-export').addEventListener('click',()=>{if(selectedNode)exportMD(selectedNode)});
+document.querySelector('.dp-share').addEventListener('click',()=>{const url=location.href;const done=()=>{const b=document.querySelector('.dp-share');const t=b.textContent;b.textContent='✓';setTimeout(()=>b.textContent='🔗',1500)};if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(url).then(done).catch(()=>prompt('复制此链接分享：',url))}else{prompt('复制此链接分享：',url)}});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&detailPanel.classList.contains('open'))closeDetailPanel()});
 
 function highlightConnections(d){
@@ -1495,20 +1513,27 @@ const TWIN_SITES=[
   {name:'book-gallery',desc:'我的书房 — 559本书籍画廊',icon:'📖',cat:'content'},
 ];
 const TWIN_CATS={ai:{label:'AI 对话',emoji:'🤖',cls:'ai'},tool:{label:'工具',emoji:'🛠️',cls:'tool'},content:{label:'内容精选',emoji:'📖',cls:'content'},data:{label:'数据分析',emoji:'📊',cls:'data'}};
-function buildTwinUniverse(){
+let twinLoading=false;
+async function buildTwinUniverse(){
+  if(twinLoading)return;twinLoading=true;
   const container=document.getElementById('twin-container');
-  const byCat={};TWIN_SITES.forEach(s=>{(byCat[s.cat]=byCat[s.cat]||[]).push(s)});
+  let sites=TWIN_SITES;
+  try{
+    const res=await fetch('https://yun-ai-base.github.io/psychscope/projects.json',{cache:'no-cache'});
+    if(res.ok){const arr=await res.json();const mapped=arr.filter(s=>s.name!=='philomap').map(s=>({name:s.name,desc:s.desc,icon:s.icon,cat:s.cat||'content'}));if(mapped.length)sites=mapped;}
+  }catch(e){/* 本地预览/离线时回退内置列表 */}
+  const byCat={};sites.forEach(s=>{(byCat[s.cat]=byCat[s.cat]||[]).push(s)});
   const order=['ai','tool','content','data'];let html='';
   order.forEach(cat=>{
     const list=byCat[cat];if(!list)return;
-    const info=TWIN_CATS[cat];
+    const info=TWIN_CATS[cat];if(!info)return;
     html+='<div class="tw-section"><div class="tw-section-title"><span>'+info.emoji+'</span>'+info.label+'</div><div class="tw-grid">';
     list.forEach(s=>{
       html+='<a class="tw-card" href="https://yun-ai-base.github.io/'+s.name+'/" target="_blank" rel="noopener"><div class="tw-card-icon '+info.cls+'">'+s.icon+'</div><div class="tw-card-info"><div class="tw-card-name">'+s.name+'</div><div class="tw-card-desc">'+s.desc+'</div></div><span class="tw-card-arrow">→</span></a>';
     });
     html+='</div></div>';
   });
-  container.innerHTML=html;
+  container.innerHTML=html;twinLoading=false;
 }
 // ═══════════════ MAIN RENDER ═══════════════
 async function init(){
@@ -1517,6 +1542,10 @@ async function init(){
     simData=processData(dataRef);setupDefs();buildFilterPanel(dataRef);renderGraph(simData);
     searchIndex=buildSearchIndex();
     loadingEl.classList.add('hidden');setTimeout(()=>loadingEl.remove(),700);
+    applyLang();
+    const o=readHash();
+    if(o.view&&['star','river','spectrum','duel','quiz','twin'].includes(o.view))switchView(o.view);
+    if(o.p){const n=simData.allNodes.find(x=>x.id===o.p);if(n){if(currentView!=='star')switchView('star');setTimeout(()=>openDetailPanel(n),500)}}
   }catch(err){console.error(err);loadingEl.innerHTML='<p style="color:#ef4444;">加载失败，请使用 npx serve 启动本地服务器</p>'}
 }
 function processData(data){
@@ -1574,6 +1603,14 @@ const duelOverlay=document.getElementById('duel-overlay');
 const viewBtns=document.querySelectorAll('.view-toggle button');
 let currentView='star';
 const spectrumView=document.getElementById('spectrum-view');
+// ═══════════════ DEEP LINK / SHAREABLE STATE ═══════════════
+function readHash(){const h=location.hash.replace(/^#/,'');if(!h)return{};const o={};h.split('&').forEach(kv=>{const i=kv.indexOf('=');if(i>=0)o[kv.slice(0,i)]=decodeURIComponent(kv.slice(i+1))});return o}
+function syncHash(){try{history.replaceState(null,'',(currentView==='star'&&!selectedNode)?'#view=star':'#view='+currentView+(selectedNode?'&p='+selectedNode.id:''))}catch(e){}}
+window.addEventListener('hashchange',()=>{
+  const o=readHash();
+  if(o.view&&o.view!==currentView)switchView(o.view);
+  if(o.p){const n=simData&&simData.allNodes.find(x=>x.id===o.p);if(n&&(!selectedNode||selectedNode.id!==o.p)){if(currentView!=='star')switchView('star');openDetailPanel(n)}}else if(selectedNode)closeDetailPanel();
+});
 function switchView(view){
   currentView=view;
   viewBtns.forEach(b=>b.classList.toggle('active',b.dataset.view===view));
@@ -1597,6 +1634,7 @@ function switchView(view){
   if(isDuel&&!duelReady)setupDuel();
   if(isSpec){buildSpectrum();renderSpectrum()}
   if(isQuiz){if(!quizReady){setupQuiz();quizReady=true}else{document.getElementById('qz-retry').click()}}
+  syncHash();
 }
 viewBtns.forEach(b=>b.addEventListener('click',()=>{
   switchView(b.dataset.view);
@@ -2096,8 +2134,6 @@ function renderSpectrum(){
 window.addEventListener('resize',()=>{if(currentView==='spectrum')renderSpectrum()});
 
 init();
-// Visit counter（仅本地调试时触发，避免线上控制台报错）
-if(location.hostname==='localhost'||location.hostname==='127.0.0.1'){fetch('http://localhost:3456/hit/philomap').catch(()=>{})}
 </script>
 </body>
 </html>
