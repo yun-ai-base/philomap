@@ -8915,12 +8915,6 @@
       "anecdote": "马可·奥勒留是罗马历史上罕见的哲人皇帝。他本不想做皇帝，是被哈德良皇帝选定的继嗣制度推上宝座的。在位期间他经历了洪水、瘟疫、蛮族入侵和多次叛乱，但他始终以斯多亚的沉着应对。有趣的是，他的儿子康茂德（《角斗士》电影中的暴君）完全背离了父亲的斯多亚原则，沉溺于角斗士表演。",
       "relationships": [
         {
-          "target": "epictetus",
-          "type": "influence",
-          "strength": 9,
-          "description": "马可·奥勒留深受爱比克泰德教学笔记的影响，但爱比克泰德不在本项目哲人列表中"
-        },
-        {
           "target": "augustine",
           "type": "influence",
           "strength": 3,
@@ -11654,12 +11648,6 @@
       "anecdote": "奥卡姆剃刀原文是拉丁文：'Entia non sunt multiplicanda praeter necessitatem'——有趣的是，奥卡姆本人从未写过这句话。他表达过同样的意思（'Pluralitas non est ponenda sine necessitate'），但名言的精简版是后人总结的。这说明了一个悖论：奥卡姆剃刀本身就被后人'剃'过一刀。",
       "relationships": [
         {
-          "target": "thomas-aquinas",
-          "type": "debate",
-          "strength": 8,
-          "description": "奥卡姆的唯名论在根本上反对阿奎那的实在论立场"
-        },
-        {
           "target": "hobbes",
           "type": "influence",
           "strength": 6,
@@ -11933,12 +11921,6 @@
       "anecdote": "边沁的auto-icon（自我标本）是哲学史上最古怪的遗产之一。他的骨架被穿上衣服、戴上蜡制面具，坐在一个他生前用过的椅子上，放在伦敦大学学院（UCL）的公共区域。有个传说（未证实）：在UCL董事会会议上，边沁的标本被记为'出席但未投票'。2013年，他的auto-icon被师生抬出来参加了UCL的校长就职典礼。",
       "relationships": [
         {
-          "target": "john-stuart-mill",
-          "type": "teacher-student",
-          "strength": 8,
-          "description": "边沁是密尔父亲的朋友，密尔从小受边沁功利主义思想的深刻影响"
-        },
-        {
           "target": "hume",
           "type": "influence",
           "strength": 6,
@@ -12079,12 +12061,6 @@
       ],
       "anecdote": "杜威的学术生涯极其漫长而稳定。他60岁时写了《民主与教育》——这本他最有名的书；70岁时写了《经验与自然》——他认为自己最重要的哲学著作；80多岁时仍然活跃写作。他的第二任妻子是他以前的学生（比他小25岁），他们收养了三个孩子。杜威90岁生日时收到超过5000封贺信。",
       "relationships": [
-        {
-          "target": "john-stuart-mill",
-          "type": "influence",
-          "strength": 5,
-          "description": "杜威继承了密尔的自由主义传统，但以实用主义代替了功利主义"
-        },
         {
           "target": "hegel",
           "type": "influence",
@@ -12253,12 +12229,6 @@
           "type": "teacher-student",
           "strength": 9,
           "description": "罗素是维特根斯坦的导师和学术引路人，帮助出版《逻辑哲学论》"
-        },
-        {
-          "target": "whitehead",
-          "type": "influence",
-          "strength": 9,
-          "description": "与怀特海合著《数学原理》，罗素的逻辑分析方法深刻影响了怀特海的哲学"
         },
         {
           "target": "hegel",
@@ -12708,12 +12678,6 @@
           "type": "influence",
           "strength": 5,
           "description": "奎因的整体论和翻译不确定性为库恩的范式不可通约性提供了哲学论证"
-        },
-        {
-          "target": "carnap",
-          "type": "debate",
-          "strength": 8,
-          "description": "奎因与卡尔纳普关于分析性、本体论和逻辑基础的系统性争论是20世纪分析哲学最精彩的学术对话"
         }
       ],
       "furtherReading": [
@@ -12984,12 +12948,6 @@
           "type": "influence",
           "strength": 9,
           "description": "荀子以孔子继承者自居，将孔子的礼学从个人修养发展为制度哲学"
-        },
-        {
-          "target": "hanfeizi",
-          "type": "teacher-student",
-          "strength": 8,
-          "description": "荀子是韩非子的老师，法家思想的理论源头之一"
         }
       ],
       "furtherReading": [
@@ -13120,12 +13078,6 @@
           "type": "influence",
           "strength": 5,
           "description": "孙子与孔子同为春秋晚期人，兵家思想在战略文化层面与儒家形成互补"
-        },
-        {
-          "target": "hanfeizi",
-          "type": "influence",
-          "strength": 6,
-          "description": "兵家的权变思想和绝对服从原则是法家统治术的重要组成部分"
         }
       ],
       "furtherReading": [
@@ -13391,22 +13343,10 @@
           "description": "朱熹是孔子之后最伟大的儒家思想家，他的体系是对孔子学说的形上学重建"
         },
         {
-          "target": "wangyangming",
-          "type": "debate",
-          "strength": 9,
-          "description": "朱熹的理学与王阳明的心学的分歧是宋明理学内部最核心的辩论——理在外还是理在心"
-        },
-        {
           "target": "mencius",
           "type": "influence",
           "strength": 8,
           "description": "朱熹继承发展了孟子的性善论，以理气论重新解释性善的形上学基础"
-        },
-        {
-          "target": "lu-jiuyuan",
-          "type": "debate",
-          "strength": 8,
-          "description": "与陆九渊的鹅湖之会，理学与心学的第一次正面交锋"
         }
       ],
       "furtherReading": [
@@ -13539,12 +13479,6 @@
           "type": "influence",
           "strength": 8,
           "description": "朱熹高度推崇张载，在理气论中吸收了张载的气本论并将其融入自己的体系"
-        },
-        {
-          "target": "wangyangming",
-          "type": "influence",
-          "strength": 5,
-          "description": "张载的民胞物与思想间接影响了王阳明'万物一体之仁'的哲学"
         },
         {
           "target": "confucius",
