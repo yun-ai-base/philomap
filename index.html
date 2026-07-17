@@ -137,6 +137,8 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
 #detail-panel .dp-close:hover{background:rgba(239,68,68,.15);border-color:rgba(239,68,68,.3);color:#f87171}
 #detail-panel .dp-export{position:absolute;top:18px;right:62px;z-index:2;width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);color:#94a3b8;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .25s}
 #detail-panel .dp-export:hover{background:rgba(129,140,248,.15);border-color:rgba(129,140,248,.3);color:#a5b4fc}
+#detail-panel .dp-share{position:absolute;top:18px;right:106px;z-index:2;width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);color:#94a3b8;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .25s}
+#detail-panel .dp-share:hover{background:rgba(52,211,153,.15);border-color:rgba(52,211,153,.3);color:#6ee7b7}
 #detail-panel .dp-scroll{flex:1;overflow-y:auto;padding:32px 28px 48px;scroll-behavior:smooth;overscroll-behavior:contain}
 #detail-panel .dp-scroll::-webkit-scrollbar{width:4px}
 #detail-panel .dp-scroll::-webkit-scrollbar-track{background:transparent}
@@ -678,10 +680,10 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
 <!-- ═══════════ DETAIL PANEL (right) ═══════════ -->
 <div id="detail-panel">
   <div class="dp-accent"></div>
-  <button class="dp-close" title="关闭">✕</button>
-  <button class="dp-export" title="导出 Markdown">⬇</button>
-  <button class="dp-share" title="复制分享链接">🔗</button>
   <button class="dp-fav" title="收藏 / 取消收藏">☆</button>
+  <button class="dp-share" title="复制分享链接">🔗</button>
+  <button class="dp-export" title="导出 Markdown">⬇</button>
+  <button class="dp-close" title="关闭">✕</button>
   <div class="dp-scroll">
     <!-- Hero -->
     <div class="dp-hero">
