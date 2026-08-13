@@ -454,6 +454,9 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
   .spec-controls label{font-size:9px}
   .spec-controls select{font-size:11px;padding:4px 22px 4px 8px}
   .spec-legend{font-size:9px;gap:8px;padding:5px 10px;bottom:8px}
+  /* 移动端隐藏球体可视化：按钮与页面都不展示 */
+  .view-toggle button[data-view="spectrum"]{display:none}
+  #spectrum-view{display:none!important}
 
   /* Twin */
   #twin-view .tw-header{padding:50px 12px 6px}
@@ -2084,6 +2087,8 @@ window.addEventListener('hashchange',()=>{
   if(o.p){const n=simData&&simData.allNodes.find(x=>x.id===o.p);if(n&&(!selectedNode||selectedNode.id!==o.p)){if(currentView!=='star')switchView('star');openDetailPanel(n)}}else if(selectedNode)closeDetailPanel();
 });
 function switchView(view){
+  // 移动端（≤768px）隐藏球体可视化：拦截所有入口（按钮/键盘/深链接）
+  if(view==='spectrum'&&window.innerWidth<=768){view='star'}
   currentView=view;
   if(view!=='star'&&typeof playbackOn!=='undefined'&&playbackOn)stopPlayback();
   viewBtns.forEach(b=>b.classList.toggle('active',b.dataset.view===view));
@@ -2547,33 +2552,62 @@ function renderSpectrum(){
   const all=dataRef.philosophers;
   const nodes=all.map(p=>{
     const sx=specScores[p.id][xKey],sy=specScores[p.id][yKey];
-    return {id:p.id,p,r:4+p.influence*1.6,tx:margin+(sx/10)*plotW,ty:margin+((10-sy)/10)*plotH,x:margin+(sx/10)*plotW,y:margin+((10-sy)/10)*plotH};
+    const r=16+p.influence*2.2; // 球体足够容纳内部名字
+    return {id:p.id,p,r,tx:margin+(sx/10)*plotW,ty:margin+((10-sy)/10)*plotH,x:margin+(sx/10)*plotW,y:margin+((10-sy)/10)*plotH};
   });
-  // Run a quick force sim to push apart
-  const sim=d3.forceSimulation(nodes).alphaDecay(.08).velocityDecay(.4)
-    .force('x',d3.forceX(d=>d.tx).strength(.15))
-    .force('y',d3.forceY(d=>d.ty).strength(.15))
-    .force('collide',d3.forceCollide(d=>d.r+10).iterations(3))
+  // Run a force sim to push apart（碰撞半径=球半径+间距，防重叠遮挡）
+  const sim=d3.forceSimulation(nodes).alphaDecay(.06).velocityDecay(.45)
+    .force('x',d3.forceX(d=>d.tx).strength(.12))
+    .force('y',d3.forceY(d=>d.ty).strength(.12))
+    .force('collide',d3.forceCollide(d=>d.r+4).iterations(4))
     .stop();
-  for(let i=0;i<80;i++)sim.tick();
+  for(let i=0;i<150;i++)sim.tick();
   // Bounding box to keep inside plot area
   for(const n of nodes){n.x=Math.max(margin+n.r,Math.min(margin+plotW-n.r,n.x));n.y=Math.max(margin+n.r,Math.min(margin+plotH-n.r,n.y))}
   // Render
   const posMap=new Map();
+  const nameOf=p=>lang==='en'?(p.nameEn||p.name):p.name;
   for(const n of nodes){
     const p=n.p,c=civColors[p.civilization]||civColors.western;
     const px=n.x,py=n.y,r=n.r;
     posMap.set(p.id,{x:px,y:py,r});
     // Glow
-    const glow=ctx.createRadialGradient(px,py,0,px,py,r*2.5);
-    glow.addColorStop(0,c.glow+'88');glow.addColorStop(1,'transparent');
-    ctx.fillStyle=glow;ctx.beginPath();ctx.arc(px,py,r*2.5,0,Math.PI*2);ctx.fill();
+    const glow=ctx.createRadialGradient(px,py,0,px,py,r*1.8);
+    glow.addColorStop(0,c.glow+'66');glow.addColorStop(1,'transparent');
+    ctx.fillStyle=glow;ctx.beginPath();ctx.arc(px,py,r*1.8,0,Math.PI*2);ctx.fill();
     // Body
     ctx.fillStyle=c.color;ctx.beginPath();ctx.arc(px,py,r,0,Math.PI*2);ctx.fill();
-    ctx.strokeStyle='rgba(255,255,255,.4)';ctx.lineWidth=1.5;ctx.stroke();
-    // Label
-    ctx.fillStyle='rgba(255,255,255,.9)';ctx.font=`bold ${10+r*.35}px system-ui,"Microsoft YaHei",sans-serif`;ctx.textAlign='center';
-    ctx.fillText(p.name,px,py-r-10);
+    ctx.strokeStyle='rgba(255,255,255,.45)';ctx.lineWidth=1.5;ctx.stroke();
+    // Label 在球体内部：按球直径自适应字号 + 多行换行，永不溢出
+    const name=nameOf(p);
+    const maxW=r*2*.82;                       // 球内可用宽度（留 18% 边距）
+    const fontFam='system-ui,"Microsoft YaHei",sans-serif';
+    // 二分字号：找到能放进球内的最大字号
+    let fs=r*.62,lines=[];
+    const wrap=(name,fs)=>{
+      ctx.font=`bold ${fs}px ${fontFam}`;
+      if(!name.includes(' ')&&/[\u4e00-\u9fa5·]/.test(name)){
+        // 中文/间隔号：按字符贪心折行
+        const chars=[...name],out=[];let cur='';
+        for(const ch of chars){if(ctx.measureText(cur+ch).width<=maxW)cur+=ch;else{out.push(cur);cur=ch}}
+        if(cur)out.push(cur);return out;
+      }
+      // 英文：按空格分词折行
+      const words=name.split(/\s+/).filter(Boolean),out=[];let cur='';
+      for(const w of words){if(ctx.measureText(cur?cur+' '+w:w).width<=maxW)cur=cur?cur+' '+w:w;else{out.push(cur);cur=w}}
+      if(cur)out.push(cur);return out;
+    };
+    // 逐步减小字号直到 ≤3 行（且不超宽）
+    for(;fs>=7;fs-=1){lines=wrap(name,fs);if(lines.length<=3)break}
+    // 若仍超 3 行，强制 3 行并截断
+    if(lines.length>3){lines=lines.slice(0,3);lines[2]=lines[2].slice(0,-1)+'…'}
+    ctx.font=`bold ${fs}px ${fontFam}`;
+    ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillStyle='rgba(255,255,255,.96)';
+    ctx.shadowColor='rgba(0,0,0,.55)';ctx.shadowBlur=2;ctx.shadowOffsetY=1;
+    const lh=fs*1.15,total=lines.length*lh;
+    lines.forEach((ln,i)=>ctx.fillText(ln,px,py-total/2+lh/2+i*lh));
+    ctx.shadowColor='transparent';ctx.shadowBlur=0;ctx.shadowOffsetY=0;
   }
   // Center title at cross intersection
   const Cx=margin+plotW/2,Cy=margin+plotH/2;
