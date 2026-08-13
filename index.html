@@ -453,6 +453,14 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
 #civ-legend{position:fixed;z-index:5;top:16px;right:16px;display:flex;gap:14px;background:var(--panel-bg);backdrop-filter:blur(16px);border:1px solid var(--border-subtle);border-radius:12px;padding:8px 14px;font-size:11px}
 #civ-legend .cl-item{display:flex;align-items:center;gap:6px;color:#cbd5e1;letter-spacing:.3px}
 #civ-legend .cl-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+#rel-legend{position:fixed;z-index:5;top:56px;right:16px;display:flex;gap:6px;background:var(--panel-bg);backdrop-filter:blur(16px);border:1px solid var(--border-subtle);border-radius:12px;padding:6px 10px;font-size:11px}
+#rel-legend .rl-item{display:flex;align-items:center;gap:6px;color:#cbd5e1;letter-spacing:.3px;cursor:pointer;padding:4px 8px;border-radius:8px;transition:all .2s;border:1px solid transparent}
+#rel-legend .rl-item:hover{background:rgba(255,255,255,.06)}
+#rel-legend .rl-item.off{opacity:.35}
+#rel-legend .rl-line{width:16px;height:0;border-top:2px solid;flex-shrink:0}
+#rel-legend .rl-line.solid{border-top-style:solid}
+#rel-legend .rl-line.dashed{border-top-style:dashed}
+#rel-legend .rl-line.dotted{border-top-style:dotted}
 #lang-btn{position:absolute;right:-2px;top:-2px;font-size:10px;color:#94a3b8;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:6px;padding:2px 8px;cursor:pointer;font-family:inherit;letter-spacing:.5px;transition:all .2s;z-index:2;pointer-events:auto}
 #lang-btn:hover{background:rgba(129,140,248,.12);color:#a5b4fc;border-color:rgba(129,140,248,.25)}
 
@@ -649,6 +657,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
   </div>
 </div>
 <div id="civ-legend"></div>
+<div id="rel-legend"></div>
 
 <!-- ═══════════ SCHOOL TIP ═══════════ -->
 <div id="school-tip">
@@ -971,7 +980,7 @@ const svg=d3.select('#graph-svg'),gRoot=svg.append('g').attr('class','root'),
   tooltip=document.getElementById('tooltip'),detailPanel=document.getElementById('detail-panel'),
   loadingEl=document.getElementById('loading');
 let simData=null,simulation=null,selectedNode=null,
-  currentFilters={civilization:new Set(),school:new Set(),era:new Set()},
+  currentFilters={civilization:new Set(),school:new Set(),era:new Set(),relType:new Set()},
   timeRange=[-9999,9999],dataRef=null;
 
 const civColors={western:{color:'#818cf8',glow:'#a78bfa'},eastern:{color:'#fbbf24',glow:'#fcd34d'},indian:{color:'#f472b6',glow:'#f9a8d4'},islamic:{color:'#34d399',glow:'#6ee7b7'}};
@@ -1097,8 +1106,31 @@ function applyLang(){
   // Civilization legend
   const cl=document.getElementById('civ-legend');
   if(cl){cl.innerHTML=['western','eastern','indian','islamic'].map(c=>`<span class="cl-item"><span class="cl-dot" style="background:${civColors[c].color}"></span>${lang==='en'?civDisplayEn[c]:civDisplay[c]}</span>`).join('')}
+  // 关系类型图例（随语言更新文案）
+  renderRelLegend();
   // 时光长河时代标签随语言重渲染
   if(typeof timeRiverBuilt!=='undefined'&&timeRiverBuilt&&currentView==='river')renderTimeRiver();
+}
+// 关系类型图例：师承/影响/论战可点击筛选
+function renderRelLegend(){
+  const rl=document.getElementById('rel-legend');
+  if(!rl)return;
+  const items=[{type:'teacher-student',cls:'solid',zh:'师承',en:'Teacher / Student'},{type:'influence',cls:'dashed',zh:'影响',en:'Influence'},{type:'debate',cls:'dotted',zh:'论战',en:'Debate'}];
+  rl.innerHTML=items.map(it=>{
+    const off=currentFilters.relType.size>0&&!currentFilters.relType.has(it.type);
+    return `<span class="rl-item${off?' off':''}" data-type="${it.type}"><span class="rl-line ${it.cls}" style="border-top-color:#94a3b8"></span>${lang==='en'?it.en:it.zh}</span>`;
+  }).join('');
+  rl.querySelectorAll('.rl-item').forEach(el=>{
+    el.addEventListener('click',()=>{
+      const t=el.dataset.type;
+      if(currentFilters.relType.has(t))currentFilters.relType.delete(t);
+      else currentFilters.relType.add(t);
+      // 若三类全选或全不选，等价于不过滤
+      if(currentFilters.relType.size===3)currentFilters.relType.clear();
+      renderRelLegend();
+      applyAllFilters();
+    });
+  });
 }
 document.getElementById('lang-btn').addEventListener('click',()=>{
   lang=lang==='zh'?'en':'zh';
@@ -1183,7 +1215,8 @@ timePlayBtn.addEventListener('click',()=>{
   // 进入播放模式：清空筛选、复位时间、禁用滑块
   playbackOn=true;timePlayBtn.textContent='■';
   if(timeStartSlider){timeStartSlider.disabled=true;timeEndSlider.disabled=true}
-  currentFilters.civilization.clear();currentFilters.school.clear();currentFilters.era.clear();favOnly=false;
+  currentFilters.civilization.clear();currentFilters.school.clear();currentFilters.era.clear();currentFilters.relType.clear();favOnly=false;
+  renderRelLegend();
   const fpFavBtn=document.getElementById('fp-fav');if(fpFavBtn)fpFavBtn.classList.remove('active');
   timeRange=[-9999,9999];
   timeStartSlider.value=0;timeEndSlider.value=100;
@@ -1213,7 +1246,7 @@ function resetFilters(){
   document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
   timeStartSlider.value=0;timeEndSlider.value=100;timeRange=[-9999,9999];timeDisplay.textContent='全部时代';
   document.getElementById('time-fill').style.left='0%';document.getElementById('time-fill').style.right='0%';
-  updateFilterCount();applyAllFilters();
+  renderRelLegend();updateFilterCount();applyAllFilters();
 }
 document.getElementById('filter-reset').addEventListener('click',resetFilters);
 // Mobile filter
@@ -1259,12 +1292,25 @@ function isNodeVisible(d){
 }
 function applyAllFilters(){
   if(!simData)return;
+  const relFiltered=currentFilters.relType.size>0;
   const visibleIds=new Set(simData.nodes.filter(isNodeVisible).map(n=>n.id));
   gNodes.selectAll('.node-group').each(function(d){const vis=visibleIds.has(d.id);d3.select(this).selectAll('circle,text').transition().duration(500).attr('opacity',vis?null:.04).attr('display',vis?null:'none');if(!vis){d.fx=null;d.fy=null}});
-  gEdges.selectAll('line').each(function(d){const vis=visibleIds.has(d.source.id||d.source)&&visibleIds.has(d.target.id||d.target);d3.select(this).transition().duration(500).attr('opacity',vis?null:0).attr('display',vis?null:'none')});
+  gEdges.selectAll('line.edge-line').each(function(d){
+    const s=d.sourceNode?d.sourceNode.id:(d.source.id||d.source),t=d.targetNode?d.targetNode.id:(d.target.id||d.target);
+    const nodeVis=visibleIds.has(s)&&visibleIds.has(t);
+    const typeVis=!relFiltered||currentFilters.relType.has(d.type);
+    const vis=nodeVis&&typeVis;
+    d3.select(this).transition().duration(500).attr('opacity',vis?null:0).attr('display',vis?null:'none');
+  });
+  gEdges.selectAll('line.edge-hit').each(function(d){
+    const s=d.sourceNode?d.sourceNode.id:(d.source.id||d.source),t=d.targetNode?d.targetNode.id:(d.target.id||d.target);
+    const nodeVis=visibleIds.has(s)&&visibleIds.has(t);
+    const typeVis=!relFiltered||currentFilters.relType.has(d.type);
+    d3.select(this).attr('display',(nodeVis&&typeVis)?null:'none');
+  });
   if(simulation){
     const activeNodes=simData.allNodes.filter(n=>visibleIds.has(n.id));
-    const activeEdges=simData.allEdges.filter(e=>visibleIds.has(e.source.id||e.source)&&visibleIds.has(e.target.id||e.target));
+    const activeEdges=simData.allEdges.filter(e=>{const s=e.sourceNode?e.sourceNode.id:(e.source.id||e.source),t=e.targetNode?e.targetNode.id:(e.target.id||e.target);return visibleIds.has(s)&&visibleIds.has(t)&&(!relFiltered||currentFilters.relType.has(e.type))});
     simulation.nodes(activeNodes);simulation.force('link',d3.forceLink(activeEdges).id(d=>d.id).distance(d=>70+(10-d.strength)*16));simulation.alpha(.3).restart();
   }
   if(selectedNode&&!visibleIds.has(selectedNode.id))closeDetailPanel();
