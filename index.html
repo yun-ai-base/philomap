@@ -145,8 +145,8 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
 #detail-panel .dp-scroll::-webkit-scrollbar-track{background:transparent}
 #detail-panel .dp-scroll::-webkit-scrollbar-thumb{background:rgba(255,255,255,.06);border-radius:2px}
 
-/* Overlay */
-#dp-overlay{position:fixed;inset:0;z-index:7;background:rgba(0,0,8,.45);opacity:0;pointer-events:none;transition:opacity .35s ease;backdrop-filter:blur(2px)}
+/* Overlay：仅作"点击空白关闭面板"的透明交互层，不压暗/模糊星图（2026-08-14 移除 45% 黑罩 + blur 蒙层效果） */
+#dp-overlay{position:fixed;inset:0;z-index:7;background:transparent;opacity:0;pointer-events:none;transition:opacity .25s ease}
 #dp-overlay.show{opacity:1;pointer-events:auto}
 
 /* Tab 分层导航 */
