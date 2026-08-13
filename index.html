@@ -1149,6 +1149,9 @@ function stopPlayback(){
   // 恢复初始过滤状态
   applyAllFilters();
   if(timeStartSlider){timeStartSlider.disabled=false;timeEndSlider.disabled=false}
+  // 复位时间显示 + 若详情面板仍开着，恢复其关系高亮
+  timeDisplay.textContent=lang==='en'?'All Eras':'全部时代';
+  if(selectedNode)highlightConnections(selectedNode);
 }
 function tickPlayback(){
   if(!playbackOn)return;
@@ -1175,6 +1178,8 @@ function tickPlayback(){
 timePlayBtn.addEventListener('click',()=>{
   if(playbackOn){stopPlayback();return}
   if(!simData)return;
+  // 播放时关闭详情面板，避免高亮与逐帧 opacity 冲突
+  if(selectedNode)closeDetailPanel();
   // 进入播放模式：清空筛选、复位时间、禁用滑块
   playbackOn=true;timePlayBtn.textContent='■';
   if(timeStartSlider){timeStartSlider.disabled=true;timeEndSlider.disabled=true}
@@ -1629,10 +1634,10 @@ function renderJourney(d){
     const arr=[...ids];
     return arr.map(id=>{
       const n=nodeMap.get(id);if(!n)return'';
-      const nm=lang==='en'?(n.nameEn||n.name):n.name;
+      const nm=escapeHtml(lang==='en'?(n.nameEn||n.name):n.name);
       // 关系类型：优先查 d→id 或 id→d
       let type=relTypeOf(d.id,id);if(!type)type=relTypeOf(id,d.id);
-      return `<span class="dp-journey-tag ${cls}" data-id="${id}">${nm}${type?`<span class="dj-type">${relLabel[type]||type}</span>`:''}</span>`;
+      return `<span class="dp-journey-tag ${cls}" data-id="${id}">${nm}${type?`<span class="dj-type">${escapeHtml(relLabel[type]||type)}</span>`:''}</span>`;
     }).join('');
   };
   const upTags=mkTags(up,'up');
@@ -1945,6 +1950,7 @@ window.addEventListener('hashchange',()=>{
 });
 function switchView(view){
   currentView=view;
+  if(view!=='star'&&typeof playbackOn!=='undefined'&&playbackOn)stopPlayback();
   viewBtns.forEach(b=>b.classList.toggle('active',b.dataset.view===view));
   const isStar=view==='star',isRiver=view==='river',isDuel=view==='duel',isSpec=view==='spectrum',isQuiz=view==='quiz',isTwin=view==='twin';
   const headerTitle=document.querySelector('#header h1'),headerSub=document.querySelector('#header .subtitle');
