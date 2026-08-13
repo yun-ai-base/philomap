@@ -7,3 +7,5 @@ node_modules/
 .audit_tmp/
 debug.log
 .workbuddy/
+test-results/
+playwright-report/
