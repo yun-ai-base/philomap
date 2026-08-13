@@ -324,21 +324,21 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
 .dp-journey-empty{font-size:11px;color:#94a3b8;opacity:.7}
 
 /* ── Time Slider ── */
-#time-bar{position:fixed;z-index:5;bottom:24px;left:50%;transform:translateX(-50%);background:linear-gradient(180deg,rgba(15,15,35,.5),rgba(10,10,28,.55));backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:16px 24px 12px;width:min(660px,90vw);box-shadow:0 4px 32px rgba(0,0,0,.4)}
+#time-bar{position:fixed;z-index:5;bottom:24px;left:50%;transform:translateX(-50%);background:linear-gradient(180deg,rgba(15,15,35,.22),rgba(10,10,28,.26));backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:16px 24px 12px;width:min(660px,90vw);box-shadow:0 4px 32px rgba(0,0,0,.35)}
 #time-bar .time-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
 #time-bar .time-label{font-size:11px;font-weight:600;color:#cbd5e1;letter-spacing:.5px}
 #time-bar .time-label span{font-size:13px;margin-right:6px}
 #time-bar .time-hint{font-size:10px;color:#94a3b8;letter-spacing:.3px}
 #time-bar .time-track-wrap{position:relative;height:32px;margin:0 4px}
-#time-bar .time-track-bg{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);height:3px;border-radius:2px;background:rgba(255,255,255,.05);overflow:hidden}
-#time-bar .time-track-fill{position:absolute;top:50%;transform:translateY(-50%);height:3px;border-radius:2px;background:rgba(129,140,248,.25);transition:left .1s,right .1s}
-#time-bar .time-eras{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);height:3px;display:flex;border-radius:2px;overflow:hidden;pointer-events:none;opacity:.08}
+#time-bar .time-track-bg{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);height:3px;border-radius:2px;background:rgba(255,255,255,.18);overflow:hidden}
+#time-bar .time-track-fill{position:absolute;top:50%;transform:translateY(-50%);height:3px;border-radius:2px;background:rgba(129,140,248,.55);transition:left .1s,right .1s}
+#time-bar .time-eras{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);height:3px;display:flex;border-radius:2px;overflow:hidden;pointer-events:none;opacity:.15}
 #time-bar .time-era-seg{height:100%}
 #time-bar input[type="range"]{-webkit-appearance:none;appearance:none;width:100%;height:32px;background:transparent;position:absolute;left:0;top:0;margin:0;z-index:2;cursor:pointer}
 #time-bar input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:16px;height:16px;border-radius:50%;cursor:pointer;background:#818cf8;border:2px solid #c7d2fe;box-shadow:0 0 16px rgba(129,140,248,.5),0 0 4px rgba(0,0,0,.3);transition:transform .15s;position:relative;z-index:3}
 #time-bar input[type="range"]::-webkit-slider-thumb:hover{transform:scale(1.2)}
 #time-bar input[type="range"]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;cursor:pointer;background:#818cf8;border:2px solid #c7d2fe;box-shadow:0 0 16px rgba(129,140,248,.5)}
-#time-bar .time-ticks{display:flex;justify-content:space-between;margin-top:6px;font-size:9px;color:#475569;padding:0 2px;position:relative}
+#time-bar .time-ticks{display:flex;justify-content:space-between;margin-top:6px;font-size:9px;color:#7c8ba1;padding:0 2px;position:relative}
 #time-bar .time-tick{display:flex;flex-direction:column;align-items:center;gap:2px}
 #time-bar .time-tick::before{content:'';width:1px;height:6px;background:rgba(255,255,255,.1)}
 #time-bar .time-value{text-align:center;font-size:12px;margin-top:6px;color:#a78bfa;font-weight:600;letter-spacing:.5px;padding:2px 12px;border-radius:100px;background:rgba(129,140,248,.1);display:inline-block;position:relative;left:50%;transform:translateX(-50%)}
