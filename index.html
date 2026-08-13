@@ -1693,7 +1693,14 @@ function clearHighlights(){
     d3.select(this).select('.node-label').transition().duration(500).attr('opacity',.95);
     d3.select(this).select('.node-halo').transition().duration(500).attr('opacity',0).remove();
   });
-  gEdges.selectAll('line.edge-line').each(function(d){d3.select(this).transition().duration(500).attr('stroke',null).attr('stroke-opacity',.55).attr('stroke-width',d.strokeWidth)});
+  gEdges.selectAll('line.edge-line').each(function(d){
+    const s=d.sourceNode||d.source,t=d.targetNode||d.target;
+    const grad=`url(#edge-${s.civilization}-${t.civilization})`;
+    d3.select(this).transition().duration(500)
+      .attr('stroke',grad)
+      .attr('stroke-opacity',.55)
+      .attr('stroke-width',Math.max(.8,d.strokeWidth));
+  });
 }
 
 // ═══════════════ SEARCH ═══════════════
