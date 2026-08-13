@@ -95,7 +95,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
 .dp-contemp-title{font-size:var(--fs-section);font-weight:600;color:#e2e8f0;margin-bottom:2px}
 .dp-contemp-desc{font-size:var(--fs-small);color:#94a3b8;line-height:1.5}
 /* ═══════════════ FILTER PANEL (left) ═══════════════ */
-#filter-panel{position:fixed;z-index:5;left:14px;top:50%;transform:translateY(-50%);background:var(--panel-bg);backdrop-filter:blur(20px);border:1px solid var(--border-subtle);border-radius:16px;padding:18px 14px;width:195px;font-size:12px;transition:transform .35s cubic-bezier(.4,0,.2,1),opacity .35s}
+#filter-panel{position:fixed;z-index:5;left:14px;top:50%;transform:translateY(-50%);background:linear-gradient(180deg,rgba(15,15,35,.22),rgba(10,10,28,.26));backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:18px 14px;width:195px;font-size:12px;transition:transform .35s cubic-bezier(.4,0,.2,1),opacity .35s}
 #filter-panel.collapsed{transform:translateY(-50%) translateX(-210px);opacity:0;pointer-events:none}
 #filter-panel .fp-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
 #filter-panel .fp-header h3{font-size:14px;font-weight:700;color:#f1f5f9;letter-spacing:.5px}
@@ -121,8 +121,8 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
 #filter-reset{width:100%;padding:6px 0;border-radius:8px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.03);color:#94a3b8;font-size:10px;cursor:pointer;font-family:inherit;letter-spacing:.5px;transition:all .2s;margin-top:4px}
 #filter-reset:hover{background:rgba(255,255,255,.08);color:#cbd5e1;border-color:rgba(255,255,255,.12)}
 
-#filter-toggle{position:fixed;z-index:5;left:14px;top:50%;transform:translateY(-50%);width:24px;height:48px;border-radius:0 8px 8px 0;border:1px solid var(--border-subtle);border-left:none;background:var(--panel-bg);backdrop-filter:blur(20px);color:#94a3b8;font-size:11px;cursor:pointer;transition:all .35s cubic-bezier(.4,0,.2,1);display:flex;align-items:center;justify-content:center}
-#filter-panel.collapsed ~ #filter-toggle{transform:translateY(-50%) translateX(195px);border-radius:8px;border-left:1px solid var(--border-subtle);left:-10px}
+#filter-toggle{position:fixed;z-index:5;left:14px;top:50%;transform:translateY(-50%);width:24px;height:48px;border-radius:0 8px 8px 0;border:1px solid rgba(255,255,255,.14);border-left:none;background:linear-gradient(180deg,rgba(15,15,35,.22),rgba(10,10,28,.26));backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);color:#94a3b8;font-size:11px;cursor:pointer;transition:all .35s cubic-bezier(.4,0,.2,1);display:flex;align-items:center;justify-content:center}
+#filter-panel.collapsed ~ #filter-toggle{transform:translateY(-50%) translateX(195px);border-radius:8px;border-left:1px solid rgba(255,255,255,.14);left:-10px}
 /* School tooltip */
 #school-tip{position:fixed;z-index:20;pointer-events:none;opacity:0;background:rgba(15,15,32,.96);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:14px 18px;max-width:300px;transition:opacity .2s;box-shadow:0 8px 32px rgba(0,0,0,.5)}
 #school-tip .st-name{font-size:14px;font-weight:700;color:#f1f5f9;margin-bottom:6px}
@@ -1656,18 +1656,19 @@ function highlightConnections(d){
     const conn=isUp||isDown;
     // Body
     d3.select(this).select('.node-body').transition().duration(400)
-      .attr('r',isSel?d.radius*1.25:n.radius).attr('opacity',isSel?1:conn?.85:.07);
+      .attr('r',isSel?d.radius*1.25:n.radius).attr('opacity',isSel?1:conn?.85:.10);
     // Glow：上游暖色（思想来源），下游冷色（思想传承）
     const glow=d3.select(this).select('.node-glow');
     if(isSel){glow.attr('filter','url(#glow-strong)').attr('r',d.radius*1.5).attr('stroke-width',6).style('animation','pulse-glow 2s ease-in-out infinite')}
     else{glow.transition().duration(400).attr('r',n.radius+6)
       .attr('stroke',isUp?'#fbbf24':isDown?'#34d399':n.glowColor)
-      .attr('stroke-width',conn?4:0).attr('opacity',conn?.7:.02)}
+      .attr('stroke-width',conn?4:0).attr('opacity',conn?.7:.05)}
     // Highlight dot（淡光点：选中/连接时稍亮但保持极淡，避免遮挡球内名字）
     d3.select(this).select('.node-highlight').transition().duration(400).attr('opacity',isSel?.2:conn?.12:.02);
     // Label（只改透明度，不改字号，避免破坏球内多行标签）
+    // 关联节点名字 100% 清晰可读；其余节点保留隐约轮廓（防"死黑蒙层"感）
     d3.select(this).select('.node-label').transition().duration(400)
-      .attr('opacity',isSel?1:conn?.8:.03);
+      .attr('opacity',isSel?1:conn?1:.08);
     // Halo ring for selected
     if(isSel&&!d3.select(this).select('.node-halo').size()){
       d3.select(this).insert('circle','.node-body').attr('class','node-halo').attr('r',d.radius*1.6).attr('fill','none').attr('stroke',d.glowColor).attr('stroke-width',1.5).attr('opacity',0).transition().duration(600).attr('opacity',.4).attr('r',d.radius*2);
@@ -2076,6 +2077,14 @@ let kbFocusIdx=-1;
 let kbOrder=[];
 function saveFavs(){try{localStorage.setItem('philomap_favs',JSON.stringify([...favSet]))}catch(e){}}
 function labelOpacityFor(d,k){const inf=d.influence||0;if(k>=1.05)return .95;if(k>=.8)return inf>=3?.9:.3;if(k>=.6)return inf>=5?.85:0;return 0}
+// 缩放时更新标签透明度；若当前有选中节点，则选中/关联节点的标签透明度由 highlightConnections 管理，缩放不覆盖（避免选中态名字变模糊）
+function updateLabelOpacity(k){if(typeof gNodes==='undefined'||!gNodes||!gNodes.selectAll)return;
+  const sel=selectedNode;
+  gNodes.selectAll('.node-group').filter(function(n){
+    if(!sel)return true;
+    const up=simData?.upstreamOf?.get(sel.id)||new Set(),down=simData?.downstreamOf?.get(sel.id)||new Set();
+    return !(n.id===sel.id||up.has(n.id)||down.has(n.id));
+  }).select('.node-label').attr('opacity',d=>labelOpacityFor(d,k))}
 function updateLabelOpacity(k){if(typeof gNodes==='undefined'||!gNodes||!gNodes.selectAll)return;gNodes.selectAll('.node-label').attr('opacity',d=>labelOpacityFor(d,k))}
 function refreshFavMarker(id){if(typeof gNodes==='undefined'||!gNodes||!gNodes.selectAll)return;gNodes.selectAll('.node-group').filter(n=>n.id===id).classed('faved',favSet.has(id))}
 function refreshFavUI(id){refreshFavMarker(id);const dpFav=detailPanel.querySelector('.dp-fav');if(dpFav&&selectedNode&&selectedNode.id===id){dpFav.textContent=favSet.has(id)?'★':'☆';dpFav.classList.toggle('on',favSet.has(id))}}
