@@ -3,3 +3,7 @@ __pycache__/
 node_modules/
 .DS_Store
 *.tmp
+*.bak.json
+.audit_tmp/
+debug.log
+.workbuddy/

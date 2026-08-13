@@ -2,6 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' https://upload.wikimedia.org data:; connect-src 'self' https://yun-ai-base.github.io; form-action 'none'; base-uri 'self'">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>脉络 Philomap — 人类思想星图</title>
 <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTQiIGZpbGw9IiMwYjEwMjAiLz48cGF0aCBkPSJNMzIgMTBDMzQgMjUgMzkgMzAgNTQgMzJDMzkgMzQgMzQgMzkgMzIgNTRDMzAgMzkgMjUgMzQgMTAgMzJDMjUgMzAgMzAgMjUgMzIgMTBaIiBmaWxsPSIjZmJiZjI0Ii8+PGNpcmNsZSBjeD0iNDkiIGN5PSIxOSIgcj0iMi42IiBmaWxsPSIjODE4Y2Y4Ii8+PGNpcmNsZSBjeD0iMTciIGN5PSI0NyIgcj0iMi4xIiBmaWxsPSIjMzRkMzk5Ii8+PC9zdmc+">
@@ -32,12 +33,12 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
 #loading.hidden{opacity:0;pointer-events:none}
 #loading .loader-ring{width:48px;height:48px;border-radius:50%;border:2px solid rgba(129,140,248,.2);border-top-color:#818cf8;animation:spin 1.2s linear infinite;margin-bottom:16px}
 @keyframes spin{to{transform:rotate(360deg)}}
-#loading p{color:#64748b;font-size:13px;letter-spacing:1px}
+#loading p{color:#94a3b8;font-size:13px;letter-spacing:1px}
 
 /* ── Header ── */
 #header{position:fixed;z-index:5;top:20px;left:50%;transform:translateX(-50%);text-align:center;pointer-events:none}
 #header h1{font-size:24px;font-weight:700;color:#f1f5f9;letter-spacing:2px;text-shadow:0 0 40px rgba(129,140,248,.4)}
-#header .subtitle{font-size:12px;color:#64748b;letter-spacing:3px;margin-top:4px}
+#header .subtitle{font-size:12px;color:#94a3b8;letter-spacing:3px;margin-top:4px}
 
 /* ── Tooltip ── */
 #tooltip{position:fixed;z-index:10;pointer-events:none;opacity:0;background:rgba(15,15,30,.94);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:12px 16px;max-width:260px;transition:opacity .2s;box-shadow:0 8px 32px rgba(0,0,0,.5)}
@@ -45,25 +46,25 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
 #tooltip .tt-years{font-size:11px;color:#94a3b8;margin-bottom:6px}
 #tooltip .tt-school{display:inline-block;padding:2px 10px;border-radius:100px;font-size:10px;margin-bottom:6px}
 #tooltip .tt-quote{font-size:12px;color:#cbd5e1;font-style:italic;line-height:1.5}
-#tooltip .tt-quote-src{font-size:10px;color:#64748b;margin-top:2px}
+#tooltip .tt-quote-src{font-size:10px;color:#94a3b8;margin-top:2px}
 
 /* ═══════════════ SEARCH ═══════════════ */
 #search-wrap{position:relative;margin-bottom:14px}
 #search-input{width:100%;padding:8px 12px 8px 30px;border-radius:10px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#e2e8f0;font-size:12px;font-family:inherit;outline:none;transition:all .2s}
 #search-input:focus{border-color:rgba(129,140,248,.35);box-shadow:0 0 12px rgba(129,140,248,.1)}
-#search-input::placeholder{color:#64748b}
-#search-icon{position:absolute;left:9px;top:50%;transform:translateY(-50%);font-size:12px;color:#64748b;pointer-events:none}
+#search-input::placeholder{color:#94a3b8}
+#search-icon{position:absolute;left:9px;top:50%;transform:translateY(-50%);font-size:12px;color:#94a3b8;pointer-events:none}
 #search-results{position:absolute;top:100%;left:0;right:0;z-index:50;background:rgba(20,20,45,.98);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.1);border-radius:12px;margin-top:4px;max-height:260px;overflow-y:auto;display:none;box-shadow:0 8px 32px rgba(0,0,0,.5)}
 #search-results.show{display:block}
 #search-results::-webkit-scrollbar{width:4px}
 #search-results::-webkit-scrollbar-thumb{background:rgba(255,255,255,.08);border-radius:2px}
-.sr-empty{padding:12px 16px;color:#64748b;font-size:12px;text-align:center}
+.sr-empty{padding:12px 16px;color:#94a3b8;font-size:12px;text-align:center}
 .sr-item{display:flex;align-items:center;gap:10px;padding:10px 14px;cursor:pointer;transition:all .15s;border-bottom:1px solid rgba(255,255,255,.03)}
 .sr-item:last-child{border-bottom:none}
 .sr-item:hover{background:rgba(129,140,248,.12)}
 .sr-item .sr-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
 .sr-item .sr-name{font-size:13px;font-weight:600;color:#f1f5f9}
-.sr-item .sr-meta{font-size:10px;color:#64748b;margin-left:auto}
+.sr-item .sr-meta{font-size:10px;color:#94a3b8;margin-left:auto}
 .sr-item .sr-highlight{color:#fbbf24}
 
 /* ═══════════════ GENEALOGY TREE ═══════════════ */
@@ -117,16 +118,16 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
 .filter-btns::-webkit-scrollbar-track{background:transparent}
 .filter-btns::-webkit-scrollbar-thumb{background:rgba(255,255,255,.08);border-radius:2px}
 .filter-btns::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,.15)}
-#filter-reset{width:100%;padding:6px 0;border-radius:8px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.03);color:#64748b;font-size:10px;cursor:pointer;font-family:inherit;letter-spacing:.5px;transition:all .2s;margin-top:4px}
+#filter-reset{width:100%;padding:6px 0;border-radius:8px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.03);color:#94a3b8;font-size:10px;cursor:pointer;font-family:inherit;letter-spacing:.5px;transition:all .2s;margin-top:4px}
 #filter-reset:hover{background:rgba(255,255,255,.08);color:#cbd5e1;border-color:rgba(255,255,255,.12)}
 
-#filter-toggle{position:fixed;z-index:5;left:14px;top:50%;transform:translateY(-50%);width:24px;height:48px;border-radius:0 8px 8px 0;border:1px solid var(--border-subtle);border-left:none;background:var(--panel-bg);backdrop-filter:blur(20px);color:#64748b;font-size:11px;cursor:pointer;transition:all .35s cubic-bezier(.4,0,.2,1);display:flex;align-items:center;justify-content:center}
+#filter-toggle{position:fixed;z-index:5;left:14px;top:50%;transform:translateY(-50%);width:24px;height:48px;border-radius:0 8px 8px 0;border:1px solid var(--border-subtle);border-left:none;background:var(--panel-bg);backdrop-filter:blur(20px);color:#94a3b8;font-size:11px;cursor:pointer;transition:all .35s cubic-bezier(.4,0,.2,1);display:flex;align-items:center;justify-content:center}
 #filter-panel.collapsed ~ #filter-toggle{transform:translateY(-50%) translateX(195px);border-radius:8px;border-left:1px solid var(--border-subtle);left:-10px}
 /* School tooltip */
 #school-tip{position:fixed;z-index:20;pointer-events:none;opacity:0;background:rgba(15,15,32,.96);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:14px 18px;max-width:300px;transition:opacity .2s;box-shadow:0 8px 32px rgba(0,0,0,.5)}
 #school-tip .st-name{font-size:14px;font-weight:700;color:#f1f5f9;margin-bottom:6px}
 #school-tip .st-desc{font-size:12px;color:#cbd5e1;line-height:1.6;margin-bottom:8px}
-#school-tip .st-dev-label{font-size:9px;color:#64748b;text-transform:uppercase;letter-spacing:1px;margin-bottom:3px}
+#school-tip .st-dev-label{font-size:9px;color:#94a3b8;text-transform:uppercase;letter-spacing:1px;margin-bottom:3px}
 #school-tip .st-dev{font-size:11px;color:#94a3b8;line-height:1.5}
 
 /* ═══════════════ DETAIL PANEL (right) ═══════════════ */
@@ -146,7 +147,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
 
 /* Font size selector */
 .dp-fs-row{display:flex;align-items:center;justify-content:center;gap:8px;margin:18px 0 6px;padding:8px 0;border-top:1px solid rgba(255,255,255,.04);border-bottom:1px solid rgba(255,255,255,.04)}
-.dp-fs-label{font-size:11px;color:#64748b;letter-spacing:.5px}
+.dp-fs-label{font-size:11px;color:#94a3b8;letter-spacing:.5px}
 .dp-fs-btns{display:flex;gap:2px;border-radius:6px;overflow:hidden;border:1px solid rgba(255,255,255,.08)}
 .dp-fs-btn{padding:3px 12px;border:none;background:rgba(255,255,255,.04);color:#94a3b8;cursor:pointer;font-family:inherit;font-size:12px;transition:all .2s;line-height:1.5}
 .dp-fs-btn:hover{background:rgba(255,255,255,.08);color:#e2e8f0}
@@ -160,11 +161,11 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
 .dp-portrait.has-img .dp-initial{display:none}
 @keyframes dp-glow-pulse{0%,100%{transform:scale(1);opacity:.35}50%{transform:scale(1.15);opacity:.55}}
 .dp-name{font-size:var(--fs-name);font-weight:800;color:#f8fafc;letter-spacing:1.5px;line-height:1.2}
-.dp-name-en{font-size:var(--fs-name-en);color:#64748b;margin-top:4px;letter-spacing:.8px;font-style:italic}
+.dp-name-en{font-size:var(--fs-name-en);color:#94a3b8;margin-top:4px;letter-spacing:.8px;font-style:italic}
 .dp-meta{font-size:var(--fs-meta);color:#94a3b8;margin-top:6px;letter-spacing:.3px}
 .dp-badges{display:flex;justify-content:center;gap:8px;margin-top:10px;flex-wrap:wrap}
 .dp-badge{padding:5px 16px;border-radius:100px;font-size:var(--fs-small);font-weight:500;letter-spacing:.5px;transition:all .2s}
-.dp-influence{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:10px;font-size:var(--fs-small);color:#64748b}
+.dp-influence{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:10px;font-size:var(--fs-small);color:#94a3b8}
 .dp-influence .dp-stars{display:flex;gap:2px}
 .dp-influence .dp-star{width:6px;height:6px;border-radius:50%}
 
@@ -172,7 +173,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
 .dp-quote-block{margin:22px 0;padding:16px 20px;border-radius:14px;background:rgba(255,255,255,.025);position:relative;overflow:hidden}
 .dp-quote-block::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:0 2px 2px 0;background:var(--quote-accent,rgba(255,255,255,.15));transition:background .3s}
 .dp-quote-text{font-size:var(--fs-quote);font-style:italic;line-height:1.7;color:#cbd5e1;position:relative;z-index:1}
-.dp-quote-src{font-size:var(--fs-small);color:#64748b;margin-top:8px;position:relative;z-index:1}
+.dp-quote-src{font-size:var(--fs-small);color:#94a3b8;margin-top:8px;position:relative;z-index:1}
 .dp-quote-nav{display:flex;gap:6px;margin-top:10px;position:relative;z-index:1}
 .dp-quote-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.15);cursor:pointer;transition:all .2s}
 .dp-quote-dot.active{background:var(--quote-accent,rgba(255,255,255,.5));box-shadow:0 0 6px var(--quote-accent,rgba(255,255,255,.3))}
@@ -215,13 +216,13 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
 .dp-concept-item .dp-concept-desc{font-size:var(--fs-section);color:#94a3b8;margin-top:5px;line-height:1.6}
 /* Level tabs */
 .dp-level-btns{display:flex;gap:4px;margin-left:auto}
-.dp-level-btn{padding:3px 10px;border-radius:6px;font-size:var(--fs-xs);border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.03);color:#64748b;cursor:pointer;font-family:inherit;transition:all .2s;white-space:nowrap}
+.dp-level-btn{padding:3px 10px;border-radius:6px;font-size:var(--fs-xs);border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.03);color:#94a3b8;cursor:pointer;font-family:inherit;transition:all .2s;white-space:nowrap}
 .dp-level-btn:hover{border-color:rgba(255,255,255,.25);color:#cbd5e1}
 .dp-level-btn.active{background:rgba(129,140,248,.15);border-color:rgba(129,140,248,.35);color:#c7d2fe;font-weight:600}
 .dp-level-btn.disabled{opacity:.35;pointer-events:none}
 /* Concept network */
 .dp-concept-net{width:100%;height:220px;border-radius:12px;background:rgba(0,0,0,.2);border:1px solid rgba(255,255,255,.04);margin-top:12px}
-.dp-concept-net .cn-label{font-size:10px;fill:#64748b}
+.dp-concept-net .cn-label{font-size:10px;fill:#94a3b8}
 .dp-concept-net .cn-node{stroke-width:2;cursor:pointer}
 .dp-concept-net .cn-node:hover{stroke-width:3}
 .dp-concept-net .cn-edge{stroke:rgba(255,255,255,.15);fill:none}
@@ -229,7 +230,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
 .concept-net-tip{position:fixed;z-index:25;pointer-events:none;opacity:0;background:rgba(12,12,30,.94);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:8px 12px;font-size:var(--fs-small);color:#cbd5e1;max-width:200px;transition:opacity .15s;box-shadow:0 4px 16px rgba(0,0,0,.4)}
 #edge-tip{position:fixed;z-index:20;pointer-events:none;opacity:0;background:rgba(15,15,32,.96);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:12px 16px;max-width:300px;transition:opacity .15s;box-shadow:0 8px 32px rgba(0,0,0,.5)}
 #edge-tip .et-title{font-size:13px;font-weight:700;color:#f1f5f9;margin-bottom:4px}
-#edge-tip .et-type{font-size:10px;color:#64748b;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+#edge-tip .et-type{font-size:10px;color:#94a3b8;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
 #edge-tip .et-desc{font-size:12px;color:#cbd5e1;line-height:1.6}
 
 /* Works */
@@ -239,7 +240,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
 .dp-work-item .dp-work-icon{width:4px;height:4px;border-radius:50%;flex-shrink:0}
 .dp-work-item .dp-work-info{flex:1;min-width:0}
 .dp-work-item .dp-work-title{color:#e2e8f0;font-weight:600}
-.dp-work-item .dp-work-meta{color:#64748b;font-size:var(--fs-xs)}
+.dp-work-item .dp-work-meta{color:#94a3b8;font-size:var(--fs-xs)}
 .dp-work-content{font-size:var(--fs-small);color:#94a3b8;line-height:1.5;margin-top:4px}
 
 /* Events */
@@ -265,21 +266,21 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
 .dp-reading-item .dp-reading-icon{font-size:16px;flex-shrink:0;margin-top:1px}
 .dp-reading-item .dp-reading-info{flex:1;min-width:0}
 .dp-reading-item .dp-reading-title{font-size:var(--fs-section);font-weight:600;color:#e2e8f0;margin-bottom:2px}
-.dp-reading-item .dp-reading-desc{font-size:var(--fs-small);color:#64748b;line-height:1.5}
+.dp-reading-item .dp-reading-desc{font-size:var(--fs-small);color:#94a3b8;line-height:1.5}
 .dp-reading-item .dp-reading-type{font-size:9px;color:#475569;text-transform:uppercase;letter-spacing:.8px;flex-shrink:0}
 
 /* Related */
 .dp-related-list{display:flex;flex-wrap:wrap;gap:6px}
 .dp-related-tag{padding:6px 14px;border-radius:100px;font-size:var(--fs-small);border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.02);color:#cbd5e1;cursor:pointer;transition:all .2s;font-family:inherit;letter-spacing:.3px}
 .dp-related-tag:hover{transform:translateY(-1px);color:#f8fafc;box-shadow:0 2px 12px rgba(0,0,0,.3)}
-.dp-related-tag .dp-rel-type{font-size:9px;color:#64748b;margin-left:4px}
+.dp-related-tag .dp-rel-type{font-size:9px;color:#94a3b8;margin-left:4px}
 
 /* ── Time Slider ── */
 #time-bar{position:fixed;z-index:5;bottom:24px;left:50%;transform:translateX(-50%);background:linear-gradient(180deg,rgba(15,15,35,.92),rgba(10,10,28,.95));backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:16px 24px 12px;width:min(660px,90vw);box-shadow:0 4px 32px rgba(0,0,0,.4)}
 #time-bar .time-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
 #time-bar .time-label{font-size:11px;font-weight:600;color:#cbd5e1;letter-spacing:.5px}
 #time-bar .time-label span{font-size:13px;margin-right:6px}
-#time-bar .time-hint{font-size:10px;color:#64748b;letter-spacing:.3px}
+#time-bar .time-hint{font-size:10px;color:#94a3b8;letter-spacing:.3px}
 #time-bar .time-track-wrap{position:relative;height:32px;margin:0 4px}
 #time-bar .time-track-bg{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);height:3px;border-radius:2px;background:rgba(255,255,255,.05);overflow:hidden}
 #time-bar .time-track-fill{position:absolute;top:50%;transform:translateY(-50%);height:3px;border-radius:2px;background:rgba(129,140,248,.25);transition:left .1s,right .1s}
@@ -434,7 +435,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
 #civ-legend{position:fixed;z-index:5;top:16px;right:16px;display:flex;gap:14px;background:var(--panel-bg);backdrop-filter:blur(16px);border:1px solid var(--border-subtle);border-radius:12px;padding:8px 14px;font-size:11px}
 #civ-legend .cl-item{display:flex;align-items:center;gap:6px;color:#cbd5e1;letter-spacing:.3px}
 #civ-legend .cl-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
-#lang-btn{position:absolute;right:-2px;top:-2px;font-size:10px;color:#64748b;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:6px;padding:2px 8px;cursor:pointer;font-family:inherit;letter-spacing:.5px;transition:all .2s;z-index:2;pointer-events:auto}
+#lang-btn{position:absolute;right:-2px;top:-2px;font-size:10px;color:#94a3b8;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:6px;padding:2px 8px;cursor:pointer;font-family:inherit;letter-spacing:.5px;transition:all .2s;z-index:2;pointer-events:auto}
 #lang-btn:hover{background:rgba(129,140,248,.12);color:#a5b4fc;border-color:rgba(129,140,248,.25)}
 
 /* ═══════════════ TIME RIVER ═══════════════ */
@@ -443,7 +444,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
 #twin-view.active{display:flex}
 #twin-view .tw-header{text-align:center;padding:80px 24px 10px;flex-shrink:0}
 #twin-view .tw-header h2{font-size:22px;font-weight:700;color:#f1f5f9;letter-spacing:1px}
-#twin-view .tw-header p{font-size:12px;color:#64748b;margin-top:4px}
+#twin-view .tw-header p{font-size:12px;color:#94a3b8;margin-top:4px}
 .tw-container{max-width:900px;margin:0 auto;padding:20px 24px 60px;width:100%}
 .tw-section{margin-bottom:32px}
 .tw-section-title{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:#94a3b8;letter-spacing:.5px;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,.06)}
@@ -457,20 +458,20 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
 .tw-card-icon.data{background:rgba(52,211,153,.1)}
 .tw-card-info{flex:1;min-width:0}
 .tw-card-name{font-size:13px;font-weight:600;color:#f1f5f9;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.tw-card-desc{font-size:11px;color:#64748b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
+.tw-card-desc{font-size:11px;color:#94a3b8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
 .tw-card-arrow{color:#4a4844;font-size:12px;flex-shrink:0;transition:all .25s}
 .tw-card:hover .tw-card-arrow{color:#c9a84c;transform:translateX(3px)}
 #time-river{position:fixed;inset:0;z-index:3;background:radial-gradient(ellipse at 50% 50%,#0a0a20,#000008);display:none;flex-direction:column}
 #time-river.active{display:flex}
 #time-river .tr-header{text-align:center;padding:80px 0 10px;flex-shrink:0}
 #time-river .tr-header h2{font-size:22px;font-weight:700;color:#f1f5f9;letter-spacing:1px}
-#time-river .tr-header p{font-size:11px;color:#64748b;margin-top:2px}
+#time-river .tr-header p{font-size:11px;color:#94a3b8;margin-top:2px}
 .tr-now{position:absolute;top:12px;left:20px;z-index:2;color:#94a3b8;font-size:10px}
 /* Time river zoom */
 .tr-zoom{position:absolute;top:70px;right:24px;z-index:4;display:flex;gap:6px;align-items:center}
 .tr-zoom button{width:30px;height:30px;border-radius:8px;border:1px solid rgba(255,255,255,.12);background:rgba(15,15,32,.9);color:#cbd5e1;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;font-family:inherit;line-height:1}
 .tr-zoom button:hover{background:rgba(30,30,56,.9);border-color:rgba(255,255,255,.25);color:#f1f5f9}
-.tr-zoom .tr-zoom-label{font-size:10px;color:#64748b;min-width:36px;text-align:center}
+.tr-zoom .tr-zoom-label{font-size:10px;color:#94a3b8;min-width:36px;text-align:center}
 .tr-scroll{flex:1;overflow-x:auto;overflow-y:hidden;padding:20px 60px 30px;cursor:grab;scroll-behavior:smooth}
 .tr-scroll:active{cursor:grabbing}
 .tr-scroll::-webkit-scrollbar{height:8px}
@@ -528,9 +529,11 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
 .duel-chart h4{font-size:13px;color:#94a3b8;text-align:center;margin-bottom:8px}
 .duel-chart canvas{width:100%;max-width:300px;display:block;margin:0 auto}
 .duel-table{width:100%;margin-top:20px;border-collapse:collapse}
-.duel-table th{font-size:10px;color:#64748b;text-transform:uppercase;letter-spacing:1px;padding:8px 12px;text-align:left;border-bottom:1px solid rgba(255,255,255,.06)}
+.duel-table th{font-size:10px;color:#94a3b8;text-transform:uppercase;letter-spacing:1px;padding:8px 12px;text-align:left;border-bottom:1px solid rgba(255,255,255,.06)}
 .duel-table td{font-size:13px;color:#cbd5e1;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.04);line-height:1.5}
 .duel-table tr:hover td{background:rgba(255,255,255,.02)}
+.duel-note{margin-top:12px;font-size:10px;color:#94a3b8;opacity:.7;letter-spacing:.3px}
+.spec-note{margin-top:10px;font-size:10px;color:#94a3b8;opacity:.7;text-align:center;letter-spacing:.3px}
 .duel-btn{display:block;margin:20px auto 0;padding:10px 32px;border-radius:100px;border:1px solid rgba(129,140,248,.3);background:rgba(129,140,248,.15);color:#c7d2fe;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;letter-spacing:.5px;transition:all .25s}
 .duel-btn:hover{background:rgba(129,140,248,.25);border-color:rgba(129,140,248,.5);box-shadow:0 0 20px rgba(129,140,248,.15);transform:translateY(-1px)}
 
@@ -542,11 +545,11 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
 #quiz-modal::-webkit-scrollbar-thumb{background:rgba(255,255,255,.08);border-radius:2px}
 #quiz-modal .qz-header{text-align:center;margin-bottom:24px}
 #quiz-modal .qz-header h2{font-size:20px;font-weight:700;color:#f1f5f9}
-#quiz-modal .qz-header p{font-size:12px;color:#64748b;margin-top:4px}
+#quiz-modal .qz-header p{font-size:12px;color:#94a3b8;margin-top:4px}
 .qz-progress{height:4px;border-radius:2px;background:rgba(255,255,255,.06);margin-bottom:24px;overflow:hidden}
 .qz-progress-bar{height:100%;background:linear-gradient(90deg,#818cf8,#f472b6);transition:width .4s;border-radius:2px}
 .qz-question{margin-bottom:20px}
-.qz-q-num{font-size:10px;color:#64748b;text-transform:uppercase;letter-spacing:2px;margin-bottom:6px}
+.qz-q-num{font-size:10px;color:#94a3b8;text-transform:uppercase;letter-spacing:2px;margin-bottom:6px}
 .qz-q-text{font-size:16px;font-weight:600;color:#f1f5f9;line-height:1.5;margin-bottom:16px}
 .qz-options{display:flex;flex-direction:column;gap:8px}
 .qz-option{padding:14px 18px;border-radius:12px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.03);color:#cbd5e1;font-size:14px;cursor:pointer;transition:all .25s;text-align:left;font-family:inherit;line-height:1.4}
@@ -556,7 +559,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
 .qz-result{text-align:center;display:none}
 .qz-result.show{display:block}
 .qz-result h3{font-size:18px;color:#f1f5f9;margin-bottom:6px}
-.qz-result .qz-subtitle{font-size:12px;color:#64748b;margin-bottom:20px}
+.qz-result .qz-subtitle{font-size:12px;color:#94a3b8;margin-bottom:20px}
 .qz-dna-bars{display:flex;flex-direction:column;gap:10px;max-width:400px;margin:0 auto 24px}
 .qz-dna-bar{display:flex;align-items:center;gap:10px}
 .qz-dna-bar .qz-dna-name{width:70px;text-align:right;font-size:13px;font-weight:600;color:#e2e8f0;flex-shrink:0}
@@ -578,7 +581,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
 #spectrum-view{position:fixed;inset:0;z-index:3;background:radial-gradient(ellipse at 50% 50%,#0a0a20,#000008);display:none;flex-direction:column}
 #spectrum-view.active{display:flex}
 .spec-controls{display:flex;justify-content:center;gap:16px;padding:8px 0 12px;flex-shrink:0;align-items:center}
-.spec-controls label{font-size:10px;color:#64748b;text-transform:uppercase;letter-spacing:1px;margin-right:4px}
+.spec-controls label{font-size:10px;color:#94a3b8;text-transform:uppercase;letter-spacing:1px;margin-right:4px}
 .spec-controls select{padding:6px 32px 6px 12px;border-radius:8px;border:1px solid rgba(255,255,255,.1);background:rgba(18,18,38,.9);color:#e2e8f0;font-size:12px;font-family:inherit;cursor:pointer;outline:none;-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath d='M5 7L1 3h8z' fill='%2394a3b8'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center}
 .spec-controls select option{background:#181830;color:#e2e8f0}
 .spec-canvas-wrap{flex:1;position:relative;overflow:hidden}
@@ -602,6 +605,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
 #detail-panel .dp-fav{position:absolute;top:18px;right:150px;z-index:2;width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);color:#94a3b8;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .25s}
 #detail-panel .dp-fav:hover{color:#fbbf24;border-color:rgba(251,191,36,.4)}
 #detail-panel .dp-fav.on{color:#fbbf24;border-color:rgba(251,191,36,.5)}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
 </style>
 </head>
 <body>
@@ -810,6 +814,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
   <div class="spec-legend">
     <span style="color:#818cf8">● 西方</span><span style="color:#fbbf24">● 东方</span><span style="color:#f472b6">● 印度</span><span style="color:#34d399">● 伊斯兰</span><span>大小=影响力</span>
   </div>
+  <div class="spec-note">* 维度得分为基于文本关键词的示意性估计，非权威学术评价。</div>
 </div>
 
 <!-- ═══════════ TWIN UNIVERSE ═══════════ -->
@@ -838,6 +843,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
         <div class="duel-chart"><h4 id="duel-name-b"></h4><canvas id="duel-radar-b"></canvas></div>
       </div>
       <table class="duel-table" id="duel-table"><thead><tr><th>维度</th><th id="duel-th-a">哲人A</th><th id="duel-th-b">哲人B</th></tr></thead><tbody></tbody></table>
+      <div class="duel-note">* 得分为基于文本关键词的示意性估计，非权威学术评价。</div>
     </div>
   </div>
 </div>
@@ -900,6 +906,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
 // ═══════════════ COSMIC BACKGROUND ═══════════════
 const bgCanvas=document.getElementById('bg-canvas'),bgCtx=bgCanvas.getContext('2d');
 let stars=[],nebulas=[],bgGrad=null,bgNebGrad=[],bgRunning=false,bgRafId=0;
+const prefersReduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 function buildGradients(){
   const w=bgCanvas.width,h=bgCanvas.height;
@@ -921,8 +928,8 @@ function drawBg(){
   bgCtx.clearRect(0,0,w,h);
   bgCtx.fillStyle=bgGrad;bgCtx.fillRect(0,0,w,h);
   for(let i=0;i<bgNebGrad.length;i++){const n=nebulas[i];bgCtx.fillStyle=bgNebGrad[i];bgCtx.fillRect(n.x*w-n.r,n.y*h-n.r,n.r*2,n.r*2)}
-  for(const s of stars){const a=s.opacity*(.6+.4*Math.sin(t*s.speed+s.phase));bgCtx.fillStyle=`rgba(255,255,255,${a})`;bgCtx.beginPath();bgCtx.arc(s.x,s.y,s.r,0,Math.PI*2);bgCtx.fill()}
-  bgRafId=requestAnimationFrame(drawBg);
+  for(const s of stars){const a=prefersReduced?s.opacity:s.opacity*(.6+.4*Math.sin(t*s.speed+s.phase));bgCtx.fillStyle=`rgba(255,255,255,${a})`;bgCtx.beginPath();bgCtx.arc(s.x,s.y,s.r,0,Math.PI*2);bgCtx.fill()}
+  if(!prefersReduced)bgRafId=requestAnimationFrame(drawBg);
 }
 function startBg(){if(bgRunning)return;bgRunning=true;bgRafId=requestAnimationFrame(drawBg)}
 function stopBg(){bgRunning=false;if(bgRafId)cancelAnimationFrame(bgRafId);bgRafId=0}
@@ -940,8 +947,8 @@ let simData=null,simulation=null,selectedNode=null,
   timeRange=[-9999,9999],dataRef=null;
 
 const civColors={western:{color:'#818cf8',glow:'#a78bfa'},eastern:{color:'#fbbf24',glow:'#fcd34d'},indian:{color:'#f472b6',glow:'#f9a8d4'},islamic:{color:'#34d399',glow:'#6ee7b7'}};
-function formatYear(y){return y<0?`公元前${Math.abs(y)}年`:`公元${y}年`}
-function formatYears(birth,death){return formatYear(birth)+' — '+formatYear(death)}
+function formatYear(y){return y==null?'':(y<0?`公元前${Math.abs(y)}年`:`公元${y}年`)}
+function formatYears(birth,death){return death==null?formatYear(birth)+' — 至今':formatYear(birth)+' — '+formatYear(death)}
 const civDisplay={western:'西方',eastern:'东方',indian:'印度',islamic:'伊斯兰'};
 const civDisplayEn={western:'Western',eastern:'Eastern',indian:'Indian',islamic:'Islamic'};
 
@@ -968,8 +975,10 @@ const I18N={
     loading:'Arranging the constellation of thought...',randomBtn:'🎲 Random',favBtn:'⭐ Favorites',dpFavTitle:'Favorite / Unfavorite'}
 };
 function t(key){return (I18N[lang]||I18N.zh)[key]||key}
+function escapeHtml(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function applyLang(){
   const en=lang==='en';
+  document.documentElement.lang=en?'en':'zh-CN';
   document.getElementById('lang-btn').textContent=en?'EN / CN':'CN / EN';
   document.querySelector('#header .subtitle').textContent=t('subtitle');
   document.querySelector('[data-view="star"]').textContent=t('vStar');
@@ -1033,6 +1042,8 @@ function applyLang(){
   // Civilization legend
   const cl=document.getElementById('civ-legend');
   if(cl){cl.innerHTML=['western','eastern','indian','islamic'].map(c=>`<span class="cl-item"><span class="cl-dot" style="background:${civColors[c].color}"></span>${lang==='en'?civDisplayEn[c]:civDisplay[c]}</span>`).join('')}
+  // 时光长河时代标签随语言重渲染
+  if(typeof timeRiverBuilt!=='undefined'&&timeRiverBuilt&&currentView==='river')renderTimeRiver();
 }
 document.getElementById('lang-btn').addEventListener('click',()=>{
   lang=lang==='zh'?'en':'zh';
@@ -1260,7 +1271,7 @@ function openDetailPanel(d){
   if(d.relationships&&d.relationships.length){relSec.style.display='block';relList.innerHTML='';const nodeMap=new Map(simData.allNodes.map(n=>[n.id,n]));
     for(const rel of d.relationships){const target=nodeMap.get(rel.target);if(!target)continue;const tag=document.createElement('span');tag.className='dp-related-tag';
       tag.style.borderColor=target.color+'40';
-      const relLabel=lang==='en'?{teacherStudent:'Teacher/Student',influence:'Influence',debate:'Debate'}[rel.type]||rel.type:{teacherStudent:'师承',influence:'影响',debate:'论战'}[rel.type]||rel.type;
+      const relLabel=lang==='en'?{'teacher-student':'Teacher / Student',influence:'Influence',debate:'Debate'}[rel.type]||rel.type:{'teacher-student':'师承',influence:'影响',debate:'论战'}[rel.type]||rel.type;
       tag.innerHTML=`${lang==='en'?target.nameEn||target.name:target.name}<span class="dp-rel-type">${relLabel}</span>`;
       tag.addEventListener('click',()=>{closeDetailPanel();setTimeout(()=>{const n=simData.allNodes.find(x=>x.id===target.id);if(n)openDetailPanel(n)},300)});relList.appendChild(tag)}
   }else{relSec.style.display='none'}
@@ -1559,7 +1570,8 @@ async function buildTwinUniverse(){
     const info=TWIN_CATS[cat];if(!info)return;
     html+='<div class="tw-section"><div class="tw-section-title"><span>'+info.emoji+'</span>'+info.label+'</div><div class="tw-grid">';
     list.forEach(s=>{
-      html+='<a class="tw-card" href="https://yun-ai-base.github.io/'+s.name+'/" target="_blank" rel="noopener"><div class="tw-card-icon '+info.cls+'">'+s.icon+'</div><div class="tw-card-info"><div class="tw-card-name">'+s.name+'</div><div class="tw-card-desc">'+s.desc+'</div></div><span class="tw-card-arrow">→</span></a>';
+      const nm=escapeHtml(s.name),dc=escapeHtml(s.desc),ic=escapeHtml(s.icon);
+      html+='<a class="tw-card" href="https://yun-ai-base.github.io/'+encodeURIComponent(s.name)+'/" target="_blank" rel="noopener"><div class="tw-card-icon '+escapeHtml(info.cls)+'">'+ic+'</div><div class="tw-card-info"><div class="tw-card-name">'+nm+'</div><div class="tw-card-desc">'+dc+'</div></div><span class="tw-card-arrow">→</span></a>';
     });
     html+='</div></div>';
   });
@@ -1586,11 +1598,27 @@ function processData(data){
 }
 function renderGraph(data){
   const w=window.innerWidth,h=window.innerHeight;svg.attr('width',w).attr('height',h);
-  const edgeLines=gEdges.selectAll('line').data(data.edges).join('line')
+  const edgeLines=gEdges.selectAll('line.edge-line').data(data.edges).join('line').attr('class','edge-line')
     .attr('stroke',d=>`url(#edge-${d.sourceNode.civilization}-${d.targetNode.civilization})`)
     .attr('stroke-width',d=>Math.max(.8,d.strokeWidth))
     .attr('stroke-dasharray',d=>d.lineStyle==='dashed'?'6,4':d.lineStyle==='dotted'?'2,3':'none').attr('stroke-opacity',.55);
-  const nodeGroups=gNodes.selectAll('.node-group').data(data.nodes).join('g').attr('class','node-group').style('cursor','pointer');
+  // 透明命中层：提升细边的 hover 可命中范围
+  const edgeHits=gEdges.selectAll('line.edge-hit').data(data.edges).join('line').attr('class','edge-hit')
+    .attr('stroke','transparent').attr('stroke-width',12).style('pointer-events','stroke');
+  const relTypeLabel=lang==='en'?{'teacher-student':'Teacher / Student',influence:'Influence',debate:'Debate'}:{'teacher-student':'师承',influence:'影响',debate:'论战'};
+  const edgeTip=document.getElementById('edge-tip');
+  edgeHits.on('mouseenter',function(event,d){
+    const sn=d.sourceNode.nameEn||d.sourceNode.name,tn=d.targetNode.nameEn||d.targetNode.name;
+    edgeTip.querySelector('.et-title').textContent=(lang==='en'?(d.sourceNode.nameEn||d.sourceNode.name):d.sourceNode.name)+' → '+(lang==='en'?(d.targetNode.nameEn||d.targetNode.name):d.targetNode.name);
+    edgeTip.querySelector('.et-type').textContent=relTypeLabel[d.type]||d.type;
+    edgeTip.querySelector('.et-desc').textContent=d.description||'';
+    edgeTip.style.opacity=1;
+    d3.select(this).attr('stroke','rgba(255,255,255,.12)');
+    edgeLines.filter(x=>x===d).attr('stroke-width',dd=>Math.max(3,dd.strokeWidth+2)).attr('stroke-opacity',.9);
+  }).on('mousemove',function(event){const x=event.clientX+16,y=event.clientY-16;edgeTip.style.left=(x+300>window.innerWidth?x-316:x)+'px';edgeTip.style.top=(y+120>window.innerHeight?y-136:y)+'px'})
+  .on('mouseleave',function(event,d){edgeTip.style.opacity=0;d3.select(this).attr('stroke','transparent');edgeLines.filter(x=>x===d).attr('stroke-width',dd=>Math.max(.8,dd.strokeWidth)).attr('stroke-opacity',.55)});
+  const nodeGroups=gNodes.selectAll('.node-group').data(data.nodes).join('g').attr('class','node-group').style('cursor','pointer')
+    .attr('tabindex',0).attr('role','button').attr('aria-label',d=>`${d.name}，${formatYears(d.birth,d.death)}`);
   nodeGroups.append('circle').attr('class','node-glow').attr('r',d=>d.radius+6).attr('fill','none').attr('stroke',d=>d.glowColor).attr('stroke-width',3).attr('filter','url(#glow)').attr('opacity',.55);
   nodeGroups.append('circle').attr('class','node-body').attr('r',d=>d.radius).attr('fill',d=>d.color).attr('opacity',.9).attr('stroke',d=>d.glowColor).attr('stroke-width',1.5);
   nodeGroups.append('circle').attr('class','node-highlight').attr('r',d=>d.radius*.35).attr('fill','white').attr('opacity',.25).attr('cx',d=>-d.radius*.25).attr('cy',d=>-d.radius*.25);
@@ -1612,7 +1640,7 @@ function renderGraph(data){
   const drag=d3.drag().on('start',function(event,d){if(!event.active)simulation.alphaTarget(.1).restart();d.fx=d.x;d.fy=d.y;svg.classed('dragging-node',true)})
     .on('drag',function(event,d){d.fx=event.x;d.fy=event.y}).on('end',function(event,d){if(!event.active)simulation.alphaTarget(0);svg.classed('dragging-node',false)});
   nodeGroups.call(drag);
-  const ticked=()=>{edgeLines.attr('x1',d=>d.source.x).attr('y1',d=>d.source.y).attr('x2',d=>d.target.x).attr('y2',d=>d.target.y);nodeGroups.attr('transform',d=>`translate(${d.x},${d.y})`)};
+  const ticked=()=>{edgeLines.attr('x1',d=>d.source.x).attr('y1',d=>d.source.y).attr('x2',d=>d.target.x).attr('y2',d=>d.target.y);edgeHits.attr('x1',d=>d.source.x).attr('y1',d=>d.source.y).attr('x2',d=>d.target.x).attr('y2',d=>d.target.y);nodeGroups.attr('transform',d=>`translate(${d.x},${d.y})`)};
   simulation=d3.forceSimulation(data.nodes).force('link',d3.forceLink(data.edges).id(d=>d.id).distance(d=>70+(10-d.strength)*16))
     .force('charge',d3.forceManyBody().strength(d=>-180-d.influence*35)).force('collide',d3.forceCollide(d=>d.radius+16).iterations(3))
     .force('center',d3.forceCenter(w*.45,h*.48)).force('x',d3.forceX(w*.45).strength(.015)).force('y',d3.forceY(h*.48).strength(.015))
@@ -1638,7 +1666,12 @@ document.addEventListener('keydown',e=>{
   if(e.key==='f'&&!e.ctrlKey&&!e.metaKey){panelOpen=!panelOpen;filterPanel.classList.toggle('collapsed',!panelOpen);filterToggle.textContent=panelOpen?'◀':'▶';return;}
   const viewMap={'1':'star','2':'river','3':'spectrum','4':'duel','5':'quiz','6':'twin'};
   if(viewMap[e.key]){switchView(viewMap[e.key]);return;}
-  if(e.key==='Enter'&&kbFocusIdx>=0&&currentView==='star'){e.preventDefault();const n=kbOrder[kbFocusIdx];if(gNodes&&gNodes.selectAll)gNodes.selectAll('.node-group').classed('kb-focus',false);if(n)openDetailPanel(n);return;}
+  if(e.key==='Enter'&&currentView==='star'){
+    // 键盘聚焦到某个节点（tabindex=0）时，Enter 打开该节点
+    const focusedNode=ae&&ae.classList&&ae.classList.contains('node-group')&&ae.__data__;
+    if(focusedNode){e.preventDefault();openDetailPanel(focusedNode);return;}
+    if(kbFocusIdx>=0){e.preventDefault();const n=kbOrder[kbFocusIdx];if(gNodes&&gNodes.selectAll)gNodes.selectAll('.node-group').classed('kb-focus',false);if(n)openDetailPanel(n);return;}
+  }
   if(currentView==='star'&&['ArrowRight','ArrowDown','ArrowLeft','ArrowUp'].includes(e.key)){e.preventDefault();navigateNodes(e.key==='ArrowRight'||e.key==='ArrowDown'?1:-1);return;}
 });
 
@@ -1741,7 +1774,8 @@ function renderTimeRiver(){
   const minYear=-600,maxYear=2000,totalSpan=maxYear-minYear;
   const totalWidth=2600*trZoom;
   const yearToX=y=>((y-minYear)/totalSpan)*totalWidth+40;
-  const eras=[{id:'ancient',label:'古希腊/轴心时代',start:-600,end:200,color:'129,140,248'},{id:'classical',label:'古典晚期/中世纪',start:200,end:1400,color:'148,163,184'},{id:'renaissance',label:'文艺复兴/近代早期',start:1400,end:1700,color:'251,191,36'},{id:'enlightenment',label:'启蒙时代',start:1700,end:1800,color:'52,211,153'},{id:'modern',label:'19世纪',start:1800,end:1900,color:'244,114,182'},{id:'contemporary',label:'20世纪/当代',start:1900,end:2000,color:'129,140,248'}];
+  const eras=[{id:'ancient',label:'古希腊/轴心时代',labelEn:'Ancient / Axial Age',start:-600,end:200,color:'129,140,248'},{id:'classical',label:'古典晚期/中世纪',labelEn:'Late Antiquity / Medieval',start:200,end:1400,color:'148,163,184'},{id:'renaissance',label:'文艺复兴/近代早期',labelEn:'Renaissance / Early Modern',start:1400,end:1700,color:'251,191,36'},{id:'enlightenment',label:'启蒙时代',labelEn:'Enlightenment',start:1700,end:1800,color:'52,211,153'},{id:'modern',label:'19世纪',labelEn:'19th Century',start:1800,end:1900,color:'244,114,182'},{id:'contemporary',label:'20世纪/当代',labelEn:'20th Century / Contemporary',start:1900,end:2000,color:'129,140,248'}];
+  const eraLabel=e=>lang==='en'?(e.labelEn||e.label):e.label;
   let html='<div class="tr-era-bands">';
   for(const era of eras){
     const x1=yearToX(era.start),x2=yearToX(era.end);
@@ -1750,7 +1784,7 @@ function renderTimeRiver(){
   html+='</div><div class="tr-axis"></div>';
   for(const era of eras){
     const cx=yearToX((era.start+era.end)/2);
-    html+=`<div class="tr-era-label" style="left:${cx}px;color:rgba(${era.color},.7)">${era.label}</div>`;
+    html+=`<div class="tr-era-label" style="left:${cx}px;color:rgba(${era.color},.7)">${eraLabel(era)}</div>`;
   }
   const topCivs=new Set(['western','islamic']);
   const top=[],bottom=[];
@@ -1972,11 +2006,24 @@ function computeQuizResults(){
     }
   }
   // Map quiz IDs to actual philosopher IDs
-  const idMap={socrates:'socrates',plato:'plato',aristotle:'aristotle',kant:'kant',hegel:'hegel',marx:'marx',nietzsche:'nietzsche',descartes:'descartes',spinoza:'spinoza',locke:'locke',hume:'hume',leibniz:'leibniz',bacon:'bacon',rousseau:'rousseau',confucius:'confucius',mencius:'mencius',laozi:'laozi',zhuangzi:'zhuangzi',buddha:'buddha',augustine:'augustine',aquinas:'aquinas',machiavelli:'machiavelli',wittgenstein:'wittgenstein',husserl:'husserl',democritus:'democritus',heraclitus:'heraclitus'};
+  // 数据一致性修复（2026-08-13）：测验选项引用了 42 个数据集未收录的哲人 id。
+  // 2026-08-13 西方扩充后，其中 12 人（epictetus/seneca/montaigne/feuerbach/habermas/
+  // kierkegaard/montesquieu/pascal/plotinus/rawls/schelling/voltaire）已收录为真实哲人，
+  // 从映射中移除后直接命中真实 id；其余仍映射到语义最接近的已收录哲人。
+  const idMap={socrates:'socrates',plato:'plato',aristotle:'aristotle',kant:'kant',hegel:'hegel',marx:'marx',nietzsche:'nietzsche',descartes:'descartes',spinoza:'spinoza',locke:'locke',hume:'hume',leibniz:'leibniz',bacon:'bacon',rousseau:'rousseau',confucius:'confucius',mencius:'mencius',laozi:'laozi',zhuangzi:'zhuangzi',buddha:'buddha',augustine:'augustine',aquinas:'aquinas',machiavelli:'machiavelli',wittgenstein:'wittgenstein',husserl:'husserl',democritus:'democritus',heraclitus:'heraclitus',
+    marcus:'marcus-aurelius',zen:'huineng',
+    alain:'epicurus',bakunin:'marx',che:'marx',gramsci:'marx',lenin:'marx',mao:'marx',
+    beckett:'camus',burke:'confucius',christianity:'augustine',dawkins:'nietzsche',dostoevsky:'schopenhauer',einstein:'kuhn',
+    emerson:'nietzsche',freud:'foucault',gandhi:'laozi',hayek:'laozi',illich:'rousseau',jesus:'mozi',
+    luther:'ockham',mctaggart:'kant',montessori:'rousseau',newton:'kuhn',
+    nozick:'hobbes',schmitt:'machiavelli',
+    smith:'laozi',thoreau:'zhuangzi',tillich:'aquinas',washington:'locke'};
   const merged={};
+  const knownIds=new Set(dataRef.philosophers.map(p=>p.id));
   for(const [key,pts] of Object.entries(scores)){
     const realId=idMap[key]||key;
-    if(dataRef.philosophers.find(p=>p.id===realId))merged[realId]=(merged[realId]||0)+pts;
+    if(knownIds.has(realId))merged[realId]=(merged[realId]||0)+pts;
+    else if(typeof console!=='undefined'&&console.warn)console.warn('[quiz] 测验引用了数据集中不存在的哲人 id:',key);
   }
   const sorted=Object.entries(merged).sort((a,b)=>b[1]-a[1]);
   const total=sorted.reduce((s,e)=>s+e[1],0)||1;
@@ -2019,7 +2066,7 @@ function setupQuiz(){
     for(let i=0;i<80;i++){ctx.fillStyle=`rgba(255,255,255,${Math.random()*.4+.1})`;ctx.beginPath();ctx.arc(Math.random()*w,Math.random()*h,Math.random()*1.5+.3,0,Math.PI*2);ctx.fill()}
     // Title
     ctx.fillStyle='#f1f5f9';ctx.font='bold 28px system-ui,"Microsoft YaHei",sans-serif';ctx.textAlign='center';ctx.fillText('🧬 我的哲学DNA',w/2,60);
-    ctx.fillStyle='#64748b';ctx.font='14px system-ui,"Microsoft YaHei",sans-serif';ctx.fillText('脉络 Philomap · 哲学基因测试',w/2,90);
+    ctx.fillStyle='#94a3b8';ctx.font='14px system-ui,"Microsoft YaHei",sans-serif';ctx.fillText('脉络 Philomap · 哲学基因测试',w/2,90);
     // Bars
     const barY=130,barH=44,barGap=16,bx=120,barW=380;
     for(let i=0;i<Math.min(3,ranked.length);i++){
