@@ -145,6 +145,34 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
 #detail-panel .dp-scroll::-webkit-scrollbar-track{background:transparent}
 #detail-panel .dp-scroll::-webkit-scrollbar-thumb{background:rgba(255,255,255,.06);border-radius:2px}
 
+/* Overlay */
+#dp-overlay{position:fixed;inset:0;z-index:7;background:rgba(0,0,8,.45);opacity:0;pointer-events:none;transition:opacity .35s ease;backdrop-filter:blur(2px)}
+#dp-overlay.show{opacity:1;pointer-events:auto}
+
+/* Tab 分层导航 */
+.dp-tabs{display:flex;gap:3px;margin:12px 0 2px;padding:4px;border-radius:10px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.05)}
+.dp-tab{flex:1;min-width:0;padding:6px 2px;border:none;border-radius:7px;background:transparent;color:#94a3b8;font-family:inherit;font-size:12px;cursor:pointer;transition:all .2s;white-space:nowrap;letter-spacing:.5px}
+.dp-tab:hover{background:rgba(255,255,255,.06);color:#e2e8f0}
+.dp-tab.active{background:rgba(129,140,248,.18);color:#c7d2fe;font-weight:700;box-shadow:0 1px 6px rgba(129,140,248,.15)}
+
+/* 影响力分位 */
+.dp-influence .dp-rank{margin-left:6px;padding:1px 8px;border-radius:100px;background:rgba(255,255,255,.05);color:#cbd5e1;font-size:var(--fs-xs);letter-spacing:.3px}
+
+/* 金句复制 */
+.dp-quote-copy{position:absolute;top:10px;right:12px;z-index:2;width:26px;height:26px;border-radius:6px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#94a3b8;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.dp-quote-copy:hover{background:rgba(255,255,255,.1);color:#e2e8f0}
+.dp-quote-copy.copied{color:#34d399;border-color:rgba(52,211,153,.4)}
+
+/* 语义色板：区分不同性质区块（暖金=金句/逸闻，冷青=科学视角） */
+.dp-quote-block{background:linear-gradient(135deg,rgba(251,191,36,.05),rgba(251,191,36,.02));border:1px solid rgba(251,191,36,.1)}
+.dp-eval{background:linear-gradient(135deg,rgba(56,189,248,.05),rgba(56,189,248,.02));border:1px solid rgba(56,189,248,.1)}
+.dp-anecdote{background:linear-gradient(135deg,rgba(251,191,36,.05),rgba(251,191,36,.02));border:1px solid rgba(251,191,36,.1)}
+/* 3级视觉层级：核心层（思想/著作/时间轴/演化）强化，花絮层弱化 */
+.dp-section-title .dp-section-icon{width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;border-radius:6px;font-size:12px;flex-shrink:0}
+#dp-core .dp-section-icon,#dp-works .dp-section-icon,#dp-timeline .dp-section-icon,#dp-evolution .dp-section-icon{background:rgba(129,140,248,.16)}
+#dp-core .dp-section-title,#dp-works .dp-section-title,#dp-timeline .dp-section-title,#dp-evolution .dp-section-title{font-weight:800;color:#e2e8f0}
+#dp-anecdote .dp-section-title,#dp-events .dp-section-title,#dp-reading .dp-section-title{opacity:.85;font-weight:500}
+
 /* Font size selector */
 .dp-fs-row{display:flex;align-items:center;justify-content:center;gap:8px;margin:18px 0 6px;padding:8px 0;border-top:1px solid rgba(255,255,255,.04);border-bottom:1px solid rgba(255,255,255,.04)}
 .dp-fs-label{font-size:11px;color:#94a3b8;letter-spacing:.5px}
@@ -274,10 +302,12 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
 .dp-reading-item .dp-reading-type{font-size:9px;color:#475569;text-transform:uppercase;letter-spacing:.8px;flex-shrink:0}
 
 /* Related */
-.dp-related-list{display:flex;flex-wrap:wrap;gap:6px}
-.dp-related-tag{padding:6px 14px;border-radius:100px;font-size:var(--fs-small);border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.02);color:#cbd5e1;cursor:pointer;transition:all .2s;font-family:inherit;letter-spacing:.3px}
+.dp-related-list{display:flex;flex-direction:column;gap:8px}
+.dp-related-tag{padding:10px 14px;border-radius:10px;font-size:var(--fs-small);border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.02);color:#cbd5e1;cursor:pointer;transition:all .2s;font-family:inherit;letter-spacing:.3px;display:flex;flex-direction:column;gap:4px}
 .dp-related-tag:hover{transform:translateY(-1px);color:#f8fafc;box-shadow:0 2px 12px rgba(0,0,0,.3)}
-.dp-related-tag .dp-rel-type{font-size:9px;color:#94a3b8;margin-left:4px}
+.dp-related-tag .dp-rel-head{display:flex;align-items:center;gap:6px;font-weight:600}
+.dp-related-tag .dp-rel-type{font-size:9px;color:#94a3b8;padding:1px 7px;border-radius:100px;background:rgba(255,255,255,.06)}
+.dp-related-tag .dp-rel-desc{font-size:var(--fs-xs);color:#94a3b8;line-height:1.5;font-weight:400}
 
 /* ── Thought Journey（关系旅行）── */
 .dp-journey{display:flex;flex-direction:column;gap:12px;padding:14px 16px;border-radius:12px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.015)}
@@ -712,7 +742,8 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
 <div id="filter-overlay"></div>
 
 <!-- ═══════════ DETAIL PANEL (right) ═══════════ -->
-<div id="detail-panel">
+<div id="dp-overlay"></div>
+<div id="detail-panel" role="dialog" aria-modal="true" aria-labelledby="dp-name" tabindex="-1">
   <div class="dp-accent"></div>
   <button class="dp-fav" title="收藏 / 取消收藏">☆</button>
   <button class="dp-share" title="复制分享链接">🔗</button>
@@ -722,18 +753,29 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
     <!-- Hero -->
     <div class="dp-hero">
       <div class="dp-portrait"><div class="dp-glow"></div><span class="dp-initial"></span></div>
-      <div class="dp-name"></div>
+      <div class="dp-name" id="dp-name"></div>
       <div class="dp-name-en"></div>
       <div class="dp-meta"></div>
       <div class="dp-badges"></div>
-      <div class="dp-influence"><span>影响力</span><div class="dp-stars"></div></div>
+      <div class="dp-influence"><span>影响力</span><div class="dp-stars"></div><span class="dp-rank"></span></div>
     </div>
 
     <!-- Font size -->
     <div class="dp-fs-row"><span class="dp-fs-label">字号</span><div class="dp-fs-btns"><button class="dp-fs-btn" data-size="small">小</button><button class="dp-fs-btn active" data-size="medium">中</button><button class="dp-fs-btn" data-size="large">大</button></div></div>
 
+    <!-- Tab 分层导航 -->
+    <div class="dp-tabs" role="tablist" aria-label="详情分类">
+      <button class="dp-tab active" data-tab="all" data-zh="全览" data-en="All" role="tab" aria-selected="true">全览</button>
+      <button class="dp-tab" data-tab="overview" data-zh="概览" data-en="Overview" role="tab" aria-selected="false">概览</button>
+      <button class="dp-tab" data-tab="thought" data-zh="思想" data-en="Thought" role="tab" aria-selected="false">思想</button>
+      <button class="dp-tab" data-tab="journey" data-zh="轨迹" data-en="Journey" role="tab" aria-selected="false">轨迹</button>
+      <button class="dp-tab" data-tab="influence" data-zh="影响" data-en="Influence" role="tab" aria-selected="false">影响</button>
+      <button class="dp-tab" data-tab="more" data-zh="更多" data-en="More" role="tab" aria-selected="false">更多</button>
+    </div>
+
     <!-- Quote -->
     <div class="dp-quote-block">
+      <button class="dp-quote-copy" title="复制金句" aria-label="复制金句">⧉</button>
       <div class="dp-quote-text"></div>
       <div class="dp-quote-src"></div>
       <div class="dp-quote-nav"></div>
@@ -1061,6 +1103,7 @@ function applyLang(){
   const fpRandom=document.getElementById('fp-random');if(fpRandom)fpRandom.textContent=t('randomBtn');
   const fpFavEl=document.getElementById('fp-fav');if(fpFavEl)fpFavEl.textContent=t('favBtn');
   const dpFavBtn=document.querySelector('.dp-fav');if(dpFavBtn)dpFavBtn.title=t('dpFavTitle');
+  document.querySelectorAll('.dp-tab').forEach(b=>{if(b.dataset.en)b.textContent=lang==='en'?b.dataset.en:(b.dataset.zh||b.textContent)});
   document.querySelector('#twin-view .tw-header h2').textContent=t('twinTitle');
   document.querySelector('#twin-view .tw-header p').textContent=t('twinSub');
   document.querySelector('#time-bar .time-hint').textContent=t('hint');
@@ -1354,16 +1397,19 @@ function openDetailPanel(d){
   // Influence stars
   const stars=panel.querySelector('.dp-stars');stars.innerHTML='';
   for(let i=0;i<10;i++){const st=document.createElement('div');st.className='dp-star';st.style.background=i<d.influence?c.color:'rgba(255,255,255,.1)';stars.appendChild(st)}
+  // 影响力分位（在全体哲人中的相对位置）
+  const rankEl=panel.querySelector('.dp-rank');
+  if(rankEl){const infs=dataRef.philosophers.map(p=>p.influence||0);const higher=infs.filter(v=>v>(d.influence||0)).length;const pct=Math.max(1,Math.round(higher/infs.length*100));rankEl.textContent=lang==='en'?`Top ${pct}%`:`前 ${pct}%`;}
   // Summary
-  panel.querySelector('.dp-summary').innerHTML=lf(d,'summary')||'';
+  panel.querySelector('.dp-summary').textContent=lf(d,'summary')||'';
   // Quotes
   const qb=panel.querySelector('.dp-quote-block');
   const quotes=d.goldenQuotes||(d.goldenQuote?[d.goldenQuote]:[]);
   if(quotes.length>0){qb.style.display='block';qb.style.setProperty('--quote-accent',c.color);
     let qIdx=0;
     function showQuote(i){
-      qb.querySelector('.dp-quote-text').innerHTML='&#x201C;'+lf(quotes[i],'text')+'&#x201D;';
-      qb.querySelector('.dp-quote-src').innerHTML='—— '+lf(quotes[i],'source');
+      qb.querySelector('.dp-quote-text').textContent='\u201C'+lf(quotes[i],'text')+'\u201D';
+      qb.querySelector('.dp-quote-src').textContent='—— '+lf(quotes[i],'source');
       const nav=qb.querySelector('.dp-quote-nav');
       if(quotes.length>1){nav.innerHTML='';for(let j=0;j<quotes.length;j++){const dot=document.createElement('span');dot.className='dp-quote-dot'+(j===i?' active':'');dot.addEventListener('click',e=>{e.stopPropagation();showQuote(j)});nav.appendChild(dot)}nav.style.display='flex'}else{nav.style.display='none'}
     }
@@ -1371,10 +1417,10 @@ function openDetailPanel(d){
   }else{qb.style.display='none'}
   // Thought evolution
   const evSec=document.getElementById('dp-evolution');
-  if(lf(d,'thoughtEvolution')){evSec.style.display='block';evSec.querySelector('.dp-evolution-text').innerHTML=lf(d,'thoughtEvolution');const dot=evSec.querySelector('.dp-evolution-text');dot.style.setProperty('--dot-color',c.color)}else{evSec.style.display='none'}
+  if(lf(d,'thoughtEvolution')){evSec.style.display='block';evSec.querySelector('.dp-evolution-text').textContent=lf(d,'thoughtEvolution');const dot=evSec.querySelector('.dp-evolution-text');dot.style.setProperty('--dot-color',c.color)}else{evSec.style.display='none'}
   // Timeline
   const tlSec=document.getElementById('dp-timeline'),tlContent=document.getElementById('dp-tl-content');
-  if(d.timeline&&d.timeline.length){tlSec.style.display='block';tlContent.innerHTML='';const displayEvents=d.timeline.slice(0,12);for(const e of displayEvents){tlContent.innerHTML+=`<div class="dp-tl-item ${e.type}"><div class="dp-tl-year">${formatYear(e.year)}</div><div class="dp-tl-title">${lf(e,'title')}</div>${e.desc?`<div class="dp-tl-desc">${lf(e,'desc')}</div>`:''}</div>`}}else{tlSec.style.display='none'}
+  if(d.timeline&&d.timeline.length){tlSec.style.display='block';tlContent.innerHTML='';const displayEvents=d.timeline.slice(0,12);for(const e of displayEvents){tlContent.innerHTML+=`<div class="dp-tl-item ${e.type}"><div class="dp-tl-year">${formatYear(e.year)}</div><div class="dp-tl-title">${escapeHtml(lf(e,'title'))}</div>${e.desc?`<div class="dp-tl-desc">${escapeHtml(lf(e,'desc'))}</div>`:''}</div>`}}else{tlSec.style.display='none'}
   // Core thoughts
   const coreSec=document.getElementById('dp-core'),coreList=coreSec.querySelector('.dp-concept-list'),coreNet=document.getElementById('dp-concept-net');
   if(d.coreThoughts&&d.coreThoughts.length){coreSec.style.display='block';coreList.innerHTML='';
@@ -1384,7 +1430,7 @@ function openDetailPanel(d){
       const cpt=lf(ct,'concept');const lvl=lf(ct,defaultLevel)||ct.desc||'';
       const lvlEn=lang==='en'?(ct[defaultLevel+'En']||ct.descEn||''):'';
       const descText=lvlEn||lvl;
-      item.innerHTML=`<div class="dp-concept-name"><span style="color:${c.color}">${cpt}</span><div class="dp-level-btns">${lvlLabels.map(lv=>`<button class="dp-level-btn${lv.k===defaultLevel?' active':''}${ct[lv.k]?'':' disabled'}" data-level="${lv.k}">${lv.label}</button>`).join('')}</div></div><div class="dp-concept-desc" data-ci="${ci}">${descText}</div>`;
+      item.innerHTML=`<div class="dp-concept-name"><span style="color:${c.color}">${escapeHtml(cpt)}</span><div class="dp-level-btns">${lvlLabels.map(lv=>`<button class="dp-level-btn${lv.k===defaultLevel?' active':''}${ct[lv.k]?'':' disabled'}" data-level="${lv.k}">${lv.label}</button>`).join('')}</div></div><div class="dp-concept-desc" data-ci="${ci}">${escapeHtml(descText)}</div>`;
       // Level switch logic
       item.querySelectorAll('.dp-level-btn').forEach(btn=>{btn.addEventListener('click',e=>{e.stopPropagation();const lv=btn.dataset.level;if(!ct[lv])return;item.querySelectorAll('.dp-level-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');item.querySelector('.dp-concept-desc').textContent=lf(ct,lv)||ct[lv]})});
       coreList.appendChild(item)}
@@ -1393,36 +1439,36 @@ function openDetailPanel(d){
   }else{coreSec.style.display='none';coreNet.style.display='none'}
   // Works
   const worksSec=document.getElementById('dp-works'),worksList=worksSec.querySelector('.dp-works-list');
-  if(d.representativeWorks&&d.representativeWorks.length){worksSec.style.display='block';worksList.innerHTML='';for(const w of d.representativeWorks){let html=`<div class="dp-work-item"><div class="dp-work-icon" style="background:${c.color}"></div><div class="dp-work-info"><span class="dp-work-title">${lf(w,'title')}</span>${w.type?`<span class="dp-work-meta">${w.type}${w.year?` · ${formatYear(w.year)}`:''}</span>`:''}`;if(w.content)html+=`<div class="dp-work-content">${lf(w,'content')||w.content}</div>`;html+='</div></div>';worksList.innerHTML+=html}}else{worksSec.style.display='none'}
+  if(d.representativeWorks&&d.representativeWorks.length){worksSec.style.display='block';worksList.innerHTML='';for(const w of d.representativeWorks){let html=`<div class="dp-work-item"><div class="dp-work-icon" style="background:${c.color}"></div><div class="dp-work-info"><span class="dp-work-title">${escapeHtml(lf(w,'title'))}</span>${w.type?`<span class="dp-work-meta">${escapeHtml(w.type)}${w.year?` · ${formatYear(w.year)}`:''}</span>`:''}`;if(w.content)html+=`<div class="dp-work-content">${escapeHtml(lf(w,'content')||w.content)}</div>`;html+='</div></div>';worksList.innerHTML+=html}}else{worksSec.style.display='none'}
   // Events
   const eventsSec=document.getElementById('dp-events'),eventsList=eventsSec.querySelector('.dp-event-list');
-  if(d.famousEvents&&d.famousEvents.length){eventsSec.style.display='block';eventsList.innerHTML='';for(const ev of d.famousEvents){eventsList.innerHTML+=`<div class="dp-event-item"><strong>${lf(ev,'title')}</strong>${ev.year?`（${formatYear(ev.year)}）` : ''}：${lf(ev,'desc')}</div>`}}else{eventsSec.style.display='none'}
+  if(d.famousEvents&&d.famousEvents.length){eventsSec.style.display='block';eventsList.innerHTML='';for(const ev of d.famousEvents){eventsList.innerHTML+=`<div class="dp-event-item"><strong>${escapeHtml(lf(ev,'title'))}</strong>${ev.year?`（${formatYear(ev.year)}）` : ''}：${escapeHtml(lf(ev,'desc'))}</div>`}}else{eventsSec.style.display='none'}
   // Anecdote
   const anecdoteSec=document.getElementById('dp-anecdote');
-  if(lf(d,'anecdote')){anecdoteSec.style.display='block';anecdoteSec.querySelector('.dp-anecdote-text').innerHTML=lf(d,'anecdote')}else{anecdoteSec.style.display='none'}
+  if(lf(d,'anecdote')){anecdoteSec.style.display='block';anecdoteSec.querySelector('.dp-anecdote-text').textContent=lf(d,'anecdote')}else{anecdoteSec.style.display='none'}
   // Scientific eval
   const evalSec=document.getElementById('dp-eval');
-  if(lf(d,'scientificEval')){evalSec.style.display='block';evalSec.querySelector('.dp-eval').innerHTML=lf(d,'scientificEval')}else{evalSec.style.display='none'}
+  if(lf(d,'scientificEval')){evalSec.style.display='block';evalSec.querySelector('.dp-eval').textContent=lf(d,'scientificEval')}else{evalSec.style.display='none'}
   // AI Review
   const aiSec=document.getElementById('dp-ai-review');
-  if(lf(d,'aiReview')){aiSec.style.display='block';aiSec.querySelector('.dp-ai-text').innerHTML=lf(d,'aiReview')}else{aiSec.style.display='none'}
+  if(lf(d,'aiReview')){aiSec.style.display='block';aiSec.querySelector('.dp-ai-text').textContent=lf(d,'aiReview')}else{aiSec.style.display='none'}
   // Influence Map
   const inflSec=document.getElementById('dp-infl'),inflGrid=inflSec.querySelector('.dp-infl-grid');
   const inflData=d.layers?.L7_legacy?.influenceMap;
   if(inflData&&inflData.length){inflSec.style.display='block';inflGrid.innerHTML=inflData.map(i=>
-    '<div class="dp-infl-item"><span class="dp-infl-icon">'+i.icon+'</span><div class="dp-infl-content"><div class="dp-infl-domain">'+lf(i,'domain')+'</div><div class="dp-infl-desc">'+lf(i,'desc')+'</div></div></div>'
+    '<div class="dp-infl-item"><span class="dp-infl-icon">'+escapeHtml(i.icon)+'</span><div class="dp-infl-content"><div class="dp-infl-domain">'+escapeHtml(lf(i,'domain'))+'</div><div class="dp-infl-desc">'+escapeHtml(lf(i,'desc'))+'</div></div></div>'
   ).join('')}else{inflSec.style.display='none'}
   // Contemporary Applications
   const contempSec=document.getElementById('dp-contemp'),contempList=contempSec.querySelector('.dp-contemp-list');
   const contempData=d.layers?.L7_legacy?.contemporaryApplications;
   if(contempData&&contempData.length){contempSec.style.display='block';contempList.innerHTML=contempData.map(i=>
-    '<div class="dp-contemp-item"><span class="dp-contemp-icon">'+i.icon+'</span><div class="dp-contemp-info"><div class="dp-contemp-title">'+lf(i,'title')+'</div><div class="dp-contemp-desc">'+lf(i,'desc')+'</div></div></div>'
+    '<div class="dp-contemp-item"><span class="dp-contemp-icon">'+escapeHtml(i.icon)+'</span><div class="dp-contemp-info"><div class="dp-contemp-title">'+escapeHtml(lf(i,'title'))+'</div><div class="dp-contemp-desc">'+escapeHtml(lf(i,'desc'))+'</div></div></div>'
   ).join('')}else{contempSec.style.display='none'}
   // Further reading
   const readSec=document.getElementById('dp-reading'),readList=readSec.querySelector('.dp-reading-list');
   if(d.furtherReading&&d.furtherReading.length){readSec.style.display='block';readList.innerHTML='';
     const typeIcons={book:'📖',concept:'💭',video:'🎬',article:'📄'};
-    for(const fr of d.furtherReading){const hasUrl=fr.url&&fr.url.startsWith('http');readList.innerHTML+=`<${hasUrl?'a':'div'} class="dp-reading-item"${hasUrl?` href="${fr.url}" target="_blank" rel="noopener"`:''}><span class="dp-reading-icon">${typeIcons[fr.type]||'📌'}</span><div class="dp-reading-info"><div class="dp-reading-title">${lf(fr,'title')}${hasUrl?' ↗':''}</div><div class="dp-reading-desc">${lf(fr,'desc')}</div></div><span class="dp-reading-type">${fr.type}</span></${hasUrl?'a':'div'}>`}
+    for(const fr of d.furtherReading){const hasUrl=fr.url&&fr.url.startsWith('http');readList.innerHTML+=`<${hasUrl?'a':'div'} class="dp-reading-item"${hasUrl?` href="${escapeHtml(fr.url)}" target="_blank" rel="noopener"`:''}><span class="dp-reading-icon">${typeIcons[fr.type]||'📌'}</span><div class="dp-reading-info"><div class="dp-reading-title">${escapeHtml(lf(fr,'title'))}${hasUrl?' ↗':''}</div><div class="dp-reading-desc">${escapeHtml(lf(fr,'desc'))}</div></div><span class="dp-reading-type">${escapeHtml(fr.type)}</span></${hasUrl?'a':'div'}>`}
   }else{readSec.style.display='none'}
   // Related
   const relSec=document.getElementById('dp-related'),relList=relSec.querySelector('.dp-related-list');
@@ -1430,7 +1476,8 @@ function openDetailPanel(d){
     for(const rel of d.relationships){const target=nodeMap.get(rel.target);if(!target)continue;const tag=document.createElement('span');tag.className='dp-related-tag';
       tag.style.borderColor=target.color+'40';
       const relLabel=lang==='en'?{'teacher-student':'Teacher / Student',influence:'Influence',debate:'Debate'}[rel.type]||rel.type:{'teacher-student':'师承',influence:'影响',debate:'论战'}[rel.type]||rel.type;
-      tag.innerHTML=`${lang==='en'?target.nameEn||target.name:target.name}<span class="dp-rel-type">${relLabel}</span>`;
+      const relName=lang==='en'?(target.nameEn||target.name):target.name;
+      tag.innerHTML=`<div class="dp-rel-head">${escapeHtml(relName)}<span class="dp-rel-type">${escapeHtml(relLabel)}</span></div>${rel.description?`<div class="dp-rel-desc">${escapeHtml(rel.description)}</div>`:''}`;
       tag.addEventListener('click',()=>{closeDetailPanel();setTimeout(()=>{const n=simData.allNodes.find(x=>x.id===target.id);if(n)openDetailPanel(n)},300)});relList.appendChild(tag)}
   }else{relSec.style.display='none'}
   // Thought Journey（关系旅行）
@@ -1443,7 +1490,7 @@ function openDetailPanel(d){
   const theme=eraThemes[d.civilization]||eraThemes.western;
   panel.style.background=`${theme.bg},linear-gradient(180deg,rgba(12,12,32,.95) 0%,rgba(10,10,28,.92) 100%)`;
   panel.querySelector('.dp-accent').style.background=theme.accent;
-  panel.classList.add('open');scroll.scrollTop=0;syncHash();
+  panel.classList.add('open');document.getElementById('dp-overlay').classList.add('show');scroll.scrollTop=0;syncHash();
   highlightConnections(d);
   // Update section titles for current language
   document.querySelectorAll('.dp-section-title').forEach(function(el){
@@ -1456,6 +1503,12 @@ function openDetailPanel(d){
   const collapseIds=['dp-events','dp-anecdote','dp-eval','dp-ai-review','dp-infl','dp-contemp','dp-reading'];
   collapseIds.forEach(id=>{const s=document.getElementById(id);if(s&&s.style.display!=='none')s.classList.add('collapsed');else if(s)s.classList.remove('collapsed')});
   ['dp-journey','dp-evolution','dp-timeline','dp-core','dp-works','dp-gen','dp-related'].forEach(id=>{const s=document.getElementById(id);if(s)s.classList.remove('collapsed')});
+  // 记录各 section 的"有数据"状态（供 Tab 聚焦），并初始化为全览
+  document.querySelectorAll('#detail-panel .dp-section').forEach(sec=>{sec.dataset.dpHidden=(sec.style.display==='none')?'1':'0'});
+  const qbHas=panel.querySelector('.dp-quote-block');if(qbHas)qbHas.dataset.hasQuote=(qbHas.style.display!=='none')?'1':'0';
+  applyDetailTab('all');
+  // a11y：打开后焦点移入面板
+  requestAnimationFrame(()=>{if(detailPanel.classList.contains('open'))detailPanel.focus()});
 }
 let conceptSim=null;
 // 详情面板 section 折叠（事件委托，一次绑定）
@@ -1464,6 +1517,41 @@ document.getElementById('detail-panel').addEventListener('click',e=>{
   if(!title)return;
   const sec=title.closest('.dp-section');
   if(sec)sec.classList.toggle('collapsed');
+});
+// ═══════════════ 详情面板 Tab 分层 ═══════════════
+const DP_TABS={overview:[],thought:['dp-core','dp-works'],journey:['dp-evolution','dp-timeline','dp-events'],influence:['dp-journey','dp-infl','dp-contemp','dp-related'],more:['dp-anecdote','dp-eval','dp-ai-review','dp-reading','dp-gen']};
+function applyDetailTab(tab){
+  document.querySelectorAll('.dp-tab').forEach(b=>{const on=b.dataset.tab===tab;b.classList.toggle('active',on);b.setAttribute('aria-selected',String(on))});
+  const sections=document.querySelectorAll('#detail-panel .dp-section');
+  const visIds=tab==='all'?null:(DP_TABS[tab]||[]);
+  sections.forEach(sec=>{
+    const hasData=sec.dataset.dpHidden!=='1';
+    if(tab==='all'){sec.style.display=hasData?'block':'none';}
+    else{sec.style.display=(visIds.indexOf(sec.id)>=0&&hasData)?'block':'none';}
+  });
+  const showTop=(tab==='all'||tab==='overview');
+  const sumEl=document.querySelector('#detail-panel .dp-summary');if(sumEl)sumEl.style.display=showTop?'':'none';
+  const qb=document.querySelector('#detail-panel .dp-quote-block');if(qb)qb.style.display=(showTop&&qb.dataset.hasQuote==='1')?'block':'none';
+}
+document.querySelector('.dp-tabs').addEventListener('click',e=>{const btn=e.target.closest('.dp-tab');if(btn)applyDetailTab(btn.dataset.tab)});
+// 遮罩点击关闭
+document.getElementById('dp-overlay').addEventListener('click',()=>{if(selectedNode)closeDetailPanel()});
+// 金句复制
+document.querySelector('.dp-quote-copy').addEventListener('click',()=>{
+  const txt=document.querySelector('#detail-panel .dp-quote-text').textContent;
+  const src=document.querySelector('#detail-panel .dp-quote-src').textContent;
+  const full=src?txt+'\n'+src:txt;
+  const done=()=>{const b=document.querySelector('.dp-quote-copy');b.classList.add('copied');b.textContent='✓';setTimeout(()=>{b.classList.remove('copied');b.textContent='⧉'},1500)};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(full).then(done).catch(()=>{})}else{done()}
+});
+// focus-trap：面板内 Tab 循环
+document.getElementById('detail-panel').addEventListener('keydown',e=>{
+  if(e.key!=='Tab')return;
+  const focusables=[...detailPanel.querySelectorAll('button, [href], input, [tabindex]:not([tabindex="-1"])')].filter(el=>!el.disabled&&el.offsetParent!==null);
+  if(focusables.length===0)return;
+  const first=focusables[0],last=focusables[focusables.length-1];
+  if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}
+  else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}
 });
 function renderConceptNet(philosopher,civColor,svgEl){
   if(conceptSim)conceptSim.stop();
@@ -1497,7 +1585,8 @@ function renderConceptNet(philosopher,civColor,svgEl){
   conceptSim=sim;
   nodeG.call(d3.drag().on('start',function(e,d){if(!e.active)sim.alphaTarget(.3).restart();d.fx=d.x;d.fy=d.y}).on('drag',function(e,d){d.fx=e.x;d.fy=e.y}).on('end',function(e,d){if(!e.active)sim.alphaTarget(0);d.fx=null;d.fy=null}));
 }
-function closeDetailPanel(){selectedNode=null;detailPanel.classList.remove('open');clearHighlights();if(typeof gNodes!=='undefined'&&gNodes&&gNodes.selectAll)gNodes.selectAll('.node-group').classed('selected',false);const qb=document.querySelector('.dp-quote-block');if(qb&&qb.dataset.interval){clearInterval(+qb.dataset.interval);delete qb.dataset.interval};syncHash()}
+function closeDetailPanel(){const prevId=selectedNode?selectedNode.id:null;selectedNode=null;detailPanel.classList.remove('open');const ov=document.getElementById('dp-overlay');if(ov)ov.classList.remove('show');clearHighlights();if(typeof gNodes!=='undefined'&&gNodes&&gNodes.selectAll)gNodes.selectAll('.node-group').classed('selected',false);const qb=document.querySelector('.dp-quote-block');if(qb&&qb.dataset.interval){clearInterval(+qb.dataset.interval);delete qb.dataset.interval};syncHash();// 焦点还回触发节点
+if(prevId&&typeof gNodes!=='undefined'&&gNodes&&gNodes.selectAll){try{const gn=gNodes.selectAll('.node-group').filter(function(n){return n&&n.id===prevId});const dom=gn.node();if(dom&&dom.focus)dom.focus()}catch(e){}}}
 function exportMD(d){
   const civName=lang==='en'?(civDisplayEn[d.civilization]||d.civilization):(civDisplay[d.civilization]||d.civilization);
   const schoolName=(dataRef.schools.find(s=>s.id===d.school)||{}).name||'';
