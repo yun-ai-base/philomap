@@ -1663,8 +1663,8 @@ function highlightConnections(d){
     else{glow.transition().duration(400).attr('r',n.radius+6)
       .attr('stroke',isUp?'#fbbf24':isDown?'#34d399':n.glowColor)
       .attr('stroke-width',conn?4:0).attr('opacity',conn?.7:.02)}
-    // Highlight dot
-    d3.select(this).select('.node-highlight').transition().duration(400).attr('opacity',isSel?.4:conn?.22:.02);
+    // Highlight dot（淡光点：选中/连接时稍亮但保持极淡，避免遮挡球内名字）
+    d3.select(this).select('.node-highlight').transition().duration(400).attr('opacity',isSel?.2:conn?.12:.02);
     // Label（只改透明度，不改字号，避免破坏球内多行标签）
     d3.select(this).select('.node-label').transition().duration(400)
       .attr('opacity',isSel?1:conn?.8:.03);
@@ -1689,7 +1689,7 @@ function clearHighlights(){
   gNodes.selectAll('.node-group').each(function(n){
     d3.select(this).select('.node-body').transition().duration(500).attr('r',n.radius).attr('opacity',.9);
     d3.select(this).select('.node-glow').attr('filter','url(#glow)').style('animation','none').transition().duration(500).attr('r',n.radius+6).attr('stroke',n.glowColor).attr('stroke-width',3).attr('opacity',.55);
-    d3.select(this).select('.node-highlight').transition().duration(500).attr('opacity',.25);
+    d3.select(this).select('.node-highlight').transition().duration(500).attr('opacity',.12);
     d3.select(this).select('.node-label').transition().duration(500).attr('opacity',.95);
     d3.select(this).select('.node-halo').transition().duration(500).attr('opacity',0).remove();
   });
@@ -2001,7 +2001,7 @@ function renderGraph(data){
     .attr('tabindex',0).attr('role','button').attr('aria-label',d=>`${d.name}，${formatYears(d.birth,d.death)}`);
   nodeGroups.append('circle').attr('class','node-glow').attr('r',d=>d.radius+6).attr('fill','none').attr('stroke',d=>d.ringColor).attr('stroke-width',3).attr('filter','url(#glow)').attr('opacity',.55);
   nodeGroups.append('circle').attr('class','node-body').attr('r',d=>d.radius).attr('fill',d=>d.color).attr('opacity',.9).attr('stroke',d=>d.ringColor).attr('stroke-width',1.5);
-  nodeGroups.append('circle').attr('class','node-highlight').attr('r',d=>d.radius*.35).attr('fill','white').attr('opacity',.25).attr('cx',d=>-d.radius*.25).attr('cy',d=>-d.radius*.25);
+  nodeGroups.append('circle').attr('class','node-highlight').attr('r',d=>d.radius*.22).attr('fill','white').attr('opacity',.12).attr('cx',d=>-d.radius*.28).attr('cy',d=>-d.radius*.28);
   nodeGroups.append('text').attr('class','node-label').attr('text-anchor','middle').attr('fill','#f1f5f9').attr('font-weight','700').attr('opacity',.95).attr('stroke','rgba(0,0,0,.45)').attr('stroke-width','1px').attr('paint-order','stroke').attr('style','pointer-events:none');
   nodeGroups.each(function(d){renderNodeLabel(this)});
   nodeGroups.append('text').attr('class','fav-star').attr('text-anchor','middle').attr('x',d=>d.radius*.78).attr('y',d=>-d.radius*.78).attr('fill','#fbbf24').attr('font-size',d=>11+d.influence*.4).text('★');
