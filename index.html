@@ -2560,15 +2560,62 @@ function renderSpectrum(){
     const r=Math.max(7,Math.min(22,densityR*infFactor));
     return {id:p.id,p,r,tx:margin+(sx/10)*plotW,ty:margin+((10-sy)/10)*plotH,x:margin+(sx/10)*plotW,y:margin+((10-sy)/10)*plotH};
   });
-  // Run a force sim to push apart（碰撞半径=球半径+小间距，防重叠遮挡）
+  // Run a force sim to push apart（先做大致布局，弱目标牵引让互斥更有效）
   const sim=d3.forceSimulation(nodes).alphaDecay(.06).velocityDecay(.45)
-    .force('x',d3.forceX(d=>d.tx).strength(.12))
-    .force('y',d3.forceY(d=>d.ty).strength(.12))
-    .force('collide',d3.forceCollide(d=>d.r+3).iterations(4))
+    .force('x',d3.forceX(d=>d.tx).strength(.05))
+    .force('y',d3.forceY(d=>d.ty).strength(.05))
+    .force('collide',d3.forceCollide(d=>d.r+3).iterations(6))
     .stop();
-  for(let i=0;i<180;i++)sim.tick();
-  // Bounding box to keep inside plot area
+  for(let i=0;i<200;i++)sim.tick();
+  // 确定性互斥因子：先不带边界约束迭代至完全收敛，再做一次边界 clamp 与末轮修复
+  const gap=3;
+  for(let iter=0;iter<200;iter++){
+    let moved=false;
+    for(let i=0;i<N;i++){
+      for(let j=i+1;j<N;j++){
+        const a=nodes[i],b=nodes[j];
+        const dx=b.x-a.x,dy=b.y-a.y;
+        const minDist=a.r+b.r+gap;
+        const dist=Math.hypot(dx,dy);
+        if(dist<minDist){
+          let ux,uy;
+          if(dist>1e-4){ux=dx/dist;uy=dy/dist;}
+          else{const ang=Math.random()*Math.PI*2;ux=Math.cos(ang);uy=Math.sin(ang);} // 完全重叠时随机方向推开
+          const push=(minDist-dist)/2+(dist<=1e-4?2:0); // 完全重叠时多推一点防再次重合
+          a.x-=ux*push;a.y-=uy*push;
+          b.x+=ux*push;b.y+=uy*push;
+          moved=true;
+        }
+      }
+    }
+    if(!moved)break;
+  }
+  // 一次性边界 clamp（推到画布外的不留）
   for(const n of nodes){n.x=Math.max(margin+n.r,Math.min(margin+plotW-n.r,n.x));n.y=Math.max(margin+n.r,Math.min(margin+plotH-n.r,n.y))}
+  // 末轮无边界互斥修复 clamp 产生的重叠
+  for(let iter=0;iter<60;iter++){
+    let moved=false;
+    for(let i=0;i<N;i++){
+      for(let j=i+1;j<N;j++){
+        const a=nodes[i],b=nodes[j];
+        const dx=b.x-a.x,dy=b.y-a.y;
+        const minDist=a.r+b.r+gap;
+        const dist=Math.hypot(dx,dy);
+        if(dist<minDist){
+          let ux,uy;
+          if(dist>1e-4){ux=dx/dist;uy=dy/dist;}
+          else{const ang=Math.random()*Math.PI*2;ux=Math.cos(ang);uy=Math.sin(ang);}
+          const push=(minDist-dist)/2+(dist<=1e-4?2:0);
+          a.x-=ux*push;a.y-=uy*push;
+          b.x+=ux*push;b.y+=uy*push;
+          moved=true;
+        }
+      }
+    }
+    // 最后一遍再 clamp 一次保险
+    for(const n of nodes){n.x=Math.max(margin+n.r,Math.min(margin+plotW-n.r,n.x));n.y=Math.max(margin+n.r,Math.min(margin+plotH-n.r,n.y))}
+    if(!moved)break;
+  }
   // Render
   const posMap=new Map();
   const nameOf=p=>lang==='en'?(p.nameEn||p.name):p.name;
@@ -2587,8 +2634,8 @@ function renderSpectrum(){
     const name=nameOf(p);
     const maxW=r*2*.82;                       // 球内可用宽度（留 18% 边距）
     const fontFam='system-ui,"Microsoft YaHei",sans-serif';
-    // 二分字号：找到能放进球内的最大字号
-    let fs=r*.62,lines=[];
+    // 二分字号：找到能放进球内的最大字号（球体缩小后字号相应更小）
+    let fs=r*.5,lines=[];
     const wrap=(name,fs)=>{
       ctx.font=`bold ${fs}px ${fontFam}`;
       if(!name.includes(' ')&&/[\u4e00-\u9fa5·]/.test(name)){
@@ -2603,7 +2650,7 @@ function renderSpectrum(){
       if(cur)out.push(cur);return out;
     };
     // 逐步减小字号直到 ≤3 行（且不超宽）
-    for(;fs>=7;fs-=1){lines=wrap(name,fs);if(lines.length<=3)break}
+    for(;fs>=6;fs-=1){lines=wrap(name,fs);if(lines.length<=3)break}
     // 若仍超 3 行，强制 3 行并截断
     if(lines.length>3){lines=lines.slice(0,3);lines[2]=lines[2].slice(0,-1)+'…'}
     ctx.font=`bold ${fs}px ${fontFam}`;
