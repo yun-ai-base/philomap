@@ -2548,20 +2548,25 @@ function renderSpectrum(){
   ctx.textAlign='left';
   ctx.save();ctx.translate(margin-16,margin);ctx.rotate(-Math.PI/2);ctx.fillText(`← ${specDims[yKey].opposite}`,0,0);ctx.restore();
   ctx.save();ctx.translate(margin-16,margin+plotH);ctx.rotate(Math.PI/2);ctx.fillText(`${specDims[yKey].label} →`,0,0);ctx.restore();
-  // Data points — force layout to spread bubbles while keeping quadrant
+  // Data points — 球半径按画布面积×节点数密度自适应，影响力仅做微调
   const all=dataRef.philosophers;
+  const N=all.length;
+  // 目标：每个球占用 ≈3.2×r²π 的画布面积（含间距），半径 = sqrt(plotArea/(N*k))
+  const densityR=Math.sqrt((plotW*plotH)/(N*3.2*Math.PI));
   const nodes=all.map(p=>{
     const sx=specScores[p.id][xKey],sy=specScores[p.id][yKey];
-    const r=16+p.influence*2.2; // 球体足够容纳内部名字
+    // 影响力 6-10 → 系数 0.86-1.10，让大人物稍大
+    const infFactor=0.86+(p.influence-6)*0.06;
+    const r=Math.max(7,Math.min(22,densityR*infFactor));
     return {id:p.id,p,r,tx:margin+(sx/10)*plotW,ty:margin+((10-sy)/10)*plotH,x:margin+(sx/10)*plotW,y:margin+((10-sy)/10)*plotH};
   });
-  // Run a force sim to push apart（碰撞半径=球半径+间距，防重叠遮挡）
+  // Run a force sim to push apart（碰撞半径=球半径+小间距，防重叠遮挡）
   const sim=d3.forceSimulation(nodes).alphaDecay(.06).velocityDecay(.45)
     .force('x',d3.forceX(d=>d.tx).strength(.12))
     .force('y',d3.forceY(d=>d.ty).strength(.12))
-    .force('collide',d3.forceCollide(d=>d.r+4).iterations(4))
+    .force('collide',d3.forceCollide(d=>d.r+3).iterations(4))
     .stop();
-  for(let i=0;i<150;i++)sim.tick();
+  for(let i=0;i<180;i++)sim.tick();
   // Bounding box to keep inside plot area
   for(const n of nodes){n.x=Math.max(margin+n.r,Math.min(margin+plotW-n.r,n.x));n.y=Math.max(margin+n.r,Math.min(margin+plotH-n.r,n.y))}
   // Render
