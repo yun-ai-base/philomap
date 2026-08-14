@@ -1257,6 +1257,16 @@ const timeStartSlider=document.getElementById('time-start'),timeEndSlider=docume
 function sliderToYear(v){
   if(v<=12)return Math.round(-600+v/12*600);if(v<=25)return Math.round((v-12)/13*500);if(v<=40)return Math.round(500+(v-25)/15*500);if(v<=55)return Math.round(1000+(v-40)/15*500);if(v<=70)return Math.round(1500+(v-55)/15*300);if(v<=85)return Math.round(1800+(v-70)/15*100);return Math.round(1900+(v-85)/15*100);
 }
+// sliderToYear 的逆映射：年份 → 滑块值（播放动画同步时间轴用）
+function yearToSlider(y){
+  if(y<0)return Math.max(0,(y+600)/600*12);
+  if(y<500)return 12+y/500*13;
+  if(y<1000)return 25+(y-500)/500*15;
+  if(y<1500)return 40+(y-1000)/500*15;
+  if(y<1800)return 55+(y-1500)/300*15;
+  if(y<1900)return 70+(y-1800)/100*15;
+  return Math.min(100,85+(y-1900)/100*15);
+}
 function updateTimeRange(){
   let s=parseInt(timeStartSlider.value),e=parseInt(timeEndSlider.value);
   if(s>e){[s,e]=[e,s];timeStartSlider.value=s;timeEndSlider.value=e}
@@ -1280,7 +1290,10 @@ function stopPlayback(){
   if(playbackRaf)cancelAnimationFrame(playbackRaf);playbackRaf=0;
   // 恢复初始过滤状态
   applyAllFilters();
-  if(timeStartSlider){timeStartSlider.disabled=false;timeEndSlider.disabled=false}
+  if(timeStartSlider){timeStartSlider.disabled=false;timeStartSlider.value=0}
+  if(timeEndSlider){timeEndSlider.disabled=false;timeEndSlider.value=100}
+  const timeFillEl=document.getElementById('time-fill');
+  if(timeFillEl){timeFillEl.style.left='0%';timeFillEl.style.right='0%'}
   // 复位时间显示 + 若详情面板仍开着，恢复其关系高亮
   timeDisplay.textContent=lang==='en'?'All Eras':'全部时代';
   if(selectedNode)highlightConnections(selectedNode);
@@ -1304,6 +1317,11 @@ function tickPlayback(){
     d3.select(this).transition().duration(60).attr('opacity',on?null:0).attr('display',on?null:'none');
   });
   timeDisplay.textContent=formatYear(Math.round(cutoff));
+  // 同步时间轴：终点滑块 + 进度填充条随年份推进（起点固定 -600 对应滑块 0）
+  const vEnd=yearToSlider(cutoff);
+  if(timeEndSlider)timeEndSlider.value=vEnd;
+  const timeFillEl=document.getElementById('time-fill');
+  if(timeFillEl){timeFillEl.style.left='0%';timeFillEl.style.right=(100-vEnd)+'%'}
   if(cutoff>=2000){stopPlayback();return}
   playbackRaf=requestAnimationFrame(tickPlayback);
 }
@@ -1320,6 +1338,8 @@ timePlayBtn.addEventListener('click',()=>{
   const fpFavBtn=document.getElementById('fp-fav');if(fpFavBtn)fpFavBtn.classList.remove('active');
   timeRange=[-9999,9999];
   timeStartSlider.value=0;timeEndSlider.value=100;
+  const timeFillEl=document.getElementById('time-fill');
+  if(timeFillEl){timeFillEl.style.left='0%';timeFillEl.style.right='0%'}
   updateFilterCount();
   // 先把所有节点淡出，再开始推进
   gNodes.selectAll('.node-group').selectAll('circle,text').attr('opacity',.05).attr('display','none');
