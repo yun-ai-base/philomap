@@ -1058,10 +1058,11 @@ const SCHOOL_RING_COLORS={
   'sophists':'#d946ef'
 };
 // 关系类型三重编码：线型(线长节奏)+颜色+线宽系数，保证师承/影响/论战一眼可分
-// 师承=琥珀实线(最重) 影响=天蓝长虚线 论战=玫红点线；避免与节点流派色混淆：均取高亮色系
-const REL_COLORS={'teacher-student':'#fbbf24','influence':'#60a5fa','debate':'#f87171'};
+// 43 种流派色已铺满全色相环，彩色必与节点外环撞色，故类型色走"节点色系之外的极端明度"：
+// 师承=纯白实线(最重) 影响=浅灰长虚线(默认感) 论战=亮洋红点线(醒目)；三色均不存在于 SCHOOL_RING_COLORS
+const REL_COLORS={'teacher-student':'#ffffff','influence':'#cbd5e1','debate':'#e879f9'};
 const REL_DASH  ={'teacher-student':'none','influence':'10,5','debate':'2,5'};
-const REL_WIDTH ={'teacher-student':1.15,'influence':1,'debate':1};
+const REL_WIDTH ={'teacher-student':1.25,'influence':1,'debate':1.05};
 function formatYear(y){return y==null?'':(y<0?`公元前${Math.abs(y)}年`:`公元${y}年`)}
 function formatYears(birth,death){return death==null?formatYear(birth)+' — 至今':formatYear(birth)+' — '+formatYear(death)}
 const civDisplay={western:'西方',eastern:'东方',indian:'印度',islamic:'伊斯兰'};
