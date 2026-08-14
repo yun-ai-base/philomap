@@ -490,10 +490,10 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
 #rel-legend .rl-item{display:flex;align-items:center;gap:6px;color:#cbd5e1;letter-spacing:.3px;cursor:pointer;padding:4px 8px;border-radius:8px;transition:all .2s;border:1px solid transparent}
 #rel-legend .rl-item:hover{background:rgba(255,255,255,.06)}
 #rel-legend .rl-item.off{opacity:.35}
-#rel-legend .rl-line{width:16px;height:0;border-top:2px solid;flex-shrink:0}
-#rel-legend .rl-line.solid{border-top-style:solid}
-#rel-legend .rl-line.dashed{border-top-style:dashed}
-#rel-legend .rl-line.dotted{border-top-style:dotted}
+#rel-legend .rl-line{width:18px;height:3px;flex-shrink:0;background:currentColor;border:none}
+#rel-legend .rl-line.solid{background:currentColor}
+#rel-legend .rl-line.dashed{background:repeating-linear-gradient(90deg,currentColor 0 10px,transparent 10px 15px)}
+#rel-legend .rl-line.dotted{background:repeating-linear-gradient(90deg,currentColor 0 2px,transparent 2px 7px)}
 #lang-btn{position:absolute;right:-2px;top:-2px;font-size:10px;color:#94a3b8;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:6px;padding:2px 8px;cursor:pointer;font-family:inherit;letter-spacing:.5px;transition:all .2s;z-index:2;pointer-events:auto}
 #lang-btn:hover{background:rgba(129,140,248,.12);color:#a5b4fc;border-color:rgba(129,140,248,.25)}
 
@@ -1057,6 +1057,11 @@ const SCHOOL_RING_COLORS={
   // 第二轮扩充新增（2026-08-13）：sophists 用 fuchsia（色相 307°，填补紫-粉空档）
   'sophists':'#d946ef'
 };
+// 关系类型三重编码：线型(线长节奏)+颜色+线宽系数，保证师承/影响/论战一眼可分
+// 师承=琥珀实线(最重) 影响=天蓝长虚线 论战=玫红点线；避免与节点流派色混淆：均取高亮色系
+const REL_COLORS={'teacher-student':'#fbbf24','influence':'#60a5fa','debate':'#f87171'};
+const REL_DASH  ={'teacher-student':'none','influence':'10,5','debate':'2,5'};
+const REL_WIDTH ={'teacher-student':1.15,'influence':1,'debate':1};
 function formatYear(y){return y==null?'':(y<0?`公元前${Math.abs(y)}年`:`公元${y}年`)}
 function formatYears(birth,death){return death==null?formatYear(birth)+' — 至今':formatYear(birth)+' — '+formatYear(death)}
 const civDisplay={western:'西方',eastern:'东方',indian:'印度',islamic:'伊斯兰'};
@@ -1164,7 +1169,7 @@ function renderRelLegend(){
   const items=[{type:'teacher-student',cls:'solid',zh:'师承',en:'Teacher / Student'},{type:'influence',cls:'dashed',zh:'影响',en:'Influence'},{type:'debate',cls:'dotted',zh:'论战',en:'Debate'}];
   rl.innerHTML=items.map(it=>{
     const off=currentFilters.relType.size>0&&!currentFilters.relType.has(it.type);
-    return `<span class="rl-item${off?' off':''}" data-type="${it.type}"><span class="rl-line ${it.cls}" style="border-top-color:#94a3b8"></span>${lang==='en'?it.en:it.zh}</span>`;
+    return `<span class="rl-item${off?' off':''}" data-type="${it.type}"><span class="rl-line ${it.cls}" style="color:${REL_COLORS[it.type]||'#94a3b8'}"></span>${lang==='en'?it.en:it.zh}</span>`;
   }).join('');
   rl.querySelectorAll('.rl-item').forEach(el=>{
     el.addEventListener('click',()=>{
@@ -1698,9 +1703,9 @@ function clearHighlights(){
     const s=d.sourceNode||d.source,t=d.targetNode||d.target;
     const grad=`url(#edge-${s.civilization}-${t.civilization})`;
     d3.select(this).transition().duration(500)
-      .attr('stroke',grad)
-      .attr('stroke-opacity',.55)
-      .attr('stroke-width',Math.max(.8,d.strokeWidth));
+      .attr('stroke',REL_COLORS[d.type]||grad)
+      .attr('stroke-opacity',.6)
+      .attr('stroke-width',Math.max(.8,d.strokeWidth)*(REL_WIDTH[d.type]||1));
   });
 }
 
@@ -1987,9 +1992,9 @@ function renderNodeLabel(group){
 function renderGraph(data){
   const w=window.innerWidth,h=window.innerHeight;svg.attr('width',w).attr('height',h);
   const edgeLines=gEdges.selectAll('line.edge-line').data(data.edges).join('line').attr('class','edge-line')
-    .attr('stroke',d=>`url(#edge-${d.sourceNode.civilization}-${d.targetNode.civilization})`)
-    .attr('stroke-width',d=>Math.max(.8,d.strokeWidth))
-    .attr('stroke-dasharray',d=>d.lineStyle==='dashed'?'6,4':d.lineStyle==='dotted'?'2,3':'none').attr('stroke-opacity',.55);
+    .attr('stroke',d=>REL_COLORS[d.type]||`url(#edge-${d.sourceNode.civilization}-${d.targetNode.civilization})`)
+    .attr('stroke-width',d=>Math.max(.8,d.strokeWidth)*(REL_WIDTH[d.type]||1))
+    .attr('stroke-dasharray',d=>REL_DASH[d.type]!==undefined?REL_DASH[d.type]:'none').attr('stroke-opacity',.6);
   // 透明命中层：提升细边的 hover 可命中范围
   const edgeHits=gEdges.selectAll('line.edge-hit').data(data.edges).join('line').attr('class','edge-hit')
     .attr('stroke','transparent').attr('stroke-width',12).style('pointer-events','stroke');
