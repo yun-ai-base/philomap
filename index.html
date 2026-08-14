@@ -391,9 +391,12 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
   #header{top:8px;left:0;transform:none;width:100%;padding:0 4px}
   #header h1{font-size:16px}
   #header .subtitle{display:none}
-  .view-toggle{overflow-x:auto;gap:2px;padding:0 4px 4px;scrollbar-width:none;justify-content:flex-start;-webkit-overflow-scrolling:touch;margin-top:4px}
-  .view-toggle::-webkit-scrollbar{display:none}
-  .view-toggle button{padding:4px 6px;font-size:9px;white-space:nowrap;flex-shrink:0;letter-spacing:0}
+  .view-toggle{position:fixed;top:46px;right:160px;width:180px;display:none;flex-direction:column;gap:4px;padding:8px;background:rgba(12,12,32,.96);border:1px solid rgba(255,255,255,.12);border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,.5);backdrop-filter:blur(12px);z-index:7}
+  .view-toggle.open{display:flex}
+  .view-toggle button{padding:10px 12px;font-size:13px;white-space:nowrap;flex-shrink:0;letter-spacing:0;width:100%;text-align:left;border-radius:8px;border:1px solid transparent}
+  .view-menu-btn{display:inline-flex;align-items:center;gap:4px;padding:6px 12px;font-size:12px;border-radius:8px;border:1px solid rgba(255,255,255,.18);background:rgba(20,20,40,.88);color:#cbd5e1;cursor:pointer;font-family:inherit;backdrop-filter:blur(8px);position:fixed;top:8px;right:170px;z-index:7}
+.view-menu-btn:active{background:rgba(129,140,248,.25)}
+  .view-menu-btn:active{background:rgba(129,140,248,.2)}
   #lang-btn{position:relative;right:auto;top:auto;display:inline-block;margin-left:6px;font-size:9px;padding:1px 6px;vertical-align:middle}
   /* fade hint on right edge */
   #header::after{content:'';position:absolute;right:0;top:28px;width:24px;height:30px;background:linear-gradient(90deg,transparent,rgba(0,0,8,.7));pointer-events:none;z-index:1}
@@ -505,10 +508,12 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
   #quiz-modal{border-radius:20px 20px 0 0;max-height:85vh}
 }@media(min-width:769px){
   #filter-overlay,#mob-filter-btn{display:none!important}
+  .view-menu-btn{display:none!important}
 }
 
 /* ═══════════════ VIEW TOGGLE ═══════════════ */
-.view-toggle{display:flex;gap:4px;margin-top:8px;pointer-events:auto}
+.view-toggle{display:none;gap:4px;margin-top:8px;pointer-events:auto}
+@media(min-width:769px){.view-toggle{display:flex}}
 .view-toggle button{padding:6px 18px;border-radius:100px;font-size:12px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.05);color:#94a3b8;cursor:pointer;font-family:inherit;letter-spacing:.5px;transition:all .25s}
 .view-toggle button:hover{border-color:rgba(255,255,255,.35);color:#e2e8f0}
 .view-toggle button.active{background:rgba(129,140,248,.2);border-color:rgba(129,140,248,.45);color:#c7d2fe;font-weight:600;box-shadow:0 0 16px rgba(129,140,248,.15)}
@@ -719,6 +724,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
     <button data-view="twin" style="background:rgba(201,168,76,.1);border-color:rgba(201,168,76,.2)">🧬 孪生宇宙</button>
   </div>
 </div>
+<button class="view-menu-btn" id="view-menu-btn" type="button">☰ 视图</button>
 <div id="civ-legend"></div>
 <div id="rel-legend"></div>
 
@@ -1490,6 +1496,8 @@ function openDetailPanel(d){
   if(school){const sBadge=document.createElement('span');sBadge.className='dp-badge';sBadge.style.background='rgba(255,255,255,.05)';sBadge.style.color='#cbd5e1';sBadge.style.cursor='pointer';sBadge.textContent=lang==='en'?(school.nameEn||school.name):school.name;
     if(school.description){const st=document.getElementById('school-tip');sBadge.addEventListener('mouseenter',function(e){st.querySelector('.st-name').textContent=lang==='en'?(school.nameEn||school.name):school.name;st.querySelector('.st-desc').textContent=lang==='en'?(school.descriptionEn||school.description):school.description;st.querySelector('.st-dev').textContent=school.development||'';const x=e.clientX+12,y=e.clientY-10;st.style.left=(x+300>window.innerWidth?x-316:x)+'px';st.style.top=(y+180>window.innerHeight?y-196:y)+'px';st.style.opacity=1});sBadge.addEventListener('mouseleave',()=>{st.style.opacity=0})}
     badges.appendChild(sBadge)}
+  // 学派宗师标识
+  if(d.founder){const fBadge=document.createElement('span');fBadge.className='dp-badge dp-founder-badge';fBadge.style.background='rgba(251,191,36,.18)';fBadge.style.color='#fbbf24';fBadge.style.border='1px solid rgba(251,191,36,.35)';fBadge.textContent=lang==='en'?'✦ School Founder':'✦ 学派宗师';badges.appendChild(fBadge)}
   // Influence stars
   const stars=panel.querySelector('.dp-stars');stars.innerHTML='';
   for(let i=0;i<10;i++){const st=document.createElement('div');st.className='dp-star';st.style.background=i<d.influence?c.color:'rgba(255,255,255,.1)';stars.appendChild(st)}
@@ -2112,7 +2120,7 @@ function renderGraph(data){
   nodeGroups.on('mouseenter',function(event,d){
     if(selectedNode&&selectedNode.id===d.id)return;d3.select(this).select('.node-glow').transition().duration(200).attr('stroke-width',5).attr('opacity',.85);d3.select(this).select('.node-body').transition().duration(200).attr('opacity',1);
     tooltip.querySelector('.tt-name').textContent=lang==='en'?(d.nameEn||d.name)+(d.nameEn&&d.name?' ('+d.name+')':''):d.name+(d.nameEn?' ('+d.nameEn+')':'');tooltip.querySelector('.tt-years').textContent=formatYears(d.birth,d.death)+' · '+d.nationality;
-    const se=dataRef?.schools.find(s=>s.id===d.school);const scEl=tooltip.querySelector('.tt-school');scEl.textContent=lang==='en'?(se?.nameEn||se?.name||''):(se?.name||'');scEl.style.background=(d.ringColor||'#ffffff')+'33';scEl.style.color=d.ringColor||'#e2e8f0';
+    const se=dataRef?.schools.find(s=>s.id===d.school);const scEl=tooltip.querySelector('.tt-school');scEl.textContent=(d.founder?'✦ ':'')+(lang==='en'?(se?.nameEn||se?.name||''):(se?.name||''));scEl.style.background=d.founder?'rgba(251,191,36,.15)':(d.ringColor||'#ffffff')+'33';scEl.style.color=d.founder?'#fbbf24':(d.ringColor||'#e2e8f0');
     const q=d.goldenQuotes?d.goldenQuotes[0]:d.goldenQuote;tooltip.querySelector('.tt-quote').textContent=q?.text||'';tooltip.querySelector('.tt-quote-src').textContent=q?.source||'';tooltip.style.opacity=1;
   }).on('mousemove',function(event){const x=event.clientX+16,y=event.clientY-16;tooltip.style.left=(x+260>window.innerWidth?x-276:x)+'px';tooltip.style.top=(y+160>window.innerHeight?y-176:y)+'px'})
   .on('mouseleave',function(event,d){if(selectedNode&&selectedNode.id===d.id)return;d3.select(this).select('.node-glow').transition().duration(300).attr('stroke-width',3).attr('opacity',.55);d3.select(this).select('.node-body').transition().duration(300).attr('opacity',.9);tooltip.style.opacity=0})
@@ -2227,7 +2235,22 @@ function switchView(view){
 }
 viewBtns.forEach(b=>b.addEventListener('click',()=>{
   switchView(b.dataset.view);
+  closeViewMenu();
 }));
+// 移动端「☰ 视图」下拉菜单
+const viewMenuBtn=document.getElementById('view-menu-btn');
+const viewToggleEl=document.querySelector('.view-toggle');
+function closeViewMenu(){if(viewToggleEl)viewToggleEl.classList.remove('open')}
+if(viewMenuBtn){
+  viewMenuBtn.addEventListener('click',e=>{
+    e.stopPropagation();
+    if(viewToggleEl)viewToggleEl.classList.toggle('open');
+  });
+  // 点击下拉外任意处收起
+  document.addEventListener('click',e=>{
+    if(viewToggleEl&&viewToggleEl.classList.contains('open')&&!viewToggleEl.contains(e.target)&&e.target!==viewMenuBtn)closeViewMenu();
+  });
+}
 
 // ═══════════════ TIME RIVER ═══════════════
 let timeRiverBuilt=false,trZoom=1;
