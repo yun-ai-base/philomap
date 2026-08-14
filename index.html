@@ -1135,9 +1135,11 @@ function applyLang(){
   document.querySelector('[data-view="quiz"]').textContent=t('vQuiz');
   document.querySelector('[data-view="twin"]').textContent=t('vTwin');
   document.querySelector('.fp-header h3').textContent=t('filterTitle');
-  document.querySelector('[data-filter="civilization"]').previousElementSibling.textContent=t('civLabel');
-  document.querySelector('[data-filter="school"]').previousElementSibling.textContent=t('schoolLabel');
-  document.querySelector('[data-filter="era"]').previousElementSibling.textContent=t('eraLabel');
+  // 筛选面板标签（null 保护：DOM 重构后 previousElementSibling 可能为 null，不能中断 applyLang 后续的 renderRelLegend）
+  const setGroupLabel=(sel,key)=>{const el=document.querySelector(sel);const lab=el&&el.previousElementSibling;if(lab)lab.textContent=t(key)};
+  setGroupLabel('[data-filter="civilization"]','civLabel');
+  setGroupLabel('[data-filter="school"]','schoolLabel');
+  setGroupLabel('[data-filter="era"]','eraLabel');
   document.getElementById('filter-reset').textContent=t('resetBtn');
   document.getElementById('search-input').placeholder=t('searchPlh');
   const fpRandom=document.getElementById('fp-random');if(fpRandom)fpRandom.textContent=t('randomBtn');
