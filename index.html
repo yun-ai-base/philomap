@@ -1063,6 +1063,7 @@ const SCHOOL_RING_COLORS={
 const REL_COLORS={'teacher-student':'#ffffff','influence':'#cbd5e1','debate':'#e879f9'};
 const REL_DASH  ={'teacher-student':'none','influence':'10,5','debate':'2,5'};
 const REL_WIDTH ={'teacher-student':1.25,'influence':1,'debate':1.05};
+const REL_MARKER ={'teacher-student':'url(#arr-ts)','influence':'url(#arr-inf)','debate':'url(#arr-deb)'};
 function formatYear(y){return y==null?'':(y<0?`公元前${Math.abs(y)}年`:`公元${y}年`)}
 function formatYears(birth,death){return death==null?formatYear(birth)+' — 至今':formatYear(birth)+' — '+formatYear(death)}
 const civDisplay={western:'西方',eastern:'东方',indian:'印度',islamic:'伊斯兰'};
@@ -1202,6 +1203,14 @@ function setupDefs(){
   const m2=f2.append('feMerge');m2.append('feMergeNode').attr('in','blur');m2.append('feMergeNode').attr('in','SourceGraphic');
   const combos=[['western','eastern'],['western','indian'],['eastern','indian'],['western','islamic'],['eastern','islamic'],['indian','islamic'],['western','western'],['eastern','eastern'],['indian','indian'],['islamic','islamic']];
   for(const[a,b]of combos){const gr=defs.append('linearGradient').attr('id',`edge-${a}-${b}`).attr('gradientUnits','userSpaceOnUse');gr.append('stop').attr('offset','0%').attr('stop-color',civColors[a]?.color||'#818cf8').attr('stop-opacity',.7);gr.append('stop').attr('offset','100%').attr('stop-color',civColors[b]?.color||'#fbbf24').attr('stop-opacity',.7)}
+  // 关系边形状标记：师承=实心箭头(白) 影响=空心箭头(灰) 论战=菱形(粉)——形状+颜色双通道，绝不依赖节点色
+  const relMarkers=[['arr-ts','#ffffff','solid'],['arr-inf','#cbd5e1','open'],['arr-deb','#e879f9','diamond']];
+  for(const[mid,color,shape]of relMarkers){
+    const mk=defs.append('marker').attr('id',mid).attr('viewBox','0 0 10 10').attr('refX',shape==='diamond'?8:9.5).attr('refY','5').attr('markerWidth','7').attr('markerHeight','7').attr('orient','auto');
+    if(shape==='diamond')mk.append('path').attr('d','M5,1 L9,5 L5,9 L1,5 Z').attr('fill',color);
+    else if(shape==='open')mk.append('path').attr('d','M1,1 L9,5 L1,9').attr('fill','none').attr('stroke',color).attr('stroke-width','1.6');
+    else mk.append('path').attr('d','M1,1 L9,5 L1,9').attr('fill',color);
+  }
 }
 
 // ═══════════════ TIME SLIDER ═══════════════
@@ -1680,16 +1689,17 @@ function highlightConnections(d){
       d3.select(this).insert('circle','.node-body').attr('class','node-halo').attr('r',d.radius*1.6).attr('fill','none').attr('stroke',d.glowColor).attr('stroke-width',1.5).attr('opacity',0).transition().duration(600).attr('opacity',.4).attr('r',d.radius*2);
     }
   });
-  // 边：上游边暖色、下游边冷色，其余淡出
+  // 边：保持类型色(师承白/影响灰/论战粉)，关联边加粗提亮、非关联淡出；方向由节点发光(暖=上游/冷=下游)表达
   gEdges.selectAll('line.edge-line').each(function(e){
     const s=e.sourceNode?e.sourceNode.id:(e.source.id||e.source),t=e.targetNode?e.targetNode.id:(e.target.id||e.target);
     const isUp=(s===d.id&&up.has(t))||(t===d.id&&up.has(s));
     const isDown=(s===d.id&&down.has(t))||(t===d.id&&down.has(s));
     const rel=isUp||isDown;
+    const base=REL_COLORS[e.type]||'#94a3b8';
     d3.select(this).transition().duration(400)
-      .attr('stroke',isUp?'#fbbf24':isDown?'#34d399':null)
-      .attr('stroke-opacity',rel?.85:.02)
-      .attr('stroke-width',rel?Math.max(1.8,e.strokeWidth*2.2):.2);
+      .attr('stroke',base)
+      .attr('stroke-opacity',rel?1:.05)
+      .attr('stroke-width',rel?Math.max(2.2,e.strokeWidth*2.4):Math.max(.6,e.strokeWidth*.9));
   });
 }
 function clearHighlights(){
@@ -1995,7 +2005,8 @@ function renderGraph(data){
   const edgeLines=gEdges.selectAll('line.edge-line').data(data.edges).join('line').attr('class','edge-line')
     .attr('stroke',d=>REL_COLORS[d.type]||`url(#edge-${d.sourceNode.civilization}-${d.targetNode.civilization})`)
     .attr('stroke-width',d=>Math.max(.8,d.strokeWidth)*(REL_WIDTH[d.type]||1))
-    .attr('stroke-dasharray',d=>REL_DASH[d.type]!==undefined?REL_DASH[d.type]:'none').attr('stroke-opacity',.6);
+    .attr('stroke-dasharray',d=>REL_DASH[d.type]!==undefined?REL_DASH[d.type]:'none').attr('stroke-opacity',.6)
+    .attr('marker-end',d=>REL_MARKER[d.type]||null);
   // 透明命中层：提升细边的 hover 可命中范围
   const edgeHits=gEdges.selectAll('line.edge-hit').data(data.edges).join('line').attr('class','edge-hit')
     .attr('stroke','transparent').attr('stroke-width',12).style('pointer-events','stroke');
