@@ -1058,9 +1058,9 @@ const SCHOOL_RING_COLORS={
   'sophists':'#d946ef'
 };
 // 关系类型三重编码：线型(线长节奏)+颜色+线宽系数，保证师承/影响/论战一眼可分
-// 43 种流派色已铺满全色相环，彩色必与节点外环撞色，故类型色走"节点色系之外的极端明度"：
-// 师承=纯白实线(最重) 影响=浅灰长虚线(默认感) 论战=亮洋红点线(醒目)；三色均不存在于 SCHOOL_RING_COLORS
-const REL_COLORS={'teacher-student':'#ffffff','influence':'#cbd5e1','debate':'#e879f9'};
+// 43 种流派色已铺满全色相环，类型色走"节点色系之外的极端色"：白/亮青/亮粉两两色距≥85，
+// 且各色与最近流派色距≥62（无撞车）；形状标记(实心箭头/空心箭头/菱形)作第二通道兜底
+const REL_COLORS={'teacher-student':'#ffffff','influence':'#67e8f9','debate':'#f0abfc'};
 const REL_DASH  ={'teacher-student':'none','influence':'10,5','debate':'2,5'};
 const REL_WIDTH ={'teacher-student':1.25,'influence':1,'debate':1.05};
 const REL_MARKER ={'teacher-student':'url(#arr-ts)','influence':'url(#arr-inf)','debate':'url(#arr-deb)'};
@@ -1203,8 +1203,8 @@ function setupDefs(){
   const m2=f2.append('feMerge');m2.append('feMergeNode').attr('in','blur');m2.append('feMergeNode').attr('in','SourceGraphic');
   const combos=[['western','eastern'],['western','indian'],['eastern','indian'],['western','islamic'],['eastern','islamic'],['indian','islamic'],['western','western'],['eastern','eastern'],['indian','indian'],['islamic','islamic']];
   for(const[a,b]of combos){const gr=defs.append('linearGradient').attr('id',`edge-${a}-${b}`).attr('gradientUnits','userSpaceOnUse');gr.append('stop').attr('offset','0%').attr('stop-color',civColors[a]?.color||'#818cf8').attr('stop-opacity',.7);gr.append('stop').attr('offset','100%').attr('stop-color',civColors[b]?.color||'#fbbf24').attr('stop-opacity',.7)}
-  // 关系边形状标记：师承=实心箭头(白) 影响=空心箭头(灰) 论战=菱形(粉)——形状+颜色双通道，绝不依赖节点色
-  const relMarkers=[['arr-ts','#ffffff','solid'],['arr-inf','#cbd5e1','open'],['arr-deb','#e879f9','diamond']];
+  // 关系边形状标记：师承=实心箭头(白) 影响=空心箭头(青) 论战=菱形(亮粉)——形状+颜色双通道，绝不依赖节点色
+  const relMarkers=[['arr-ts','#ffffff','solid'],['arr-inf','#67e8f9','open'],['arr-deb','#f0abfc','diamond']];
   for(const[mid,color,shape]of relMarkers){
     const mk=defs.append('marker').attr('id',mid).attr('viewBox','0 0 10 10').attr('refX',shape==='diamond'?8:9.5).attr('refY','5').attr('markerWidth','7').attr('markerHeight','7').attr('orient','auto');
     if(shape==='diamond')mk.append('path').attr('d','M5,1 L9,5 L5,9 L1,5 Z').attr('fill',color);
