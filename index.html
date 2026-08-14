@@ -114,6 +114,30 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
 .filter-btn.active.indian{background:rgba(244,114,182,.3);border-color:rgba(244,114,182,.6);box-shadow:0 0 16px rgba(244,114,182,.2);color:#fff}
 .filter-btn.active.islamic{background:rgba(52,211,153,.3);border-color:rgba(52,211,153,.6);box-shadow:0 0 16px rgba(52,211,153,.2);color:#fff}
 
+/* 文明圈 · 色块象限卡 */
+[data-filter="civilization"].filter-btns{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.filter-btn.civ-card{display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 6px;border-radius:12px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.03);transition:all .25s}
+.filter-btn.civ-card .civ-dot{width:14px;height:14px;border-radius:50%;box-shadow:0 0 8px currentColor}
+.filter-btn.civ-card .civ-name{font-size:12px;color:#cbd5e1;letter-spacing:.5px}
+.filter-btn.civ-card:hover{border-color:rgba(255,255,255,.28);transform:translateY(-1px)}
+.filter-btn.civ-card.active{box-shadow:0 0 16px var(--civ-glow,rgba(129,140,248,.45));border-width:1.5px}
+
+/* 时代 · 时间轴色带 */
+.filter-btns.era-strip{display:flex;gap:2px;height:28px;overflow:hidden;border-radius:8px;background:rgba(255,255,255,.03);padding:2px}
+.filter-btn.era-seg{flex:1;min-width:0;padding:0;border:none;border-radius:3px;opacity:.5;transition:opacity .2s,box-shadow .2s;cursor:pointer;position:relative}
+.filter-btn.era-seg:hover{opacity:.85}
+.filter-btn.era-seg.active{opacity:1;box-shadow:inset 0 0 0 1.5px #fff}
+.era-scale{display:flex;justify-content:space-between;font-size:9px;color:#64748b;margin-top:4px;letter-spacing:.3px}
+
+/* 流派 · 色点矩阵 */
+.filter-btns.school-matrix{display:flex;flex-direction:column;gap:9px;max-height:150px;overflow-y:auto}
+.school-civ-group{display:flex;flex-direction:column;gap:5px}
+.school-civ-label{font-size:10px;letter-spacing:1px;padding-left:1px}
+.school-dots{display:flex;flex-wrap:wrap;gap:6px}
+.filter-btn.school-dot{width:15px;height:15px;padding:0;border-radius:50%;border:1px solid rgba(255,255,255,.22);transition:transform .15s,box-shadow .15s}
+.filter-btn.school-dot:hover{transform:scale(1.4);z-index:2}
+.filter-btn.school-dot.active{box-shadow:0 0 0 2px #fff,0 0 8px rgba(255,255,255,.5);transform:scale(1.25)}
+
 .filter-btns::-webkit-scrollbar{width:4px}
 .filter-btns::-webkit-scrollbar-track{background:transparent}
 .filter-btns::-webkit-scrollbar-thumb{background:rgba(255,255,255,.08);border-radius:2px}
@@ -1134,22 +1158,27 @@ function applyLang(){
     if(lang==='en'){tlLegend.innerHTML='<span style="color:#fbbf24">● Life</span><span style="color:#818cf8">● Works</span><span style="color:#34d399">● Events</span>'}
     else{tlLegend.innerHTML='<span style="color:#fbbf24">● 生平</span><span style="color:#818cf8">● 著作</span><span style="color:#34d399">● 世界事件</span>'}
   }
-  // School tooltip
-  document.querySelectorAll('.filter-btn').forEach(b=>{
+  // School dots（色点矩阵）：仅更新 title/aria-label，不写文字
+  document.querySelectorAll('.school-dot').forEach(b=>{
     const s=dataRef?.schools?.find(sc=>sc.id===b.dataset.value);
-    if(s&&s.nameEn&&lang==='en')b.textContent=s.nameEn;
-    else if(s&&s.name&&lang==='zh')b.textContent=s.name;
+    if(!s)return;
+    const nm=lang==='en'?(s.nameEn||s.name):s.name;
+    b.title=nm;b.setAttribute('aria-label',nm);
   });
-  // Era filter buttons
+  // Era strip（时间轴色带）：仅更新 title，不写文字
   document.querySelectorAll('[data-key="era"]').forEach(b=>{
     const e=dataRef?.eras?.find(er=>er.id===b.dataset.value);
-    if(e&&e.nameEn&&lang==='en')b.textContent=e.nameEn;
-    else if(e&&e.name&&lang==='zh')b.textContent=e.name;
+    if(!e)return;
+    const nm=lang==='en'?(e.nameEn||e.name):e.name;
+    b.title=nm+(e.start!=null?' · '+formatYear(e.start)+' ~ '+formatYear(e.end):'');
+    b.setAttribute('aria-label',nm);
   });
-  // Civilization filter buttons
+  // Civilization cards（色块卡）：更新内部 .civ-name
   document.querySelectorAll('[data-key="civilization"]').forEach(b=>{
     const map={western:{zh:'西方',en:'Western'},eastern:{zh:'东方',en:'Eastern'},indian:{zh:'印度',en:'Indian'},islamic:{zh:'伊斯兰',en:'Islamic'}};
-    const m=map[b.dataset.value];if(m)b.textContent=lang==='en'?m.en:m.zh;
+    const m=map[b.dataset.value];if(!m)return;
+    const nm=lang==='en'?m.en:m.zh;
+    const nameEl=b.querySelector('.civ-name');if(nameEl)nameEl.textContent=nm;
   });
   // Node labels on graph
   document.querySelectorAll('.node-group').forEach(g=>{
@@ -1330,16 +1359,30 @@ resetFilters=((orig)=>function(){orig();if(window.innerWidth<=768){filterPanel.c
 
 function buildFilterPanel(data){
   const civContainer=document.querySelector('[data-filter="civilization"]');
-  for(const c of data.civilizations){const btn=document.createElement('button');btn.className='filter-btn '+c.id;btn.dataset.key='civilization';btn.dataset.value=c.id;btn.textContent=c.name;btn.addEventListener('click',()=>toggleFilter('civilization',c.id,btn));civContainer.appendChild(btn)}
+  for(const c of data.civilizations){const btn=document.createElement('button');btn.className='filter-btn civ-card '+c.id;btn.dataset.key='civilization';btn.dataset.value=c.id;btn.style.setProperty('--civ-glow',c.glowColor||c.color+'80');btn.innerHTML='<span class="civ-dot" style="background:'+c.color+';color:'+c.color+'"></span><span class="civ-name">'+c.name+'</span>';btn.addEventListener('click',()=>toggleFilter('civilization',c.id,btn));civContainer.appendChild(btn)}
   const schoolContainer=document.querySelector('[data-filter="school"]');
+  schoolContainer.classList.add('school-matrix');
   const schools=[...new Set(data.philosophers.map(p=>p.school))].map(s=>data.schools.find(sc=>sc.id===s)).filter(Boolean);
   const schoolTip=document.getElementById('school-tip');
-  for(const s of schools){const btn=document.createElement('button');btn.className='filter-btn';btn.dataset.key='school';btn.dataset.value=s.id;btn.innerHTML='<span style="display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;vertical-align:middle;background:'+(SCHOOL_RING_COLORS[s.id]||'#64748b')+'"></span>'+s.name;btn.addEventListener('click',()=>toggleFilter('school',s.id,btn));
-    if(s.description){btn.addEventListener('mouseenter',function(e){schoolTip.querySelector('.st-name').textContent=lang==='en'?(s.nameEn||s.name):s.name;schoolTip.querySelector('.st-desc').textContent=lang==='en'?(s.descriptionEn||s.description):s.description;schoolTip.querySelector('.st-dev').textContent=s.development||'';const x=e.clientX+12,y=e.clientY-10;schoolTip.style.left=(x+300>window.innerWidth?x-316:x)+'px';schoolTip.style.top=(y+180>window.innerHeight?y-196:y)+'px';schoolTip.style.opacity=1});btn.addEventListener('mouseleave',()=>{schoolTip.style.opacity=0})}
-    schoolContainer.appendChild(btn)}
+  for(const civ of ['western','eastern','indian','islamic']){
+    const list=schools.filter(sc=>sc.civilization===civ);
+    if(!list.length)continue;
+    const group=document.createElement('div');group.className='school-civ-group';
+    const label=document.createElement('span');label.className='school-civ-label';label.style.color=civColors[civ]?civColors[civ].color:'#94a3b8';label.textContent=civDisplay[civ]||civ;
+    group.appendChild(label);
+    const dots=document.createElement('div');dots.className='school-dots';
+    for(const s of list){const dot=document.createElement('button');dot.className='filter-btn school-dot';dot.dataset.key='school';dot.dataset.value=s.id;dot.style.background=SCHOOL_RING_COLORS[s.id]||'#64748b';dot.title=s.name;dot.setAttribute('aria-label',s.name);dot.addEventListener('click',()=>toggleFilter('school',s.id,dot));
+      if(s.description){dot.addEventListener('mouseenter',function(e){schoolTip.querySelector('.st-name').textContent=lang==='en'?(s.nameEn||s.name):s.name;schoolTip.querySelector('.st-desc').textContent=lang==='en'?(s.descriptionEn||s.description):s.description;schoolTip.querySelector('.st-dev').textContent=s.development||'';const x=e.clientX+12,y=e.clientY-10;schoolTip.style.left=(x+300>window.innerWidth?x-316:x)+'px';schoolTip.style.top=(y+180>window.innerHeight?y-196:y)+'px';schoolTip.style.opacity=1});dot.addEventListener('mouseleave',()=>{schoolTip.style.opacity=0})}
+      dots.appendChild(dot)}
+    group.appendChild(dots);
+    schoolContainer.appendChild(group);
+  }
   const eraContainer=document.querySelector('[data-filter="era"]');
+  eraContainer.classList.add('era-strip');
   const eras=[...new Set(data.philosophers.map(p=>p.era))].map(e=>data.eras.find(er=>er.id===e)).filter(Boolean);
-  for(const e of eras){const btn=document.createElement('button');btn.className='filter-btn';btn.dataset.key='era';btn.dataset.value=e.id;btn.textContent=e.name;btn.addEventListener('click',()=>toggleFilter('era',e.id,btn));eraContainer.appendChild(btn)}
+  eras.sort((a,b)=>(a.start==null?9999:a.start)-(b.start==null?9999:b.start));
+  for(const e of eras){const btn=document.createElement('button');btn.className='filter-btn era-seg';btn.dataset.key='era';btn.dataset.value=e.id;btn.title=(lang==='en'&&e.nameEn?e.nameEn:e.name)+(e.start!=null?' · '+formatYear(e.start)+' ~ '+formatYear(e.end):'');btn.setAttribute('aria-label',e.name);const span=(e.start!=null&&e.end!=null)?Math.max(1,e.end-e.start):200;btn.style.flexGrow=span;const cc=e.civilization?civColors[e.civilization]:null;btn.style.background=cc?cc.color:'#64748b';btn.addEventListener('click',()=>toggleFilter('era',e.id,btn));eraContainer.appendChild(btn)}
+  const scale=document.createElement('div');scale.className='era-scale';scale.innerHTML='<span>-600</span><span>0</span><span>600</span><span>1200</span><span>1800</span>';eraContainer.parentNode.appendChild(scale);
 }
 
 // ═══════════════ FILTERING ═══════════════
