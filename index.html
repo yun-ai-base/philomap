@@ -494,7 +494,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
 #rel-legend .rl-line.solid{background:currentColor}
 #rel-legend .rl-line.dashed{background:repeating-linear-gradient(90deg,currentColor 0 10px,transparent 10px 15px)}
 #rel-legend .rl-line.dotted{background:repeating-linear-gradient(90deg,currentColor 0 2px,transparent 2px 7px)}
-#lang-btn{position:absolute;right:-2px;top:-2px;font-size:10px;color:#94a3b8;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:6px;padding:2px 8px;cursor:pointer;font-family:inherit;letter-spacing:.5px;transition:all .2s;z-index:2;pointer-events:auto}
+#lang-btn{position:absolute;right:-2px;top:-2px;font-size:11px;color:#94a3b8;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:6px;padding:1px 5px;min-width:24px;text-align:center;cursor:pointer;font-family:inherit;letter-spacing:.3px;transition:all .2s;z-index:2;pointer-events:auto}
 #lang-btn:hover{background:rgba(129,140,248,.12);color:#a5b4fc;border-color:rgba(129,140,248,.25)}
 
 /* ═══════════════ TIME RIVER ═══════════════ */
@@ -679,7 +679,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
 <div id="header">
   <h1>脉络 Philomap</h1>
   <div class="subtitle">在群星闪耀时，发现思想的引力</div>
-  <div class="lang-toggle" id="lang-btn" title="Switch language">CN / EN</div>
+  <div class="lang-toggle" id="lang-btn" title="切换至英文">中</div>
   <div class="view-toggle">
     <button class="active" data-view="star">✨ 思想星图</button>
     <button data-view="river">⏳ 时光长河</button>
@@ -1096,7 +1096,7 @@ function escapeHtml(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'
 function applyLang(){
   const en=lang==='en';
   document.documentElement.lang=en?'en':'zh-CN';
-  document.getElementById('lang-btn').textContent=en?'EN / CN':'CN / EN';
+  document.getElementById('lang-btn').textContent=en?'EN':'中';document.getElementById('lang-btn').title=en?'Switch to Chinese':'切换至英文';
   document.querySelector('#header .subtitle').textContent=t('subtitle');
   document.querySelector('[data-view="star"]').textContent=t('vStar');
   document.querySelector('[data-view="river"]').textContent=t('vRiver');
