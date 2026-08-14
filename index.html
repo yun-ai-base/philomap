@@ -129,18 +129,17 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
 .filter-btn.era-seg.active{opacity:1;box-shadow:inset 0 0 0 1.5px #fff}
 .era-scale{display:flex;justify-content:space-between;font-size:9px;color:#64748b;margin-top:4px;letter-spacing:.3px}
 
-/* 流派 · 色点矩阵（横向滑动，可滑到中国/印度/伊斯兰） */
+/* 流派 · 色点矩阵（纵向分组：西方/东方/印度/伊斯兰 自上而下，印度伊斯兰在东方下面） */
 .school-wrap{position:relative}
-.filter-btns.school-matrix{display:flex;flex-direction:row;flex-wrap:nowrap;gap:0;align-items:flex-start;overflow-x:auto;overflow-y:hidden;padding:6px 2px 10px;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.14) transparent}
-.filter-btns.school-matrix::-webkit-scrollbar{height:4px}
+.filter-btns.school-matrix{display:flex;flex-direction:column;flex-wrap:nowrap;gap:9px;max-height:160px;overflow-y:auto;overflow-x:hidden;padding:6px 2px 8px;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.14) transparent}
+.filter-btns.school-matrix::-webkit-scrollbar{width:4px}
 .filter-btns.school-matrix::-webkit-scrollbar-track{background:transparent}
 .filter-btns.school-matrix::-webkit-scrollbar-thumb{background:rgba(255,255,255,.14);border-radius:2px}
 .filter-btns.school-matrix::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,.22)}
 .school-swipe-hint{position:absolute;top:-20px;right:0;font-size:9px;color:#94a3b8;letter-spacing:1px;pointer-events:none;opacity:.85;display:flex;align-items:center;gap:3px}
-.school-civ-group{display:flex;flex-direction:column;gap:6px;flex-shrink:0;padding:0 14px 0 2px;border-right:1px solid rgba(255,255,255,.06)}
-.school-civ-group:last-child{border-right:none;padding-right:2px}
-.school-civ-label{font-size:10px;letter-spacing:1px;padding-left:1px;opacity:.9;white-space:nowrap}
-.school-dots{display:flex;flex-wrap:wrap;gap:6px;max-width:210px}
+.school-civ-group{display:flex;flex-direction:column;gap:5px}
+.school-civ-label{font-size:10px;letter-spacing:1px;padding-left:1px;opacity:.9}
+.school-dots{display:flex;flex-wrap:wrap;gap:6px;max-width:100%}
 .filter-btn.school-dot{width:15px;height:15px;padding:0;border-radius:50%;border:1px solid rgba(255,255,255,.22);transition:transform .15s,box-shadow .15s}
 .filter-btn.school-dot:hover{transform:scale(1.4);z-index:2}
 .filter-btn.school-dot.active{box-shadow:0 0 0 2px #fff,0 0 8px rgba(255,255,255,.5);transform:scale(1.25)}
@@ -1188,7 +1187,7 @@ function applyLang(){
     const nameEl=b.querySelector('.civ-name');if(nameEl)nameEl.textContent=nm;
   });
   // 流派滑动提示文案
-  const swipeHint=document.querySelector('.school-swipe-hint');if(swipeHint)swipeHint.textContent=lang==='en'?'\u2194 swipe':'\u2194 \u6ed1\u52a8';
+  const swipeHint=document.querySelector('.school-swipe-hint');if(swipeHint)swipeHint.textContent=lang==='en'?'scroll':'\u6ed1\u52a8';
   // Node labels on graph
   document.querySelectorAll('.node-group').forEach(g=>{
     if(!g.__data__)return;
@@ -1374,7 +1373,7 @@ function buildFilterPanel(data){
   schoolContainer.parentNode.insertBefore(schoolWrap,schoolContainer);
   schoolWrap.appendChild(schoolContainer);
   schoolContainer.classList.add('school-matrix');
-  const swipeHint=document.createElement('span');swipeHint.className='school-swipe-hint';swipeHint.setAttribute('aria-hidden','true');swipeHint.textContent=lang==='en'?'\u2194 swipe':'\u2194 \u6ed1\u52a8';
+  const swipeHint=document.createElement('span');swipeHint.className='school-swipe-hint';swipeHint.setAttribute('aria-hidden','true');swipeHint.textContent=lang==='en'?'scroll':'\u6ed1\u52a8';
   schoolWrap.appendChild(swipeHint);
   const schools=[...new Set(data.philosophers.map(p=>p.school))].map(s=>data.schools.find(sc=>sc.id===s)).filter(Boolean);
   const schoolTip=document.getElementById('school-tip');
