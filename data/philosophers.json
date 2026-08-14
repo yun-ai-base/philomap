@@ -304,7 +304,7 @@
       "development": "周敦颐创始→程颐程颢奠基→朱熹集大成→陆九渊心学→王阳明心学顶峰。",
       "nameEn": "Neo-Confucianism",
       "descriptionEn": "Song-Ming Confucian revival synthesizing Confucian, Buddhist, and Daoist thought.",
-      "civilization": "western"
+      "civilization": "eastern"
     },
     {
       "id": "legalism",
@@ -313,7 +313,7 @@
       "development": "管仲先驱→商鞅变法实践→申不害术治→韩非子集大成→影响两千年帝制。",
       "nameEn": "Legalism",
       "descriptionEn": "Ancient Chinese political philosophy advocating rule by law and institutional power.",
-      "civilization": "western"
+      "civilization": "eastern"
     },
     {
       "id": "skepticism",
