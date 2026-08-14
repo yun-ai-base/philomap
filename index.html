@@ -2105,7 +2105,7 @@ function renderGraph(data){
   const ticked=()=>{edgeLines.attr('x1',d=>d.source.x).attr('y1',d=>d.source.y).attr('x2',d=>d.target.x).attr('y2',d=>d.target.y);edgeHits.attr('x1',d=>d.source.x).attr('y1',d=>d.source.y).attr('x2',d=>d.target.x).attr('y2',d=>d.target.y);nodeGroups.attr('transform',d=>`translate(${d.x},${d.y})`)};
   simulation=d3.forceSimulation(data.nodes).force('link',d3.forceLink(data.edges).id(d=>d.id).distance(d=>70+(10-d.strength)*16))
     .force('charge',d3.forceManyBody().strength(d=>-180-d.influence*35)).force('collide',d3.forceCollide(d=>d.radius+16).iterations(3))
-    .force('center',d3.forceCenter(w*.45,h*.48)).force('x',d3.forceX(w*.45).strength(.015)).force('y',d3.forceY(h*.48).strength(.015))
+    .force('center',d3.forceCenter(w*.45,h*.48)).force('x',d3.forceX(d=>d.civilization==='eastern'?w*.42:w*.45).strength(d=>d.civilization==='eastern'?.06:.015)).force('y',d3.forceY(d=>d.civilization==='eastern'?h*.38:h*.48).strength(d=>d.civilization==='eastern'?.06:.015))
     .velocityDecay(.35).on('tick',ticked);
   // 预计算布局：同步跑足够多的 tick 把位置算好，避免首屏逐帧强制布局造成的长时间卡顿
   simulation.stop();
