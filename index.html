@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' https://upload.wikimedia.org data:; connect-src 'self' https://yun-ai-base.github.io; form-action 'none'; base-uri 'self'">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>脉络 Philomap — 人类思想星图</title>
+<title>智识星球 Philomap — 人类思想星图</title>
 <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTQiIGZpbGw9IiMwYjEwMjAiLz48cGF0aCBkPSJNMzIgMTBDMzQgMjUgMzkgMzAgNTQgMzJDMzkgMzQgMzQgMzkgMzIgNTRDMzAgMzkgMjUgMzQgMTAgMzJDMjUgMzAgMzAgMjUgMzIgMTBaIiBmaWxsPSIjZmJiZjI0Ii8+PGNpcmNsZSBjeD0iNDkiIGN5PSIxOSIgcj0iMi42IiBmaWxsPSIjODE4Y2Y4Ii8+PGNpcmNsZSBjeD0iMTciIGN5PSI0NyIgcj0iMi4xIiBmaWxsPSIjMzRkMzk5Ii8+PC9zdmc+">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
@@ -677,7 +677,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
 <svg id="graph-svg"></svg>
 
 <div id="header">
-  <h1>脉络 Philomap</h1>
+  <h1>智识星球 Philomap</h1>
   <div class="subtitle">在群星闪耀时，发现思想的引力</div>
   <div class="lang-toggle" id="lang-btn" title="切换至英文">中</div>
   <div class="view-toggle">
@@ -1653,7 +1653,7 @@ function exportMD(d){
     const relLabel=lang==='en'?{teacherStudent:'Teacher/Student',influence:'Influence',debate:'Debate'}:{teacherStudent:'师承',influence:'影响',debate:'论战'};
     d.relationships.forEach(r=>{const t=nm.get(r.target);if(t){md.push(`- **${lang==='en'?t.nameEn||t.name:t.name}**：${r.description||''}（${relLabel[r.type]||r.type}）`)}});md.push('')
   }
-  md.push('','---','','*'+(lang==='en'?'Exported from「Philomap — Star Map of Thought」':'由「脉络 Philomap」导出')+'*');
+  md.push('','---','','*'+(lang==='en'?'Exported from「Philomap — Star Map of Thought」':'由「智识星球 Philomap」导出')+'*');
   const blob=new Blob([md.join('\n')],{type:'text/markdown;charset=utf-8'});
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=(lang==='en'?d.nameEn||d.name:d.name)+'.md';a.click();URL.revokeObjectURL(a.href)
 }
@@ -2483,7 +2483,7 @@ function setupQuiz(){
     for(let i=0;i<80;i++){ctx.fillStyle=`rgba(255,255,255,${Math.random()*.4+.1})`;ctx.beginPath();ctx.arc(Math.random()*w,Math.random()*h,Math.random()*1.5+.3,0,Math.PI*2);ctx.fill()}
     // Title
     ctx.fillStyle='#f1f5f9';ctx.font='bold 28px system-ui,"Microsoft YaHei",sans-serif';ctx.textAlign='center';ctx.fillText('🧬 我的哲学DNA',w/2,60);
-    ctx.fillStyle='#94a3b8';ctx.font='14px system-ui,"Microsoft YaHei",sans-serif';ctx.fillText('脉络 Philomap · 哲学基因测试',w/2,90);
+    ctx.fillStyle='#94a3b8';ctx.font='14px system-ui,"Microsoft YaHei",sans-serif';ctx.fillText('智识星球 Philomap · 哲学基因测试',w/2,90);
     // Bars
     const barY=130,barH=44,barGap=16,bx=120,barW=380;
     for(let i=0;i<Math.min(3,ranked.length);i++){
@@ -2511,7 +2511,7 @@ function setupQuiz(){
       }
     }
     // Footer
-    ctx.fillStyle='#475569';ctx.font='11px system-ui,"Microsoft YaHei",sans-serif';ctx.textAlign='center';ctx.fillText('脉络 Philomap — 在群星闪耀时，发现思想的引力',w/2,h-20);
+    ctx.fillStyle='#475569';ctx.font='11px system-ui,"Microsoft YaHei",sans-serif';ctx.textAlign='center';ctx.fillText('智识星球 Philomap — 在群星闪耀时，发现思想的引力',w/2,h-20);
   }
   function roundRect(ctx,x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.arcTo(x+w,y,x+w,y+r,r);ctx.lineTo(x+w,y+h-r);ctx.arcTo(x+w,y+h,x+w-r,y+h,r);ctx.lineTo(x+r,y+h);ctx.arcTo(x,y+h,x,y+h-r,r);ctx.lineTo(x,y+r);ctx.arcTo(x,y,x+r,y,r);ctx.closePath()}
   // Start
