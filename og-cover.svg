@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <radialGradient id="bg" cx="42%" cy="36%" r="85%">
+      <stop offset="0%" stop-color="#0d0d24"/>
+      <stop offset="55%" stop-color="#060615"/>
+      <stop offset="100%" stop-color="#000008"/>
+    </radialGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#818cf8" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#818cf8" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glowWarm" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#fbbf24" stop-opacity="0.14"/>
+      <stop offset="100%" stop-color="#fbbf24" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- 星点 -->
+  <g fill="#ffffff">
+    <circle cx="98" cy="76" r="2.2" opacity="0.9"/>
+    <circle cx="224" cy="150" r="1.4" opacity="0.55"/>
+    <circle cx="352" cy="64" r="1.7" opacity="0.7"/>
+    <circle cx="470" cy="180" r="1.2" opacity="0.5"/>
+    <circle cx="620" cy="90" r="2.0" opacity="0.8"/>
+    <circle cx="780" cy="150" r="1.5" opacity="0.6"/>
+    <circle cx="920" cy="70" r="1.8" opacity="0.75"/>
+    <circle cx="1050" cy="190" r="1.3" opacity="0.5"/>
+    <circle cx="1140" cy="90" r="2.1" opacity="0.85"/>
+    <circle cx="140" cy="360" r="1.4" opacity="0.5"/>
+    <circle cx="60" cy="480" r="1.6" opacity="0.6"/>
+    <circle cx="1080" cy="470" r="1.5" opacity="0.55"/>
+    <circle cx="520" cy="40" r="1.1" opacity="0.45"/>
+    <circle cx="850" cy="40" r="1.2" opacity="0.5"/>
+    <circle cx="180" cy="560" r="1.3" opacity="0.45"/>
+    <circle cx="1020" cy="560" r="1.4" opacity="0.5"/>
+    <circle cx="300" cy="500" r="1.1" opacity="0.4"/>
+    <circle cx="860" cy="520" r="1.2" opacity="0.45"/>
+  </g>
+
+  <ellipse cx="620" cy="290" rx="400" ry="210" fill="url(#glow)"/>
+  <ellipse cx="470" cy="430" rx="220" ry="120" fill="url(#glowWarm)"/>
+
+  <!-- 文明圈四色 -->
+  <g>
+    <circle cx="452" cy="428" r="11" fill="#818cf8"/>
+    <circle cx="452" cy="428" r="19" fill="none" stroke="#818cf8" stroke-opacity="0.35" stroke-width="2"/>
+    <circle cx="566" cy="452" r="8" fill="#fbbf24"/>
+    <circle cx="566" cy="452" r="15" fill="none" stroke="#fbbf24" stroke-opacity="0.35" stroke-width="2"/>
+    <circle cx="674" cy="452" r="8" fill="#f472b6"/>
+    <circle cx="674" cy="452" r="15" fill="none" stroke="#f472b6" stroke-opacity="0.35" stroke-width="2"/>
+    <circle cx="788" cy="428" r="11" fill="#34d399"/>
+    <circle cx="788" cy="428" r="19" fill="none" stroke="#34d399" stroke-opacity="0.35" stroke-width="2"/>
+  </g>
+
+  <text x="600" y="278" font-family="'PingFang SC','Microsoft YaHei',system-ui,sans-serif" font-size="74" font-weight="700" fill="#f1f5f9" text-anchor="middle" letter-spacing="2">智识星球 Philomap</text>
+  <text x="600" y="356" font-family="'PingFang SC','Microsoft YaHei',system-ui,sans-serif" font-size="28" fill="#a5b4c8" text-anchor="middle" letter-spacing="10">在群星闪耀时，发现思想的引力</text>
+  <text x="600" y="548" font-family="'PingFang SC','Microsoft YaHei',system-ui,sans-serif" font-size="20" fill="#64748b" text-anchor="middle" letter-spacing="3">人类思想星图 · 102 位哲人 · 跨越 2600 年</text>
+</svg>
