@@ -4,6 +4,20 @@
 <meta charset="UTF-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' https://upload.wikimedia.org data:; connect-src 'self' https://yun-ai-base.github.io; form-action 'none'; base-uri 'self'">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="智识星球 Philomap — 人类思想星图。102 位哲学家、跨越 2600 年的思想关系图谱，支持思想星图 / 时光长河 / 哲学光谱 / 哲学对决 / 哲学基因测试。">
+<meta name="theme-color" content="#000008">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://yun-ai-base.github.io/philomap/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="智识星球 Philomap">
+<meta property="og:title" content="智识星球 Philomap — 人类思想星图">
+<meta property="og:description" content="在群星闪耀时，发现思想的引力。102 位哲学家、2600 年思想关系星图。">
+<meta property="og:url" content="https://yun-ai-base.github.io/philomap/">
+<meta property="og:image" content="https://yun-ai-base.github.io/philomap/og-cover.svg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="智识星球 Philomap — 人类思想星图">
+<meta name="twitter:description" content="在群星闪耀时，发现思想的引力。">
+<meta name="twitter:image" content="https://yun-ai-base.github.io/philomap/og-cover.svg">
 <title>智识星球 Philomap — 人类思想星图</title>
 <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTQiIGZpbGw9IiMwYjEwMjAiLz48cGF0aCBkPSJNMzIgMTBDMzQgMjUgMzkgMzAgNTQgMzJDMzkgMzQgMzQgMzkgMzIgNTRDMzAgMzkgMjUgMzQgMTAgMzJDMjUgMzAgMzAgMjUgMzIgMTBaIiBmaWxsPSIjZmJiZjI0Ii8+PGNpcmNsZSBjeD0iNDkiIGN5PSIxOSIgcj0iMi42IiBmaWxsPSIjODE4Y2Y4Ii8+PGNpcmNsZSBjeD0iMTciIGN5PSI0NyIgcj0iMi4xIiBmaWxsPSIjMzRkMzk5Ii8+PC9zdmc+">
 <style>
@@ -202,6 +216,10 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000008;font-family:
 #dp-core .dp-section-icon,#dp-works .dp-section-icon,#dp-timeline .dp-section-icon,#dp-evolution .dp-section-icon{background:rgba(129,140,248,.16)}
 #dp-core .dp-section-title,#dp-works .dp-section-title,#dp-timeline .dp-section-title,#dp-evolution .dp-section-title{font-weight:800;color:#e2e8f0}
 #dp-anecdote .dp-section-title,#dp-events .dp-section-title,#dp-reading .dp-section-title{opacity:.85;font-weight:500}
+/* 富文本关键词高亮（数据内嵌 <span class='hl'>，renderRich 渲染还原） */
+.hl{color:#fde68a;font-weight:650;text-shadow:0 0 14px rgba(251,191,36,.35)}
+/* 多段落字段保留换行（aiReview 等以 \n\n 分段） */
+.dp-summary,.dp-ai-text,.dp-eval,.dp-anecdote-text,.dp-evolution-text{white-space:pre-line}
 
 /* Font size selector */
 .dp-fs-row{display:flex;align-items:center;justify-content:center;gap:8px;margin:18px 0 6px;padding:8px 0;border-top:1px solid rgba(255,255,255,.04);border-bottom:1px solid rgba(255,255,255,.04)}
@@ -1100,10 +1118,19 @@ const REL_COLORS={'teacher-student':'#ffffff','influence':'#67e8f9','debate':'#f
 const REL_DASH  ={'teacher-student':'none','influence':'10,5','debate':'2,5'};
 const REL_WIDTH ={'teacher-student':1.25,'influence':1,'debate':1.05};
 const REL_MARKER ={'teacher-student':'url(#arr-ts)','influence':'url(#arr-inf)','debate':'url(#arr-deb)'};
-function formatYear(y){return y==null?'':(y<0?`公元前${Math.abs(y)}年`:`公元${y}年`)}
-function formatYears(birth,death){return death==null?formatYear(birth)+' — 至今':formatYear(birth)+' — '+formatYear(death)}
+function formatYear(y){if(y==null)return'';return y<0?(lang==='en'?`${Math.abs(y)} BCE`:`公元前${Math.abs(y)}年`):(lang==='en'?`${y} CE`:`公元${y}年`)}
+function formatYears(birth,death){return death==null?formatYear(birth)+(lang==='en'?' — present':' — 至今'):formatYear(birth)+' — '+formatYear(death)}
 const civDisplay={western:'西方',eastern:'东方',indian:'印度',islamic:'伊斯兰'};
 const civDisplayEn={western:'Western',eastern:'Eastern',indian:'Indian',islamic:'Islamic'};
+// 时光轴统一 6 段时代体系（时间滑块 + 时光长河共用，避免两处时代边界不一致）
+const ERAS_TIMELINE=[
+  {start:-600,end:200,zh:'古希腊/轴心时代',en:'Ancient / Axial Age',color:'129,140,248'},
+  {start:200,end:1400,zh:'古典晚期/中世纪',en:'Late Antiquity / Medieval',color:'148,163,184'},
+  {start:1400,end:1700,zh:'文艺复兴/近代早期',en:'Renaissance / Early Modern',color:'251,191,36'},
+  {start:1700,end:1800,zh:'启蒙时代',en:'Enlightenment',color:'52,211,153'},
+  {start:1800,end:1900,zh:'19世纪',en:'19th Century',color:'244,114,182'},
+  {start:1900,end:2000,zh:'20世纪/当代',en:'20th Century / Contemporary',color:'129,140,248'}
+];
 
 // ═══════════════ I18N ═══════════════
 let lang=localStorage.getItem('philomap-lang')||'zh';
@@ -1129,6 +1156,15 @@ const I18N={
 };
 function t(key){return (I18N[lang]||I18N.zh)[key]||key}
 function escapeHtml(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+// 富文本渲染：数据字段允许内嵌 <span class='hl'>…</span> 关键词高亮，其余全部转义防注入。
+// 先把高亮片段用私有区哨兵保护，整体 escapeHtml 后再还原为真实 <span class="hl">，保证高亮内容同样被转义。
+function renderRich(el,text){
+  const s=String(text==null?'':text);
+  const OPEN='\uE000',CLOSE='\uE001';
+  const html=escapeHtml(s.replace(/<span\s+class=['"]hl['"]>(.*?)<\/span>/g,(m,inner)=>OPEN+inner+CLOSE))
+    .split(OPEN).join('<span class="hl">').split(CLOSE).join('</span>');
+  el.innerHTML=html;
+}
 function applyLang(){
   const en=lang==='en';
   document.documentElement.lang=en?'en':'zh-CN';
@@ -1280,10 +1316,9 @@ function updateTimeRange(){
   // Update fill bar
   document.getElementById('time-fill').style.left=s+'%';
   document.getElementById('time-fill').style.right=(100-e)+'%';
-  const eras=[[-600,0,'古代'],[0,500,'古典晚期'],[500,1500,'中世纪'],[1500,1800,'近代早期'],[1800,1900,'19世纪'],[1900,2000,'20世纪']];
-  let label=`${timeRange[0]}年 — ${timeRange[1]}年`;
-  for(const[a,b,n]of eras)if(timeRange[0]>=a&&timeRange[1]<=b){label=n;break}
-  if(s===0&&e===100)label='全部时代';
+  let label=`${formatYear(timeRange[0])} — ${formatYear(timeRange[1])}`;
+  for(const era of ERAS_TIMELINE)if(timeRange[0]>=era.start&&timeRange[1]<=era.end){label=lang==='en'?era.en:era.zh;break}
+  if(s===0&&e===100)label=lang==='en'?'All Eras':'全部时代';
   timeDisplay.textContent=label;applyAllFilters();
 }
 timeStartSlider.addEventListener('input',updateTimeRange);timeEndSlider.addEventListener('input',updateTimeRange);
@@ -1370,7 +1405,7 @@ function toggleFilter(key,value,btn){
 function resetFilters(){
   for(const k of Object.keys(currentFilters))currentFilters[k].clear();
   document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
-  timeStartSlider.value=0;timeEndSlider.value=100;timeRange=[-9999,9999];timeDisplay.textContent='全部时代';
+  timeStartSlider.value=0;timeEndSlider.value=100;timeRange=[-9999,9999];timeDisplay.textContent=lang==='en'?'All Eras':'全部时代';
   document.getElementById('time-fill').style.left='0%';document.getElementById('time-fill').style.right='0%';
   renderRelLegend();updateFilterCount();applyAllFilters();
 }
@@ -1505,7 +1540,7 @@ function openDetailPanel(d){
   const rankEl=panel.querySelector('.dp-rank');
   if(rankEl){const infs=dataRef.philosophers.map(p=>p.influence||0);const higher=infs.filter(v=>v>(d.influence||0)).length;const pct=Math.max(1,Math.round(higher/infs.length*100));rankEl.textContent=lang==='en'?`Top ${pct}%`:`前 ${pct}%`;}
   // Summary
-  panel.querySelector('.dp-summary').textContent=lf(d,'summary')||'';
+  renderRich(panel.querySelector('.dp-summary'),lf(d,'summary'));
   // Quotes
   const qb=panel.querySelector('.dp-quote-block');
   const quotes=d.goldenQuotes||(d.goldenQuote?[d.goldenQuote]:[]);
@@ -1521,7 +1556,7 @@ function openDetailPanel(d){
   }else{qb.style.display='none'}
   // Thought evolution
   const evSec=document.getElementById('dp-evolution');
-  if(lf(d,'thoughtEvolution')){evSec.style.display='block';evSec.querySelector('.dp-evolution-text').textContent=lf(d,'thoughtEvolution');const dot=evSec.querySelector('.dp-evolution-text');dot.style.setProperty('--dot-color',c.color)}else{evSec.style.display='none'}
+  if(lf(d,'thoughtEvolution')){evSec.style.display='block';renderRich(evSec.querySelector('.dp-evolution-text'),lf(d,'thoughtEvolution'));const dot=evSec.querySelector('.dp-evolution-text');dot.style.setProperty('--dot-color',c.color)}else{evSec.style.display='none'}
   // Timeline
   const tlSec=document.getElementById('dp-timeline'),tlContent=document.getElementById('dp-tl-content');
   if(d.timeline&&d.timeline.length){tlSec.style.display='block';tlContent.innerHTML='';const displayEvents=d.timeline.slice(0,12);for(const e of displayEvents){tlContent.innerHTML+=`<div class="dp-tl-item ${e.type}"><div class="dp-tl-year">${formatYear(e.year)}</div><div class="dp-tl-title">${escapeHtml(lf(e,'title'))}</div>${e.desc?`<div class="dp-tl-desc">${escapeHtml(lf(e,'desc'))}</div>`:''}</div>`}}else{tlSec.style.display='none'}
@@ -1549,13 +1584,13 @@ function openDetailPanel(d){
   if(d.famousEvents&&d.famousEvents.length){eventsSec.style.display='block';eventsList.innerHTML='';for(const ev of d.famousEvents){eventsList.innerHTML+=`<div class="dp-event-item"><strong>${escapeHtml(lf(ev,'title'))}</strong>${ev.year?`（${formatYear(ev.year)}）` : ''}：${escapeHtml(lf(ev,'desc'))}</div>`}}else{eventsSec.style.display='none'}
   // Anecdote
   const anecdoteSec=document.getElementById('dp-anecdote');
-  if(lf(d,'anecdote')){anecdoteSec.style.display='block';anecdoteSec.querySelector('.dp-anecdote-text').textContent=lf(d,'anecdote')}else{anecdoteSec.style.display='none'}
+  if(lf(d,'anecdote')){anecdoteSec.style.display='block';renderRich(anecdoteSec.querySelector('.dp-anecdote-text'),lf(d,'anecdote'))}else{anecdoteSec.style.display='none'}
   // Scientific eval
   const evalSec=document.getElementById('dp-eval');
-  if(lf(d,'scientificEval')){evalSec.style.display='block';evalSec.querySelector('.dp-eval').textContent=lf(d,'scientificEval')}else{evalSec.style.display='none'}
+  if(lf(d,'scientificEval')){evalSec.style.display='block';renderRich(evalSec.querySelector('.dp-eval'),lf(d,'scientificEval'))}else{evalSec.style.display='none'}
   // AI Review
   const aiSec=document.getElementById('dp-ai-review');
-  if(lf(d,'aiReview')){aiSec.style.display='block';aiSec.querySelector('.dp-ai-text').textContent=lf(d,'aiReview')}else{aiSec.style.display='none'}
+  if(lf(d,'aiReview')){aiSec.style.display='block';renderRich(aiSec.querySelector('.dp-ai-text'),lf(d,'aiReview'))}else{aiSec.style.display='none'}
   // Influence Map
   const inflSec=document.getElementById('dp-infl'),inflGrid=inflSec.querySelector('.dp-infl-grid');
   const inflData=d.layers?.L7_legacy?.influenceMap;
@@ -2188,7 +2223,6 @@ function updateLabelOpacity(k){if(typeof gNodes==='undefined'||!gNodes||!gNodes.
     const up=simData?.upstreamOf?.get(sel.id)||new Set(),down=simData?.downstreamOf?.get(sel.id)||new Set();
     return !(n.id===sel.id||up.has(n.id)||down.has(n.id));
   }).select('.node-label').attr('opacity',d=>labelOpacityFor(d,k))}
-function updateLabelOpacity(k){if(typeof gNodes==='undefined'||!gNodes||!gNodes.selectAll)return;gNodes.selectAll('.node-label').attr('opacity',d=>labelOpacityFor(d,k))}
 function refreshFavMarker(id){if(typeof gNodes==='undefined'||!gNodes||!gNodes.selectAll)return;gNodes.selectAll('.node-group').filter(n=>n.id===id).classed('faved',favSet.has(id))}
 function refreshFavUI(id){refreshFavMarker(id);const dpFav=detailPanel.querySelector('.dp-fav');if(dpFav&&selectedNode&&selectedNode.id===id){dpFav.textContent=favSet.has(id)?'★':'☆';dpFav.classList.toggle('on',favSet.has(id))}}
 function toggleFav(id){if(favSet.has(id))favSet.delete(id);else favSet.add(id);saveFavs();refreshFavUI(id);if(favOnly)applyAllFilters()}
@@ -2292,8 +2326,8 @@ function renderTimeRiver(){
   const minYear=-600,maxYear=2000,totalSpan=maxYear-minYear;
   const totalWidth=2600*trZoom;
   const yearToX=y=>((y-minYear)/totalSpan)*totalWidth+40;
-  const eras=[{id:'ancient',label:'古希腊/轴心时代',labelEn:'Ancient / Axial Age',start:-600,end:200,color:'129,140,248'},{id:'classical',label:'古典晚期/中世纪',labelEn:'Late Antiquity / Medieval',start:200,end:1400,color:'148,163,184'},{id:'renaissance',label:'文艺复兴/近代早期',labelEn:'Renaissance / Early Modern',start:1400,end:1700,color:'251,191,36'},{id:'enlightenment',label:'启蒙时代',labelEn:'Enlightenment',start:1700,end:1800,color:'52,211,153'},{id:'modern',label:'19世纪',labelEn:'19th Century',start:1800,end:1900,color:'244,114,182'},{id:'contemporary',label:'20世纪/当代',labelEn:'20th Century / Contemporary',start:1900,end:2000,color:'129,140,248'}];
-  const eraLabel=e=>lang==='en'?(e.labelEn||e.label):e.label;
+  const eras=ERAS_TIMELINE;
+  const eraLabel=e=>lang==='en'?e.en:e.zh;
   let html='<div class="tr-era-bands">';
   for(const era of eras){
     const x1=yearToX(era.start),x2=yearToX(era.end);
@@ -2311,7 +2345,7 @@ function renderTimeRiver(){
     if(!node)continue;
     const x=yearToX(p.birth);
     const c=civColors[p.civilization]||civColors.western;
-    const card=`<div class="tr-card" data-id="${p.id}" style="left:${x}px;border-color:${c.color}22" onmouseenter="this.style.borderColor='${c.color}88'" onmouseleave="this.style.borderColor='${c.color}22'"><div class="trc-avatar" style="background:${c.color}33;color:${c.color}">${p.name.charAt(0)}</div><div class="trc-name">${p.name}</div><div class="trc-years">${formatYears(p.birth,p.death)}</div></div>`;
+    const card=`<div class="tr-card" data-id="${p.id}" style="left:${x}px;border-color:${c.color}22" onmouseenter="this.style.borderColor='${c.color}88'" onmouseleave="this.style.borderColor='${c.color}22'"><div class="trc-avatar" style="background:${c.color}33;color:${c.color}">${(lang==='en'?(p.nameEn||p.name):p.name).charAt(0)}</div><div class="trc-name">${lang==='en'?(p.nameEn||p.name):p.name}</div><div class="trc-years">${formatYears(p.birth,p.death)}</div></div>`;
     if(topCivs.has(p.civilization))top.push({x,card,id:p.id});else bottom.push({x,card,id:p.id});
   }
   html+=`<div class="tr-row top">${top.map(t=>t.card).join('')}</div>`;
@@ -2535,11 +2569,14 @@ function computeQuizResults(){
     emerson:'nietzsche',freud:'foucault',gandhi:'laozi',hayek:'laozi',illich:'rousseau',jesus:'mozi',
     luther:'ockham',mctaggart:'kant',montessori:'rousseau',newton:'kuhn',
     schmitt:'machiavelli',
-    thoreau:'zhuangzi',tillich:'aquinas',washington:'locke'};
+    thoreau:'zhuangzi',tillich:'aquinas',washington:'locke',
+    // 遗漏在映射表外的幽灵 id → 语义最近的真实哲人（若某 id 已收录，会被上方 knownIds.has 直接命中，不会走到这里）
+    sartre:'camus',beauvoir:'camus',bentham:'mill',popper:'kuhn',russell:'wittgenstein',dewey:'mill',diogenes:'socrates',hobbes:'locke'};
   const merged={};
   const knownIds=new Set(dataRef.philosophers.map(p=>p.id));
   for(const [key,pts] of Object.entries(scores)){
-    const realId=idMap[key]||key;
+    // 真实 id 直接命中；仅幽灵 id 走语义映射，避免把已收录哲人误映射到别人
+    const realId=knownIds.has(key)?key:(idMap[key]||key);
     if(knownIds.has(realId))merged[realId]=(merged[realId]||0)+pts;
     else if(typeof console!=='undefined'&&console.warn)console.warn('[quiz] 测验引用了数据集中不存在的哲人 id:',key);
   }
@@ -2608,7 +2645,7 @@ function setupQuiz(){
         ctx.fillStyle=c.color;ctx.beginPath();ctx.arc(px,py+20,24,0,Math.PI*2);ctx.fill();
         ctx.fillStyle='rgba(255,255,255,.2)';ctx.beginPath();ctx.arc(px,py+20,28,0,Math.PI*2);ctx.stroke();
         ctx.fillStyle='#f1f5f9';ctx.textAlign='center';ctx.font='bold 14px system-ui,"Microsoft YaHei",sans-serif';ctx.fillText(p.name,px,py+60);
-        ctx.fillStyle='cbd5e1';ctx.font='12px system-ui,"Microsoft YaHei",sans-serif';ctx.fillText(r.pct+'%',px,py+78);
+        ctx.fillStyle='#cbd5e1';ctx.font='12px system-ui,"Microsoft YaHei",sans-serif';ctx.fillText(r.pct+'%',px,py+78);
       }
     }
     // Footer
